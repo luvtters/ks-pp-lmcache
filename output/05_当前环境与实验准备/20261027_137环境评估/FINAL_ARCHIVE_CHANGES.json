@@ -1,0 +1,191 @@
+{
+  "updated_utc": "2026-10-27T14:46:09.467971+00:00",
+  "source_changes": [
+    {
+      "relative_path": "受控就绪窗口诊断/结果与接线缺口.md",
+      "action": "added"
+    },
+    {
+      "relative_path": "受控就绪窗口诊断/结果与接线缺口.json",
+      "action": "added"
+    },
+    {
+      "relative_path": "受控就绪窗口诊断/check_actual_schedule_route.py",
+      "action": "added"
+    },
+    {
+      "relative_path": "受控就绪窗口诊断/actual137_patch_balance_schedule.py",
+      "action": "added"
+    },
+    {
+      "relative_path": "减层PD运行证据/结果分析.md",
+      "action": "updated"
+    },
+    {
+      "relative_path": "docs/README_本轮运行状态快照.md",
+      "action": "added"
+    },
+    {
+      "relative_path": "docs/本轮执行状态_去生成文本.json",
+      "action": "added"
+    },
+    {
+      "relative_path": "docs/AGENTS_137运行状态摘录.md",
+      "action": "added"
+    },
+    {
+      "relative_path": "docs/来源与删减说明.json",
+      "action": "added"
+    },
+    {
+      "relative_path": "实际P调度接线修复/README.md",
+      "action": "added"
+    },
+    {
+      "relative_path": "实际P调度接线修复/prepare_balance_candidate.py",
+      "action": "added"
+    },
+    {
+      "relative_path": "实际P调度接线修复/actual137_patch_balance_schedule.py",
+      "action": "added"
+    },
+    {
+      "relative_path": "实际P调度接线修复/ks_stage_reservation_snapshot.py",
+      "action": "added"
+    },
+    {
+      "relative_path": "实际P调度接线修复/patch_balance_schedule_fixed.py",
+      "action": "added"
+    },
+    {
+      "relative_path": "实际P调度接线修复/balance_scheduler_wiring.patch",
+      "action": "added"
+    },
+    {
+      "relative_path": "实际P调度接线修复/candidate_manifest.json",
+      "action": "added"
+    },
+    {
+      "relative_path": "实际P调度接线修复/check_actual_balance_schedule.py",
+      "action": "added"
+    },
+    {
+      "relative_path": "实际P调度接线修复/cpu_result.json",
+      "action": "added"
+    },
+    {
+      "relative_path": "实际P调度接线修复/prepare_loader_candidate.py",
+      "action": "added"
+    },
+    {
+      "relative_path": "实际P调度接线修复/sitecustomize_balance_CANDIDATE.py",
+      "action": "added"
+    },
+    {
+      "relative_path": "实际P调度接线修复/loader_exact_map_candidate.patch",
+      "action": "added"
+    },
+    {
+      "relative_path": "实际P调度接线修复/actual17_origins_snapshot.json",
+      "action": "added"
+    },
+    {
+      "relative_path": "实际P调度接线修复/loader_cpu_result.json",
+      "action": "added"
+    },
+    {
+      "relative_path": "实际P调度接线修复/archive_selection.json",
+      "action": "added"
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/archive_closing_selection.json",
+      "action": "updated"
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/archive_incremental_candidate.py",
+      "action": "updated"
+    }
+  ],
+  "updated_archive_metadata": [
+    "ARCHIVE_README.md",
+    "COPY_INCREMENTAL_FILES.txt",
+    "COPY_INCREMENTAL_MANIFEST.json",
+    "COPY_INCREMENTAL_VALIDATION.json",
+    "FINAL_ARCHIVE_CHANGED_PATHS.txt",
+    "FINAL_ARCHIVE_CHANGES.json",
+    "GIT_STAGE_CANDIDATES.nul",
+    "GIT_STAGE_CANDIDATES.txt",
+    "GIT_STAGE_CANDIDATES_VALIDATION.json",
+    "N16_FINAL_SOURCE_RECHECK.json"
+  ],
+  "precise_repository_paths": [
+    "output/05_当前环境与实验准备/20261027_137环境评估/ARCHIVE_README.md",
+    "output/05_当前环境与实验准备/20261027_137环境评估/COPY_INCREMENTAL_FILES.txt",
+    "output/05_当前环境与实验准备/20261027_137环境评估/COPY_INCREMENTAL_MANIFEST.json",
+    "output/05_当前环境与实验准备/20261027_137环境评估/COPY_INCREMENTAL_VALIDATION.json",
+    "output/05_当前环境与实验准备/20261027_137环境评估/FINAL_ARCHIVE_CHANGED_PATHS.txt",
+    "output/05_当前环境与实验准备/20261027_137环境评估/FINAL_ARCHIVE_CHANGES.json",
+    "output/05_当前环境与实验准备/20261027_137环境评估/GIT_STAGE_CANDIDATES.nul",
+    "output/05_当前环境与实验准备/20261027_137环境评估/GIT_STAGE_CANDIDATES.txt",
+    "output/05_当前环境与实验准备/20261027_137环境评估/GIT_STAGE_CANDIDATES_VALIDATION.json",
+    "output/05_当前环境与实验准备/20261027_137环境评估/N16_FINAL_SOURCE_RECHECK.json",
+    "output/05_当前环境与实验准备/20261027_137环境评估/docs/AGENTS_137运行状态摘录.md",
+    "output/05_当前环境与实验准备/20261027_137环境评估/docs/README_本轮运行状态快照.md",
+    "output/05_当前环境与实验准备/20261027_137环境评估/docs/本轮执行状态_去生成文本.json",
+    "output/05_当前环境与实验准备/20261027_137环境评估/docs/来源与删减说明.json",
+    "output/05_当前环境与实验准备/20261027_137环境评估/减层PD运行证据/结果分析.md",
+    "output/05_当前环境与实验准备/20261027_137环境评估/受控就绪窗口诊断/actual137_patch_balance_schedule.py",
+    "output/05_当前环境与实验准备/20261027_137环境评估/受控就绪窗口诊断/check_actual_schedule_route.py",
+    "output/05_当前环境与实验准备/20261027_137环境评估/受控就绪窗口诊断/结果与接线缺口.json",
+    "output/05_当前环境与实验准备/20261027_137环境评估/受控就绪窗口诊断/结果与接线缺口.md",
+    "output/05_当前环境与实验准备/20261027_137环境评估/实际P调度接线修复/README.md",
+    "output/05_当前环境与实验准备/20261027_137环境评估/实际P调度接线修复/actual137_patch_balance_schedule.py",
+    "output/05_当前环境与实验准备/20261027_137环境评估/实际P调度接线修复/actual17_origins_snapshot.json",
+    "output/05_当前环境与实验准备/20261027_137环境评估/实际P调度接线修复/archive_selection.json",
+    "output/05_当前环境与实验准备/20261027_137环境评估/实际P调度接线修复/balance_scheduler_wiring.patch",
+    "output/05_当前环境与实验准备/20261027_137环境评估/实际P调度接线修复/candidate_manifest.json",
+    "output/05_当前环境与实验准备/20261027_137环境评估/实际P调度接线修复/check_actual_balance_schedule.py",
+    "output/05_当前环境与实验准备/20261027_137环境评估/实际P调度接线修复/cpu_result.json",
+    "output/05_当前环境与实验准备/20261027_137环境评估/实际P调度接线修复/ks_stage_reservation_snapshot.py",
+    "output/05_当前环境与实验准备/20261027_137环境评估/实际P调度接线修复/loader_cpu_result.json",
+    "output/05_当前环境与实验准备/20261027_137环境评估/实际P调度接线修复/loader_exact_map_candidate.patch",
+    "output/05_当前环境与实验准备/20261027_137环境评估/实际P调度接线修复/patch_balance_schedule_fixed.py",
+    "output/05_当前环境与实验准备/20261027_137环境评估/实际P调度接线修复/prepare_balance_candidate.py",
+    "output/05_当前环境与实验准备/20261027_137环境评估/实际P调度接线修复/prepare_loader_candidate.py",
+    "output/05_当前环境与实验准备/20261027_137环境评估/实际P调度接线修复/sitecustomize_balance_CANDIDATE.py",
+    "output/05_当前环境与实验准备/20261027_137环境评估/恢复身份与启动接线/stage_driver/archive_closing_selection.json",
+    "output/05_当前环境与实验准备/20261027_137环境评估/恢复身份与启动接线/stage_driver/archive_incremental_candidate.py"
+  ],
+  "documented_copy_transformations": [
+    {
+      "relative_path": "受控就绪窗口诊断/结果与接线缺口.md",
+      "mode": "archive-copy-only raw-link conversion",
+      "plain_path_references": [
+        "../减层PD运行证据/stage-diagnostic-trace/stage-1512244.jsonl",
+        "../减层PD运行证据/stage-diagnostic-warm/benchmark.json"
+      ],
+      "source_report_modified": false
+    },
+    {
+      "relative_path": "减层PD运行证据/结果分析.md",
+      "mode": "archive-copy-only raw-link conversion",
+      "plain_path_references": [
+        "stage-candidate-trace/stage-1505817.jsonl",
+        "original-async-cold/benchmark.json",
+        "original-async-warm/benchmark.json",
+        "original-async-warm2/benchmark.json",
+        "stage-candidate-cold/benchmark.json",
+        "stage-candidate-warm/benchmark.json",
+        "stage-candidate-warm2/benchmark.json",
+        "p-original-async.launch.json",
+        "p-stage-candidate.launch.json"
+      ],
+      "source_report_modified": false
+    }
+  ],
+  "source_reports_modified": false,
+  "root_AGENTS_modified": false,
+  "git_actions": [],
+  "tests_rerun": false,
+  "remote_actions": 0
+}

@@ -1,19 +1,37 @@
 {
   "status": "FROZEN_N16_FINAL_SOURCE_AND_EXISTING_CPU_RECEIPT_MATCHED",
-  "updated_utc": "2026-10-27T13:49:08.470357+00:00",
-  "frozen_N16_files": 64,
-  "selected_with_selection_and_archive_entry": 67,
-  "N16_source_files_changed": 7,
+  "updated_utc": "2026-10-27T14:46:09.467971+00:00",
+  "frozen_N16_files": 68,
+  "selected_with_selection_and_archive_entry": 40,
+  "verification_scope": "closing files only; prior frozen N16 files not recopied",
+  "N16_source_files_changed": 0,
   "changed_archive_paths": [
-    "完整模型单机P对照/cache-clear-and-reduced-model/prepare_reduced_pd_private.py",
-    "完整模型单机P对照/cache-clear-and-reduced-model/prepare_p_hccl512.py",
-    "完整模型单机P对照/cache-clear-and-reduced-model/P_hccl512_deployment.json",
-    "完整模型单机P对照/cache-clear-and-reduced-model/reduced-pd-prepared/README.md",
-    "完整模型单机P对照/cache-clear-and-reduced-model/reduced-pd-prepared/startup/p-original-async.env.native.sh",
-    "完整模型单机P对照/cache-clear-and-reduced-model/reduced-pd-prepared/startup/p-stage-candidate.env.native.sh",
-    "完整模型单机P对照/cache-clear-and-reduced-model/archive_n16_selection.json",
-    "恢复身份与启动接线/stage_driver/archive_incremental_candidate.py",
-    "恢复身份与启动接线/stage_driver/前段先就绪_机制诊断边界.md"
+    "受控就绪窗口诊断/结果与接线缺口.md",
+    "受控就绪窗口诊断/结果与接线缺口.json",
+    "受控就绪窗口诊断/check_actual_schedule_route.py",
+    "受控就绪窗口诊断/actual137_patch_balance_schedule.py",
+    "减层PD运行证据/结果分析.md",
+    "docs/README_本轮运行状态快照.md",
+    "docs/本轮执行状态_去生成文本.json",
+    "docs/AGENTS_137运行状态摘录.md",
+    "docs/来源与删减说明.json",
+    "实际P调度接线修复/README.md",
+    "实际P调度接线修复/prepare_balance_candidate.py",
+    "实际P调度接线修复/actual137_patch_balance_schedule.py",
+    "实际P调度接线修复/ks_stage_reservation_snapshot.py",
+    "实际P调度接线修复/patch_balance_schedule_fixed.py",
+    "实际P调度接线修复/balance_scheduler_wiring.patch",
+    "实际P调度接线修复/candidate_manifest.json",
+    "实际P调度接线修复/check_actual_balance_schedule.py",
+    "实际P调度接线修复/cpu_result.json",
+    "实际P调度接线修复/prepare_loader_candidate.py",
+    "实际P调度接线修复/sitecustomize_balance_CANDIDATE.py",
+    "实际P调度接线修复/loader_exact_map_candidate.patch",
+    "实际P调度接线修复/actual17_origins_snapshot.json",
+    "实际P调度接线修复/loader_cpu_result.json",
+    "实际P调度接线修复/archive_selection.json",
+    "恢复身份与启动接线/stage_driver/archive_closing_selection.json",
+    "恢复身份与启动接线/stage_driver/archive_incremental_candidate.py"
   ],
   "final_proposer_review_diff_lines": 32,
   "existing_CPU_receipt": {
@@ -31,10 +49,79 @@
     "D1": "ready",
     "P_previous_attempt": "target warmup DispatchFFNCombine operator error",
     "P_env0_attempt": "MC2 reported required HCCL window 413MB exceeds actual 400MB",
-    "P_current_attempt": "original group restarting with common P-only FUSED_MC2=0 and HCCL_BUFFSIZE=512; not verified",
-    "PD_success": false,
+    "natural_PD_requests": "six HTTP/benchmark successes, original/candidate cold+warm+warm2",
+    "natural_stage_admissions": 0,
+    "performance_gain_verified": false,
+    "token_or_KV_content_correctness": "NOT_VERIFIED",
+    "P_current_attempt": "DIAGNOSTIC_ONLY request output300 succeeded and partial reserved, but effective Balance schedule omitted two hooks; no stage worker compute",
+    "full_formal_PD_acceptance": false,
     "candidate_stage_compute_success": false
   },
+  "closing_archive": {
+    "diagnostic_source_preparation_files": 13,
+    "diagnostic_result_source_checker_files": 4,
+    "natural_sanitized_files": 2,
+    "diagnostic_default_delay": "OFF; only separate diagnostic env enables 500ms",
+    "diagnostic_CPU_cases": 11,
+    "diagnostic_stage_NPU_verified": false,
+    "diagnostic_request_success": true,
+    "diagnostic_stage_admission_observed": false,
+    "actual_Balance_two_hook_gap_source_confirmed": true,
+    "natural_result_source": "减层PD运行证据/结果摘要.json",
+    "natural_runs": 6,
+    "raw_customer_or_generated_payloads_archived": false
+  },
+  "actual_Balance_fix": {
+    "selected_files": 15,
+    "existing_CPU_cases": 6,
+    "CPU_cases_rerun": false,
+    "deployed": false,
+    "NPU_verified": false,
+    "loader_map_counts": [
+      18,
+      19,
+      19,
+      20
+    ],
+    "explicit_migrated_dependencies_present": [
+      "output/05_当前环境与实验准备/20261027_137环境评估/受控就绪窗口诊断/actual137_patch_balance_schedule.py",
+      "output/05_当前环境与实验准备/20261027_137环境评估/恢复身份与启动接线/stage_driver/check_scheduler_reservation.py",
+      "output/05_当前环境与实验准备/20261027_137环境评估/恢复身份与启动接线/stage_driver/runtime_overlay/vllm/v1/core/sched/scheduler.py",
+      "output/05_当前环境与实验准备/20261027_137环境评估/恢复身份与启动接线/stage_driver/runtime_overlay/vllm/v1/core/sched/ks_stage_reservation.py",
+      "output/05_当前环境与实验准备/20261027_137环境评估/恢复身份与启动接线/stage_driver/private_candidate_deployment.json",
+      "output/05_当前环境与实验准备/20261027_137环境评估/受控就绪窗口诊断/current_stage_loader_snapshot.py",
+      "output/05_当前环境与实验准备/20261027_137环境评估/实际P调度接线修复/actual137_patch_balance_schedule.py",
+      "output/05_当前环境与实验准备/20261027_137环境评估/实际P调度接线修复/patch_balance_schedule_fixed.py",
+      "output/04_修改策略与验证/01_修改策略与隔离候选/KV完成通知修改策略与隔离分支_20261022/capacity_followup/sources/vllm/v1/core/sched/output.py"
+    ]
+  },
+  "copy_transformations": [
+    {
+      "relative_path": "受控就绪窗口诊断/结果与接线缺口.md",
+      "mode": "archive-copy-only raw-link conversion",
+      "plain_path_references": [
+        "../减层PD运行证据/stage-diagnostic-trace/stage-1512244.jsonl",
+        "../减层PD运行证据/stage-diagnostic-warm/benchmark.json"
+      ],
+      "source_report_modified": false
+    },
+    {
+      "relative_path": "减层PD运行证据/结果分析.md",
+      "mode": "archive-copy-only raw-link conversion",
+      "plain_path_references": [
+        "stage-candidate-trace/stage-1505817.jsonl",
+        "original-async-cold/benchmark.json",
+        "original-async-warm/benchmark.json",
+        "original-async-warm2/benchmark.json",
+        "stage-candidate-cold/benchmark.json",
+        "stage-candidate-warm/benchmark.json",
+        "stage-candidate-warm2/benchmark.json",
+        "p-original-async.launch.json",
+        "p-stage-candidate.launch.json"
+      ],
+      "source_report_modified": false
+    }
+  ],
   "common_P_fallback": {
     "VLLM_ASCEND_ENABLE_FUSED_MC2": "0",
     "HCCL_BUFFSIZE": "512",

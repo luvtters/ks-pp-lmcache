@@ -1,0 +1,24 @@
+{
+  "status": "PASS",
+  "scope": "DIAGNOSTIC_ONLY same generated observer AST, scalar Future/proxy/clock fixtures",
+  "cases": [
+    "default OFF publishes immediately",
+    "front immediate with diagnostic ON",
+    "back only after real success+window; deadline fixed; getter once; references retained; one publication",
+    "held back entry does not block later front entry",
+    "real False immediate; no success",
+    "real exception immediate; retained ownership; no success",
+    "cancel after real success bypasses delay; no late success",
+    "cancel before device completion retains until real terminal state",
+    "close bypasses only completed publication delay; no late success",
+    "close never fabricates completion for an unfinished real Future",
+    "owner poll contains no sleep/wait"
+  ],
+  "case_count": 11,
+  "source_imported": false,
+  "NPU_test": false,
+  "runtime_modified": false,
+  "deployed": false,
+  "requests_sent": 0,
+  "boundary": "No KV bytes or real NPU Future executed; verifies publication/lifetime state machine only."
+}

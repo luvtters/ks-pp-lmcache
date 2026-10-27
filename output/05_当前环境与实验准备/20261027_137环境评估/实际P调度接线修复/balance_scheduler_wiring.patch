@@ -1,0 +1,28 @@
+--- actual137/patch_balance_schedule.py
++++ private/patch_balance_schedule_fixed.py
+@@ -18,6 +18,7 @@
+ from vllm.v1.core.sched.output import NewRequestData, SchedulerOutput
+ from vllm.v1.core.sched.request_queue import SchedulingPolicy, create_request_queue
+ from vllm.v1.core.sched.scheduler import Scheduler
++from vllm.v1.core.sched import ks_stage_reservation as _ks_stage_reservation
+ from vllm.v1.engine import EngineCoreEventType, EngineCoreOutputs
+ from vllm.v1.engine.core import DPEngineCoreProc, EngineCoreProc
+ from vllm.v1.kv_cache_interface import KVCacheConfig
+@@ -480,7 +481,7 @@
+                     new_computed_blocks=new_computed_blocks,
+                     num_lookahead_tokens=effective_lookahead_tokens,
+                     num_external_computed_tokens=num_external_computed_tokens,
+-                    delay_cache_blocks=load_kv_async,
++                    delay_cache_blocks=(load_kv_async or _ks_stage_reservation.delay_cache_blocks(self, request_id)),
+                     num_encoder_tokens=num_encoder_tokens,
+                 )
+ 
+@@ -634,6 +635,8 @@
+             ec_meta: ECConnectorMetadata = self.ec_connector.build_connector_meta(scheduler_output)
+             scheduler_output.ec_connector_metadata = ec_meta
+ 
++        _ks_stage_reservation.attach_output(self, scheduler_output)
++
+         with record_function_or_nullcontext("schedule: update_after_schedule"):
+             self._update_after_schedule(scheduler_output)
+         return scheduler_output

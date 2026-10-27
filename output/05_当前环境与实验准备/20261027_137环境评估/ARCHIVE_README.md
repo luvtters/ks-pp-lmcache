@@ -1,7 +1,7 @@
 # 137本机源码归档
 
 最新增量精确清单为 `COPY_INCREMENTAL_FILES.txt`，含逐文件来源、字节数及文本/字节一致结果的记录为
-`COPY_INCREMENTAL_MANIFEST.json`。当前增量清单包含 116 个文件；对于与初次 `COPY_MANIFEST.json`
+`COPY_INCREMENTAL_MANIFEST.json`。当前增量清单包含 162 个文件；对于与初次 `COPY_MANIFEST.json`
 重名的路径，以增量清单为当前文件版本。原299文件及已放置的5个旧依赖输入未改动。
 
 新增内容包括 TP4绑定/partial观测、父包路径修复、17→18→19可选精确加载器、私有部署与CPU回执，
@@ -54,8 +54,11 @@ python -X utf8 -B .\check_integrated_first_token.py
 
 ## N16最终源码复核
 
-64项冻结清单与最终32行draft GLM-family/HF78源码、diff及既有7权重/真实quant CPU回执已逐文件复核。CPU用例未重跑，未加载真实checkpoint。root报告两D已ready，P在target预热DispatchFFNCombine遇算子错误；P两组随后共同采用官方FUSED_MC2=0及HCCL_BUFFSIZE=512并重启原组，尚未验收；四个benchmark结果目录已匹配管理器。不能标为PD成功或候选阶段计算成功。复核细节见`N16_FINAL_SOURCE_RECHECK.json`。
+68项冻结清单与最终32行draft GLM-family/HF78源码、diff及既有7权重/真实quant CPU回执已逐文件复核。CPU用例未重跑，未加载真实checkpoint。早期P曾在target预热遇DispatchFFNCombine错误；P两组随后共同采用官方FUSED_MC2=0及HCCL_BUFFSIZE=512，benchmark结果目录已匹配管理器。自然请求功能结果见下段；这不等于token/KV内容或候选阶段计算验收。复核细节见`N16_FINAL_SOURCE_RECHECK.json`。
+
+自然6次结果现已单独归档到`减层PD运行证据/`：6次HTTP/benchmark成功，未出现stage admission，不能证明提速，token/KV内容仍NOT_VERIFIED。该目录只带结果分析和精简JSON；文档中原始benchmark/metrics/log链接仍指原工作区，本仓库按数据边界没有复制那些文件。独立`受控就绪窗口诊断/`带13份源码/准备材料及4份精简结果/实际0.23调度源码/检查器；默认关闭，500ms只由独立env启用。真实单请求成功并出现partial reserved，但实际Balance schedule遗漏两钩子、未进入阶段worker；不能并入自然6次或标为模型阶段PASS。本轮README/状态及AGENTS的137运行段落另存docs，状态中历史生成文本字段已删除并记录，根仓库AGENTS未改。
+实际P调度接线修复的15项隔离候选与既有6项CPU结果已保存，loader为18/20 exact候选；仅核对明确引用依赖存在，未部署或复跑。
 
 ## 暂存候选路径（未执行Git）
 
-`GIT_STAGE_CANDIDATES.txt` 为本轮 218 个精确仓库相对路径，另有NUL分隔的`GIT_STAGE_CANDIDATES.nul`。来源仅为两份复制manifest、本目录索引和INPUT_PLACEMENT的5个新增输入，不包含初次manifest中仅只读核对的旧仓库依赖。这里只生成候选清单，没有调用Git、暂存、提交或推送。
+`GIT_STAGE_CANDIDATES.txt` 为本轮 263 个精确仓库相对路径，另有NUL分隔的`GIT_STAGE_CANDIDATES.nul`。来源仅为两份复制manifest、本目录索引和5个新增旧输入；没有Git、暂存、提交或推送动作。

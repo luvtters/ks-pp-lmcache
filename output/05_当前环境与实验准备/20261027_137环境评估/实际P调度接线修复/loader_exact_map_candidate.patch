@@ -1,0 +1,9 @@
+--- E:\work\ks\output\05_当前环境与实验准备\20261027_137环境评估\受控就绪窗口诊断\current_stage_loader_snapshot.py
++++ CANDIDATE/sitecustomize.py
+@@ -37,4 +37,6 @@
+ # The source tree contains partial package directories. Keep it off sys.path;
+ # only this exact-module finder may expose its files (editable parents stay real).
+ sys.path[:] = [value for value in sys.path if Path(value or ".").resolve() != _ROOT]
++# CPU_ONLY_NOT_DEPLOYED: exact actual-P scheduler hook mapping.
++_KSStageCandidateFinder.modules['vllm_ascend.patch.platform.patch_balance_schedule'] = Path('/opt/ks-stage-ready-luv-20261027/reduced-pd/runtime/balance-scheduler-fix/patch_balance_schedule_fixed.py')
+ sys.meta_path.insert(0, _KSStageCandidateFinder())

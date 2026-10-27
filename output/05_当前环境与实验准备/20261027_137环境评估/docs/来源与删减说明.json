@@ -1,0 +1,29 @@
+{
+  "captured_utc": "2026-10-27T14:46:09.462268+00:00",
+  "README": {
+    "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\README.md",
+    "copy": "README_本轮运行状态快照.md",
+    "mode": "exact source bytes"
+  },
+  "state": {
+    "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\本轮执行状态.json",
+    "copy": "本轮执行状态_去生成文本.json",
+    "mode": "numeric/status snapshot; generated/customer payload keys removed",
+    "omitted_field_paths": [
+      "completed_original_group.all_generated_text"
+    ],
+    "omitted_values_retained": false
+  },
+  "AGENTS": {
+    "source": "E:\\work\\ks\\AGENTS.md",
+    "copy": "AGENTS_137运行状态摘录.md",
+    "source_lines": [
+      65,
+      84
+    ],
+    "mode": "exact current137 section plus archival label; repository root rules untouched"
+  },
+  "git_remote_status_independently_verified": false,
+  "git_actions": [],
+  "remote_actions": 0
+}

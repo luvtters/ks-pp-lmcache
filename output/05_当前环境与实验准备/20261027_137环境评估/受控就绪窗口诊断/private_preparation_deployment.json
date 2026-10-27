@@ -1,0 +1,23 @@
+{
+  "root": "/opt/ks-stage-ready-luv-20261027/reduced-pd",
+  "files": [
+    "runtime/diagnostic-back-ready/vllm_multi_process_adapter_DIAGNOSTIC_ONLY.py",
+    "startup/p-stage-diagnostic.env.native.sh",
+    "startup/p-stage-diagnostic.serve.native.sh",
+    "startup/bench-stage-diagnostic-warm.native.sh",
+    "runtime/diagnostic-back-ready/sitecustomize.py"
+  ],
+  "map_count_before": 19,
+  "map_count_after": 19,
+  "changed_modules": [
+    "lmcache.integration.vllm.vllm_multi_process_adapter"
+  ],
+  "optional_mooncake_and_proposer_preserved": true,
+  "finder_cpu": "PASS",
+  "bash_syntax": "PASS",
+  "source": "runtime/diagnostic-back-ready/vllm_multi_process_adapter_DIAGNOSTIC_ONLY.py",
+  "services_changed": false,
+  "requests_sent": 0,
+  "active_runtime_files_changed": false,
+  "framework_imported": false
+}

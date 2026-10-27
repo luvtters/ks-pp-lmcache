@@ -1,0 +1,165 @@
+{
+  "scope": "DIAGNOSTIC_ONLY_REAL_BACK_COMPLETION_THEN_CPU_PUBLICATION_DELAY",
+  "artificial_back_publication_delay_ms": 500,
+  "performance_comparison_eligible": false,
+  "source_routing_assertions": {
+    "actual_023_producer_disables_preemption": true,
+    "balance_false_producer_bypasses_base_schedule": true,
+    "actual_schedule_calls_inherited_promotion": true,
+    "actual_schedule_lacks_attach_output": true,
+    "actual_waiting_delay_is_only_load_kv_async": true,
+    "candidate_base_has_both_hooks": true
+  },
+  "cpu_scope": "Actual predicate AST plus source-call assertions only; not a full effective scheduler execution.",
+  "actual_source": "actual137_patch_balance_schedule.py",
+  "source_lines": {
+    "producer_condition": [
+      49,
+      53
+    ],
+    "constructor_warning": [
+      79,
+      81
+    ],
+    "super_gate": [
+      107,
+      111
+    ],
+    "inherited_promotion": [
+      336,
+      338
+    ],
+    "allocate_slots": [
+      476,
+      485
+    ],
+    "return_without_attach": [
+      637,
+      639
+    ],
+    "canonical_replacement": 745
+  },
+  "client": {
+    "successful_requests": 1,
+    "failed_requests": 0,
+    "input_tokens": 29696,
+    "output_tokens": 300,
+    "ttft_s": 4.563491251319647,
+    "tpot_ms": 32.04060703154691,
+    "e2e_s": 14.143632753752172
+  },
+  "trace_evidence": "减层PD运行证据/stage-diagnostic-trace/stage-1512244.jsonl",
+  "trace_line_count": 4,
+  "trace": [
+    {
+      "utc": "2026-10-27T14:24:36.104011+00:00",
+      "monotonic_ns": 4622643128876263,
+      "pid": 1512244,
+      "thread_id": 281473451217024,
+      "phase": "partial_admission_decision",
+      "batch": null,
+      "stage": null,
+      "worker_id": null,
+      "requests": [
+        [
+          "cmpl-04904539-c52b-4ba0-975b-a13142dca099-0-b24f296d",
+          0
+        ]
+      ],
+      "reason": "front_not_ready",
+      "decision": "deferred",
+      "front_kv_ready": false,
+      "all_stages_ready": false,
+      "stage_busy": false,
+      "request_global_finished": false,
+      "timestamp_kind": "cpu_scheduler_decision"
+    },
+    {
+      "utc": "2026-10-27T14:24:36.207463+00:00",
+      "monotonic_ns": 4622643232324206,
+      "pid": 1512244,
+      "thread_id": 281473451217024,
+      "phase": "stage_kv_ready_observed",
+      "batch": null,
+      "stage": 0,
+      "worker_id": null,
+      "requests": [
+        [
+          "cmpl-04904539-c52b-4ba0-975b-a13142dca099-0-b24f296d",
+          0
+        ]
+      ],
+      "front_kv_ready": true,
+      "all_kv_ready": false
+    },
+    {
+      "utc": "2026-10-27T14:24:36.207834+00:00",
+      "monotonic_ns": 4622643232684458,
+      "pid": 1512244,
+      "thread_id": 281473451217024,
+      "phase": "partial_admission_decision",
+      "batch": null,
+      "stage": null,
+      "worker_id": null,
+      "requests": [
+        [
+          "cmpl-04904539-c52b-4ba0-975b-a13142dca099-0-b24f296d",
+          0
+        ]
+      ],
+      "reason": "front_ready",
+      "decision": "reserved",
+      "front_kv_ready": true,
+      "all_stages_ready": false,
+      "stage_busy": false,
+      "request_global_finished": false,
+      "timestamp_kind": "cpu_scheduler_decision"
+    },
+    {
+      "utc": "2026-10-27T14:24:36.724732+00:00",
+      "monotonic_ns": 4622643749601131,
+      "pid": 1512244,
+      "thread_id": 281473451217024,
+      "phase": "stage_kv_ready_observed",
+      "batch": null,
+      "stage": 1,
+      "worker_id": null,
+      "requests": [
+        [
+          "cmpl-04904539-c52b-4ba0-975b-a13142dca099-0-b24f296d",
+          0
+        ]
+      ],
+      "front_kv_ready": true,
+      "all_kv_ready": true
+    }
+  ],
+  "front_to_reservation_cpu_ms": 0.360252,
+  "reservation_to_back_observed_cpu_ms": 516.916673,
+  "stage_batch_admission_observed": false,
+  "stage_worker_execution_verified": false,
+  "new_path_device_compute_or_overlap_verified": false,
+  "token_or_kv_content_correctness": "NOT_VERIFIED",
+  "after_gauges": {
+    "p": {
+      "num_requests_running": 0.0,
+      "num_requests_waiting": 0.0,
+      "kv_cache_usage_perc": 0.0
+    },
+    "d0": {
+      "num_requests_running": 0.0,
+      "num_requests_waiting": 0.0,
+      "kv_cache_usage_perc": 0.0
+    },
+    "d1": {
+      "num_requests_running": 0.0,
+      "num_requests_waiting": 0.0,
+      "kv_cache_usage_perc": 0.0
+    }
+  },
+  "required_followup": [
+    "Preserve official PD no-preemption semantics in the actual effective schedule.",
+    "Apply partial delay_cache_blocks and attach_output to that schedule, then verify the effective class route.",
+    "Verify admission, actual worker execution, parsed final output, genuine global completion and normal producer lifecycle on device."
+  ]
+}

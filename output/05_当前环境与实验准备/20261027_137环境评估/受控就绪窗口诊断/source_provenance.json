@@ -1,0 +1,9 @@
+{
+  "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\lmcache\\integration\\vllm\\vllm_multi_process_adapter.py",
+  "diagnostic_copy": "vllm_multi_process_adapter_DIAGNOSTIC_ONLY.py",
+  "default_enabled": false,
+  "environment": "KS_LMCACHE_DIAGNOSTIC_BACK_READY_DELAY_MS",
+  "suggested_value_ms": 500,
+  "deployed": false,
+  "device_action": false
+}

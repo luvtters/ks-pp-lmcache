@@ -1,0 +1,62 @@
+--- E:\work\ks\output\05_当前环境与实验准备\20261027_137环境评估\恢复身份与启动接线\stage_driver\runtime_overlay\lmcache\integration\vllm\vllm_multi_process_adapter.py
++++ DIAGNOSTIC_ONLY/vllm_multi_process_adapter.py
+@@ -1337,6 +1337,9 @@
+     producer_event: object
+     real_future: object = None
+     cancelled: bool = False
++    real_value: bool | None = None
++    real_done_at: float | None = None
++    release_at: float | None = None
+ 
+ 
+ class LMCacheStageObserver:
+@@ -1356,6 +1359,10 @@
+         self.stopping = threading.Event()
+         self.wakeup = threading.Event()
+         self.owner_error = None
++        # DIAGNOSTIC_ONLY: delay publication after successful device completion.
++        # Default0 preserves the normal observer path; no real Future is modified.
++        self._diagnostic_back_delay_s = float(os.environ.get(
++            "KS_LMCACHE_DIAGNOSTIC_BACK_READY_DELAY_MS", "0")) / 1000.0
+ 
+     def start(self):
+         if self.thread is not None:
+@@ -1436,17 +1443,33 @@
+             value, error = None, None
+             try:
+                 # No lock is held for event import/query/result or device work.
+-                if not real.query():
+-                    continue
+-                value = real.result(timeout=0)
+-                if type(value) is not bool:
+-                    raise TypeError("current RetrieveResult must be bool")
++                if operation.real_value is None:
++                    if not real.query():
++                        continue
++                    value = real.result(timeout=0)
++                    if type(value) is not bool:
++                        raise TypeError("current RetrieveResult must be bool")
++                else:
++                    value = operation.real_value
+             except Exception as exc:
+                 error = exc
+             with self.lock:
+                 if self.entries.get(key) is not operation:
+                     raise RuntimeError("observer operation identity changed")
+                 if error is None:
++                    if operation.real_value is None:
++                        operation.real_value = value
++                        operation.real_done_at = time.monotonic()
++                        if (value and operation.identity.stage_id == 1
++                                and not operation.cancelled and not self.stopping.is_set()
++                                and self._diagnostic_back_delay_s > 0):
++                            operation.release_at = operation.real_done_at + self._diagnostic_back_delay_s
++                    # Never block the owner. Cancellation/shutdown bypass only
++                    # this CPU publication delay, after real device completion.
++                    if (value and not operation.cancelled and not self.stopping.is_set()
++                            and operation.release_at is not None
++                            and time.monotonic() < operation.release_at):
++                        continue
+                     if value and not operation.cancelled:
+                         self.success_outbox.append(operation.identity)
+                     operation.proxy.set_result(value)

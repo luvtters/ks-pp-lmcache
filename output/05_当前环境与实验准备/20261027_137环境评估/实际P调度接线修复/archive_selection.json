@@ -1,0 +1,36 @@
+{
+  "status": "CPU_ONLY_NOT_DEPLOYED",
+  "frozen": true,
+  "relative_files": [
+    "README.md",
+    "prepare_balance_candidate.py",
+    "actual137_patch_balance_schedule.py",
+    "ks_stage_reservation_snapshot.py",
+    "patch_balance_schedule_fixed.py",
+    "balance_scheduler_wiring.patch",
+    "candidate_manifest.json",
+    "check_actual_balance_schedule.py",
+    "cpu_result.json",
+    "prepare_loader_candidate.py",
+    "sitecustomize_balance_CANDIDATE.py",
+    "loader_exact_map_candidate.patch",
+    "actual17_origins_snapshot.json",
+    "loader_cpu_result.json",
+    "archive_selection.json"
+  ],
+  "external_source_references": [
+    "受控就绪窗口诊断/actual137_patch_balance_schedule.py",
+    "恢复身份与启动接线/stage_driver/check_scheduler_reservation.py",
+    "恢复身份与启动接线/stage_driver/runtime_overlay/vllm/v1/core/sched/scheduler.py",
+    "恢复身份与启动接线/stage_driver/runtime_overlay/vllm/v1/core/sched/ks_stage_reservation.py",
+    "恢复身份与启动接线/stage_driver/private_candidate_deployment.json",
+    "受控就绪窗口诊断/current_stage_loader_snapshot.py"
+  ],
+  "notes": [
+    "Actual Balance.schedule old missing-hook assertion failed first; new actual method/helper route passed six targeted CPU checks.",
+    "No manual pretagged scheduler output and no previous eight/eleven-test suites executed.",
+    "Loader proposal adds one exact Balance module: no optional17->18, both N16 optional19->20; parents remain normal.",
+    "No server runtime, source deployment, service action, request, or NPU operation. Current server remains the previous diagnostic version.",
+    "No customer prompt/data, model weights, venv, secret, or runtime log included."
+  ]
+}

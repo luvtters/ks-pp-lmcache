@@ -1,9 +1,8 @@
 {
   "status": "EXPLICIT_PROSPECTIVE_PATHS_ONLY_NO_GIT_ACTIONS",
-  "created_utc": "2026-10-27T13:49:09.235283+00:00",
-  "repository": "E:\\work\\ks\\repos\\ks-pp-lmcache",
-  "candidate_paths": 218,
-  "new_archive_paths": 213,
+  "created_utc": "2026-10-27T14:46:09.737077+00:00",
+  "candidate_paths": 263,
+  "new_archive_paths": 258,
   "necessary_new_old_input_paths": [
     "output/04_修改策略与验证/01_修改策略与隔离候选/KV完成通知修改策略与隔离分支_20261022/capacity_followup/sources/lmcache/integration/vllm/lmcache_mp_metadata.py",
     "output/04_修改策略与验证/01_修改策略与隔离候选/KV完成通知修改策略与隔离分支_20261022/capacity_followup/sources/vllm/v1/core/sched/async_scheduler.py",

@@ -73,3 +73,8 @@ P/D双方 Mooncake 都明确 prefill(dp1,tp4,pp2,partition8,8)／decode(dp2,tp4,
 env0后13:45:11 UTC的新首错已明确：profile_run为mc2_tokens_capacity做预热，在普通 `npu_moe_distribute_dispatch_v2`／`aclnnMoeDistributeDispatchV4` 的tiling检查报 `HCCL_BUFFSIZE_EP is too SMALL`。日志实际参数为maxBs64、h6144、epWorldSize4、localMoeExpertNum64、k8；算子要求413MB，实际HCCL/CCL窗口为400MB。这是已确认窗口不足，不据此宣称EP4不受支持。
 
 已按用户批准，仅P原异步／候选两份env追加 `export HCCL_BUFFSIZE=512` 覆盖common400，保留 `VLLM_ASCEND_ENABLE_FUSED_MC2=0`。D/common文件和已就绪D/cache/proxy均不改，P TP/PP/CP/MTP3、batch/seq、模型、客户数据、输出及压测口径均不变。512超过实测所需413MB；这只完成必要配置准备，是否通过设备预热及PD请求仍由本轮实际运行记录验收。本脚本不启动、停止服务或发请求。
+
+
+## 追加第二次同文热请求
+
+主任务已确认N16原异步组cold/warm各1次均返回原300输出；首次warm TTFT为9.195s，存在首热化混杂的可能。用户已批准两ON组各追加一次相同warm2复核，不替换原cold/warm结果。两份 `bench-original-async-warm2.native.sh`／`bench-stage-candidate-warm2.native.sh`逐字复制既有warm命令，只将结果目录改成 `results/original-async-warm2`／`results/stage-candidate-warm2`。客户原文、原输出300、N1/C1、预热0、proxy18083及全部采样参数保持；本准备仅上传启动文件并做bash语法检查，没有发送请求或启停服务。

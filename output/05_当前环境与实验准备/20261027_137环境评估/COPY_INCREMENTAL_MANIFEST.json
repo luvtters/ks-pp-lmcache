@@ -1,6 +1,6 @@
 {
   "status": "EXACT_EXPLICIT_INCREMENTAL_ARCHIVE_SYNC_LOCAL_ONLY",
-  "updated_utc": "2026-10-27T13:49:08.470357+00:00",
+  "updated_utc": "2026-10-27T14:46:09.467971+00:00",
   "source_root": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估",
   "archive_root": "E:\\work\\ks\\repos\\ks-pp-lmcache\\output\\05_当前环境与实验准备\\20261027_137环境评估",
   "selected_files": [
@@ -327,12 +327,16 @@
     {
       "relative_path": "恢复身份与启动接线/stage_driver/archive_incremental_candidate.py",
       "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\archive_incremental_candidate.py",
-      "bytes": 22546,
+      "bytes": 37261,
       "action": "added",
       "bytes_equal": true,
       "utf8_text_equal": true,
-      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
-      "last_recheck_action": "updated"
+      "last_recheck_utc": "2026-10-27T14:46:09.467971+00:00",
+      "last_recheck_action": "updated",
+      "source_bytes": 37261,
+      "expected_archive_bytes_equal": true,
+      "source_unchanged": true,
+      "copy_mode": "exact source bytes"
     },
     {
       "relative_path": "恢复身份与启动接线/stage_driver/native_candidate/stage-candidate.env.native.sh",
@@ -437,8 +441,8 @@
       "action": "added",
       "bytes_equal": true,
       "utf8_text_equal": true,
-      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
-      "last_recheck_action": "updated"
+      "last_recheck_utc": "2026-10-27T14:24:21.582182+00:00",
+      "last_recheck_action": "unchanged"
     },
     {
       "relative_path": "完整模型单机P对照/cache-clear-and-reduced-model/build_model_view.py",
@@ -447,7 +451,7 @@
       "action": "added",
       "bytes_equal": true,
       "utf8_text_equal": true,
-      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_utc": "2026-10-27T14:24:21.582182+00:00",
       "last_recheck_action": "unchanged"
     },
     {
@@ -457,7 +461,7 @@
       "action": "added",
       "bytes_equal": true,
       "utf8_text_equal": true,
-      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_utc": "2026-10-27T14:24:21.582182+00:00",
       "last_recheck_action": "unchanged"
     },
     {
@@ -467,7 +471,7 @@
       "action": "added",
       "bytes_equal": true,
       "utf8_text_equal": true,
-      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_utc": "2026-10-27T14:24:21.582182+00:00",
       "last_recheck_action": "unchanged"
     },
     {
@@ -477,7 +481,7 @@
       "action": "added",
       "bytes_equal": true,
       "utf8_text_equal": true,
-      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_utc": "2026-10-27T14:24:21.582182+00:00",
       "last_recheck_action": "unchanged"
     },
     {
@@ -487,7 +491,7 @@
       "action": "added",
       "bytes_equal": true,
       "utf8_text_equal": true,
-      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_utc": "2026-10-27T14:24:21.582182+00:00",
       "last_recheck_action": "unchanged"
     },
     {
@@ -497,7 +501,7 @@
       "action": "added",
       "bytes_equal": true,
       "utf8_text_equal": true,
-      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_utc": "2026-10-27T14:24:21.582182+00:00",
       "last_recheck_action": "unchanged"
     },
     {
@@ -507,7 +511,7 @@
       "action": "added",
       "bytes_equal": true,
       "utf8_text_equal": true,
-      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_utc": "2026-10-27T14:24:21.582182+00:00",
       "last_recheck_action": "unchanged"
     },
     {
@@ -517,7 +521,7 @@
       "action": "added",
       "bytes_equal": true,
       "utf8_text_equal": true,
-      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_utc": "2026-10-27T14:24:21.582182+00:00",
       "last_recheck_action": "unchanged"
     },
     {
@@ -527,7 +531,7 @@
       "action": "added",
       "bytes_equal": true,
       "utf8_text_equal": true,
-      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_utc": "2026-10-27T14:24:21.582182+00:00",
       "last_recheck_action": "unchanged"
     },
     {
@@ -537,7 +541,7 @@
       "action": "added",
       "bytes_equal": true,
       "utf8_text_equal": true,
-      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_utc": "2026-10-27T14:24:21.582182+00:00",
       "last_recheck_action": "unchanged"
     },
     {
@@ -547,7 +551,7 @@
       "action": "added",
       "bytes_equal": true,
       "utf8_text_equal": true,
-      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_utc": "2026-10-27T14:24:21.582182+00:00",
       "last_recheck_action": "unchanged"
     },
     {
@@ -557,7 +561,7 @@
       "action": "added",
       "bytes_equal": true,
       "utf8_text_equal": true,
-      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_utc": "2026-10-27T14:24:21.582182+00:00",
       "last_recheck_action": "unchanged"
     },
     {
@@ -567,7 +571,7 @@
       "action": "added",
       "bytes_equal": true,
       "utf8_text_equal": true,
-      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_utc": "2026-10-27T14:24:21.582182+00:00",
       "last_recheck_action": "unchanged"
     },
     {
@@ -577,7 +581,7 @@
       "action": "added",
       "bytes_equal": true,
       "utf8_text_equal": true,
-      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_utc": "2026-10-27T14:24:21.582182+00:00",
       "last_recheck_action": "unchanged"
     },
     {
@@ -587,7 +591,7 @@
       "action": "added",
       "bytes_equal": true,
       "utf8_text_equal": true,
-      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_utc": "2026-10-27T14:24:21.582182+00:00",
       "last_recheck_action": "unchanged"
     },
     {
@@ -597,7 +601,7 @@
       "action": "added",
       "bytes_equal": true,
       "utf8_text_equal": true,
-      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_utc": "2026-10-27T14:24:21.582182+00:00",
       "last_recheck_action": "unchanged"
     },
     {
@@ -607,7 +611,7 @@
       "action": "added",
       "bytes_equal": true,
       "utf8_text_equal": true,
-      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_utc": "2026-10-27T14:24:21.582182+00:00",
       "last_recheck_action": "unchanged"
     },
     {
@@ -617,7 +621,7 @@
       "action": "added",
       "bytes_equal": true,
       "utf8_text_equal": true,
-      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_utc": "2026-10-27T14:24:21.582182+00:00",
       "last_recheck_action": "unchanged"
     },
     {
@@ -627,7 +631,7 @@
       "action": "added",
       "bytes_equal": true,
       "utf8_text_equal": true,
-      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_utc": "2026-10-27T14:24:21.582182+00:00",
       "last_recheck_action": "unchanged"
     },
     {
@@ -637,7 +641,7 @@
       "action": "added",
       "bytes_equal": true,
       "utf8_text_equal": true,
-      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_utc": "2026-10-27T14:24:21.582182+00:00",
       "last_recheck_action": "unchanged"
     },
     {
@@ -647,7 +651,7 @@
       "action": "added",
       "bytes_equal": true,
       "utf8_text_equal": true,
-      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_utc": "2026-10-27T14:24:21.582182+00:00",
       "last_recheck_action": "unchanged"
     },
     {
@@ -657,7 +661,7 @@
       "action": "added",
       "bytes_equal": true,
       "utf8_text_equal": true,
-      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_utc": "2026-10-27T14:24:21.582182+00:00",
       "last_recheck_action": "unchanged"
     },
     {
@@ -667,7 +671,7 @@
       "action": "added",
       "bytes_equal": true,
       "utf8_text_equal": true,
-      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_utc": "2026-10-27T14:24:21.582182+00:00",
       "last_recheck_action": "unchanged"
     },
     {
@@ -677,7 +681,7 @@
       "action": "added",
       "bytes_equal": true,
       "utf8_text_equal": true,
-      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_utc": "2026-10-27T14:24:21.582182+00:00",
       "last_recheck_action": "unchanged"
     },
     {
@@ -687,7 +691,7 @@
       "action": "added",
       "bytes_equal": true,
       "utf8_text_equal": true,
-      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_utc": "2026-10-27T14:24:21.582182+00:00",
       "last_recheck_action": "unchanged"
     },
     {
@@ -697,7 +701,7 @@
       "action": "added",
       "bytes_equal": true,
       "utf8_text_equal": true,
-      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_utc": "2026-10-27T14:24:21.582182+00:00",
       "last_recheck_action": "unchanged"
     },
     {
@@ -707,7 +711,7 @@
       "action": "added",
       "bytes_equal": true,
       "utf8_text_equal": true,
-      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_utc": "2026-10-27T14:24:21.582182+00:00",
       "last_recheck_action": "unchanged"
     },
     {
@@ -717,17 +721,17 @@
       "action": "added",
       "bytes_equal": true,
       "utf8_text_equal": true,
-      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_utc": "2026-10-27T14:24:21.582182+00:00",
       "last_recheck_action": "unchanged"
     },
     {
       "relative_path": "完整模型单机P对照/cache-clear-and-reduced-model/reduced-pd-prepared/README.md",
       "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\cache-clear-and-reduced-model\\reduced-pd-prepared\\README.md",
-      "bytes": 12567,
+      "bytes": 13215,
       "action": "added",
       "bytes_equal": true,
       "utf8_text_equal": true,
-      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_utc": "2026-10-27T14:24:21.582182+00:00",
       "last_recheck_action": "updated"
     },
     {
@@ -737,7 +741,7 @@
       "action": "added",
       "bytes_equal": true,
       "utf8_text_equal": true,
-      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_utc": "2026-10-27T14:24:21.582182+00:00",
       "last_recheck_action": "unchanged"
     },
     {
@@ -747,7 +751,7 @@
       "action": "added",
       "bytes_equal": true,
       "utf8_text_equal": true,
-      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_utc": "2026-10-27T14:24:21.582182+00:00",
       "last_recheck_action": "unchanged"
     },
     {
@@ -757,7 +761,7 @@
       "action": "added",
       "bytes_equal": true,
       "utf8_text_equal": true,
-      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_utc": "2026-10-27T14:24:21.582182+00:00",
       "last_recheck_action": "unchanged"
     },
     {
@@ -767,7 +771,7 @@
       "action": "added",
       "bytes_equal": true,
       "utf8_text_equal": true,
-      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_utc": "2026-10-27T14:24:21.582182+00:00",
       "last_recheck_action": "unchanged"
     },
     {
@@ -777,7 +781,7 @@
       "action": "added",
       "bytes_equal": true,
       "utf8_text_equal": true,
-      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_utc": "2026-10-27T14:24:21.582182+00:00",
       "last_recheck_action": "unchanged"
     },
     {
@@ -787,7 +791,7 @@
       "action": "added",
       "bytes_equal": true,
       "utf8_text_equal": true,
-      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_utc": "2026-10-27T14:24:21.582182+00:00",
       "last_recheck_action": "unchanged"
     },
     {
@@ -797,7 +801,7 @@
       "action": "added",
       "bytes_equal": true,
       "utf8_text_equal": true,
-      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_utc": "2026-10-27T14:24:21.582182+00:00",
       "last_recheck_action": "unchanged"
     },
     {
@@ -807,7 +811,7 @@
       "action": "added",
       "bytes_equal": true,
       "utf8_text_equal": true,
-      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_utc": "2026-10-27T14:24:21.582182+00:00",
       "last_recheck_action": "unchanged"
     },
     {
@@ -817,7 +821,7 @@
       "action": "added",
       "bytes_equal": true,
       "utf8_text_equal": true,
-      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_utc": "2026-10-27T14:24:21.582182+00:00",
       "last_recheck_action": "unchanged"
     },
     {
@@ -827,7 +831,7 @@
       "action": "added",
       "bytes_equal": true,
       "utf8_text_equal": true,
-      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_utc": "2026-10-27T14:24:21.582182+00:00",
       "last_recheck_action": "unchanged"
     },
     {
@@ -837,7 +841,7 @@
       "action": "added",
       "bytes_equal": true,
       "utf8_text_equal": true,
-      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_utc": "2026-10-27T14:24:21.582182+00:00",
       "last_recheck_action": "unchanged"
     },
     {
@@ -847,7 +851,7 @@
       "action": "added",
       "bytes_equal": true,
       "utf8_text_equal": true,
-      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_utc": "2026-10-27T14:24:21.582182+00:00",
       "last_recheck_action": "unchanged"
     },
     {
@@ -857,7 +861,7 @@
       "action": "added",
       "bytes_equal": true,
       "utf8_text_equal": true,
-      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_utc": "2026-10-27T14:24:21.582182+00:00",
       "last_recheck_action": "unchanged"
     },
     {
@@ -867,7 +871,7 @@
       "action": "added",
       "bytes_equal": true,
       "utf8_text_equal": true,
-      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_utc": "2026-10-27T14:24:21.582182+00:00",
       "last_recheck_action": "unchanged"
     },
     {
@@ -877,8 +881,8 @@
       "action": "added",
       "bytes_equal": true,
       "utf8_text_equal": true,
-      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
-      "last_recheck_action": "updated"
+      "last_recheck_utc": "2026-10-27T14:24:21.582182+00:00",
+      "last_recheck_action": "unchanged"
     },
     {
       "relative_path": "完整模型单机P对照/cache-clear-and-reduced-model/reduced-pd-prepared/startup/p-original-async.serve.native.sh",
@@ -887,7 +891,7 @@
       "action": "added",
       "bytes_equal": true,
       "utf8_text_equal": true,
-      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_utc": "2026-10-27T14:24:21.582182+00:00",
       "last_recheck_action": "unchanged"
     },
     {
@@ -897,8 +901,8 @@
       "action": "added",
       "bytes_equal": true,
       "utf8_text_equal": true,
-      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
-      "last_recheck_action": "updated"
+      "last_recheck_utc": "2026-10-27T14:24:21.582182+00:00",
+      "last_recheck_action": "unchanged"
     },
     {
       "relative_path": "完整模型单机P对照/cache-clear-and-reduced-model/reduced-pd-prepared/startup/p-stage-candidate.serve.native.sh",
@@ -907,7 +911,7 @@
       "action": "added",
       "bytes_equal": true,
       "utf8_text_equal": true,
-      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_utc": "2026-10-27T14:24:21.582182+00:00",
       "last_recheck_action": "unchanged"
     },
     {
@@ -917,7 +921,7 @@
       "action": "added",
       "bytes_equal": true,
       "utf8_text_equal": true,
-      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_utc": "2026-10-27T14:24:21.582182+00:00",
       "last_recheck_action": "unchanged"
     },
     {
@@ -927,7 +931,7 @@
       "action": "added",
       "bytes_equal": true,
       "utf8_text_equal": true,
-      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_utc": "2026-10-27T14:24:21.582182+00:00",
       "last_recheck_action": "unchanged"
     },
     {
@@ -937,7 +941,7 @@
       "action": "added",
       "bytes_equal": true,
       "utf8_text_equal": true,
-      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_utc": "2026-10-27T14:24:21.582182+00:00",
       "last_recheck_action": "unchanged"
     },
     {
@@ -947,7 +951,7 @@
       "action": "added",
       "bytes_equal": true,
       "utf8_text_equal": true,
-      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_utc": "2026-10-27T14:24:21.582182+00:00",
       "last_recheck_action": "unchanged"
     },
     {
@@ -957,7 +961,7 @@
       "action": "added",
       "bytes_equal": true,
       "utf8_text_equal": true,
-      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_utc": "2026-10-27T14:24:21.582182+00:00",
       "last_recheck_action": "unchanged"
     },
     {
@@ -967,7 +971,7 @@
       "action": "added",
       "bytes_equal": true,
       "utf8_text_equal": true,
-      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_utc": "2026-10-27T14:24:21.582182+00:00",
       "last_recheck_action": "unchanged"
     },
     {
@@ -977,17 +981,17 @@
       "action": "added",
       "bytes_equal": true,
       "utf8_text_equal": true,
-      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_utc": "2026-10-27T14:24:21.582182+00:00",
       "last_recheck_action": "unchanged"
     },
     {
       "relative_path": "完整模型单机P对照/cache-clear-and-reduced-model/archive_n16_selection.json",
       "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\cache-clear-and-reduced-model\\archive_n16_selection.json",
-      "bytes": 3860,
+      "bytes": 4217,
       "action": "added",
       "bytes_equal": true,
       "utf8_text_equal": true,
-      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_utc": "2026-10-27T14:24:21.582182+00:00",
       "last_recheck_action": "updated"
     },
     {
@@ -997,7 +1001,7 @@
       "bytes": 4573,
       "bytes_equal": true,
       "utf8_text_equal": true,
-      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_utc": "2026-10-27T14:24:21.582182+00:00",
       "last_recheck_action": "unchanged"
     },
     {
@@ -1007,7 +1011,7 @@
       "bytes": 471,
       "bytes_equal": true,
       "utf8_text_equal": true,
-      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_utc": "2026-10-27T14:24:21.582182+00:00",
       "last_recheck_action": "unchanged"
     },
     {
@@ -1017,7 +1021,7 @@
       "bytes": 7437,
       "bytes_equal": true,
       "utf8_text_equal": true,
-      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_utc": "2026-10-27T14:24:21.582182+00:00",
       "last_recheck_action": "unchanged"
     },
     {
@@ -1027,7 +1031,7 @@
       "bytes": 47827,
       "bytes_equal": true,
       "utf8_text_equal": true,
-      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_utc": "2026-10-27T14:24:21.582182+00:00",
       "last_recheck_action": "unchanged"
     },
     {
@@ -1037,7 +1041,7 @@
       "bytes": 17046,
       "bytes_equal": true,
       "utf8_text_equal": true,
-      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_utc": "2026-10-27T14:24:21.582182+00:00",
       "last_recheck_action": "unchanged"
     },
     {
@@ -1047,7 +1051,7 @@
       "bytes": 14680,
       "bytes_equal": true,
       "utf8_text_equal": true,
-      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_utc": "2026-10-27T14:24:21.582182+00:00",
       "last_recheck_action": "unchanged"
     },
     {
@@ -1057,7 +1061,7 @@
       "bytes": 15888,
       "bytes_equal": true,
       "utf8_text_equal": true,
-      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_utc": "2026-10-27T14:24:21.582182+00:00",
       "last_recheck_action": "unchanged"
     },
     {
@@ -1067,8 +1071,8 @@
       "bytes": 3550,
       "bytes_equal": true,
       "utf8_text_equal": true,
-      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
-      "last_recheck_action": "updated"
+      "last_recheck_utc": "2026-10-27T14:24:21.582182+00:00",
+      "last_recheck_action": "unchanged"
     },
     {
       "relative_path": "完整模型单机P对照/cache-clear-and-reduced-model/P_hccl512_deployment.json",
@@ -1077,8 +1081,8 @@
       "bytes": 301,
       "bytes_equal": true,
       "utf8_text_equal": true,
-      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
-      "last_recheck_action": "updated"
+      "last_recheck_utc": "2026-10-27T14:24:21.582182+00:00",
+      "last_recheck_action": "unchanged"
     },
     {
       "relative_path": "恢复身份与启动接线/stage_driver/前段先就绪_机制诊断边界.md",
@@ -1087,12 +1091,598 @@
       "bytes": 5779,
       "bytes_equal": true,
       "utf8_text_equal": true,
-      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_utc": "2026-10-27T14:24:21.582182+00:00",
+      "last_recheck_action": "unchanged"
+    },
+    {
+      "relative_path": "完整模型单机P对照/cache-clear-and-reduced-model/prepare_warm2_native.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\cache-clear-and-reduced-model\\prepare_warm2_native.py",
+      "action": "added_in_current_archive_revision",
+      "bytes": 3038,
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T14:24:21.582182+00:00",
+      "last_recheck_action": "updated"
+    },
+    {
+      "relative_path": "完整模型单机P对照/cache-clear-and-reduced-model/warm2_native_deployment.json",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\cache-clear-and-reduced-model\\warm2_native_deployment.json",
+      "action": "added_in_current_archive_revision",
+      "bytes": 271,
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T14:24:21.582182+00:00",
+      "last_recheck_action": "updated"
+    },
+    {
+      "relative_path": "完整模型单机P对照/cache-clear-and-reduced-model/reduced-pd-prepared/startup/bench-original-async-warm2.native.sh",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\cache-clear-and-reduced-model\\reduced-pd-prepared\\startup\\bench-original-async-warm2.native.sh",
+      "action": "added_in_current_archive_revision",
+      "bytes": 810,
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T14:24:21.582182+00:00",
+      "last_recheck_action": "updated"
+    },
+    {
+      "relative_path": "完整模型单机P对照/cache-clear-and-reduced-model/reduced-pd-prepared/startup/bench-stage-candidate-warm2.native.sh",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\cache-clear-and-reduced-model\\reduced-pd-prepared\\startup\\bench-stage-candidate-warm2.native.sh",
+      "action": "added_in_current_archive_revision",
+      "bytes": 811,
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T14:24:21.582182+00:00",
+      "last_recheck_action": "updated"
+    },
+    {
+      "relative_path": "受控就绪窗口诊断/README.md",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\受控就绪窗口诊断\\README.md",
+      "action": "added_in_current_archive_revision",
+      "bytes": 4849,
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T14:46:09.467971+00:00",
+      "last_recheck_action": "unchanged",
+      "source_bytes": 4849,
+      "expected_archive_bytes_equal": true,
+      "source_unchanged": true,
+      "copy_mode": "exact source bytes"
+    },
+    {
+      "relative_path": "受控就绪窗口诊断/prepare_diagnostic_only.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\受控就绪窗口诊断\\prepare_diagnostic_only.py",
+      "action": "added_in_current_archive_revision",
+      "bytes": 11253,
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T14:46:09.467971+00:00",
+      "last_recheck_action": "unchanged",
+      "source_bytes": 11253,
+      "expected_archive_bytes_equal": true,
+      "source_unchanged": true,
+      "copy_mode": "exact source bytes"
+    },
+    {
+      "relative_path": "受控就绪窗口诊断/vllm_multi_process_adapter_DIAGNOSTIC_ONLY.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\受控就绪窗口诊断\\vllm_multi_process_adapter_DIAGNOSTIC_ONLY.py",
+      "action": "added_in_current_archive_revision",
+      "bytes": 119239,
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T14:46:09.467971+00:00",
+      "last_recheck_action": "unchanged",
+      "source_bytes": 119239,
+      "expected_archive_bytes_equal": true,
+      "source_unchanged": true,
+      "copy_mode": "exact source bytes"
+    },
+    {
+      "relative_path": "受控就绪窗口诊断/observer_back_ready_DIAGNOSTIC_ONLY.patch",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\受控就绪窗口诊断\\observer_back_ready_DIAGNOSTIC_ONLY.patch",
+      "action": "added_in_current_archive_revision",
+      "bytes": 3241,
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T14:46:09.467971+00:00",
+      "last_recheck_action": "unchanged",
+      "source_bytes": 3241,
+      "expected_archive_bytes_equal": true,
+      "source_unchanged": true,
+      "copy_mode": "exact source bytes"
+    },
+    {
+      "relative_path": "受控就绪窗口诊断/source_provenance.json",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\受控就绪窗口诊断\\source_provenance.json",
+      "action": "added_in_current_archive_revision",
+      "bytes": 461,
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T14:46:09.467971+00:00",
+      "last_recheck_action": "unchanged",
+      "source_bytes": 461,
+      "expected_archive_bytes_equal": true,
+      "source_unchanged": true,
+      "copy_mode": "exact source bytes"
+    },
+    {
+      "relative_path": "受控就绪窗口诊断/cpu_result.json",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\受控就绪窗口诊断\\cpu_result.json",
+      "action": "added_in_current_archive_revision",
+      "bytes": 1082,
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T14:46:09.467971+00:00",
+      "last_recheck_action": "unchanged",
+      "source_bytes": 1082,
+      "expected_archive_bytes_equal": true,
+      "source_unchanged": true,
+      "copy_mode": "exact source bytes"
+    },
+    {
+      "relative_path": "受控就绪窗口诊断/current_stage_loader_snapshot.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\受控就绪窗口诊断\\current_stage_loader_snapshot.py",
+      "action": "added_in_current_archive_revision",
+      "bytes": 1979,
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T14:46:09.467971+00:00",
+      "last_recheck_action": "unchanged",
+      "source_bytes": 1979,
+      "expected_archive_bytes_equal": true,
+      "source_unchanged": true,
+      "copy_mode": "exact source bytes"
+    },
+    {
+      "relative_path": "受控就绪窗口诊断/sitecustomize_DIAGNOSTIC_ONLY.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\受控就绪窗口诊断\\sitecustomize_DIAGNOSTIC_ONLY.py",
+      "action": "added_in_current_archive_revision",
+      "bytes": 2268,
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T14:46:09.467971+00:00",
+      "last_recheck_action": "unchanged",
+      "source_bytes": 2268,
+      "expected_archive_bytes_equal": true,
+      "source_unchanged": true,
+      "copy_mode": "exact source bytes"
+    },
+    {
+      "relative_path": "受控就绪窗口诊断/p-stage-diagnostic.env.native.sh",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\受控就绪窗口诊断\\p-stage-diagnostic.env.native.sh",
+      "action": "added_in_current_archive_revision",
+      "bytes": 1239,
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T14:46:09.467971+00:00",
+      "last_recheck_action": "unchanged",
+      "source_bytes": 1239,
+      "expected_archive_bytes_equal": true,
+      "source_unchanged": true,
+      "copy_mode": "exact source bytes"
+    },
+    {
+      "relative_path": "受控就绪窗口诊断/p-stage-diagnostic.serve.native.sh",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\受控就绪窗口诊断\\p-stage-diagnostic.serve.native.sh",
+      "action": "added_in_current_archive_revision",
+      "bytes": 2038,
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T14:46:09.467971+00:00",
+      "last_recheck_action": "unchanged",
+      "source_bytes": 2038,
+      "expected_archive_bytes_equal": true,
+      "source_unchanged": true,
+      "copy_mode": "exact source bytes"
+    },
+    {
+      "relative_path": "受控就绪窗口诊断/bench-stage-diagnostic-warm.native.sh",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\受控就绪窗口诊断\\bench-stage-diagnostic-warm.native.sh",
+      "action": "added_in_current_archive_revision",
+      "bytes": 811,
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T14:46:09.467971+00:00",
+      "last_recheck_action": "unchanged",
+      "source_bytes": 811,
+      "expected_archive_bytes_equal": true,
+      "source_unchanged": true,
+      "copy_mode": "exact source bytes"
+    },
+    {
+      "relative_path": "受控就绪窗口诊断/deploy_private_preparation.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\受控就绪窗口诊断\\deploy_private_preparation.py",
+      "action": "added_in_current_archive_revision",
+      "bytes": 5823,
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T14:46:09.467971+00:00",
+      "last_recheck_action": "unchanged",
+      "source_bytes": 5823,
+      "expected_archive_bytes_equal": true,
+      "source_unchanged": true,
+      "copy_mode": "exact source bytes"
+    },
+    {
+      "relative_path": "受控就绪窗口诊断/private_preparation_deployment.json",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\受控就绪窗口诊断\\private_preparation_deployment.json",
+      "action": "added_in_current_archive_revision",
+      "bytes": 840,
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T14:46:09.467971+00:00",
+      "last_recheck_action": "unchanged",
+      "source_bytes": 840,
+      "expected_archive_bytes_equal": true,
+      "source_unchanged": true,
+      "copy_mode": "exact source bytes"
+    },
+    {
+      "relative_path": "减层PD运行证据/结果分析.md",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\减层PD运行证据\\结果分析.md",
+      "action": "added_in_current_archive_revision",
+      "bytes": 8780,
+      "bytes_equal": false,
+      "utf8_text_equal": false,
+      "last_recheck_utc": "2026-10-27T14:46:09.467971+00:00",
+      "last_recheck_action": "updated",
+      "source_bytes": 8662,
+      "expected_archive_bytes_equal": true,
+      "source_unchanged": true,
+      "copy_mode": "documented raw-link transform"
+    },
+    {
+      "relative_path": "减层PD运行证据/结果摘要.json",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\减层PD运行证据\\结果摘要.json",
+      "action": "added_in_current_archive_revision",
+      "bytes": 22789,
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T14:46:09.467971+00:00",
+      "last_recheck_action": "unchanged",
+      "source_bytes": 22789,
+      "expected_archive_bytes_equal": true,
+      "source_unchanged": true,
+      "copy_mode": "exact source bytes"
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/archive_closing_selection.json",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\archive_closing_selection.json",
+      "action": "added_in_current_archive_revision",
+      "bytes": 3195,
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T14:46:09.467971+00:00",
+      "last_recheck_action": "updated",
+      "source_bytes": 3195,
+      "expected_archive_bytes_equal": true,
+      "source_unchanged": true,
+      "copy_mode": "exact source bytes"
+    },
+    {
+      "relative_path": "受控就绪窗口诊断/结果与接线缺口.md",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\受控就绪窗口诊断\\结果与接线缺口.md",
+      "action": "added_in_current_archive_revision",
+      "bytes": 5501,
+      "bytes_equal": false,
+      "utf8_text_equal": false,
+      "source_bytes": 5411,
+      "expected_archive_bytes_equal": true,
+      "source_unchanged": true,
+      "copy_mode": "documented raw-link transform",
+      "last_recheck_utc": "2026-10-27T14:46:09.467971+00:00",
+      "last_recheck_action": "updated"
+    },
+    {
+      "relative_path": "受控就绪窗口诊断/结果与接线缺口.json",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\受控就绪窗口诊断\\结果与接线缺口.json",
+      "action": "added_in_current_archive_revision",
+      "bytes": 4834,
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "source_bytes": 4834,
+      "expected_archive_bytes_equal": true,
+      "source_unchanged": true,
+      "copy_mode": "exact source bytes",
+      "last_recheck_utc": "2026-10-27T14:46:09.467971+00:00",
+      "last_recheck_action": "updated"
+    },
+    {
+      "relative_path": "受控就绪窗口诊断/check_actual_schedule_route.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\受控就绪窗口诊断\\check_actual_schedule_route.py",
+      "action": "added_in_current_archive_revision",
+      "bytes": 6082,
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "source_bytes": 6082,
+      "expected_archive_bytes_equal": true,
+      "source_unchanged": true,
+      "copy_mode": "exact source bytes",
+      "last_recheck_utc": "2026-10-27T14:46:09.467971+00:00",
+      "last_recheck_action": "updated"
+    },
+    {
+      "relative_path": "受控就绪窗口诊断/actual137_patch_balance_schedule.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\受控就绪窗口诊断\\actual137_patch_balance_schedule.py",
+      "action": "added_in_current_archive_revision",
+      "bytes": 36062,
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "source_bytes": 36062,
+      "expected_archive_bytes_equal": true,
+      "source_unchanged": true,
+      "copy_mode": "exact source bytes",
+      "last_recheck_utc": "2026-10-27T14:46:09.467971+00:00",
+      "last_recheck_action": "updated"
+    },
+    {
+      "relative_path": "docs/README_本轮运行状态快照.md",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\docs\\README_本轮运行状态快照.md",
+      "action": "added_in_current_archive_revision",
+      "bytes": 10309,
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "source_bytes": 10309,
+      "expected_archive_bytes_equal": true,
+      "source_unchanged": true,
+      "copy_mode": "exact source bytes",
+      "last_recheck_utc": "2026-10-27T14:46:09.467971+00:00",
+      "last_recheck_action": "updated"
+    },
+    {
+      "relative_path": "docs/本轮执行状态_去生成文本.json",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\docs\\本轮执行状态_去生成文本.json",
+      "action": "added_in_current_archive_revision",
+      "bytes": 5625,
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "source_bytes": 5625,
+      "expected_archive_bytes_equal": true,
+      "source_unchanged": true,
+      "copy_mode": "exact source bytes",
+      "last_recheck_utc": "2026-10-27T14:46:09.467971+00:00",
+      "last_recheck_action": "updated"
+    },
+    {
+      "relative_path": "docs/AGENTS_137运行状态摘录.md",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\docs\\AGENTS_137运行状态摘录.md",
+      "action": "added_in_current_archive_revision",
+      "bytes": 6177,
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "source_bytes": 6177,
+      "expected_archive_bytes_equal": true,
+      "source_unchanged": true,
+      "copy_mode": "exact source bytes",
+      "last_recheck_utc": "2026-10-27T14:46:09.467971+00:00",
+      "last_recheck_action": "updated"
+    },
+    {
+      "relative_path": "docs/来源与删减说明.json",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\docs\\来源与删减说明.json",
+      "action": "added_in_current_archive_revision",
+      "bytes": 1038,
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "source_bytes": 1038,
+      "expected_archive_bytes_equal": true,
+      "source_unchanged": true,
+      "copy_mode": "exact source bytes",
+      "last_recheck_utc": "2026-10-27T14:46:09.467971+00:00",
+      "last_recheck_action": "updated"
+    },
+    {
+      "relative_path": "实际P调度接线修复/README.md",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\实际P调度接线修复\\README.md",
+      "action": "added_in_current_archive_revision",
+      "bytes": 4455,
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "source_bytes": 4455,
+      "expected_archive_bytes_equal": true,
+      "source_unchanged": true,
+      "copy_mode": "exact source bytes",
+      "last_recheck_utc": "2026-10-27T14:46:09.467971+00:00",
+      "last_recheck_action": "updated"
+    },
+    {
+      "relative_path": "实际P调度接线修复/prepare_balance_candidate.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\实际P调度接线修复\\prepare_balance_candidate.py",
+      "action": "added_in_current_archive_revision",
+      "bytes": 2768,
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "source_bytes": 2768,
+      "expected_archive_bytes_equal": true,
+      "source_unchanged": true,
+      "copy_mode": "exact source bytes",
+      "last_recheck_utc": "2026-10-27T14:46:09.467971+00:00",
+      "last_recheck_action": "updated"
+    },
+    {
+      "relative_path": "实际P调度接线修复/actual137_patch_balance_schedule.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\实际P调度接线修复\\actual137_patch_balance_schedule.py",
+      "action": "added_in_current_archive_revision",
+      "bytes": 35317,
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "source_bytes": 35317,
+      "expected_archive_bytes_equal": true,
+      "source_unchanged": true,
+      "copy_mode": "exact source bytes",
+      "last_recheck_utc": "2026-10-27T14:46:09.467971+00:00",
+      "last_recheck_action": "updated"
+    },
+    {
+      "relative_path": "实际P调度接线修复/ks_stage_reservation_snapshot.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\实际P调度接线修复\\ks_stage_reservation_snapshot.py",
+      "action": "added_in_current_archive_revision",
+      "bytes": 8651,
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "source_bytes": 8651,
+      "expected_archive_bytes_equal": true,
+      "source_unchanged": true,
+      "copy_mode": "exact source bytes",
+      "last_recheck_utc": "2026-10-27T14:46:09.467971+00:00",
+      "last_recheck_action": "updated"
+    },
+    {
+      "relative_path": "实际P调度接线修复/patch_balance_schedule_fixed.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\实际P调度接线修复\\patch_balance_schedule_fixed.py",
+      "action": "added_in_current_archive_revision",
+      "bytes": 35527,
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "source_bytes": 35527,
+      "expected_archive_bytes_equal": true,
+      "source_unchanged": true,
+      "copy_mode": "exact source bytes",
+      "last_recheck_utc": "2026-10-27T14:46:09.467971+00:00",
+      "last_recheck_action": "updated"
+    },
+    {
+      "relative_path": "实际P调度接线修复/balance_scheduler_wiring.patch",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\实际P调度接线修复\\balance_scheduler_wiring.patch",
+      "action": "added_in_current_archive_revision",
+      "bytes": 1519,
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "source_bytes": 1519,
+      "expected_archive_bytes_equal": true,
+      "source_unchanged": true,
+      "copy_mode": "exact source bytes",
+      "last_recheck_utc": "2026-10-27T14:46:09.467971+00:00",
+      "last_recheck_action": "updated"
+    },
+    {
+      "relative_path": "实际P调度接线修复/candidate_manifest.json",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\实际P调度接线修复\\candidate_manifest.json",
+      "action": "added_in_current_archive_revision",
+      "bytes": 643,
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "source_bytes": 643,
+      "expected_archive_bytes_equal": true,
+      "source_unchanged": true,
+      "copy_mode": "exact source bytes",
+      "last_recheck_utc": "2026-10-27T14:46:09.467971+00:00",
+      "last_recheck_action": "updated"
+    },
+    {
+      "relative_path": "实际P调度接线修复/check_actual_balance_schedule.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\实际P调度接线修复\\check_actual_balance_schedule.py",
+      "action": "added_in_current_archive_revision",
+      "bytes": 8352,
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "source_bytes": 8352,
+      "expected_archive_bytes_equal": true,
+      "source_unchanged": true,
+      "copy_mode": "exact source bytes",
+      "last_recheck_utc": "2026-10-27T14:46:09.467971+00:00",
+      "last_recheck_action": "updated"
+    },
+    {
+      "relative_path": "实际P调度接线修复/cpu_result.json",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\实际P调度接线修复\\cpu_result.json",
+      "action": "added_in_current_archive_revision",
+      "bytes": 8227,
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "source_bytes": 8227,
+      "expected_archive_bytes_equal": true,
+      "source_unchanged": true,
+      "copy_mode": "exact source bytes",
+      "last_recheck_utc": "2026-10-27T14:46:09.467971+00:00",
+      "last_recheck_action": "updated"
+    },
+    {
+      "relative_path": "实际P调度接线修复/prepare_loader_candidate.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\实际P调度接线修复\\prepare_loader_candidate.py",
+      "action": "added_in_current_archive_revision",
+      "bytes": 4477,
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "source_bytes": 4477,
+      "expected_archive_bytes_equal": true,
+      "source_unchanged": true,
+      "copy_mode": "exact source bytes",
+      "last_recheck_utc": "2026-10-27T14:46:09.467971+00:00",
+      "last_recheck_action": "updated"
+    },
+    {
+      "relative_path": "实际P调度接线修复/sitecustomize_balance_CANDIDATE.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\实际P调度接线修复\\sitecustomize_balance_CANDIDATE.py",
+      "action": "added_in_current_archive_revision",
+      "bytes": 2244,
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "source_bytes": 2244,
+      "expected_archive_bytes_equal": true,
+      "source_unchanged": true,
+      "copy_mode": "exact source bytes",
+      "last_recheck_utc": "2026-10-27T14:46:09.467971+00:00",
+      "last_recheck_action": "updated"
+    },
+    {
+      "relative_path": "实际P调度接线修复/loader_exact_map_candidate.patch",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\实际P调度接线修复\\loader_exact_map_candidate.patch",
+      "action": "added_in_current_archive_revision",
+      "bytes": 762,
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "source_bytes": 762,
+      "expected_archive_bytes_equal": true,
+      "source_unchanged": true,
+      "copy_mode": "exact source bytes",
+      "last_recheck_utc": "2026-10-27T14:46:09.467971+00:00",
+      "last_recheck_action": "updated"
+    },
+    {
+      "relative_path": "实际P调度接线修复/actual17_origins_snapshot.json",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\实际P调度接线修复\\actual17_origins_snapshot.json",
+      "action": "added_in_current_archive_revision",
+      "bytes": 2834,
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "source_bytes": 2834,
+      "expected_archive_bytes_equal": true,
+      "source_unchanged": true,
+      "copy_mode": "exact source bytes",
+      "last_recheck_utc": "2026-10-27T14:46:09.467971+00:00",
+      "last_recheck_action": "updated"
+    },
+    {
+      "relative_path": "实际P调度接线修复/loader_cpu_result.json",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\实际P调度接线修复\\loader_cpu_result.json",
+      "action": "added_in_current_archive_revision",
+      "bytes": 985,
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "source_bytes": 985,
+      "expected_archive_bytes_equal": true,
+      "source_unchanged": true,
+      "copy_mode": "exact source bytes",
+      "last_recheck_utc": "2026-10-27T14:46:09.467971+00:00",
+      "last_recheck_action": "updated"
+    },
+    {
+      "relative_path": "实际P调度接线修复/archive_selection.json",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\实际P调度接线修复\\archive_selection.json",
+      "action": "added_in_current_archive_revision",
+      "bytes": 1739,
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "source_bytes": 1739,
+      "expected_archive_bytes_equal": true,
+      "source_unchanged": true,
+      "copy_mode": "exact source bytes",
+      "last_recheck_utc": "2026-10-27T14:46:09.467971+00:00",
       "last_recheck_action": "updated"
     }
   ],
-  "selected_count": 119,
-  "selected_bytes": 2092196,
+  "selected_count": 162,
+  "selected_bytes": 2496861,
   "actions": {
     "added": 80,
     "updated_new_archive_file": 11,
@@ -1122,20 +1712,38 @@
   "actions_scope": "initial snapshot sync; final N16 recheck action counts are separate",
   "final_N16_source_recheck": {
     "status": "FROZEN_N16_FINAL_SOURCE_AND_EXISTING_CPU_RECEIPT_MATCHED",
-    "updated_utc": "2026-10-27T13:49:08.470357+00:00",
-    "frozen_N16_files": 64,
-    "selected_with_selection_and_archive_entry": 67,
-    "N16_source_files_changed": 7,
+    "updated_utc": "2026-10-27T14:46:09.467971+00:00",
+    "frozen_N16_files": 68,
+    "selected_with_selection_and_archive_entry": 40,
+    "verification_scope": "closing files only; prior frozen N16 files not recopied",
+    "N16_source_files_changed": 0,
     "changed_archive_paths": [
-      "完整模型单机P对照/cache-clear-and-reduced-model/prepare_reduced_pd_private.py",
-      "完整模型单机P对照/cache-clear-and-reduced-model/prepare_p_hccl512.py",
-      "完整模型单机P对照/cache-clear-and-reduced-model/P_hccl512_deployment.json",
-      "完整模型单机P对照/cache-clear-and-reduced-model/reduced-pd-prepared/README.md",
-      "完整模型单机P对照/cache-clear-and-reduced-model/reduced-pd-prepared/startup/p-original-async.env.native.sh",
-      "完整模型单机P对照/cache-clear-and-reduced-model/reduced-pd-prepared/startup/p-stage-candidate.env.native.sh",
-      "完整模型单机P对照/cache-clear-and-reduced-model/archive_n16_selection.json",
-      "恢复身份与启动接线/stage_driver/archive_incremental_candidate.py",
-      "恢复身份与启动接线/stage_driver/前段先就绪_机制诊断边界.md"
+      "受控就绪窗口诊断/结果与接线缺口.md",
+      "受控就绪窗口诊断/结果与接线缺口.json",
+      "受控就绪窗口诊断/check_actual_schedule_route.py",
+      "受控就绪窗口诊断/actual137_patch_balance_schedule.py",
+      "减层PD运行证据/结果分析.md",
+      "docs/README_本轮运行状态快照.md",
+      "docs/本轮执行状态_去生成文本.json",
+      "docs/AGENTS_137运行状态摘录.md",
+      "docs/来源与删减说明.json",
+      "实际P调度接线修复/README.md",
+      "实际P调度接线修复/prepare_balance_candidate.py",
+      "实际P调度接线修复/actual137_patch_balance_schedule.py",
+      "实际P调度接线修复/ks_stage_reservation_snapshot.py",
+      "实际P调度接线修复/patch_balance_schedule_fixed.py",
+      "实际P调度接线修复/balance_scheduler_wiring.patch",
+      "实际P调度接线修复/candidate_manifest.json",
+      "实际P调度接线修复/check_actual_balance_schedule.py",
+      "实际P调度接线修复/cpu_result.json",
+      "实际P调度接线修复/prepare_loader_candidate.py",
+      "实际P调度接线修复/sitecustomize_balance_CANDIDATE.py",
+      "实际P调度接线修复/loader_exact_map_candidate.patch",
+      "实际P调度接线修复/actual17_origins_snapshot.json",
+      "实际P调度接线修复/loader_cpu_result.json",
+      "实际P调度接线修复/archive_selection.json",
+      "恢复身份与启动接线/stage_driver/archive_closing_selection.json",
+      "恢复身份与启动接线/stage_driver/archive_incremental_candidate.py"
     ],
     "final_proposer_review_diff_lines": 32,
     "existing_CPU_receipt": {
@@ -1153,10 +1761,79 @@
       "D1": "ready",
       "P_previous_attempt": "target warmup DispatchFFNCombine operator error",
       "P_env0_attempt": "MC2 reported required HCCL window 413MB exceeds actual 400MB",
-      "P_current_attempt": "original group restarting with common P-only FUSED_MC2=0 and HCCL_BUFFSIZE=512; not verified",
-      "PD_success": false,
+      "natural_PD_requests": "six HTTP/benchmark successes, original/candidate cold+warm+warm2",
+      "natural_stage_admissions": 0,
+      "performance_gain_verified": false,
+      "token_or_KV_content_correctness": "NOT_VERIFIED",
+      "P_current_attempt": "DIAGNOSTIC_ONLY request output300 succeeded and partial reserved, but effective Balance schedule omitted two hooks; no stage worker compute",
+      "full_formal_PD_acceptance": false,
       "candidate_stage_compute_success": false
     },
+    "closing_archive": {
+      "diagnostic_source_preparation_files": 13,
+      "diagnostic_result_source_checker_files": 4,
+      "natural_sanitized_files": 2,
+      "diagnostic_default_delay": "OFF; only separate diagnostic env enables 500ms",
+      "diagnostic_CPU_cases": 11,
+      "diagnostic_stage_NPU_verified": false,
+      "diagnostic_request_success": true,
+      "diagnostic_stage_admission_observed": false,
+      "actual_Balance_two_hook_gap_source_confirmed": true,
+      "natural_result_source": "减层PD运行证据/结果摘要.json",
+      "natural_runs": 6,
+      "raw_customer_or_generated_payloads_archived": false
+    },
+    "actual_Balance_fix": {
+      "selected_files": 15,
+      "existing_CPU_cases": 6,
+      "CPU_cases_rerun": false,
+      "deployed": false,
+      "NPU_verified": false,
+      "loader_map_counts": [
+        18,
+        19,
+        19,
+        20
+      ],
+      "explicit_migrated_dependencies_present": [
+        "output/05_当前环境与实验准备/20261027_137环境评估/受控就绪窗口诊断/actual137_patch_balance_schedule.py",
+        "output/05_当前环境与实验准备/20261027_137环境评估/恢复身份与启动接线/stage_driver/check_scheduler_reservation.py",
+        "output/05_当前环境与实验准备/20261027_137环境评估/恢复身份与启动接线/stage_driver/runtime_overlay/vllm/v1/core/sched/scheduler.py",
+        "output/05_当前环境与实验准备/20261027_137环境评估/恢复身份与启动接线/stage_driver/runtime_overlay/vllm/v1/core/sched/ks_stage_reservation.py",
+        "output/05_当前环境与实验准备/20261027_137环境评估/恢复身份与启动接线/stage_driver/private_candidate_deployment.json",
+        "output/05_当前环境与实验准备/20261027_137环境评估/受控就绪窗口诊断/current_stage_loader_snapshot.py",
+        "output/05_当前环境与实验准备/20261027_137环境评估/实际P调度接线修复/actual137_patch_balance_schedule.py",
+        "output/05_当前环境与实验准备/20261027_137环境评估/实际P调度接线修复/patch_balance_schedule_fixed.py",
+        "output/04_修改策略与验证/01_修改策略与隔离候选/KV完成通知修改策略与隔离分支_20261022/capacity_followup/sources/vllm/v1/core/sched/output.py"
+      ]
+    },
+    "copy_transformations": [
+      {
+        "relative_path": "受控就绪窗口诊断/结果与接线缺口.md",
+        "mode": "archive-copy-only raw-link conversion",
+        "plain_path_references": [
+          "../减层PD运行证据/stage-diagnostic-trace/stage-1512244.jsonl",
+          "../减层PD运行证据/stage-diagnostic-warm/benchmark.json"
+        ],
+        "source_report_modified": false
+      },
+      {
+        "relative_path": "减层PD运行证据/结果分析.md",
+        "mode": "archive-copy-only raw-link conversion",
+        "plain_path_references": [
+          "stage-candidate-trace/stage-1505817.jsonl",
+          "original-async-cold/benchmark.json",
+          "original-async-warm/benchmark.json",
+          "original-async-warm2/benchmark.json",
+          "stage-candidate-cold/benchmark.json",
+          "stage-candidate-warm/benchmark.json",
+          "stage-candidate-warm2/benchmark.json",
+          "p-original-async.launch.json",
+          "p-stage-candidate.launch.json"
+        ],
+        "source_report_modified": false
+      }
+    ],
     "common_P_fallback": {
       "VLLM_ASCEND_ENABLE_FUSED_MC2": "0",
       "HCCL_BUFFSIZE": "512",

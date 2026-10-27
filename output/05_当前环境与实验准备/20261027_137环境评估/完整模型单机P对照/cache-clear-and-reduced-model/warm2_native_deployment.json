@@ -1,0 +1,11 @@
+{
+  "files": [
+    "startup/bench-original-async-warm2.native.sh",
+    "startup/bench-stage-candidate-warm2.native.sh",
+    "README.md"
+  ],
+  "syntax": "PASS",
+  "difference": "warm2 result directories only",
+  "requests_sent": 0,
+  "service_action": false
+}

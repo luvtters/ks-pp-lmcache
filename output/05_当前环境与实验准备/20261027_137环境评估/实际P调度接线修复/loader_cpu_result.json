@@ -1,0 +1,37 @@
+{
+  "status": "PASS_CPU_ONLY_NOT_DEPLOYED",
+  "actual_base_origins": 17,
+  "cases": [
+    {
+      "case": "no_optional",
+      "before": 17,
+      "after": 18,
+      "only_added": "vllm_ascend.patch.platform.patch_balance_schedule"
+    },
+    {
+      "case": "mooncake_only",
+      "before": 18,
+      "after": 19,
+      "only_added": "vllm_ascend.patch.platform.patch_balance_schedule"
+    },
+    {
+      "case": "draft_only",
+      "before": 18,
+      "after": 19,
+      "only_added": "vllm_ascend.patch.platform.patch_balance_schedule"
+    },
+    {
+      "case": "both_n16_optional",
+      "before": 19,
+      "after": 20,
+      "only_added": "vllm_ascend.patch.platform.patch_balance_schedule"
+    }
+  ],
+  "package_parent_namespaces_created": false,
+  "filesystem_existence_checked": false,
+  "framework_imported": false,
+  "private_source_path_is_proposal": true,
+  "NPU_actions": 0,
+  "server_runtime_modified": false,
+  "deployed": false
+}

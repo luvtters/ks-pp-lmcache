@@ -1,0 +1,148 @@
+{
+  "updated_beijing": "2026-10-27 22:38",
+  "resource_window_end_beijing": "2026-10-27 22:30",
+  "machine": "115.120.85.137",
+  "container": "ks-pp-m137-priv",
+  "private_root": "/opt/ks-stage-ready-luv-20261027/standalone-p",
+  "cache_pid": 1417770,
+  "cache_ports": [
+    5565,
+    15565
+  ],
+  "current_model": {
+    "pid": 1512007,
+    "group": "N16-p-stage-diagnostic",
+    "status": "READY_PRESERVED_DIAGNOSTIC_ONLY_500MS_NOT_FORMAL_BENCH"
+  },
+  "gpu_request_work_finished": true,
+  "new_gpu_tasks_permitted_after_window": false,
+  "services_preserved": {
+    "p": true,
+    "d0": true,
+    "d1": true,
+    "cache": true,
+    "proxy": true,
+    "container": true
+  },
+  "n16_natural_results": {
+    "all_six_success_output300": true,
+    "original_warm2": {
+      "ttft_seconds": 0.5483502736,
+      "tpot_ms": 30.8359970578,
+      "e2e_seconds": 9.7683133939
+    },
+    "candidate_warm2": {
+      "ttft_seconds": 0.5324256727,
+      "tpot_ms": 30.7570473606,
+      "e2e_seconds": 9.7287828336
+    },
+    "p_warm_external_tokens": 29695,
+    "d_external_tokens_each": 29696,
+    "d_new_prefix_kv_tokens_each": 0,
+    "candidate_stage_admission_observed": false,
+    "speedup_proven": false,
+    "numeric_kv_and_token_correctness": "NOT_VERIFIED_GENERATED_TEXTS_DIFFER"
+  },
+  "n16_controlled_diagnostic": {
+    "request_success_output300": true,
+    "performance_evidence": false,
+    "back_publication_delay_ms": 500,
+    "real_back_future_must_complete_first": true,
+    "front_ready_with_back_not_published": true,
+    "partial_promotion_reserved": true,
+    "stage_batch_admission_observed": false,
+    "stage_worker_compute_observed": false,
+    "confirmed_hook_gap": "Actual Ascend BalanceScheduler.schedule overrides base schedule on PD producer; partial cache guard and batch-tag hooks absent",
+    "actual_source": "受控就绪窗口诊断/actual137_patch_balance_schedule.py",
+    "next_cpu_only": "Actual BalanceScheduler two-hook candidate completed in local isolation; six CPU checks pass; no deployment",
+    "actual_balance_hook_cpu_checks": 6,
+    "actual_balance_hook_cpu_status": "PASS_CPU_ONLY_NOT_DEPLOYED",
+    "actual_balance_hook_server_enabled": false
+  },
+  "current_d": {
+    "d0_pid": 1471631,
+    "d1_pid": 1471664,
+    "ready_at_beijing": "2026-10-27 21:37",
+    "preserved": true
+  },
+  "completed_candidate_group": {
+    "pid": 1442833,
+    "status": "AUTHORIZED_STOP_FOR_REDUCED_PD_SWITCH",
+    "cold_ttft_seconds": 8.6768828416,
+    "warm1_ttft_seconds": 0.7356845727,
+    "warm2_ttft_seconds": 0.6525907926,
+    "success_count": 3,
+    "failure_count": 0,
+    "warm_external_hit_tokens_each": 29695,
+    "stage_notification_observed": true,
+    "stage_batch_admission_observed": false,
+    "stage_model_execution_observed": false,
+    "speedup_proven": false,
+    "readiness_order": "BACK_FIRST_THEN_FRONT_26_TO_28_MS_LATER"
+  },
+  "completed_original_group": {
+    "pid": 1430473,
+    "status": "AUTHORIZED_STOP_FOR_CANDIDATE_SWITCH",
+    "input_tokens": 29696,
+    "output_tokens": 1,
+    "source_line": 36,
+    "source_original_output_tokens": 300,
+    "cold_ttft_seconds": 9.536419786512852,
+    "warm1_ttft_seconds": 9.751573926769197,
+    "warm2_ttft_seconds": 0.6575754815712571,
+    "all_success": true,
+    "warm_external_hit_tokens_each": 29695,
+    "kv_usage_after_each": 0,
+    "scope": "ONE_ORIGINAL_CUSTOMER_PROMPT_FIRST_TOKEN_ONLY_NOT_FORMAL_389_OR_PD_OFF_ON"
+  },
+  "candidate_flags": {
+    "KS_PP_STAGE_DRIVER": "1",
+    "KS_PP_STAGE_EVENTS": "1",
+    "KS_CORE_STAGE_EVENT_PUMP": "1",
+    "KS_LMCACHE_STAGE_OBSERVER": "1",
+    "PYTHONPATH_first": "/opt/ks-stage-ready-luv-20261027/standalone-p/runtime/stage-launcher"
+  },
+  "common_kv_flags": {
+    "ks_local_p_complete": false,
+    "ks_local_p_first_token_only": true
+  },
+  "candidate_next": [
+    "No new GPU jobs; preserve current services and containers",
+    "Keep natural six results separate from controlled delay diagnostic",
+    "CPU only: adapt actual Ascend BalanceScheduler hooks, not just base vLLM Scheduler",
+    "Archive source, exact native commands, measurements and unverified boundaries"
+  ],
+  "reduced_pd_authorized": {
+    "target_layers": 16,
+    "p": {
+      "tp": 4,
+      "pp": 2,
+      "layer_partition": "8,8",
+      "devices": "0-7"
+    },
+    "d": {
+      "dp": 2,
+      "tp": 4,
+      "pp": 1,
+      "devices": "8-15"
+    },
+    "dsa_cp_and_mtp3": "PRESERVE",
+    "customer_case": "SAME_SOURCE_LINE36_ORIGINAL_OUTPUT300_N1_C1_COLD_WARM",
+    "order": "AFTER_FULL_MODEL_P_COMPARISON",
+    "owner_preparation": "standalone_p_prepare",
+    "state": "SIX_NATURAL_AND_ONE_CONTROLLED_PD_REQUESTS_COMPLETED_STAGE_EXECUTION_NOT_VERIFIED",
+    "shared_necessary_adaptations": [
+      "private target16 view original draft78",
+      "Mooncake draft78 mapped to logical16",
+      "private GLM family draft construction and quantization",
+      "P original and candidate official FUSED_MC2=0"
+    ],
+    "installed_or_public_sources_modified": false
+  },
+  "unresolved": [
+    "Original and candidate four-framework import both print correct source paths then exit -6 with native heap corruption; not candidate-specific proof",
+    "Old ks_local_p_complete=true cold returned first token but cleanup hung and HCCL failed; warm did not complete READ; old run excluded from valid performance pair",
+    "First warm extra ~9.1s lies mainly in prefill/RUNNING statistics; exact operator or wait root cause NOT_VERIFIED",
+    "KS-MEM-001 OPEN"
+  ]
+}

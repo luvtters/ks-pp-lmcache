@@ -1,0 +1,11 @@
+{
+  "status": "CPU_ONLY_NOT_DEPLOYED",
+  "actual_source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\受控就绪窗口诊断\\actual137_patch_balance_schedule.py",
+  "helper_source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\ks_stage_reservation.py",
+  "canonical": "vllm_ascend.patch.platform.patch_balance_schedule",
+  "only_method_changed": "BalanceScheduler.schedule",
+  "diff_lines": 28,
+  "NPU_actions": 0,
+  "server_runtime_modified": false,
+  "deployed": false
+}

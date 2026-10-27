@@ -9,6 +9,8 @@
     "P_mc2_fallback_deployment.json",
     "prepare_p_hccl512.py",
     "P_hccl512_deployment.json",
+    "prepare_warm2_native.py",
+    "warm2_native_deployment.json",
     "mc2_actual_envs.py",
     "mc2_actual_ascend_config.py",
     "mc2_actual_ascend_forward_context.py",
@@ -45,8 +47,10 @@
     "reduced-pd-prepared/historical137_d_actual_argv.json",
     "reduced-pd-prepared/startup/bench-original-async-cold.native.sh",
     "reduced-pd-prepared/startup/bench-original-async-warm.native.sh",
+    "reduced-pd-prepared/startup/bench-original-async-warm2.native.sh",
     "reduced-pd-prepared/startup/bench-stage-candidate-cold.native.sh",
     "reduced-pd-prepared/startup/bench-stage-candidate-warm.native.sh",
+    "reduced-pd-prepared/startup/bench-stage-candidate-warm2.native.sh",
     "reduced-pd-prepared/startup/cache-server.native.sh",
     "reduced-pd-prepared/startup/common.env.native.sh",
     "reduced-pd-prepared/startup/d0.env.native.sh",
@@ -72,6 +76,7 @@
     "Final deployed proposer is the 32-line GLM-family/HF78 private variant; actual CPU proof PASS, NPU result pending.",
     "P-only FUSED_MC2=0 env and four hyphenated benchmark result directories were subsequently deployed; D files unchanged.",
     "Latest official P-only HCCL_BUFFSIZE=512 exceeds the actual MC2 tiling requirement413MB; NPU rerun pending.",
+    "Root confirmed original cold/warm returned300; both ON groups have separately tagged warm2 commands, no original result overwritten.",
     "Frozen source snapshot after source-only deployment; any later authorized runtime fix needs a new archive revision.",
     "Native dataset paths are external inputs, deliberately absent from archive."
   ]

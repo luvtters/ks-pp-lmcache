@@ -1,0 +1,226 @@
+{
+  "status": "PASS_CPU_ONLY_NOT_DEPLOYED",
+  "test_count": 6,
+  "checks": [
+    "RED: unmodified actual Balance schedule creates real reservation but misses both hooks",
+    "GREEN: actual inherited promotion/helper -> real Balance allocation/output -> tag and delayed cache blocks",
+    "default OFF: old/fixed actual producer Balance output/state equal",
+    "true global completion uses original promotion/cache path without partial tag",
+    "old/fixed disable-preemption allocation-failure branch retains running request and never preempts",
+    "official balance-queue throttle remains active in old/fixed actual schedule"
+  ],
+  "order": "old missing-wiring assertion failed first; fixed actual function passed next",
+  "actual_methods": [
+    {
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\实际P调度接线修复\\actual137_patch_balance_schedule.py",
+      "class": "BalanceScheduler",
+      "method": "schedule",
+      "begin": 107,
+      "end": 639,
+      "fixture_init_only": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\check_scheduler_reservation.py"
+    },
+    {
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\实际P调度接线修复\\patch_balance_schedule_fixed.py",
+      "class": "BalanceScheduler",
+      "method": "schedule",
+      "begin": 108,
+      "end": 642,
+      "fixture_init_only": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\check_scheduler_reservation.py"
+    },
+    {
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\实际P调度接线修复\\actual137_patch_balance_schedule.py",
+      "class": "BalanceScheduler",
+      "method": "schedule",
+      "begin": 107,
+      "end": 639,
+      "fixture_init_only": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\check_scheduler_reservation.py"
+    },
+    {
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\实际P调度接线修复\\patch_balance_schedule_fixed.py",
+      "class": "BalanceScheduler",
+      "method": "schedule",
+      "begin": 108,
+      "end": 642,
+      "fixture_init_only": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\check_scheduler_reservation.py"
+    },
+    {
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\实际P调度接线修复\\patch_balance_schedule_fixed.py",
+      "class": "BalanceScheduler",
+      "method": "schedule",
+      "begin": 108,
+      "end": 642,
+      "fixture_init_only": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\check_scheduler_reservation.py"
+    },
+    {
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\实际P调度接线修复\\actual137_patch_balance_schedule.py",
+      "class": "BalanceScheduler",
+      "method": "schedule",
+      "begin": 107,
+      "end": 639,
+      "fixture_init_only": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\check_scheduler_reservation.py"
+    },
+    {
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\实际P调度接线修复\\patch_balance_schedule_fixed.py",
+      "class": "BalanceScheduler",
+      "method": "schedule",
+      "begin": 108,
+      "end": 642,
+      "fixture_init_only": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\check_scheduler_reservation.py"
+    },
+    {
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\实际P调度接线修复\\actual137_patch_balance_schedule.py",
+      "class": "BalanceScheduler",
+      "method": "schedule",
+      "begin": 107,
+      "end": 639,
+      "fixture_init_only": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\check_scheduler_reservation.py"
+    },
+    {
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\实际P调度接线修复\\patch_balance_schedule_fixed.py",
+      "class": "BalanceScheduler",
+      "method": "schedule",
+      "begin": 108,
+      "end": 642,
+      "fixture_init_only": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\check_scheduler_reservation.py"
+    }
+  ],
+  "observations": {
+    "old_actual_partial": {
+      "tokens": {
+        "r": 1
+      },
+      "total": 1,
+      "tag": null,
+      "request_status": "RUNNING",
+      "computed": 512,
+      "allocated": [
+        {
+          "num_new_computed_tokens": 0,
+          "new_computed_blocks": {
+            "fixture": "KVCacheBlocks",
+            "block_ids": [
+              [
+                10,
+                11,
+                12,
+                13
+              ]
+            ]
+          },
+          "num_lookahead_tokens": 3,
+          "num_external_computed_tokens": 0,
+          "delay_cache_blocks": false,
+          "num_encoder_tokens": 0
+        }
+      ],
+      "cached": [],
+      "free": [],
+      "new_request_positions": [
+        511
+      ]
+    },
+    "fixed_actual_partial": {
+      "tokens": {
+        "r": 1
+      },
+      "total": 1,
+      "tag": {
+        "batch_id": "ks-first-token:0",
+        "generation": 0,
+        "requests": [
+          [
+            "r",
+            4
+          ]
+        ],
+        "token_positions": [
+          [
+            511
+          ]
+        ],
+        "restored_prefix_tokens": {
+          "r": 512
+        }
+      },
+      "request_status": "RUNNING",
+      "computed": 512,
+      "allocated": [
+        {
+          "num_new_computed_tokens": 0,
+          "new_computed_blocks": {
+            "fixture": "KVCacheBlocks",
+            "block_ids": [
+              [
+                10,
+                11,
+                12,
+                13
+              ]
+            ]
+          },
+          "num_lookahead_tokens": 3,
+          "num_external_computed_tokens": 0,
+          "delay_cache_blocks": true,
+          "num_encoder_tokens": 0
+        }
+      ],
+      "cached": [],
+      "free": [],
+      "new_request_positions": [
+        511
+      ]
+    },
+    "true_global_completion": {
+      "tokens": {
+        "r": 1
+      },
+      "total": 1,
+      "tag": null,
+      "request_status": "RUNNING",
+      "computed": 512,
+      "allocated": [
+        {
+          "num_new_computed_tokens": 0,
+          "new_computed_blocks": {
+            "fixture": "KVCacheBlocks",
+            "block_ids": [
+              [
+                10,
+                11,
+                12,
+                13
+              ]
+            ]
+          },
+          "num_lookahead_tokens": 3,
+          "num_external_computed_tokens": 0,
+          "delay_cache_blocks": false,
+          "num_encoder_tokens": 0
+        }
+      ],
+      "cached": [
+        [
+          "r",
+          512
+        ]
+      ],
+      "free": [],
+      "new_request_positions": [
+        511
+      ]
+    }
+  },
+  "helper_route": "real _try_promote_blocked_waiting_request -> real try_partial_promotion -> actual Balance.schedule -> real attach_output",
+  "manual_output_tag_injected": false,
+  "prior_suites_run": false,
+  "NPU_actions": 0,
+  "deployed": false,
+  "fixtures": [
+    "request/config",
+    "KV allocator recording",
+    "connector metadata",
+    "controller readiness",
+    "queue"
+  ],
+  "boundary": "actual function/helper/output AST with CPU metadata fixtures; no KV bytes/model/NPU/runtime proof"
+}

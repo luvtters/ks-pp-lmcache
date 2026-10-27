@@ -118,6 +118,47 @@ def materialize_small_evidence():
         'events':events,'stage_compute_entered_proven':False,'DMA_completion_order_proven':False})
 
 
+def materialize_status_docs():
+    """Create archival status snapshots without copying generated response text."""
+    target=SOURCE/'docs'
+    target.mkdir(parents=True,exist_ok=True)
+    readme_source=SOURCE/'README.md'
+    state_source=SOURCE/'本轮执行状态.json'
+    agents_source=SOURCE.parents[2]/'AGENTS.md'
+    captured={path:path.read_bytes() for path in (readme_source,state_source,agents_source)}
+    (target/'README_本轮运行状态快照.md').write_bytes(captured[readme_source])
+    state=json.loads(captured[state_source].decode('utf-8'))
+    omitted=[]
+    def strip(value,prefix=''):
+        if isinstance(value,dict):
+            for key in list(value):
+                path=prefix+'.'+key if prefix else key
+                if key in {'prompt','messages','generated_text','generated_texts','all_generated_text','all_generated_texts','completion_text','output_text'}:
+                    del value[key]
+                    omitted.append(path)
+                else:strip(value[key],path)
+        elif isinstance(value,list):
+            for index,child in enumerate(value):strip(child,prefix+f'[{index}]')
+    strip(state)
+    write_json(target/'本轮执行状态_去生成文本.json',state)
+    lines=captured[agents_source].decode('utf-8').splitlines(keepends=True)
+    begin=next(index for index,line in enumerate(lines) if line.startswith('### 当前评估窗口（2026-10-27，137环境）'))
+    end=next((index for index in range(begin+1,len(lines)) if lines[index].startswith('### ')),len(lines))
+    excerpt=''.join(lines[begin:end])
+    prefix='# AGENTS 137运行状态摘录（归档快照）\n\n仅摘录本轮运行状态，不是仓库规则入口；未覆盖仓库根AGENTS。源段落中的旧PID/待验描述以段尾最新状态为准。\n\n'
+    (target/'AGENTS_137运行状态摘录.md').write_text(prefix+excerpt,encoding='utf-8',newline='\n')
+    write_json(target/'来源与删减说明.json',{
+        'captured_utc':datetime.now(timezone.utc).isoformat(),
+        'README':{'source':str(readme_source),'copy':'README_本轮运行状态快照.md','mode':'exact source bytes'},
+        'state':{'source':str(state_source),'copy':'本轮执行状态_去生成文本.json','mode':'numeric/status snapshot; generated/customer payload keys removed',
+            'omitted_field_paths':omitted,'omitted_values_retained':False},
+        'AGENTS':{'source':str(agents_source),'copy':'AGENTS_137运行状态摘录.md','source_lines':[begin+1,end],
+            'mode':'exact current137 section plus archival label; repository root rules untouched'},
+        'git_remote_status_independently_verified':False,'git_actions':[],'remote_actions':0})
+    if any(path.read_bytes()!=content for path,content in captured.items()):
+        raise RuntimeError('status source changed during snapshot creation')
+
+
 def main():
     if not DEST.is_dir() or not DEST.resolve().is_relative_to(REPO.resolve()):
         raise RuntimeError('only the pre-existing new 137 archive area may be updated')
@@ -130,6 +171,10 @@ def main():
     selected += [STAGE+name for name in STAGE_FILES]
     selected += [N16+name for name in n16_selection['relative_files']]
     selected += [N16+'archive_n16_selection.json']
+    if (HERE/'archive_closing_selection.json').is_file():
+        closing=json.loads((HERE/'archive_closing_selection.json').read_text(encoding='utf-8'))
+        if closing.get('frozen') is not True:raise RuntimeError('closing source list is not frozen')
+        selected += closing['relative_files']+[STAGE+'archive_closing_selection.json']
     if len(selected)!=len(set(selected)):raise RuntimeError('duplicate selected path')
     originals={}
     for relative in selected:
@@ -214,6 +259,7 @@ def recheck_final_n16():
     if selection.get('frozen') is not True:
         raise RuntimeError('final explicit N16 source list is not frozen')
     frozen_count=len(selection['relative_files'])
+    materialize_status_docs()
     n16=SOURCE/N16
     before=(n16/'ascend_llm_base_proposer.py').read_text(encoding='utf-8')
     after=(n16/'reduced-pd-prepared/runtime/draft-n16/llm_base_proposer_n16.py').read_text(encoding='utf-8')
@@ -246,8 +292,42 @@ def recheck_final_n16():
     selected=[N16+name for name in selection['relative_files']]
     selected += [N16+'archive_n16_selection.json',STAGE+'archive_incremental_candidate.py',
                  STAGE+'前段先就绪_机制诊断边界.md']
+    closing=json.loads((HERE/'archive_closing_selection.json').read_text(encoding='utf-8'))
+    if closing.get('frozen') is not True:raise RuntimeError('closing source list is not frozen')
+    selected = closing['relative_files']+[STAGE+'archive_closing_selection.json',STAGE+'archive_incremental_candidate.py']
+    natural=json.loads((SOURCE/'减层PD运行证据/结果摘要.json').read_text(encoding='utf-8'))
+    if (len(natural['runs'])!=6 or natural['performance_gain_verified'] is not False
+            or natural['stage_dispatch_npu_verified'] is not False
+            or any(run['client']['successful_requests']!=1 or run['client']['failed_requests']!=0
+                   or run['client']['output_tokens']!=300 for run in natural['runs'])):
+        raise RuntimeError('natural summary does not match the frozen six-run evidence boundary')
+    def reject_payload(value):
+        if isinstance(value,dict):
+            if any(key in {'prompt','messages','generated_texts','generated_text','completion_text','output_text'} for key in value):
+                raise RuntimeError('raw customer/generated payload key in compact natural summary')
+            for child in value.values():reject_payload(child)
+        elif isinstance(value,list):
+            for child in value:reject_payload(child)
+    reject_payload(natural)
+    diagnostic_cpu=json.loads((SOURCE/'受控就绪窗口诊断/cpu_result.json').read_text(encoding='utf-8'))
+    diagnostic_deployment=json.loads((SOURCE/'受控就绪窗口诊断/private_preparation_deployment.json').read_text(encoding='utf-8'))
+    if (diagnostic_cpu.get('status')!='PASS' or diagnostic_cpu.get('case_count')!=11
+            or diagnostic_cpu.get('NPU_test') is not False
+            or diagnostic_deployment.get('changed_modules')!=['lmcache.integration.vllm.vllm_multi_process_adapter']
+            or diagnostic_deployment.get('map_count_before')!=19 or diagnostic_deployment.get('map_count_after')!=19):
+        raise RuntimeError('diagnostic source/preparation evidence boundary changed')
+    balance=json.loads((SOURCE/'实际P调度接线修复/archive_selection.json').read_text(encoding='utf-8'))
+    balance_cpu=json.loads((SOURCE/'实际P调度接线修复/cpu_result.json').read_text(encoding='utf-8'))
+    if (balance.get('frozen') is not True or len(balance['relative_files'])!=15
+            or balance_cpu.get('status')!='PASS_CPU_ONLY_NOT_DEPLOYED' or balance_cpu.get('test_count')!=6
+            or balance_cpu.get('deployed') is not False):
+        raise RuntimeError('actual Balance CPU-only candidate is not the frozen expected source')
     now=datetime.now(timezone.utc).isoformat()
     changed=[]
+    changes=[]
+    transformations=[]
+    planned={(DEST/name).resolve() for name in selected}
+    transformed_reports={'减层PD运行证据/结果分析.md','受控就绪窗口诊断/结果与接线缺口.md'}
     for relative in selected:
         source,target=SOURCE/relative,DEST/relative
         if not source.resolve().is_relative_to(SOURCE.resolve()) or not target.resolve().is_relative_to(DEST.resolve()):
@@ -255,23 +335,53 @@ def recheck_final_n16():
         if (source.suffix in ('.log','.jsonl','.safetensors','.bin','.pem','.key')
                 or any(part.lower() in {'data','venv','.ssh','__pycache__','model-n16','model','weights'} for part in source.parts)):
             raise RuntimeError('excluded content in frozen selection: '+relative)
-        content=source.read_bytes()
+        raw_content=source.read_bytes()
+        content=raw_content
         text=content.decode('utf-8')
         private_key_marker='-----BEGIN '+'OPENSSH PRIVATE KEY'+'-----'
         if private_key_marker in text or re.search(r'https?://[^/\s:@]+:[^/\s@]+@',text):
             raise RuntimeError('credential material in frozen selection: '+relative)
+        converted=[]
+        if relative in transformed_reports:
+            def local_link(match):
+                label,reference=match.group(1),match.group(2)
+                if reference.startswith(('http://','https://','#')):return match.group(0)
+                referenced=(target.parent/reference.split('#',1)[0]).resolve()
+                if referenced in planned or referenced.is_file():return match.group(0)
+                if not (reference.endswith('.jsonl') or reference.endswith('/benchmark.json') or reference.endswith('.launch.json')):
+                    raise RuntimeError('unclassified local report link: '+reference)
+                converted.append(reference)
+                return label+'（`'+reference+'`）'
+            text=re.sub(r'\[([^\]]+)\]\(([^)]+)\)',local_link,text)
+            note='原始证据仅保留本机/容器，仓库以本页精简JSON为数值凭据。'
+            if note not in text:
+                first,separator,rest=text.partition('\n')
+                text=first+'\n\n'+note+'\n'+rest
+            content=text.encode('utf-8')
+            transformations.append({'relative_path':relative,'mode':'archive-copy-only raw-link conversion',
+                'plain_path_references':converted,'source_report_modified':False})
         existed=target.is_file()
         if not existed or target.read_bytes()!=content:
             target.parent.mkdir(parents=True,exist_ok=True)
             target.write_bytes(content)
             changed.append(relative)
-        if target.read_bytes()!=content or source.read_bytes()!=content:
+            changes.append({'relative_path':relative,'action':'updated' if existed else 'added'})
+        if target.read_bytes()!=content or source.read_bytes()!=raw_content:
             raise RuntimeError('final N16 source changed or archive copy differs: '+relative)
         rows.setdefault(relative,{'relative_path':relative,'source':str(source),'action':'added_in_current_archive_revision'})
-        rows[relative].update(bytes=len(content),bytes_equal=True,utf8_text_equal=True,
+        rows[relative].update(bytes=len(content),bytes_equal=content==raw_content,utf8_text_equal=content==raw_content,
+            source_bytes=len(raw_content),expected_archive_bytes_equal=True,source_unchanged=True,
+            copy_mode='documented raw-link transform' if relative in transformed_reports else 'exact source bytes',
             last_recheck_utc=now,last_recheck_action='updated' if relative in changed else 'unchanged')
+    dependency_paths=[(DEST/name) for name in balance['external_source_references']]
+    dependency_paths += [DEST/'实际P调度接线修复/actual137_patch_balance_schedule.py',
+        DEST/'实际P调度接线修复/patch_balance_schedule_fixed.py',
+        REPO/'output/04_修改策略与验证/01_修改策略与隔离候选/KV完成通知修改策略与隔离分支_20261022/capacity_followup/sources/vllm/v1/core/sched/output.py']
+    if any(not path.is_file() for path in dependency_paths):
+        raise RuntimeError('an explicitly referenced migrated CPU input is missing: '+repr([str(path) for path in dependency_paths if not path.is_file()]))
     summary={'status':'FROZEN_N16_FINAL_SOURCE_AND_EXISTING_CPU_RECEIPT_MATCHED',
         'updated_utc':now,'frozen_N16_files':frozen_count,'selected_with_selection_and_archive_entry':len(selected),
+        'verification_scope':'closing files only; prior frozen N16 files not recopied',
         'N16_source_files_changed':sum(name.startswith(N16) for name in changed),
         'changed_archive_paths':changed,'final_proposer_review_diff_lines':32,
         'existing_CPU_receipt':{'file':'draft_n16_family_quant_cpu.json','status':'PASS',
@@ -280,8 +390,21 @@ def recheck_final_n16():
         'runtime_boundary':{'source':'root report; not remotely inspected by this archive action',
             'D0':'ready','D1':'ready','P_previous_attempt':'target warmup DispatchFFNCombine operator error',
             'P_env0_attempt':'MC2 reported required HCCL window 413MB exceeds actual 400MB',
-            'P_current_attempt':'original group restarting with common P-only FUSED_MC2=0 and HCCL_BUFFSIZE=512; not verified',
-            'PD_success':False,'candidate_stage_compute_success':False},
+            'natural_PD_requests':'six HTTP/benchmark successes, original/candidate cold+warm+warm2',
+            'natural_stage_admissions':0,'performance_gain_verified':False,
+            'token_or_KV_content_correctness':'NOT_VERIFIED',
+            'P_current_attempt':'DIAGNOSTIC_ONLY request output300 succeeded and partial reserved, but effective Balance schedule omitted two hooks; no stage worker compute',
+            'full_formal_PD_acceptance':False,'candidate_stage_compute_success':False},
+        'closing_archive':{'diagnostic_source_preparation_files':13,'diagnostic_result_source_checker_files':4,'natural_sanitized_files':2,
+            'diagnostic_default_delay':'OFF; only separate diagnostic env enables 500ms',
+            'diagnostic_CPU_cases':11,'diagnostic_stage_NPU_verified':False,'diagnostic_request_success':True,
+            'diagnostic_stage_admission_observed':False,'actual_Balance_two_hook_gap_source_confirmed':True,
+            'natural_result_source':'减层PD运行证据/结果摘要.json','natural_runs':6,
+            'raw_customer_or_generated_payloads_archived':False},
+        'actual_Balance_fix':{'selected_files':15,'existing_CPU_cases':6,'CPU_cases_rerun':False,
+            'deployed':False,'NPU_verified':False,'loader_map_counts':[18,19,19,20],
+            'explicit_migrated_dependencies_present':[path.relative_to(REPO).as_posix() for path in dependency_paths]},
+        'copy_transformations':transformations,
         'common_P_fallback':{'VLLM_ASCEND_ENABLE_FUSED_MC2':'0','HCCL_BUFFSIZE':'512','applied_to':['original-async','stage-candidate'],
             'D_files_changed_by_fallback':False,'benchmark_result_directories':'manager-compatible hyphenated paths'},
         'selected_content_review':'explicit whitelist excludes prompt/data/weights/venv/keys/logs; new additions are preparation/deployment and official source snapshots; native text references external data only',
@@ -304,11 +427,65 @@ def recheck_final_n16():
     marker='## N16最终源码复核'
     text=text.split(marker,1)[0].rstrip()
     text+='\n\n'+marker+f'\n\n{frozen_count}项冻结清单与最终32行draft GLM-family/HF78源码、diff及既有7权重/真实quant CPU回执已逐文件复核。'
-    text+='CPU用例未重跑，未加载真实checkpoint。root报告两D已ready，P在target预热DispatchFFNCombine遇算子错误；'
-    text+='P两组随后共同采用官方FUSED_MC2=0及HCCL_BUFFSIZE=512并重启原组，尚未验收；四个benchmark结果目录已匹配管理器。'
-    text+='不能标为PD成功或候选阶段计算成功。复核细节见`N16_FINAL_SOURCE_RECHECK.json`。\n'
+    text+='CPU用例未重跑，未加载真实checkpoint。早期P曾在target预热遇DispatchFFNCombine错误；'
+    text+='P两组随后共同采用官方FUSED_MC2=0及HCCL_BUFFSIZE=512，benchmark结果目录已匹配管理器。'
+    text+='自然请求功能结果见下段；这不等于token/KV内容或候选阶段计算验收。复核细节见`N16_FINAL_SOURCE_RECHECK.json`。\n'
+    text+='\n自然6次结果现已单独归档到`减层PD运行证据/`：6次HTTP/benchmark成功，未出现stage admission，不能证明提速，token/KV内容仍NOT_VERIFIED。'
+    text+='该目录只带结果分析和精简JSON；文档中原始benchmark/metrics/log链接仍指原工作区，本仓库按数据边界没有复制那些文件。'
+    text+='独立`受控就绪窗口诊断/`带13份源码/准备材料及4份精简结果/实际0.23调度源码/检查器；默认关闭，500ms只由独立env启用。'
+    text+='真实单请求成功并出现partial reserved，但实际Balance schedule遗漏两钩子、未进入阶段worker；不能并入自然6次或标为模型阶段PASS。'
+    text+='本轮README/状态及AGENTS的137运行段落另存docs，状态中历史生成文本字段已删除并记录，根仓库AGENTS未改。\n'
+    text+='实际P调度接线修复的15项隔离候选与既有6项CPU结果已保存，loader为18/20 exact候选；仅核对明确引用依赖存在，未部署或复跑。\n'
     readme.write_text(text,encoding='utf-8',newline='\n')
+    final_paths={'FINAL_ARCHIVE_CHANGED_PATHS.txt','FINAL_ARCHIVE_CHANGES.json'}
+    metadata_changed={'ARCHIVE_README.md','COPY_INCREMENTAL_MANIFEST.json','COPY_INCREMENTAL_VALIDATION.json',
+        'COPY_INCREMENTAL_FILES.txt','N16_FINAL_SOURCE_RECHECK.json','GIT_STAGE_CANDIDATES.txt',
+        'GIT_STAGE_CANDIDATES.nul','GIT_STAGE_CANDIDATES_VALIDATION.json'}|final_paths
+    archive_relative=DEST.relative_to(REPO)
+    precise=sorted({(archive_relative/name).as_posix() for name in changed}|{(archive_relative/name).as_posix() for name in metadata_changed})
+    (DEST/'FINAL_ARCHIVE_CHANGED_PATHS.txt').write_text('\n'.join(precise)+'\n',encoding='utf-8')
+    write_json(DEST/'FINAL_ARCHIVE_CHANGES.json',{'updated_utc':now,'source_changes':changes,
+        'updated_archive_metadata':sorted(metadata_changed),'precise_repository_paths':precise,
+        'documented_copy_transformations':transformations,'source_reports_modified':False,
+        'root_AGENTS_modified':False,'git_actions':[],'tests_rerun':False,'remote_actions':0})
+    write_git_candidates()
     print(json.dumps(summary,ensure_ascii=False))
+
+
+def write_git_candidates():
+    """Derive exact paths from archive manifests; do not invoke Git or scan."""
+    archive_relative=DEST.relative_to(REPO)
+    initial=json.loads((DEST/'COPY_MANIFEST.json').read_text(encoding='utf-8'))
+    latest=json.loads((DEST/'COPY_INCREMENTAL_MANIFEST.json').read_text(encoding='utf-8'))
+    placement=json.loads((DEST/'INPUT_PLACEMENT.json').read_text(encoding='utf-8'))
+    copied={row['relative_path'] for row in initial['copied_files']}
+    copied.update(row['relative_path'] for row in latest['selected_files'])
+    metadata={'ARCHIVE_README.md','COPY_MANIFEST.json','COPY_VALIDATION.json','INPUT_PLACEMENT.json',
+        'COPY_INCREMENTAL_MANIFEST.json','COPY_INCREMENTAL_VALIDATION.json','COPY_INCREMENTAL_FILES.txt',
+        'N16_FINAL_SOURCE_RECHECK.json','GIT_STAGE_CANDIDATES.txt','GIT_STAGE_CANDIDATES.nul',
+        'GIT_STAGE_CANDIDATES_VALIDATION.json','FINAL_ARCHIVE_CHANGED_PATHS.txt','FINAL_ARCHIVE_CHANGES.json'}
+    if len(placement['entries'])!=5 or any(row['status']!='NEW_INPUT_CREATED_EXACT_BYTES' for row in placement['entries']):
+        raise RuntimeError('only the five recorded new inputs may leave the new archive area')
+    old_inputs={row['path'] for row in placement['entries']}
+    paths=sorted({(archive_relative/name).as_posix() for name in copied|metadata}|old_inputs)
+    (DEST/'GIT_STAGE_CANDIDATES.txt').write_text('\n'.join(paths)+'\n',encoding='utf-8')
+    (DEST/'GIT_STAGE_CANDIDATES.nul').write_bytes(b'\0'.join((':(literal)'+name).encode('utf-8') for name in paths)+b'\0')
+    write_json(DEST/'GIT_STAGE_CANDIDATES_VALIDATION.json',{
+        'status':'EXPLICIT_PROSPECTIVE_PATHS_ONLY_NO_GIT_ACTIONS','created_utc':datetime.now(timezone.utc).isoformat(),
+        'candidate_paths':len(paths),'new_archive_paths':len(paths)-5,'necessary_new_old_input_paths':sorted(old_inputs),
+        'source_manifests':['COPY_MANIFEST.json','COPY_INCREMENTAL_MANIFEST.json','INPUT_PLACEMENT.json'],
+        'excluded_initial_read_only_dependencies':initial['existing_repository_inputs_checked_read_only'],
+        'git_actions':[],'directory_scan_used':False,'hashes_used':False,'tests_rerun':False,
+        'customer_data_or_model_files_included':False})
+    readme=DEST/'ARCHIVE_README.md'
+    text=readme.read_text(encoding='utf-8')
+    text=re.sub(r'(?:本次显式核对|当前增量清单包含) \d+ 个文件；',
+                f'当前增量清单包含 {latest["selected_count"]} 个文件；',text,count=1)
+    marker='## 暂存候选路径（未执行Git）'
+    text=text.split(marker,1)[0].rstrip()
+    text+='\n\n'+marker+f'\n\n`GIT_STAGE_CANDIDATES.txt` 为本轮 {len(paths)} 个精确仓库相对路径，另有NUL分隔的`GIT_STAGE_CANDIDATES.nul`。'
+    text+='来源仅为两份复制manifest、本目录索引和5个新增旧输入；没有Git、暂存、提交或推送动作。\n'
+    readme.write_text(text,encoding='utf-8',newline='\n')
 
 
 if __name__=='__main__':
