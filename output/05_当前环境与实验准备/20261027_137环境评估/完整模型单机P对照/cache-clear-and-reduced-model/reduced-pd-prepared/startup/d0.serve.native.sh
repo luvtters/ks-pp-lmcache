@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+# PREPARED ONLY. N16 real PD D rank0/DP2; source common.env and d0.env.
+vllm serve /opt/ks-stage-ready-luv-20261027/reduced-pd/model-N16 \
+  --host 0.0.0.0 \
+  --port 18200 \
+  --data-parallel-size 2 \
+  --data-parallel-rank 0 \
+  --data-parallel-address 192.168.0.223 \
+  --data-parallel-rpc-port 18300 \
+  --tensor-parallel-size 4 \
+  --pipeline-parallel-size 1 \
+  --enable-expert-parallel \
+  --hf-overrides '{"use_index_cache":true,"index_topk_freq":4}' \
+  --seed 1024 \
+  --served-model-name glm-5 \
+  --max-model-len 65536 \
+  --max-num-batched-tokens 164 \
+  --max-num-seqs 32 \
+  --compilation-config '{"cudagraph_mode":"FULL_DECODE_ONLY"}' \
+  --speculative-config '{"num_speculative_tokens":3,"method":"deepseek_mtp","enforce_eager":true,"quantization":"ascend","model":"/opt/ks-models/GLM-5.1-w8a8c8-MTP"}' \
+  --additional-config '{"fuse_muls_add":true,"recompute_scheduler_enable":true,"multistream_overlap_shared_expert":true,"enable_sparse_sfa_c8":true,"enable_sparse_li_c8":true}' \
+  --trust-remote-code \
+  --no-enable-prefix-caching \
+  --gpu-memory-utilization 0.92 \
+  --async-scheduling \
+  --quantization ascend \
+  --enable-auto-tool-choice \
+  --tool-call-parser glm47 \
+  --reasoning-parser glm45 \
+  --kv-transfer-config '{"kv_connector":"MooncakeConnectorV1","kv_role":"kv_consumer","kv_port":29000,"engine_id":"ks-luv-N16-d0","kv_connector_extra_config":{"use_ascend_direct":true,"prefill":{"dp_size":1,"tp_size":4,"pp_size":2,"pp_layer_partition":"8,8"},"decode":{"dp_size":2,"tp_size":4,"pp_size":1}}}' \
+  --kv-cache-memory-bytes 4831838208

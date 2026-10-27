@@ -1,0 +1,14 @@
+{
+  "root": "/opt/ks-stage-ready-luv-20261027/reduced-pd",
+  "files": [
+    "runtime/mooncake-n16/mooncake_connector_n16.py",
+    "runtime/common/sitecustomize.py",
+    "runtime/p-original/sitecustomize.py",
+    "startup/common.env.native.sh",
+    "README.md"
+  ],
+  "syntax": "PASS",
+  "services_started": false,
+  "installed_source_modified": false,
+  "model_view_modified": false
+}

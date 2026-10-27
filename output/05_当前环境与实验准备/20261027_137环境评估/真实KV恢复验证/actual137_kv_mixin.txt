@@ -1,0 +1,277 @@
+FILE /vllm-workspace/vllm/vllm/v1/worker/kv_connector_model_runner_mixin.py
+1:# SPDX-License-Identifier: Apache-2.0
+2:# SPDX-FileCopyrightText: Copyright contributors to the vLLM project
+3:"""
+4:Define KV connector functionality mixin for model runners.
+5:"""
+6:
+7:from collections.abc import Generator
+8:from contextlib import AbstractContextManager, contextmanager, nullcontext
+9:from typing import TYPE_CHECKING
+10:
+11:import torch
+12:
+13:from vllm.config import VllmConfig
+14:from vllm.config.cache import CacheDType
+15:from vllm.distributed.kv_transfer import get_kv_transfer_group, has_kv_transfer_group
+16:from vllm.distributed.kv_transfer.kv_connector.base import KVConnectorBase
+17:from vllm.forward_context import get_forward_context, set_forward_context
+18:from vllm.logger import init_logger
+19:from vllm.v1.attention.backend import AttentionBackend
+20:from vllm.v1.kv_cache_interface import AttentionSpec, KVCacheConfig
+21:from vllm.v1.outputs import (
+22:    KVConnectorOutput,
+23:    ModelRunnerOutput,
+24:)
+25:from vllm.v1.worker.utils import AttentionGroup
+26:
+27:if TYPE_CHECKING:
+28:    from vllm.v1.core.sched.output import SchedulerOutput
+29:
+30:logger = init_logger(__name__)
+31:
+32:
+33:# Defined as a kv connector functionality mixin for ModelRunner (GPU, TPU)
+34:class KVConnectorModelRunnerMixin:
+35:    @staticmethod
+36:    def kv_connector_no_forward(
+37:        scheduler_output: "SchedulerOutput", vllm_config: VllmConfig
+38:    ) -> ModelRunnerOutput:
+39:        # KV send/recv even if no work to do.
+40:        with (
+41:            set_forward_context(None, vllm_config),
+42:            KVConnectorModelRunnerMixin._get_kv_connector_output(
+43:                scheduler_output, wait_for_save=False
+44:            ) as kv_connector_output,
+45:        ):
+46:            pass
+47:
+48:        return ModelRunnerOutput.with_kv_conn_output_only(kv_connector_output)
+49:
+50:    @staticmethod
+51:    def maybe_get_kv_connector_output(
+52:        scheduler_output: "SchedulerOutput",
+53:        defer_finalize: bool = False,
+54:    ) -> AbstractContextManager[KVConnectorOutput | None]:
+55:        return (
+56:            KVConnectorModelRunnerMixin._get_kv_connector_output(
+57:                scheduler_output, defer_finalize=defer_finalize
+58:            )
+59:            if has_kv_transfer_group()
+60:            else nullcontext()
+61:        )
+62:
+63:    @staticmethod
+64:    def finalize_kv_connector() -> None:
+65:        """Finalize the KV connector: wait_for_save and clear metadata.
+66:
+67:        Call after draft model forward when defer_finalize=True was used.
+68:        """
+69:        if has_kv_transfer_group():
+70:            kv_connector = get_kv_transfer_group()
+71:            kv_connector.wait_for_save()
+72:            kv_connector.clear_connector_metadata()
+73:
+74:    # This context manager must be used within an active forward context.
+75:    # It encapsulates the entire KV connector lifecycle within execute_model
+76:    @staticmethod
+77:    @contextmanager
+78:    def _get_kv_connector_output(
+79:        scheduler_output: "SchedulerOutput",
+80:        wait_for_save: bool = True,
+81:        defer_finalize: bool = False,
+82:    ) -> Generator[KVConnectorOutput, None, None]:
+83:        output = KVConnectorOutput()
+84:
+85:        # Update KVConnector with the KVConnector metadata forward().
+86:        kv_connector = get_kv_transfer_group()
+87:        assert isinstance(kv_connector, KVConnectorBase)
+88:        assert scheduler_output.kv_connector_metadata is not None
+89:        kv_connector.bind_connector_metadata(scheduler_output.kv_connector_metadata)
+90:
+91:        # Background KV cache transfers happen here.
+92:        # These transfers are designed to be async and the requests
+93:        # involved may be disjoint from the running requests.
+94:        # Do this here to save a collective_rpc.
+95:        kv_connector.start_load_kv(get_forward_context())
+96:        try:
+97:            yield output
+98:        finally:
+99:            if wait_for_save and not defer_finalize:
+100:                kv_connector.wait_for_save()
+101:
+102:            output.finished_sending, output.finished_recving = (
+103:                kv_connector.get_finished(scheduler_output.finished_req_ids)
+104:            )
+105:            output.invalid_block_ids = kv_connector.get_block_ids_with_load_errors()
+106:
+107:            output.kv_connector_stats = kv_connector.get_kv_connector_stats()
+108:            output.kv_cache_events = kv_connector.get_kv_connector_kv_cache_events()
+109:            output.kv_connector_worker_meta = kv_connector.build_connector_worker_meta()
+110:
+111:            if not defer_finalize:
+112:                kv_connector.clear_connector_metadata()
+113:
+114:    @staticmethod
+115:    def use_uniform_kv_cache(
+116:        attn_groups: list[list[AttentionGroup]],
+117:        cache_dtype: CacheDType,
+118:    ) -> bool:
+119:        """
+120:        Determines whether a uniform KV layout should be used.
+121:        A uniform layout means all layers KV caches will share the same
+122:        underlying tensor, where for a given block number, the respective
+123:        KV data for all layers will be contiguous.
+124:        This will allow efficient KV transfer of per-block KV data for all
+125:        layers at once.
+126:        Note this layout will only be applied given 3 conditions:
+127:        1. The KV Cache config contains just a single group where all layers
+128:            have the same page size.
+129:        2. A KV connector is configured, and the KV connector instance prefers
+130:            to use this layout (prefer_cross_layer_blocks() returns True)
+131:        2. The flash attention backend supports this layout
+132:            (get_kv_cache_stride_order(True) includes a placement for a
+133:            num_layers dimension)
+134:
+135:        Note that the actual placement of the num_layers dimensions
+136:        in the unified layers tensors will be determined by the attention
+137:        backend.
+138:        Thus, the layers KV data may still not be contiguous per block
+139:        if the attention backend does not support it.
+140:
+141:        Args:
+142:            attn_groups: The list of attention groups for this model
+143:            cache_dtype: The KV cache dtype
+144:        Returns:
+145:            True if we should use a uniform KV cache layout.
+146:        """
+147:
+148:        if not has_kv_transfer_group():
+149:            return False
+150:        if not get_kv_transfer_group().prefer_cross_layer_blocks:
+151:            return False
+152:
+153:        if len(attn_groups) != 1 or len(attn_groups[0]) != 1:
+154:            return False
+155:
+156:        attn_group = attn_groups[0][0]
+157:        kv_cache_spec = attn_group.kv_cache_spec
+158:        if not isinstance(kv_cache_spec, AttentionSpec):
+159:            return False
+160:
+161:        attn_backend = attn_group.backend
+162:        kv_cache_shape = attn_backend.get_kv_cache_shape(
+163:            1234,
+164:            kv_cache_spec.block_size,
+165:            kv_cache_spec.num_kv_heads,
+166:            kv_cache_spec.head_size,
+167:            cache_dtype_str=cache_dtype,
+168:        )
+169:
+170:        try:
+171:            kv_cache_stride_order = attn_backend.get_kv_cache_stride_order(
+172:                include_num_layers_dimension=True
+173:            )
+174:        except (AttributeError, NotImplementedError):
+175:            return False
+176:
+177:        # check that attention backend includes a layers dimension
+178:        if len(kv_cache_stride_order) != len(kv_cache_shape) + 1:
+179:            return False
+180:
+181:        # stride_order[0] == 0 means num_layers stays first in physical
+182:        # layout (identity permutation), so cross-layer is unsupported.
+183:        return kv_cache_stride_order[0] != 0
+184:
+185:    @staticmethod
+186:    def allocate_uniform_kv_caches(
+187:        kv_cache_config: KVCacheConfig,
+188:        attn_groups: list[list[AttentionGroup]],
+189:        cache_dtype: CacheDType,
+190:        device: torch.device,
+191:        kernel_block_sizes: list[int],
+192:    ) -> tuple[dict[str, torch.Tensor], torch.Tensor, type[AttentionBackend]]:
+193:        """
+194:        Initializes and reshapes KV caches for the simple case where all
+195:        layers have the same layout.
+196:
+197:        This function assumes use_uniform_kv_cache() returned True.
+198:
+199:        Args:
+200:            kv_cache_config: The KV cache config
+201:            attn_groups: The list of attention groups for this model
+202:            cache_dtype: The KV cache dtype
+203:            device: The torch device to allocate on.
+204:            kernel_block_sizes: The kernel block sizes for each KV cache group.
+205:        Returns:
+206:            A tuple (kv_caches, cross_layers_kv_cache, attn_backend) where:
+207:                kv_caches is a dict mapping between layer names to their
+208:                    corresponding memory buffer for KV cache.
+209:                cross_layers_kv_cache is the cross layers kv cache tensor
+210:                attn_backend is the attention backend matching this tensor
+211:        """
+212:        attn_group = attn_groups[0][0]
+213:        kv_cache_spec = attn_group.kv_cache_spec
+214:        assert isinstance(kv_cache_spec, AttentionSpec)
+215:
+216:        tensor_sizes = set(
+217:            kv_cache_tensor.size for kv_cache_tensor in kv_cache_config.kv_cache_tensors
+218:        )
+219:        assert len(tensor_sizes) == 1
+220:        tensor_size = tensor_sizes.pop()
+221:
+222:        page_size = kv_cache_spec.page_size_bytes
+223:        assert tensor_size % page_size == 0
+224:        num_blocks = tensor_size // page_size
+225:        num_layers = len(kv_cache_config.kv_cache_tensors)
+226:        total_size = tensor_size * num_layers
+227:
+228:        assert len(kernel_block_sizes) == 1
+229:        kernel_block_size = kernel_block_sizes[0]
+230:        num_blocks_per_kv_block = kv_cache_spec.block_size // kernel_block_size
+231:        kernel_num_blocks = num_blocks * num_blocks_per_kv_block
+232:
+233:        attn_backend = attn_group.backend
+234:        kv_cache_shape = attn_backend.get_kv_cache_shape(
+235:            kernel_num_blocks,
+236:            kernel_block_size,
+237:            kv_cache_spec.num_kv_heads,
+238:            kv_cache_spec.head_size,
+239:            cache_dtype_str=cache_dtype,
+240:        )
+241:
+242:        # prepend a num_layers dimension into the shape
+243:        kv_cache_shape = (num_layers,) + kv_cache_shape
+244:
+245:        try:
+246:            kv_cache_stride_order = attn_backend.get_kv_cache_stride_order(
+247:                include_num_layers_dimension=True
+248:            )
+249:            assert len(kv_cache_stride_order) == len(kv_cache_shape)
+250:        except (AttributeError, NotImplementedError):
+251:            kv_cache_stride_order = tuple(range(len(kv_cache_shape)))
+252:
+253:        kv_cache_shape = tuple(kv_cache_shape[i] for i in kv_cache_stride_order)
+254:
+255:        logger.info("Allocating a cross layer KV cache of shape %s", kv_cache_shape)
+256:
+257:        # allocate one contiguous buffer for all layers
+258:        cross_layers_kv_cache = (
+259:            torch.zeros(total_size, dtype=torch.int8, device=device)
+260:            .view(kv_cache_spec.dtype)
+261:            .view(kv_cache_shape)
+262:        )
+263:
+264:        # Maintain original KV shape view.
+265:        inv_order = [
+266:            kv_cache_stride_order.index(i) for i in range(len(kv_cache_stride_order))
+267:        ]
+268:        permuted_kv_cache = cross_layers_kv_cache.permute(*inv_order)
+269:
+270:        kv_caches = {}
+271:        for i, kv_cache_tensor in enumerate(kv_cache_config.kv_cache_tensors):
+272:            tensor = permuted_kv_cache[i]
+273:            for layer_name in kv_cache_tensor.shared_by:
+274:                kv_caches[layer_name] = tensor
+275:
+276:        return kv_caches, cross_layers_kv_cache, attn_backend

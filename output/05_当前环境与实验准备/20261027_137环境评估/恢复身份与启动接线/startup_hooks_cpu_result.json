@@ -1,0 +1,412 @@
+{
+  "status": "PASS_NORMAL_STARTUP_METHODS_CPU_ONLY",
+  "tests": 5,
+  "failures": 0,
+  "errors": 0,
+  "actual_methods": [
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\20261027_PP分段就绪原型\\lmcache_stage_observer\\vllm_multi_process_adapter.py",
+      "class": "LMCacheMPWorkerAdapter",
+      "method": "configure_ks_stage_observer",
+      "begin": 2069,
+      "end": 2078
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\overlay\\lmcache\\integration\\vllm\\lmcache_mp_connector.py",
+      "class": "LMCacheMPConnector",
+      "method": "__init__",
+      "begin": 573,
+      "end": 839
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\overlay\\lmcache\\integration\\vllm\\lmcache_mp_connector.py",
+      "class": "LMCacheMPConnector",
+      "method": "role",
+      "begin": 842,
+      "end": 843
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\overlay\\lmcache\\integration\\vllm\\lmcache_mp_connector.py",
+      "class": "LMCacheMPConnector",
+      "method": "transfer_intermediate_tensors",
+      "begin": 846,
+      "end": 853
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\overlay\\lmcache\\integration\\vllm\\lmcache_mp_connector.py",
+      "class": "LMCacheMPConnector",
+      "method": "start_load_kv",
+      "begin": 909,
+      "end": 952
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\overlay\\lmcache\\integration\\vllm\\lmcache_mp_connector.py",
+      "class": "LMCacheMPConnector",
+      "method": "build_connector_meta",
+      "begin": 1480,
+      "end": 1514
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\overlay\\lmcache\\integration\\vllm\\lmcache_mp_connector.py",
+      "class": "LMCacheMPConnector",
+      "method": "_process_retrieve_requests",
+      "begin": 1689,
+      "end": 1705
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\overlay\\vllm\\v1\\executor\\multiproc_executor.py",
+      "class": "WorkerProc",
+      "method": "_init_stage_event_channel",
+      "begin": 1062,
+      "end": 1079
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\20261027_PP分段就绪原型\\lmcache_stage_observer\\vllm_multi_process_adapter.py",
+      "class": "LMCacheMPWorkerAdapter",
+      "method": "configure_ks_stage_observer",
+      "begin": 2069,
+      "end": 2078
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\overlay\\lmcache\\integration\\vllm\\lmcache_mp_connector.py",
+      "class": "LMCacheMPConnector",
+      "method": "__init__",
+      "begin": 573,
+      "end": 839
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\overlay\\lmcache\\integration\\vllm\\lmcache_mp_connector.py",
+      "class": "LMCacheMPConnector",
+      "method": "role",
+      "begin": 842,
+      "end": 843
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\overlay\\lmcache\\integration\\vllm\\lmcache_mp_connector.py",
+      "class": "LMCacheMPConnector",
+      "method": "transfer_intermediate_tensors",
+      "begin": 846,
+      "end": 853
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\overlay\\lmcache\\integration\\vllm\\lmcache_mp_connector.py",
+      "class": "LMCacheMPConnector",
+      "method": "start_load_kv",
+      "begin": 909,
+      "end": 952
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\overlay\\lmcache\\integration\\vllm\\lmcache_mp_connector.py",
+      "class": "LMCacheMPConnector",
+      "method": "build_connector_meta",
+      "begin": 1480,
+      "end": 1514
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\overlay\\lmcache\\integration\\vllm\\lmcache_mp_connector.py",
+      "class": "LMCacheMPConnector",
+      "method": "_process_retrieve_requests",
+      "begin": 1689,
+      "end": 1705
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\overlay\\vllm\\v1\\executor\\multiproc_executor.py",
+      "class": "WorkerProc",
+      "method": "_init_stage_event_channel",
+      "begin": 1062,
+      "end": 1079
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\overlay\\vllm\\v1\\engine\\core.py",
+      "class": "EngineCore",
+      "method": "__init__",
+      "begin": 153,
+      "end": 290
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\overlay\\vllm\\v1\\engine\\core.py",
+      "class": "EngineCore",
+      "method": "_ks_initialize_restore_notifications",
+      "begin": 292,
+      "end": 321
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\overlay\\vllm\\v1\\engine\\core.py",
+      "class": "EngineCore",
+      "method": "configure_ks_core_event_pump",
+      "begin": 532,
+      "end": 550
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\overlay\\vllm\\v1\\engine\\core.py",
+      "class": "EngineCore",
+      "method": "_ks_consume_stage_events",
+      "begin": 560,
+      "end": 570
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\20261027_PP分段就绪原型\\lmcache_stage_observer\\vllm_multi_process_adapter.py",
+      "class": "LMCacheMPWorkerAdapter",
+      "method": "configure_ks_stage_observer",
+      "begin": 2069,
+      "end": 2078
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\overlay\\lmcache\\integration\\vllm\\lmcache_mp_connector.py",
+      "class": "LMCacheMPConnector",
+      "method": "__init__",
+      "begin": 573,
+      "end": 839
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\overlay\\lmcache\\integration\\vllm\\lmcache_mp_connector.py",
+      "class": "LMCacheMPConnector",
+      "method": "role",
+      "begin": 842,
+      "end": 843
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\overlay\\lmcache\\integration\\vllm\\lmcache_mp_connector.py",
+      "class": "LMCacheMPConnector",
+      "method": "transfer_intermediate_tensors",
+      "begin": 846,
+      "end": 853
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\overlay\\lmcache\\integration\\vllm\\lmcache_mp_connector.py",
+      "class": "LMCacheMPConnector",
+      "method": "start_load_kv",
+      "begin": 909,
+      "end": 952
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\overlay\\lmcache\\integration\\vllm\\lmcache_mp_connector.py",
+      "class": "LMCacheMPConnector",
+      "method": "build_connector_meta",
+      "begin": 1480,
+      "end": 1514
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\overlay\\lmcache\\integration\\vllm\\lmcache_mp_connector.py",
+      "class": "LMCacheMPConnector",
+      "method": "_process_retrieve_requests",
+      "begin": 1689,
+      "end": 1705
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\overlay\\vllm\\v1\\executor\\multiproc_executor.py",
+      "class": "WorkerProc",
+      "method": "_init_stage_event_channel",
+      "begin": 1062,
+      "end": 1079
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\overlay\\vllm\\v1\\engine\\core.py",
+      "class": "EngineCore",
+      "method": "__init__",
+      "begin": 153,
+      "end": 290
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\overlay\\vllm\\v1\\engine\\core.py",
+      "class": "EngineCore",
+      "method": "_ks_initialize_restore_notifications",
+      "begin": 292,
+      "end": 321
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\overlay\\vllm\\v1\\engine\\core.py",
+      "class": "EngineCore",
+      "method": "configure_ks_core_event_pump",
+      "begin": 532,
+      "end": 550
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\overlay\\vllm\\v1\\engine\\core.py",
+      "class": "EngineCore",
+      "method": "_ks_consume_stage_events",
+      "begin": 560,
+      "end": 570
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\20261027_PP分段就绪原型\\lmcache_stage_observer\\vllm_multi_process_adapter.py",
+      "class": "LMCacheMPWorkerAdapter",
+      "method": "configure_ks_stage_observer",
+      "begin": 2069,
+      "end": 2078
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\overlay\\lmcache\\integration\\vllm\\lmcache_mp_connector.py",
+      "class": "LMCacheMPConnector",
+      "method": "__init__",
+      "begin": 573,
+      "end": 839
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\overlay\\lmcache\\integration\\vllm\\lmcache_mp_connector.py",
+      "class": "LMCacheMPConnector",
+      "method": "role",
+      "begin": 842,
+      "end": 843
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\overlay\\lmcache\\integration\\vllm\\lmcache_mp_connector.py",
+      "class": "LMCacheMPConnector",
+      "method": "transfer_intermediate_tensors",
+      "begin": 846,
+      "end": 853
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\overlay\\lmcache\\integration\\vllm\\lmcache_mp_connector.py",
+      "class": "LMCacheMPConnector",
+      "method": "start_load_kv",
+      "begin": 909,
+      "end": 952
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\overlay\\lmcache\\integration\\vllm\\lmcache_mp_connector.py",
+      "class": "LMCacheMPConnector",
+      "method": "build_connector_meta",
+      "begin": 1480,
+      "end": 1514
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\overlay\\lmcache\\integration\\vllm\\lmcache_mp_connector.py",
+      "class": "LMCacheMPConnector",
+      "method": "_process_retrieve_requests",
+      "begin": 1689,
+      "end": 1705
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\overlay\\vllm\\v1\\executor\\multiproc_executor.py",
+      "class": "WorkerProc",
+      "method": "_init_stage_event_channel",
+      "begin": 1062,
+      "end": 1079
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\overlay\\vllm\\v1\\engine\\core.py",
+      "class": "EngineCore",
+      "method": "__init__",
+      "begin": 153,
+      "end": 290
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\overlay\\vllm\\v1\\engine\\core.py",
+      "class": "EngineCore",
+      "method": "_ks_initialize_restore_notifications",
+      "begin": 292,
+      "end": 321
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\overlay\\vllm\\v1\\engine\\core.py",
+      "class": "EngineCore",
+      "method": "configure_ks_core_event_pump",
+      "begin": 532,
+      "end": 550
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\overlay\\vllm\\v1\\engine\\core.py",
+      "class": "EngineCore",
+      "method": "_ks_consume_stage_events",
+      "begin": 560,
+      "end": 570
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\20261027_PP分段就绪原型\\lmcache_stage_observer\\vllm_multi_process_adapter.py",
+      "class": "LMCacheMPWorkerAdapter",
+      "method": "configure_ks_stage_observer",
+      "begin": 2069,
+      "end": 2078
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\overlay\\lmcache\\integration\\vllm\\lmcache_mp_connector.py",
+      "class": "LMCacheMPConnector",
+      "method": "__init__",
+      "begin": 573,
+      "end": 839
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\overlay\\lmcache\\integration\\vllm\\lmcache_mp_connector.py",
+      "class": "LMCacheMPConnector",
+      "method": "role",
+      "begin": 842,
+      "end": 843
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\overlay\\lmcache\\integration\\vllm\\lmcache_mp_connector.py",
+      "class": "LMCacheMPConnector",
+      "method": "transfer_intermediate_tensors",
+      "begin": 846,
+      "end": 853
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\overlay\\lmcache\\integration\\vllm\\lmcache_mp_connector.py",
+      "class": "LMCacheMPConnector",
+      "method": "start_load_kv",
+      "begin": 909,
+      "end": 952
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\overlay\\lmcache\\integration\\vllm\\lmcache_mp_connector.py",
+      "class": "LMCacheMPConnector",
+      "method": "build_connector_meta",
+      "begin": 1480,
+      "end": 1514
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\overlay\\lmcache\\integration\\vllm\\lmcache_mp_connector.py",
+      "class": "LMCacheMPConnector",
+      "method": "_process_retrieve_requests",
+      "begin": 1689,
+      "end": 1705
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\overlay\\vllm\\v1\\executor\\multiproc_executor.py",
+      "class": "WorkerProc",
+      "method": "_init_stage_event_channel",
+      "begin": 1062,
+      "end": 1079
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\overlay\\vllm\\v1\\engine\\core.py",
+      "class": "EngineCore",
+      "method": "__init__",
+      "begin": 153,
+      "end": 290
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\overlay\\vllm\\v1\\engine\\core.py",
+      "class": "EngineCore",
+      "method": "_ks_initialize_restore_notifications",
+      "begin": 292,
+      "end": 321
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\overlay\\vllm\\v1\\engine\\core.py",
+      "class": "EngineCore",
+      "method": "configure_ks_core_event_pump",
+      "begin": 532,
+      "end": 550
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\overlay\\vllm\\v1\\engine\\core.py",
+      "class": "EngineCore",
+      "method": "_ks_consume_stage_events",
+      "begin": 560,
+      "end": 570
+    }
+  ],
+  "fixtures": [
+    "model executor/initialization",
+    "adapter network transfer and CPU retrieve Future",
+    "NPU context",
+    "request tracker and block slicing",
+    "parallel groups/config"
+  ],
+  "normal_core_constructor_body_executed": true,
+  "actual_model_loaded": false,
+  "npu_actions": 0,
+  "stage_driver_integrated": false,
+  "installed_source_modified": false
+}

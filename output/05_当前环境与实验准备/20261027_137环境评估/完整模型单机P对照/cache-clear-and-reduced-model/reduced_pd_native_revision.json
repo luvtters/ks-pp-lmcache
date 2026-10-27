@@ -1,0 +1,10 @@
+{
+  "root": "/opt/ks-stage-ready-luv-20261027/reduced-pd",
+  "asset_count": 3,
+  "view": {
+    "untouched": true
+  },
+  "services_started": false,
+  "device_framework_imported": false,
+  "bash_syntax": "PASS"
+}

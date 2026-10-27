@@ -1,0 +1,1137 @@
+{
+  "status": "PASS_ACTUAL_SCHEDULER_FIRST_TOKEN_CPU_ONLY",
+  "tests": 8,
+  "failures": 0,
+  "errors": 0,
+  "actual_methods": [
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "class": "NewRequestData",
+      "method": "from_request",
+      "begin": 47,
+      "end": 65
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "class": "NewRequestData",
+      "method": "__repr__",
+      "begin": 67,
+      "end": 83
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "class": "NewRequestData",
+      "method": "anon_repr",
+      "begin": 86,
+      "end": 108
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "class": "CachedRequestData",
+      "method": "anon_repr",
+      "begin": 129,
+      "end": 144
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "class": "CachedRequestData",
+      "method": "__repr__",
+      "begin": 146,
+      "end": 147
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "class": "CachedRequestData",
+      "method": "num_reqs",
+      "begin": 150,
+      "end": 151
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "class": "CachedRequestData",
+      "method": "_req_id_to_num_output_tokens",
+      "begin": 154,
+      "end": 161
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "class": "CachedRequestData",
+      "method": "is_context_phase",
+      "begin": 163,
+      "end": 165
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "class": "CachedRequestData",
+      "method": "make_empty",
+      "begin": 168,
+      "end": 177
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "class": "SchedulerOutput",
+      "method": "make_empty",
+      "begin": 244,
+      "end": 255
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "schedule",
+      "begin": 341,
+      "end": 969
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "_build_kv_connector_meta",
+      "begin": 971,
+      "end": 974
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "_update_after_schedule",
+      "begin": 999,
+      "end": 1042
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "_make_cached_request_data",
+      "begin": 1087,
+      "end": 1145
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "_is_blocked_waiting_status",
+      "begin": 1655,
+      "end": 1660
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "_select_waiting_queue_for_scheduling",
+      "begin": 1668,
+      "end": 1678
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "_update_waiting_for_remote_kv",
+      "begin": 2157,
+      "end": 2189
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "ks_bind_stage_controller",
+      "begin": 2191,
+      "end": 2192
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "_try_promote_blocked_waiting_request",
+      "begin": 2194,
+      "end": 2228
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "_update_from_kv_xfer_finished",
+      "begin": 2230,
+      "end": 2259
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "class": "NewRequestData",
+      "method": "from_request",
+      "begin": 47,
+      "end": 65
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "class": "NewRequestData",
+      "method": "__repr__",
+      "begin": 67,
+      "end": 83
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "class": "NewRequestData",
+      "method": "anon_repr",
+      "begin": 86,
+      "end": 108
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "class": "CachedRequestData",
+      "method": "anon_repr",
+      "begin": 129,
+      "end": 144
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "class": "CachedRequestData",
+      "method": "__repr__",
+      "begin": 146,
+      "end": 147
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "class": "CachedRequestData",
+      "method": "num_reqs",
+      "begin": 150,
+      "end": 151
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "class": "CachedRequestData",
+      "method": "_req_id_to_num_output_tokens",
+      "begin": 154,
+      "end": 161
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "class": "CachedRequestData",
+      "method": "is_context_phase",
+      "begin": 163,
+      "end": 165
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "class": "CachedRequestData",
+      "method": "make_empty",
+      "begin": 168,
+      "end": 177
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "class": "SchedulerOutput",
+      "method": "make_empty",
+      "begin": 244,
+      "end": 255
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "schedule",
+      "begin": 341,
+      "end": 969
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "_build_kv_connector_meta",
+      "begin": 971,
+      "end": 974
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "_update_after_schedule",
+      "begin": 999,
+      "end": 1042
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "_make_cached_request_data",
+      "begin": 1087,
+      "end": 1145
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "_is_blocked_waiting_status",
+      "begin": 1655,
+      "end": 1660
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "_select_waiting_queue_for_scheduling",
+      "begin": 1668,
+      "end": 1678
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "_update_waiting_for_remote_kv",
+      "begin": 2157,
+      "end": 2189
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "ks_bind_stage_controller",
+      "begin": 2191,
+      "end": 2192
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "_try_promote_blocked_waiting_request",
+      "begin": 2194,
+      "end": 2228
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "_update_from_kv_xfer_finished",
+      "begin": 2230,
+      "end": 2259
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "class": "NewRequestData",
+      "method": "from_request",
+      "begin": 47,
+      "end": 65
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "class": "NewRequestData",
+      "method": "__repr__",
+      "begin": 67,
+      "end": 83
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "class": "NewRequestData",
+      "method": "anon_repr",
+      "begin": 86,
+      "end": 108
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "class": "CachedRequestData",
+      "method": "anon_repr",
+      "begin": 129,
+      "end": 144
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "class": "CachedRequestData",
+      "method": "__repr__",
+      "begin": 146,
+      "end": 147
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "class": "CachedRequestData",
+      "method": "num_reqs",
+      "begin": 150,
+      "end": 151
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "class": "CachedRequestData",
+      "method": "_req_id_to_num_output_tokens",
+      "begin": 154,
+      "end": 161
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "class": "CachedRequestData",
+      "method": "is_context_phase",
+      "begin": 163,
+      "end": 165
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "class": "CachedRequestData",
+      "method": "make_empty",
+      "begin": 168,
+      "end": 177
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "class": "SchedulerOutput",
+      "method": "make_empty",
+      "begin": 244,
+      "end": 255
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "schedule",
+      "begin": 341,
+      "end": 969
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "_build_kv_connector_meta",
+      "begin": 971,
+      "end": 974
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "_update_after_schedule",
+      "begin": 999,
+      "end": 1042
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "_make_cached_request_data",
+      "begin": 1087,
+      "end": 1145
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "_is_blocked_waiting_status",
+      "begin": 1655,
+      "end": 1660
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "_select_waiting_queue_for_scheduling",
+      "begin": 1668,
+      "end": 1678
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "_update_waiting_for_remote_kv",
+      "begin": 2157,
+      "end": 2189
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "ks_bind_stage_controller",
+      "begin": 2191,
+      "end": 2192
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "_try_promote_blocked_waiting_request",
+      "begin": 2194,
+      "end": 2228
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "_update_from_kv_xfer_finished",
+      "begin": 2230,
+      "end": 2259
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "class": "NewRequestData",
+      "method": "from_request",
+      "begin": 47,
+      "end": 65
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "class": "NewRequestData",
+      "method": "__repr__",
+      "begin": 67,
+      "end": 83
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "class": "NewRequestData",
+      "method": "anon_repr",
+      "begin": 86,
+      "end": 108
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "class": "CachedRequestData",
+      "method": "anon_repr",
+      "begin": 129,
+      "end": 144
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "class": "CachedRequestData",
+      "method": "__repr__",
+      "begin": 146,
+      "end": 147
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "class": "CachedRequestData",
+      "method": "num_reqs",
+      "begin": 150,
+      "end": 151
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "class": "CachedRequestData",
+      "method": "_req_id_to_num_output_tokens",
+      "begin": 154,
+      "end": 161
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "class": "CachedRequestData",
+      "method": "is_context_phase",
+      "begin": 163,
+      "end": 165
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "class": "CachedRequestData",
+      "method": "make_empty",
+      "begin": 168,
+      "end": 177
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "class": "SchedulerOutput",
+      "method": "make_empty",
+      "begin": 244,
+      "end": 255
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "schedule",
+      "begin": 341,
+      "end": 969
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "_build_kv_connector_meta",
+      "begin": 971,
+      "end": 974
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "_update_after_schedule",
+      "begin": 999,
+      "end": 1042
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "_make_cached_request_data",
+      "begin": 1087,
+      "end": 1145
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "_is_blocked_waiting_status",
+      "begin": 1655,
+      "end": 1660
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "_select_waiting_queue_for_scheduling",
+      "begin": 1668,
+      "end": 1678
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "_update_waiting_for_remote_kv",
+      "begin": 2157,
+      "end": 2189
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "ks_bind_stage_controller",
+      "begin": 2191,
+      "end": 2192
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "_try_promote_blocked_waiting_request",
+      "begin": 2194,
+      "end": 2228
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "_update_from_kv_xfer_finished",
+      "begin": 2230,
+      "end": 2259
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "class": "NewRequestData",
+      "method": "from_request",
+      "begin": 47,
+      "end": 65
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "class": "NewRequestData",
+      "method": "__repr__",
+      "begin": 67,
+      "end": 83
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "class": "NewRequestData",
+      "method": "anon_repr",
+      "begin": 86,
+      "end": 108
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "class": "CachedRequestData",
+      "method": "anon_repr",
+      "begin": 129,
+      "end": 144
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "class": "CachedRequestData",
+      "method": "__repr__",
+      "begin": 146,
+      "end": 147
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "class": "CachedRequestData",
+      "method": "num_reqs",
+      "begin": 150,
+      "end": 151
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "class": "CachedRequestData",
+      "method": "_req_id_to_num_output_tokens",
+      "begin": 154,
+      "end": 161
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "class": "CachedRequestData",
+      "method": "is_context_phase",
+      "begin": 163,
+      "end": 165
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "class": "CachedRequestData",
+      "method": "make_empty",
+      "begin": 168,
+      "end": 177
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "class": "SchedulerOutput",
+      "method": "make_empty",
+      "begin": 244,
+      "end": 255
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "schedule",
+      "begin": 341,
+      "end": 969
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "_build_kv_connector_meta",
+      "begin": 971,
+      "end": 974
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "_update_after_schedule",
+      "begin": 999,
+      "end": 1042
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "_make_cached_request_data",
+      "begin": 1087,
+      "end": 1145
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "_is_blocked_waiting_status",
+      "begin": 1655,
+      "end": 1660
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "_select_waiting_queue_for_scheduling",
+      "begin": 1668,
+      "end": 1678
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "_update_waiting_for_remote_kv",
+      "begin": 2157,
+      "end": 2189
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "ks_bind_stage_controller",
+      "begin": 2191,
+      "end": 2192
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "_try_promote_blocked_waiting_request",
+      "begin": 2194,
+      "end": 2228
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "_update_from_kv_xfer_finished",
+      "begin": 2230,
+      "end": 2259
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "class": "NewRequestData",
+      "method": "from_request",
+      "begin": 47,
+      "end": 65
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "class": "NewRequestData",
+      "method": "__repr__",
+      "begin": 67,
+      "end": 83
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "class": "NewRequestData",
+      "method": "anon_repr",
+      "begin": 86,
+      "end": 108
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "class": "CachedRequestData",
+      "method": "anon_repr",
+      "begin": 129,
+      "end": 144
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "class": "CachedRequestData",
+      "method": "__repr__",
+      "begin": 146,
+      "end": 147
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "class": "CachedRequestData",
+      "method": "num_reqs",
+      "begin": 150,
+      "end": 151
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "class": "CachedRequestData",
+      "method": "_req_id_to_num_output_tokens",
+      "begin": 154,
+      "end": 161
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "class": "CachedRequestData",
+      "method": "is_context_phase",
+      "begin": 163,
+      "end": 165
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "class": "CachedRequestData",
+      "method": "make_empty",
+      "begin": 168,
+      "end": 177
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "class": "SchedulerOutput",
+      "method": "make_empty",
+      "begin": 244,
+      "end": 255
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "schedule",
+      "begin": 341,
+      "end": 969
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "_build_kv_connector_meta",
+      "begin": 971,
+      "end": 974
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "_update_after_schedule",
+      "begin": 999,
+      "end": 1042
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "_make_cached_request_data",
+      "begin": 1087,
+      "end": 1145
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "_is_blocked_waiting_status",
+      "begin": 1655,
+      "end": 1660
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "_select_waiting_queue_for_scheduling",
+      "begin": 1668,
+      "end": 1678
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "_update_waiting_for_remote_kv",
+      "begin": 2157,
+      "end": 2189
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "ks_bind_stage_controller",
+      "begin": 2191,
+      "end": 2192
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "_try_promote_blocked_waiting_request",
+      "begin": 2194,
+      "end": 2228
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "_update_from_kv_xfer_finished",
+      "begin": 2230,
+      "end": 2259
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "class": "NewRequestData",
+      "method": "from_request",
+      "begin": 47,
+      "end": 65
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "class": "NewRequestData",
+      "method": "__repr__",
+      "begin": 67,
+      "end": 83
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "class": "NewRequestData",
+      "method": "anon_repr",
+      "begin": 86,
+      "end": 108
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "class": "CachedRequestData",
+      "method": "anon_repr",
+      "begin": 129,
+      "end": 144
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "class": "CachedRequestData",
+      "method": "__repr__",
+      "begin": 146,
+      "end": 147
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "class": "CachedRequestData",
+      "method": "num_reqs",
+      "begin": 150,
+      "end": 151
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "class": "CachedRequestData",
+      "method": "_req_id_to_num_output_tokens",
+      "begin": 154,
+      "end": 161
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "class": "CachedRequestData",
+      "method": "is_context_phase",
+      "begin": 163,
+      "end": 165
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "class": "CachedRequestData",
+      "method": "make_empty",
+      "begin": 168,
+      "end": 177
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "class": "SchedulerOutput",
+      "method": "make_empty",
+      "begin": 244,
+      "end": 255
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "schedule",
+      "begin": 341,
+      "end": 969
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "_build_kv_connector_meta",
+      "begin": 971,
+      "end": 974
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "_update_after_schedule",
+      "begin": 999,
+      "end": 1042
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "_make_cached_request_data",
+      "begin": 1087,
+      "end": 1145
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "_is_blocked_waiting_status",
+      "begin": 1655,
+      "end": 1660
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "_select_waiting_queue_for_scheduling",
+      "begin": 1668,
+      "end": 1678
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "_update_waiting_for_remote_kv",
+      "begin": 2157,
+      "end": 2189
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "ks_bind_stage_controller",
+      "begin": 2191,
+      "end": 2192
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "_try_promote_blocked_waiting_request",
+      "begin": 2194,
+      "end": 2228
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "_update_from_kv_xfer_finished",
+      "begin": 2230,
+      "end": 2259
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "class": "NewRequestData",
+      "method": "from_request",
+      "begin": 47,
+      "end": 65
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "class": "NewRequestData",
+      "method": "__repr__",
+      "begin": 67,
+      "end": 83
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "class": "NewRequestData",
+      "method": "anon_repr",
+      "begin": 86,
+      "end": 108
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "class": "CachedRequestData",
+      "method": "anon_repr",
+      "begin": 129,
+      "end": 144
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "class": "CachedRequestData",
+      "method": "__repr__",
+      "begin": 146,
+      "end": 147
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "class": "CachedRequestData",
+      "method": "num_reqs",
+      "begin": 150,
+      "end": 151
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "class": "CachedRequestData",
+      "method": "_req_id_to_num_output_tokens",
+      "begin": 154,
+      "end": 161
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "class": "CachedRequestData",
+      "method": "is_context_phase",
+      "begin": 163,
+      "end": 165
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "class": "CachedRequestData",
+      "method": "make_empty",
+      "begin": 168,
+      "end": 177
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "class": "SchedulerOutput",
+      "method": "make_empty",
+      "begin": 244,
+      "end": 255
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "schedule",
+      "begin": 341,
+      "end": 969
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "_build_kv_connector_meta",
+      "begin": 971,
+      "end": 974
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "_update_after_schedule",
+      "begin": 999,
+      "end": 1042
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "_make_cached_request_data",
+      "begin": 1087,
+      "end": 1145
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "_is_blocked_waiting_status",
+      "begin": 1655,
+      "end": 1660
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "_select_waiting_queue_for_scheduling",
+      "begin": 1668,
+      "end": 1678
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "_update_waiting_for_remote_kv",
+      "begin": 2157,
+      "end": 2189
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "ks_bind_stage_controller",
+      "begin": 2191,
+      "end": 2192
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "_try_promote_blocked_waiting_request",
+      "begin": 2194,
+      "end": 2228
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "_update_from_kv_xfer_finished",
+      "begin": 2230,
+      "end": 2259
+    }
+  ],
+  "fixtures": [
+    "request/config",
+    "KV cache manager",
+    "connector metadata",
+    "parallel controller state",
+    "request queue"
+  ],
+  "npu_actions": 0,
+  "installed_source_changes": 0
+}

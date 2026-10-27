@@ -1,0 +1,56 @@
+{
+  "status": "CONFIRMED_CURRENT_STAGE_DRIVER_CONTRACTS",
+  "cases": 4,
+  "failures": 0,
+  "errors": 0,
+  "sources": [
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\20261027_PP分段就绪原型\\draft_wait_followup\\multiproc_executor.py",
+      "class": "WorkerProc",
+      "method": "_handle_stage_command",
+      "begin": 1078,
+      "end": 1101
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\20261027_PP分段就绪原型\\controller\\stage_controller.py",
+      "class": "StageController",
+      "method": "admit_batch",
+      "begin": 118,
+      "end": 148
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\20261027_PP分段就绪原型\\worker_split\\worker.py",
+      "class": "NPUWorker",
+      "method": "pp_stage_release_ready",
+      "begin": 770,
+      "end": 802
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_25环境准备\\25镜像源码与配置快照\\sources\\vllm\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "_update_waiting_for_remote_kv",
+      "begin": 2154,
+      "end": 2186
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_25环境准备\\25镜像源码与配置快照\\sources\\vllm\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "_try_promote_blocked_waiting_request",
+      "begin": 2188,
+      "end": 2219
+    }
+  ],
+  "counterfactuals": [
+    "front-ready inserted into global finished set",
+    "execute inserted into control allowlist"
+  ],
+  "fixtures": [
+    "request/cache manager",
+    "model output payload",
+    "worker model completion and connector output"
+  ],
+  "runtime_stage_driver_delivered": false,
+  "model_started": false,
+  "npu_actions": 0,
+  "installed_source_changes": 0
+}

@@ -1,0 +1,15 @@
+{
+  "status": "ACTUAL137_OBSERVER_REBASED_NOT_INSTALLED",
+  "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\adapter_rebase\\actual137_vllm_multi_process_adapter.py",
+  "candidate": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\lmcache\\integration\\vllm\\vllm_multi_process_adapter.py",
+  "changed_existing_methods": [
+    "LMCacheMPWorkerAdapter.get_finished",
+    "LMCacheMPWorkerAdapter.get_finished_with_lazy_offload",
+    "LMCacheMPWorkerAdapter.shutdown",
+    "LMCacheMPWorkerAdapter.submit_retrieve_request"
+  ],
+  "scheduler_lookup_methods_unchanged": true,
+  "lmcache_upstream_commit": "NOT_VERIFIED",
+  "installed_source_changes": 0,
+  "npu_actions": 0
+}

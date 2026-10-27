@@ -1,0 +1,497 @@
+--- actual137/vllm/v1/executor/multiproc_executor.py
++++ private/vllm/v1/executor/multiproc_executor.py
+@@ -64,7 +64,170 @@
+ from vllm.v1.outputs import AsyncModelRunnerOutput, DraftTokenIds, ModelRunnerOutput
+ from vllm.v1.worker.worker_base import WorkerWrapperBase
+ 
++from ks_stage_executor_driver import (KSStageRPCCommand, KSStageWireReply, FirstTokenStageDriver, handle_worker_command)
++
+ logger = init_logger(__name__)
++
++
++_KS_STAGE_METHODS = {
++    "input_received": "pp_stage_input_received",
++    "input_ready": "pp_stage_input_ready",
++    "model_ready": "pp_stage_model_ready",
++    "release_ready": "pp_stage_release_ready",
++    "release": "release_pp_stage_batch",
++}
++_KS_EVENT_KINDS = frozenset(("CONTROL_RESULT", "CONTROL_ERROR",
++                           "KV_DEVICE_READY", "INPUT_DEVICE_READY",
++                           "STAGE_DEVICE_DONE"))
++
++
++def _ks_identity(event_id, batch_id, generation, stage):
++    if not (type(event_id) is str and 0 < len(event_id) <= 128
++            and type(batch_id) is str and 0 < len(batch_id) <= 128
++            and type(generation) is int and generation >= 0
++            and type(stage) is int and stage >= 0):
++        raise ValueError("invalid stage event/command identity")
++
++
++@dataclass(frozen=True)
++class KSStageCommand:
++    command_id: str
++    batch_id: str
++    generation: int
++    target_stage: int
++    operation: str
++    final_output_consumed: bool = False
++
++    def validate(self):
++        _ks_identity(self.command_id, self.batch_id, self.generation,
++                     self.target_stage)
++        if (self.operation not in _KS_STAGE_METHODS
++                or type(self.final_output_consumed) is not bool):
++            raise ValueError("unsupported stage control command")
++
++
++@dataclass(frozen=True)
++class KSStageEvent:
++    event_id: str
++    batch_id: str
++    generation: int
++    stage: int
++    worker_id: int
++    sequence: int
++    kind: str
++    value: bool | str | None = None
++
++    def validate(self):
++        _ks_identity(self.event_id, self.batch_id, self.generation, self.stage)
++        if (type(self.worker_id) is not int or self.worker_id < 0
++                or type(self.sequence) is not int or self.sequence < 1
++                or self.kind not in _KS_EVENT_KINDS
++                or type(self.value) not in (bool, str, type(None))
++                or (type(self.value) is str and len(self.value) > 512)):
++            raise ValueError("invalid stage event payload")
++
++
++@dataclass(frozen=True)
++class KSRestoreEvent:
++    """Per-request restore identity; deliberately has no logical batch ID."""
++    event_id: str
++    request_id: str
++    restore_generation: int
++    stage: int
++    worker_id: int
++    tp_rank: int
++    pcp_rank: int
++    sequence: int
++
++    def validate(self):
++        if (type(self.event_id) is not str or not 0 < len(self.event_id) <= 128
++                or type(self.request_id) is not str or not self.request_id
++                or any(type(value) is not int or value < 0 for value in (
++                    self.restore_generation, self.stage, self.worker_id,
++                    self.tp_rank, self.pcp_rank))
++                or type(self.sequence) is not int or self.sequence < 1):
++            raise ValueError("invalid restore event identity")
++
++
++class _KSStageEventPublisher:
++    """One writer thread per worker; never runs model/HCCL/Future queries.
++
++    Any future host observer must enqueue a previously obtained readiness fact.
++    It must NOT query the same LMCache Future as an existing completion path.
++    """
++    def __init__(self, transport, failed, worker_id, stage, tp_size=None, pcp_size=1):
++        self.transport = transport
++        self.failed = failed
++        self.worker_id = worker_id
++        self.stage = stage
++        self.tp_size = tp_size
++        self.pcp_size = pcp_size
++        self.pending = queue.Queue(maxsize=64)
++        self.stopped = threading.Event()
++        self.lock = threading.Lock()
++        self.sequence = 0
++        self.thread = Thread(target=self._run, daemon=True,
++                             name="KSStageEventWriter")
++        self.thread.start()
++
++    def publish(self, event_id, batch_id, generation, kind, value=None):
++        with self.lock:
++            if self.stopped.is_set() or self.failed.is_set():
++                raise RuntimeError("stage event channel unavailable")
++            event = KSStageEvent(event_id, batch_id, generation, self.stage,
++                                 self.worker_id, self.sequence + 1, kind, value)
++            event.validate()
++            try:
++                self.pending.put_nowait(event)
++            except queue.Full:
++                self.failed.set()
++                raise RuntimeError("stage event inbox full") from None
++            self.sequence += 1
++
++    def publish_restore_ready(self, identity):
++        # Called only with success drained from the unique device-future owner.
++        # This method does not query/synchronize an event or manufacture readiness.
++        identity.validate()
++        if (self.pcp_size != 1 or type(self.tp_size) is not int or self.tp_size < 1
++                or identity.global_worker_rank != self.worker_id
++                or identity.stage_id != self.stage
++                or self.stage != self.worker_id // self.tp_size
++                or identity.tp_rank != self.worker_id % self.tp_size
++                or identity.pcp_rank != 0):
++            raise ValueError("restore identity does not match publisher PP/TP/PCP rank")
++        with self.lock:
++            if self.stopped.is_set() or self.failed.is_set():
++                raise RuntimeError("stage event channel unavailable")
++            sequence = self.sequence + 1
++            event = KSRestoreEvent(f"restore:{self.worker_id}:{sequence}",
++                identity.request_id, identity.restore_generation, self.stage,
++                self.worker_id, identity.tp_rank, identity.pcp_rank, sequence)
++            event.validate()
++            try:
++                self.pending.put_nowait(event)
++            except queue.Full:
++                self.failed.set()
++                raise RuntimeError("stage event inbox full") from None
++            self.sequence = sequence
++
++    def _run(self):
++        while not self.stopped.is_set():
++            try:
++                event = self.pending.get(timeout=0.05)
++            except queue.Empty:
++                continue
++            try:
++                self.transport.put_nowait(event)
++            except (queue.Full, OSError, ValueError):
++                self.failed.set()
++                return
++
++    def close(self):
++        self.stopped.set()
++        self.thread.join(timeout=0.2)
++        # Never join a multiprocessing feeder whose reader may have exited.
++        self.transport.cancel_join_thread()
++        self.transport.close()
+ 
+ 
+ class FutureWrapper(Future):
+@@ -157,6 +320,7 @@
+             scheduler_output_handle = self.rpc_broadcast_mq.export_handle()
+         # Create workers
+         context = get_mp_context()
++        self._init_stage_event_channels(context, tp_size, pp_size, pcp_size)
+         shared_worker_lock = context.Lock()
+         unready_workers: list[UnreadyWorkerProcHandle] = []
+         success = False
+@@ -188,6 +352,7 @@
+                         shared_worker_lock=shared_worker_lock,
+                         is_driver_worker=is_driver_worker,
+                         inherited_fds=inherited_fds,
++                        stage_event_channel=self._ks_stage_channels.get(global_rank),
+                     )
+                 unready_workers.append(unready_worker_handle)
+                 if inherited_fds is not None:
+@@ -304,29 +469,35 @@
+         else:
+             self.failure_callback = callback
+ 
+-    def execute_model(  # type: ignore[override]
+-        self, scheduler_output: SchedulerOutput, non_block: bool = False
+-    ) -> ModelRunnerOutput | None | Future[ModelRunnerOutput | None]:
+-        return self.collective_rpc(
+-            "execute_model",
+-            args=(scheduler_output,),
+-            unique_reply_rank=self.output_rank,
+-            non_block=non_block,
+-            timeout=envs.VLLM_EXECUTE_MODEL_TIMEOUT_SECONDS,
+-            kv_output_aggregator=self.kv_output_aggregator,
+-        )
+-
+-    def sample_tokens(  # type: ignore[override]
+-        self, grammar_output: GrammarOutput | None, non_block: bool = False
+-    ) -> ModelRunnerOutput | Future[ModelRunnerOutput]:
+-        return self.collective_rpc(
+-            "sample_tokens",
+-            args=(grammar_output,),
+-            unique_reply_rank=self.output_rank,
+-            non_block=non_block,
+-            timeout=envs.VLLM_EXECUTE_MODEL_TIMEOUT_SECONDS,
+-            kv_output_aggregator=self.kv_output_aggregator,
+-        )
++    def execute_model(self, scheduler_output, non_block=False):
++        driver = getattr(self, "_ks_stage_driver", None)
++        if driver is None:
++            return self._ks_legacy_execute_model(scheduler_output, non_block=non_block)
++        if not hasattr(self, "_ks_sample_routes"):
++            self._ks_sample_routes = deque()
++        tag = getattr(scheduler_output, "ks_stage_batch", None)
++        if scheduler_output.total_num_scheduled_tokens:
++            self._ks_sample_routes.append("stage" if tag else "legacy")
++        if tag:
++            if not non_block:
++                raise ValueError("staged execute requires the core's existing non-blocking call")
++            return driver.admit(scheduler_output)
++        if driver.batches:
++            return driver.defer_legacy(lambda: self._ks_legacy_execute_model(scheduler_output, non_block=True))
++        return self._ks_legacy_execute_model(scheduler_output, non_block=non_block)
++
++    def sample_tokens(self, grammar_output, non_block=False):
++        driver = getattr(self, "_ks_stage_driver", None)
++        if driver is None:
++            return self._ks_legacy_sample_tokens(grammar_output, non_block=non_block)
++        route = self._ks_sample_routes.popleft()
++        if route == "stage":
++            if not non_block:
++                raise ValueError("staged sample requires the core's existing non-blocking call")
++            return driver.request_sample(grammar_output)
++        if driver.batches:
++            return driver.defer_legacy(lambda: self._ks_legacy_sample_tokens(grammar_output, non_block=True))
++        return self._ks_legacy_sample_tokens(grammar_output, non_block=non_block)
+ 
+     def execute_dummy_batch(self) -> None:
+         self.collective_rpc("execute_dummy_batch", unique_reply_rank=self.output_rank)
+@@ -513,6 +684,151 @@
+         return True
+ 
+ 
++    def _init_stage_event_channels(self, context, tp_size, pp_size, pcp_size):
++        self._ks_stage_channels = {}
++        self._ks_stage_sequences = {}
++        self._ks_stage_pending = {}
++        self._ks_stage_poll_owner = None
++        self._ks_stage_rpc_owner = threading.get_ident()
++        self._ks_stage_tp_size = tp_size * pcp_size
++        self._ks_restore_tp_size = tp_size
++        self._ks_restore_pcp_size = pcp_size
++        self._ks_stage_count = pp_size
++        if os.environ.get("KS_PP_STAGE_EVENTS") != "1":
++            return
++        if (self.parallel_config.nnodes_within_dp != 1
++                or self.local_world_size != self.world_size):
++            raise ValueError("KS stage sidechannel supports single-node only")
++        for rank in range(self.world_size):
++            self._ks_stage_channels[rank] = (context.Queue(maxsize=64),
++                                              context.Event())
++
++    def submit_stage_command(self, command):
++        if not self._ks_stage_channels:
++            raise RuntimeError("KS stage sidechannel is disabled")
++        if threading.get_ident() != self._ks_stage_rpc_owner:
++            raise RuntimeError("stage and ordinary RPC must share the core writer")
++        if self.is_failed:
++            raise RuntimeError("Executor failed.")
++        if not isinstance(command, KSStageCommand):
++            raise ValueError("expected KSStageCommand")
++        command.validate()
++        if command.target_stage >= self._ks_stage_count:
++            raise ValueError("unknown PP stage")
++        if command.command_id in self._ks_stage_pending:
++            raise ValueError("duplicate pending stage command id")
++        ranks = frozenset(rank for rank in self._ks_stage_channels
++                          if rank // self._ks_stage_tp_size == command.target_stage)
++        if not ranks:
++            raise ValueError("target stage has no workers")
++        self._ks_stage_pending[command.command_id] = [command, set(ranks)]
++        try:
++            # Same single broadcast writer; no FutureWrapper/model FIFO entry.
++            self.rpc_broadcast_mq.enqueue((command, (), {}, None))
++        except Exception:
++            del self._ks_stage_pending[command.command_id]
++            raise
++        return ranks
++
++    def poll_stage_events(self, max_per_worker=8):
++        if type(max_per_worker) is not int or max_per_worker < 1:
++            raise ValueError("max_per_worker must be positive")
++        owner = threading.get_ident()
++        if self._ks_stage_poll_owner not in (None, owner):
++            raise RuntimeError("only one core reader may consume stage events")
++        self._ks_stage_poll_owner = owner
++        events = []
++        for rank, (transport, failed) in self._ks_stage_channels.items():
++            if failed.is_set():
++                raise RuntimeError(f"stage event channel failed for worker {rank}")
++            for _ in range(max_per_worker):
++                try:
++                    event = transport.get_nowait()
++                except queue.Empty:
++                    break
++                if isinstance(event, KSStageWireReply):
++                    event.validate((ModelRunnerOutput, AsyncModelRunnerOutput))
++                    if (event.worker_id != rank or event.stage != rank // self._ks_stage_tp_size
++                            or event.sequence != self._ks_stage_sequences.get(rank, 0) + 1):
++                        raise ValueError('typed stage worker/sequence mismatch')
++                    self._ks_stage_driver.accept(event)
++                    self._ks_stage_sequences[rank] = event.sequence
++                    continue
++                if not isinstance(event, (KSStageEvent, KSRestoreEvent)):
++                    raise ValueError("unexpected stage channel payload")
++                event.validate()
++                if (event.worker_id != rank
++                        or event.stage != rank // self._ks_stage_tp_size
++                        or event.sequence != self._ks_stage_sequences.get(rank, 0) + 1):
++                    raise ValueError("stage event worker/sequence mismatch")
++                if isinstance(event, KSRestoreEvent):
++                    if (self._ks_restore_pcp_size != 1
++                            or event.tp_rank != rank % self._ks_restore_tp_size
++                            or event.pcp_rank != 0):
++                        raise ValueError("restore event TP/PCP identity mismatch")
++                elif event.kind in ("CONTROL_RESULT", "CONTROL_ERROR"):
++                    pending = self._ks_stage_pending.get(event.event_id)
++                    if pending is None:
++                        raise ValueError("unknown or duplicate stage command result")
++                    command, ranks = pending
++                    if (event.batch_id != command.batch_id
++                            or event.generation != command.generation
++                            or event.stage != command.target_stage or rank not in ranks):
++                        raise ValueError("stage command result identity mismatch")
++                    ranks.remove(rank)
++                    if not ranks:
++                        del self._ks_stage_pending[event.event_id]
++                self._ks_stage_sequences[rank] = event.sequence
++                events.append(event)
++        if driver := getattr(self, '_ks_stage_driver', None):
++            driver.pump()
++        return events
++
++    def _close_stage_event_channels(self):
++        for transport, _ in getattr(self, "_ks_stage_channels", {}).values():
++            transport.cancel_join_thread()
++            transport.close()
++        self._ks_stage_channels = {}
++        self._ks_stage_pending = {}
++
++
++    def _ks_legacy_execute_model(  # type: ignore[override]
++        self, scheduler_output: SchedulerOutput, non_block: bool = False
++    ) -> ModelRunnerOutput | None | Future[ModelRunnerOutput | None]:
++        return self.collective_rpc(
++            "execute_model",
++            args=(scheduler_output,),
++            unique_reply_rank=self.output_rank,
++            non_block=non_block,
++            timeout=envs.VLLM_EXECUTE_MODEL_TIMEOUT_SECONDS,
++            kv_output_aggregator=self.kv_output_aggregator,
++        )
++
++    def _ks_legacy_sample_tokens(  # type: ignore[override]
++        self, grammar_output: GrammarOutput | None, non_block: bool = False
++    ) -> ModelRunnerOutput | Future[ModelRunnerOutput]:
++        return self.collective_rpc(
++            "sample_tokens",
++            args=(grammar_output,),
++            unique_reply_rank=self.output_rank,
++            non_block=non_block,
++            timeout=envs.VLLM_EXECUTE_MODEL_TIMEOUT_SECONDS,
++            kv_output_aggregator=self.kv_output_aggregator,
++        )
++
++
++    def ks_bind_stage_driver(self, controller, *, async_scheduling):
++        if os.environ.get("KS_PP_STAGE_DRIVER") != "1":
++            return
++        self._ks_stage_driver = FirstTokenStageDriver(self, controller,
++            (ModelRunnerOutput, AsyncModelRunnerOutput), async_scheduling=async_scheduling)
++
++    def ks_ack_stage_result(self, scheduler_output, model_output):
++        driver = getattr(self, "_ks_stage_driver", None)
++        if driver is not None:
++            driver.core_consumed(scheduler_output, model_output)
++
++
+ @dataclass
+ class UnreadyWorkerProcHandle:
+     """WorkerProcess handle before READY."""
+@@ -600,6 +916,7 @@
+         input_shm_handle: Handle,
+         shared_worker_lock: LockType,
+         is_driver_worker: bool,
++        stage_event_channel=None,
+     ):
+         self.rank = rank
+         wrapper = WorkerWrapperBase(rpc_rank=local_rank, global_rank=rank)
+@@ -650,6 +967,7 @@
+         # Initialize message queues after init_device() since multi-node setups
+         # (nnodes_within_dp > 1) require distributed groups to be initialized
+         self._init_message_queues(input_shm_handle, vllm_config)
++        self._init_stage_event_channel(stage_event_channel, vllm_config)
+ 
+         # Enable environment variable cache (e.g. assume no more
+         # environment variable overrides after this point)
+@@ -665,6 +983,7 @@
+         shared_worker_lock: LockType,
+         is_driver_worker: bool,
+         inherited_fds: list[int] | None = None,
++        stage_event_channel=None,
+     ) -> UnreadyWorkerProcHandle:
+         context = get_mp_context()
+         # Ready pipe to communicate readiness from child to parent
+@@ -684,6 +1003,7 @@
+             "death_pipe": death_reader,
+             "shared_worker_lock": shared_worker_lock,
+             "is_driver_worker": is_driver_worker,
++            "stage_event_channel": stage_event_channel,
+             # Have the worker close parent end of this worker's pipes too
+             "inherited_fds": inherited_fds if inherited_fds is not None else [],
+         }
+@@ -973,6 +1293,12 @@
+             method, args, kwargs, output_rank = self.rpc_broadcast_mq.dequeue(
+                 indefinite=True
+             )
++            if isinstance(method, KSStageRPCCommand):
++                handle_worker_command(self, method, (ModelRunnerOutput, AsyncModelRunnerOutput), AsyncModelRunnerOutput)
++                continue
++            if isinstance(method, KSStageCommand):
++                self._handle_stage_command(method)
++                continue
+             try:
+                 if isinstance(method, str):
+                     func = getattr(self.worker, method)
+@@ -1031,6 +1357,51 @@
+         decorate_logs(process_name)
+ 
+ 
++    def _init_stage_event_channel(self, stage_event_channel, vllm_config):
++        self._ks_stage_publisher = None
++        if stage_event_channel is None:
++            return
++        parallel = vllm_config.parallel_config
++        self._ks_stage_index = self.rank // (parallel.tensor_parallel_size
++                                            * parallel.prefill_context_parallel_size)
++        transport, failed = stage_event_channel
++        self._ks_stage_publisher = _KSStageEventPublisher(
++            transport, failed, self.rank, self._ks_stage_index,
++            tp_size=parallel.tensor_parallel_size,
++            pcp_size=parallel.prefill_context_parallel_size)
++        # Interface only. No LMCache/stream/event observer is installed here.
++        self.worker.ks_publish_stage_event = self._ks_stage_publisher.publish
++        self.worker.ks_publish_restore_ready = self._ks_stage_publisher.publish_restore_ready
++        if os.environ.get("KS_LMCACHE_STAGE_OBSERVER") == "1":
++            from lmcache.integration.vllm.ks_restore_runtime import register_worker_publisher
++            register_worker_publisher(self._ks_stage_publisher)
++
++    def _handle_stage_command(self, command):
++        publisher = self._ks_stage_publisher
++        if publisher is None:
++            raise RuntimeError("stage command received without sidechannel")
++        command.validate()
++        if self._ks_stage_index != command.target_stage:
++            return
++        try:
++            method = getattr(self.worker, _KS_STAGE_METHODS[command.operation])
++            batch_key = (command.batch_id, command.generation)
++            if command.operation in ("release_ready", "release"):
++                value = method(batch_key,
++                    final_output_consumed=command.final_output_consumed)
++            else:
++                value = method(batch_key)
++            if type(value) not in (bool, type(None)):
++                raise TypeError("stage controls may return only bool or None")
++        except Exception as error:
++            publisher.publish(command.command_id, command.batch_id,
++                              command.generation, "CONTROL_ERROR",
++                              f"{type(error).__name__}: {error}"[:512])
++            return
++        publisher.publish(command.command_id, command.batch_id,
++                          command.generation, "CONTROL_RESULT", value)
++
++
+ def set_multiprocessing_worker_envs():
+     """Set up environment variables that should be used when there are workers
+     in a multiprocessing environment. This should be called by the parent

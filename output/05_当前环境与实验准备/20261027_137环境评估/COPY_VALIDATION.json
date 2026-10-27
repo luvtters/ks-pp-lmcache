@@ -1,0 +1,10 @@
+{
+  "status": "EXACT_SELECTED_BYTES_AND_SOURCE_STABILITY_CONFIRMED",
+  "selected_source_files": 112,
+  "runtime_overlay_modules": 14,
+  "selected_total_bytes": 2747963,
+  "hashes_used": false,
+  "directory_walk_used": false,
+  "tests_rerun": false,
+  "pre_existing_files_modified": 0
+}

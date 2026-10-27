@@ -1,0 +1,15 @@
+--- stage-launcher-before/sitecustomize.py
++++ stage-launcher-after/sitecustomize.py
+@@ -19,6 +19,12 @@
+         if not _mooncake_path.is_absolute():
+             raise ImportError("KS_N16_MOONCAKE_OVERRIDE requires an absolute private source path")
+         modules["vllm_ascend.distributed.kv_transfer.kv_p2p.mooncake_connector"] = _mooncake_path.resolve()
++    _draft_override = os.environ.get("KS_N16_DRAFT_PROPOSER_OVERRIDE")
++    if _draft_override:
++        _draft_path = Path(_draft_override)
++        if not _draft_path.is_absolute():
++            raise ImportError("KS_N16_DRAFT_PROPOSER_OVERRIDE requires an absolute private source path")
++        modules["vllm_ascend.spec_decode.llm_base_proposer"] = _draft_path.resolve()
+ 
+     def find_spec(self, fullname, path=None, target=None):
+         source = self.modules.get(fullname)

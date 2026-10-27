@@ -1,0 +1,88 @@
+--- private-before/vllm/v1/core/sched/ks_stage_reservation.py
++++ private-after/vllm/v1/core/sched/ks_stage_reservation.py
+@@ -10,8 +10,13 @@
+ 
+ 
+ def bind(scheduler, controller):
+-    if tuple(map(len, controller.stage_workers)) != (8, 8):
+-        raise ValueError("this diagnostic requires unchanged TP8/PP2 workers")
++    pc = scheduler.parallel_config
++    tp = pc.tensor_parallel_size
++    if (type(tp) is not int or tp < 1 or pc.pipeline_parallel_size != 2
++            or pc.world_size != 2 * tp
++            or controller.stage_workers != (tuple(range(tp)), tuple(range(tp, 2 * tp)))
++            or any(type(rank) is not int for group in controller.stage_workers for rank in group)):
++        raise ValueError("stage workers must match actual single-node TP/PP2 global ranks")
+     if getattr(scheduler, "_ks_stage_controller", controller) is not controller:
+         raise RuntimeError("another stage controller is already bound")
+     scheduler._ks_stage_controller = controller
+@@ -20,18 +25,50 @@
+         scheduler._ks_partial_batch_sequence = 0
+ 
+ 
++def _trace_decision(scheduler, request, reason, decision):
++    if not os.environ.get("KS_STAGE_TRACE_DIR"):
++        return
++    controller = getattr(scheduler, "_ks_stage_controller", None)
++    restore = controller._restores.get(request.request_id) if controller is not None else None
++    front_ready = restore is not None and restore.ready[0] == set(controller.stage_workers[0])
++    all_ready = restore is not None and all(
++        restore.ready[stage] == set(controller.stage_workers[stage]) for stage in (0, 1))
++    busy = getattr(controller, "_busy", ())
++    stage_busy = any(value is not None for value in busy)
++    generation = restore.generation if restore is not None else None
++    global_finished = request.request_id in scheduler.finished_recving_kv_req_ids
++    state = (generation, reason, decision, front_ready, all_ready, stage_busy, global_finished)
++    previous = getattr(scheduler, "_ks_partial_trace_decisions", None)
++    if previous is None:
++        previous = scheduler._ks_partial_trace_decisions = {}
++    if previous.get(request.request_id) == state:
++        return
++    previous[request.request_id] = state
++    from ks_stage_executor_driver import trace_event
++    trace_event("partial_admission_decision", requests=((request.request_id, generation),),
++        reason=reason, decision=decision, front_kv_ready=front_ready,
++        all_stages_ready=all_ready, stage_busy=stage_busy,
++        request_global_finished=global_finished, timestamp_kind="cpu_scheduler_decision")
++
++
+ def try_partial_promotion(scheduler, request, waiting_status):
+     if not enabled() or request.status is not waiting_status:
+         return False
+     if request.request_id in scheduler.finished_recving_kv_req_ids:
++        _trace_decision(scheduler, request, "request_global_finished", "deferred_to_original")
+         return False
+     controller = getattr(scheduler, "_ks_stage_controller", None)
+     if controller is None:
+         raise RuntimeError("actual core stage controller must be bound before scheduling")
+     restore = controller._restores.get(request.request_id)
+-    if restore is None or restore.ready[0] != set(controller.stage_workers[0]):
++    if restore is None:
++        _trace_decision(scheduler, request, "restore_unregistered", "deferred")
++        return False
++    if restore.ready[0] != set(controller.stage_workers[0]):
++        _trace_decision(scheduler, request, "front_not_ready", "deferred")
+         return False
+     if restore.invalid:
++        _trace_decision(scheduler, request, "restore_invalid", "rejected")
+         raise RuntimeError("invalid restore cannot reserve stage computation")
+     position = min(request.num_computed_tokens, request.num_tokens - 1)
+     if (scheduler.scheduler_config.async_scheduling is not True
+@@ -41,6 +78,7 @@
+             or request.use_structured_output or request.has_encoder_inputs
+             or request.num_preemptions != 0 or position < 1
+             or request.num_tokens - position != 1):
++        _trace_decision(scheduler, request, "unsupported_request_shape", "rejected")
+         raise NotImplementedError("stage reservation supports only first token, max_tokens=1, no input speculation or chunked remainder")
+     reservations = scheduler._ks_partial_restore_reservations
+     if request.request_id in reservations:
+@@ -56,6 +94,9 @@
+     # The ordinary Scheduler will allocate the actual budget/blocks and create
+     # NewRequestData. Do not call _update_waiting_for_remote_kv/cache_blocks.
+     request.num_computed_tokens = position
++    reason = ("all_stages_ready" if all(restore.ready[stage] == set(controller.stage_workers[stage])
++              for stage in (0, 1)) else "front_ready")
++    _trace_decision(scheduler, request, reason, "reserved")
+     return True
+ 
+ 

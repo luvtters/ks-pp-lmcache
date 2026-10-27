@@ -1,0 +1,12 @@
+--- a/vllm/v1/executor/multiproc_executor.py
++++ b/vllm/v1/executor/multiproc_executor.py
+@@ -1074,6 +1074,9 @@
+         # Interface only. No LMCache/stream/event observer is installed here.
+         self.worker.ks_publish_stage_event = self._ks_stage_publisher.publish
+         self.worker.ks_publish_restore_ready = self._ks_stage_publisher.publish_restore_ready
++        if os.environ.get("KS_LMCACHE_STAGE_OBSERVER") == "1":
++            from lmcache.integration.vllm.ks_restore_runtime import register_worker_publisher
++            register_worker_publisher(self._ks_stage_publisher)
+ 
+     def _handle_stage_command(self, command):
+         publisher = self._ks_stage_publisher

@@ -1,0 +1,34 @@
+{
+  "status": "EXPLICIT_PROSPECTIVE_PATHS_ONLY_NO_GIT_ACTIONS",
+  "created_utc": "2026-10-27T13:49:09.235283+00:00",
+  "repository": "E:\\work\\ks\\repos\\ks-pp-lmcache",
+  "candidate_paths": 218,
+  "new_archive_paths": 213,
+  "necessary_new_old_input_paths": [
+    "output/04_修改策略与验证/01_修改策略与隔离候选/KV完成通知修改策略与隔离分支_20261022/capacity_followup/sources/lmcache/integration/vllm/lmcache_mp_metadata.py",
+    "output/04_修改策略与验证/01_修改策略与隔离候选/KV完成通知修改策略与隔离分支_20261022/capacity_followup/sources/vllm/v1/core/sched/async_scheduler.py",
+    "output/04_修改策略与验证/01_修改策略与隔离候选/KV完成通知修改策略与隔离分支_20261022/capacity_followup/sources/vllm/v1/core/sched/output.py",
+    "output/04_修改策略与验证/01_修改策略与隔离候选/KV完成通知修改策略与隔离分支_20261022/lmcache_only_followup/source_current/lmcache/integration/vllm/lmcache_mp_connector.py",
+    "output/04_修改策略与验证/01_修改策略与隔离候选/KV完成通知修改策略与隔离分支_20261022/source_baseline/vllm/v1/outputs.py"
+  ],
+  "source_manifests": [
+    "COPY_MANIFEST.json",
+    "COPY_INCREMENTAL_MANIFEST.json",
+    "INPUT_PLACEMENT.json"
+  ],
+  "excluded_initial_read_only_dependencies": [
+    "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/controller/stage_controller.py",
+    "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/worker_split/worker.py",
+    "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/lmcache_stage_observer/stage_observer.py",
+    "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/lmcache_stage_observer/build_lmcache_stage_observer.py",
+    "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/lmcache_stage_observer/vllm_multi_process_adapter.py",
+    "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/draft_wait_followup/multiproc_executor.py",
+    "output/04_修改策略与验证/01_修改策略与隔离候选/KV完成通知修改策略与隔离分支_20261022/lmcache_only_followup/source_current/lmcache/integration/vllm/vllm_multi_process_adapter.py",
+    "output/05_当前环境与实验准备/20261027_25环境准备/25镜像源码与配置快照/sources/vllm/vllm/v1/core/sched/scheduler.py"
+  ],
+  "git_actions": [],
+  "directory_scan_used": false,
+  "hashes_used": false,
+  "tests_rerun": false,
+  "customer_data_or_model_files_included": false
+}

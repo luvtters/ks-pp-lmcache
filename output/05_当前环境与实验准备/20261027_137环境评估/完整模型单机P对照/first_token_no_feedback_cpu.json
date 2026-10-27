@@ -1,0 +1,71 @@
+{
+  "status": "FOCUSED_ACTUAL_METHODS_CPU_PASS_NOT_HCCL_CAUSAL_PROOF",
+  "passed": 2,
+  "async_scheduling": true,
+  "request_scope": "max_tokens=1 only",
+  "config_change": {
+    "ks_local_p_complete": [
+      true,
+      false
+    ],
+    "ks_local_p_first_token_only": [
+      null,
+      true
+    ]
+  },
+  "sample_feedback": "original producer PP skip retained; no new HCCL sampled-token broadcast",
+  "sampled_and_draft_values": "unchanged CPU fixtures; last stage still proposes MTP and finalizes KV",
+  "LMCache17_pin_roles": "unchanged",
+  "runtime_HCCL_root_cause": "NOT_VERIFIED",
+  "service_actions": [],
+  "changes": [
+    {
+      "file": "p-local-first-token.serve.native.sh",
+      "config": {
+        "kv_connector": "MultiConnector",
+        "kv_role": "kv_producer",
+        "kv_connector_extra_config": {
+          "ks_local_p_complete": false,
+          "connectors": [
+            {
+              "kv_connector": "LMCacheMPConnector",
+              "kv_role": "kv_both",
+              "kv_connector_module_path": "lmcache.integration.vllm.lmcache_mp_connector",
+              "kv_connector_extra_config": {
+                "lmcache.mp.host": "tcp://127.0.0.1",
+                "lmcache.mp.port": 5565,
+                "lmcache.mp.autostart": false,
+                "lmcache.mp.nonblocking_lookup_status": false
+              }
+            }
+          ],
+          "ks_local_p_first_token_only": true
+        }
+      }
+    },
+    {
+      "file": "p-local-complete.serve.native.sh",
+      "config": {
+        "kv_connector": "MultiConnector",
+        "kv_role": "kv_producer",
+        "kv_connector_extra_config": {
+          "ks_local_p_complete": false,
+          "connectors": [
+            {
+              "kv_connector": "LMCacheMPConnector",
+              "kv_role": "kv_both",
+              "kv_connector_module_path": "lmcache.integration.vllm.lmcache_mp_connector",
+              "kv_connector_extra_config": {
+                "lmcache.mp.host": "tcp://127.0.0.1",
+                "lmcache.mp.port": 5565,
+                "lmcache.mp.autostart": false,
+                "lmcache.mp.nonblocking_lookup_status": false
+              }
+            }
+          ],
+          "ks_local_p_first_token_only": true
+        }
+      }
+    }
+  ]
+}

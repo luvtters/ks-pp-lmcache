@@ -1,0 +1,25 @@
+{
+  "status": "PASS_PRIVATE_TP_BINDING_DELTA_DEPLOYED_NOT_RELOADED",
+  "target": "/opt/ks-stage-ready-luv-20261027/standalone-p/runtime/stage-candidate/vllm/v1/core/sched/ks_stage_reservation.py",
+  "source_files_changed": 1,
+  "ast_valid": true,
+  "module_mappings": 17,
+  "cpu_evidence": {
+    "scheduler_reservation_cpu_result.json": {
+      "status": "PASS_ACTUAL_SCHEDULER_FIRST_TOKEN_CPU_ONLY",
+      "tests": 8
+    },
+    "executor_driver_cpu_result.json": {
+      "status": "PASS_CPU_ACTUAL_AST_WIRE_ONLY",
+      "tests": 9
+    },
+    "integrated_first_token_cpu_result.json": {
+      "status": "PASS_ACTUAL_SCHEDULER_WIRE_UPDATE_CPU_ONLY",
+      "tests": 2
+    }
+  },
+  "max_tokens_supported": 1,
+  "service_actions": 0,
+  "npu_actions": 0,
+  "compressed_payload_bytes": 2591
+}

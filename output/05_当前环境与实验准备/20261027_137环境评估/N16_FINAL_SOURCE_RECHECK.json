@@ -1,0 +1,54 @@
+{
+  "status": "FROZEN_N16_FINAL_SOURCE_AND_EXISTING_CPU_RECEIPT_MATCHED",
+  "updated_utc": "2026-10-27T13:49:08.470357+00:00",
+  "frozen_N16_files": 64,
+  "selected_with_selection_and_archive_entry": 67,
+  "N16_source_files_changed": 7,
+  "changed_archive_paths": [
+    "完整模型单机P对照/cache-clear-and-reduced-model/prepare_reduced_pd_private.py",
+    "完整模型单机P对照/cache-clear-and-reduced-model/prepare_p_hccl512.py",
+    "完整模型单机P对照/cache-clear-and-reduced-model/P_hccl512_deployment.json",
+    "完整模型单机P对照/cache-clear-and-reduced-model/reduced-pd-prepared/README.md",
+    "完整模型单机P对照/cache-clear-and-reduced-model/reduced-pd-prepared/startup/p-original-async.env.native.sh",
+    "完整模型单机P对照/cache-clear-and-reduced-model/reduced-pd-prepared/startup/p-stage-candidate.env.native.sh",
+    "完整模型单机P对照/cache-clear-and-reduced-model/archive_n16_selection.json",
+    "恢复身份与启动接线/stage_driver/archive_incremental_candidate.py",
+    "恢复身份与启动接线/stage_driver/前段先就绪_机制诊断边界.md"
+  ],
+  "final_proposer_review_diff_lines": 32,
+  "existing_CPU_receipt": {
+    "file": "draft_n16_family_quant_cpu.json",
+    "status": "PASS",
+    "special_weight_writes": 7,
+    "actual_quant_metadata_dispatch": "W8A8_DISPATCH_SUCCESS_REAL_TWO_KEYS",
+    "evidence_class": "ACTUAL_AST_CPU_ONLY",
+    "rerun": false,
+    "real_checkpoint_bytes_loaded": false
+  },
+  "runtime_boundary": {
+    "source": "root report; not remotely inspected by this archive action",
+    "D0": "ready",
+    "D1": "ready",
+    "P_previous_attempt": "target warmup DispatchFFNCombine operator error",
+    "P_env0_attempt": "MC2 reported required HCCL window 413MB exceeds actual 400MB",
+    "P_current_attempt": "original group restarting with common P-only FUSED_MC2=0 and HCCL_BUFFSIZE=512; not verified",
+    "PD_success": false,
+    "candidate_stage_compute_success": false
+  },
+  "common_P_fallback": {
+    "VLLM_ASCEND_ENABLE_FUSED_MC2": "0",
+    "HCCL_BUFFSIZE": "512",
+    "applied_to": [
+      "original-async",
+      "stage-candidate"
+    ],
+    "D_files_changed_by_fallback": false,
+    "benchmark_result_directories": "manager-compatible hyphenated paths"
+  },
+  "selected_content_review": "explicit whitelist excludes prompt/data/weights/venv/keys/logs; new additions are preparation/deployment and official source snapshots; native text references external data only",
+  "git_actions": [],
+  "tests_rerun": false,
+  "remote_actions": 0,
+  "original_299_files_written": 0,
+  "hashes_used": false
+}

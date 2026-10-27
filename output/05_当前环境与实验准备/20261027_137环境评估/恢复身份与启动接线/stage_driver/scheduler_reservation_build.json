@@ -1,0 +1,10 @@
+{
+  "status": "SCHEDULER_FIRST_TOKEN_OVERLAY_BUILT_NOT_INSTALLED",
+  "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_25环境准备\\25镜像源码与配置快照\\sources\\vllm\\vllm\\v1\\core\\sched\\scheduler.py",
+  "candidate": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+  "base_framework_commit": "0fc695fc6d1d82e9a5ac6835ac8e4e1c83703665",
+  "feature_flag": "KS_PP_STAGE_DRIVER",
+  "max_tokens_supported": 1,
+  "installed_source_changes": 0,
+  "npu_actions": 0
+}

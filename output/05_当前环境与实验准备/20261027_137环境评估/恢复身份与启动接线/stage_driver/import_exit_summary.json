@@ -1,0 +1,31 @@
+{
+  "source": "local import_exit_baseline_comparison.json; raw import logs intentionally excluded",
+  "rows": {
+    "candidate": {
+      "exit": -6,
+      "module_origins_printed": {
+        "vllm.v1.engine.core": "/opt/ks-stage-ready-luv-20261027/standalone-p/runtime/stage-candidate/vllm/v1/engine/core.py",
+        "vllm.v1.executor.multiproc_executor": "/opt/ks-stage-ready-luv-20261027/standalone-p/runtime/stage-candidate/vllm/v1/executor/multiproc_executor.py",
+        "vllm_ascend.worker.worker": "/opt/ks-stage-ready-luv-20261027/standalone-p/runtime/stage-candidate/vllm_ascend/worker/worker.py",
+        "lmcache.integration.vllm.vllm_multi_process_adapter": "/opt/ks-stage-ready-luv-20261027/standalone-p/runtime/stage-candidate/lmcache/integration/vllm/vllm_multi_process_adapter.py"
+      },
+      "stderr_last_line": [
+        "corrupted size vs. prev_size"
+      ]
+    },
+    "baseline": {
+      "exit": -6,
+      "module_origins_printed": {
+        "vllm.v1.engine.core": "/vllm-workspace/vllm/vllm/v1/engine/core.py",
+        "vllm.v1.executor.multiproc_executor": "/vllm-workspace/vllm/vllm/v1/executor/multiproc_executor.py",
+        "vllm_ascend.worker.worker": "/vllm-workspace/vllm-ascend/vllm_ascend/worker/worker.py",
+        "lmcache.integration.vllm.vllm_multi_process_adapter": "/opt/ks-lmcache-stage2/official-mp-v0.5.6rc5/venv/lib/python3.12/site-packages/lmcache/integration/vllm/vllm_multi_process_adapter.py"
+      },
+      "stderr_last_line": [
+        "corrupted size vs. prev_size"
+      ]
+    }
+  },
+  "interpretation": "Both import controls abort during interpreter teardown after printing module origins; candidate-only regression is not established. Native extension/environment/import teardown interaction remains unlocalized.",
+  "full_package_pass": false
+}

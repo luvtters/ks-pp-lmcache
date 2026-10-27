@@ -1,0 +1,54 @@
+--- actual137/mooncake_connector.py
++++ private/mooncake_connector_n16.py
+@@ -1194,6 +1194,15 @@
+         length_list.append(remote_ssm_len)
+ 
+     def _get_group_kv_caches(self, group_idx: int, layer_indices: list[int] | None = None) -> dict[str, Any]:
++        if _ks_n16_original_mtp_mapping(self.vllm_config):
++            group_spec, full_layer_indices = self.kv_group2layeridx[group_idx]
++            requested = set(full_layer_indices if layer_indices is None else layer_indices)
++            # Zip complete metadata first; filtering must not shift name/index pairs.
++            return {
++                name: self.kv_caches[name]
++                for name, logical_idx in zip(group_spec["layer_names"], full_layer_indices, strict=True)
++                if logical_idx in requested
++            }
+         if layer_indices is None:
+             _, layer_indices = self.kv_group2layeridx[group_idx]
+         layer_index_set = set(layer_indices)
+@@ -1973,6 +1982,22 @@
+         self.set_xfer_handshake_metadata_from_workers(metadata)
+ 
+ 
++def _ks_n16_original_mtp_mapping(vllm_config) -> bool:
++    """Only the approved target16 / original draft78 / one MTP KV layer."""
++    model = vllm_config.model_config
++    target = getattr(model, "hf_text_config", None) or getattr(model, "hf_config", None)
++    speculative = vllm_config.speculative_config
++    draft_model = getattr(speculative, "draft_model_config", None)
++    draft = getattr(draft_model, "hf_text_config", None) or getattr(draft_model, "hf_config", None)
++    return (
++        getattr(target, "model_type", None) == "glm_moe_dsa"
++        and getattr(target, "num_hidden_layers", None) == 16
++        and getattr(speculative, "method", None) == "mtp"
++        and getattr(draft, "num_hidden_layers", None) == 78
++        and getattr(draft, "num_nextn_predict_layers", None) == 1
++    )
++
++
+ class MooncakeConnectorWorker:
+     """Implementation of Worker side methods"""
+ 
+@@ -2199,7 +2224,11 @@
+                     next_mtp_layer_idx += 1
+                 else:
+                     layer_idx = extract_layer_index(layer_name, num_attn_module)
+-                    if assigned_indices and layer_idx < min(assigned_indices) or layer_idx in assigned_indices:
++                    if _ks_n16_original_mtp_mapping(self.vllm_config):
++                        # Preserve physical checkpoint/tensor names; transfer MTP as logical layer16.
++                        if layer_idx == 78:
++                            layer_idx = self.total_layers
++                    elif assigned_indices and layer_idx < min(assigned_indices) or layer_idx in assigned_indices:
+                         layer_idx = next_mtp_layer_idx
+                         next_mtp_layer_idx += 1
+                 assigned_indices.add(layer_idx)

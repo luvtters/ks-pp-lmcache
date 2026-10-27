@@ -1,0 +1,20 @@
+{
+  "status": "BUILT_PRIVATE_OVERLAY_NOT_INSTALLED",
+  "source": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\lmcache_only_followup\\source_current\\lmcache\\integration\\vllm\\lmcache_mp_connector.py",
+  "candidate": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\overlay\\lmcache\\integration\\vllm\\lmcache_mp_connector.py",
+  "archive_commit": "daa4d895b2afa63fc33b6b8182c8d50479ac25e3",
+  "lmcache_upstream_commit": "NOT_VERIFIED",
+  "worker_hook_applied": false,
+  "core_restore_binding_installed": false,
+  "generated_core_restore_binding": true,
+  "generated_worker_publisher_hook": true,
+  "normal_engine_core_started": false,
+  "server_actions": 0,
+  "npu_actions": 0,
+  "changes": [
+    "constructor after adapter initialization",
+    "scheduler metadata registration/stamp",
+    "worker metadata binding before retrieve",
+    "guarded adapter shutdown"
+  ]
+}

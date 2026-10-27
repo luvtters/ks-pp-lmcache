@@ -1,0 +1,70 @@
+--- a/vllm/v1/core/sched/scheduler.py
++++ b/vllm/v1/core/sched/scheduler.py
+@@ -1,5 +1,6 @@
+ # SPDX-License-Identifier: Apache-2.0
+ # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
++from vllm.v1.core.sched import ks_stage_reservation as _ks_stage_reservation
+ import itertools
+ import time
+ from collections import defaultdict, deque
+@@ -765,7 +766,7 @@
+                     new_computed_blocks=new_computed_blocks,
+                     num_lookahead_tokens=effective_lookahead_tokens,
+                     num_external_computed_tokens=num_external_computed_tokens,
+-                    delay_cache_blocks=load_kv_async,
++                    delay_cache_blocks=(load_kv_async or _ks_stage_reservation.delay_cache_blocks(self, request_id)),
+                     num_encoder_tokens=num_encoder_tokens,
+                     full_sequence_must_fit=self.scheduler_reserve_full_isl,
+                     reserved_blocks=reserved_blocks,
+@@ -962,6 +963,7 @@
+             )
+             scheduler_output.ec_connector_metadata = ec_meta
+ 
++        _ks_stage_reservation.attach_output(self, scheduler_output)
+         with record_function_or_nullcontext("schedule: update_after_schedule"):
+             self._update_after_schedule(scheduler_output)
+         return scheduler_output
+@@ -1337,7 +1339,7 @@
+         num_scheduled_tokens = scheduler_output.num_scheduled_tokens
+         pooler_outputs = model_runner_output.pooler_output
+         num_nans_in_logits = model_runner_output.num_nans_in_logits
+-        kv_connector_output = model_runner_output.kv_connector_output
++        kv_connector_output = _ks_stage_reservation.prepare_update_output(self, model_runner_output.kv_connector_output)
+         cudagraph_stats = model_runner_output.cudagraph_stats
+ 
+         perf_stats: PerfStats | None = None
+@@ -1646,6 +1648,7 @@
+                 engine_core_outputs[0] = eco = EngineCoreOutputs()
+             eco.scheduler_stats = stats
+ 
++        _ks_stage_reservation.after_update_output(self, scheduler_output)
+         return engine_core_outputs
+ 
+     @staticmethod
+@@ -2185,11 +2188,17 @@
+ 
+         self.finished_recving_kv_req_ids.remove(request.request_id)
+ 
++    def ks_bind_stage_controller(self, controller):
++        _ks_stage_reservation.bind(self, controller)
++
+     def _try_promote_blocked_waiting_request(self, request: Request) -> bool:
+         """
+         Try to promote a blocked waiting request back to schedulable states.
+         """
+         if request.status == RequestStatus.WAITING_FOR_REMOTE_KVS:
++            if _ks_stage_reservation.try_partial_promotion(self, request, RequestStatus.WAITING_FOR_REMOTE_KVS):
++                request.status = RequestStatus.WAITING
++                return True
+             # finished_recving_kv_req_ids is populated during
+             # update_from_output(), based on worker-side connector signals
+             # in KVConnectorOutput.finished_recving
+@@ -2235,6 +2244,8 @@
+         # KV Connector:: update recv and send status from last step.
+         for req_id in kv_connector_output.finished_recving or ():
+             logger.debug("Finished recving KV transfer for request %s", req_id)
++            if _ks_stage_reservation.handle_true_finished_recv(self, req_id):
++                continue
+             assert req_id in self.requests
+             req = self.requests[req_id]
+             if req.status == RequestStatus.WAITING_FOR_REMOTE_KVS:

@@ -1,0 +1,9 @@
+{
+  "status": "SPAN_CONTROLLER_BUILT_NOT_RUNTIME_INTEGRATED",
+  "source": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\20261027_PP分段就绪原型\\controller\\stage_controller.py",
+  "candidate": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\span_stage_controller.py",
+  "whole_batch_default": 2,
+  "same_request_active_spans_supported": true,
+  "installed_source_changes": 0,
+  "npu_actions": 0
+}

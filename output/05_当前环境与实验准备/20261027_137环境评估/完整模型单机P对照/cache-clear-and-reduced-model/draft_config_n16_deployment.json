@@ -1,0 +1,16 @@
+{
+  "files": [
+    "runtime/draft-n16/llm_base_proposer_n16.py",
+    "runtime/common/sitecustomize.py",
+    "runtime/p-original/sitecustomize.py",
+    "startup/common.env.native.sh",
+    "README.md",
+    "startup/p-original-async.serve.native.sh",
+    "startup/p-stage-candidate.serve.native.sh",
+    "startup/d0.serve.native.sh",
+    "startup/d1.serve.native.sh"
+  ],
+  "syntax": "PASS",
+  "service_action": false,
+  "public_or_installed_modified": false
+}

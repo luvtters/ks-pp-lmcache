@@ -1,0 +1,54 @@
+--- a/vllm/v1/engine/core.py
++++ b/vllm/v1/engine/core.py
+@@ -287,6 +287,39 @@
+         # environment variable overrides after this point)
+         enable_envs_cache()
+ 
++        self._ks_initialize_restore_notifications()
++
++    def _ks_initialize_restore_notifications(self):
++        # This hook registers facts only. No stage driver or model admission.
++        if os.environ.get("KS_LMCACHE_STAGE_OBSERVER") != "1":
++            return
++        if (os.environ.get("KS_PP_STAGE_EVENTS") != "1"
++                or os.environ.get("KS_CORE_STAGE_EVENT_PUMP") != "1"):
++            raise RuntimeError("restore notification startup requires all three KS flags")
++        pc = self.vllm_config.parallel_config
++        if (pc.pipeline_parallel_size != 2
++                or pc.prefill_context_parallel_size != 1
++                or pc.nnodes_within_dp != 1
++                or pc.data_parallel_size != 1
++                or pc.world_size != 2 * pc.tensor_parallel_size):
++            raise ValueError("restore startup supports single-node DP1/PP2/PCP1 only")
++        from vllm.v1.engine.ks_stage_controller import StageController
++        from vllm.v1.engine.ks_restore_binding import RestoreEventBinding
++        from vllm.v1.executor.multiproc_executor import KSRestoreEvent
++        from lmcache.integration.vllm.ks_restore_runtime import bind_scheduler_begin_restore
++        tp = pc.tensor_parallel_size
++        controller = StageController(
++            (tuple(range(tp)), tuple(range(tp, 2 * tp))),
++            max_inflight_batches=self.batch_queue_size,
++            max_buffered_activations=self.batch_queue_size)
++        binding = RestoreEventBinding(controller, KSRestoreEvent,
++                                      tp_size=tp, pcp_size=pc.prefill_context_parallel_size)
++        self.configure_ks_core_event_pump(binding)
++        bind_scheduler_begin_restore(controller.begin_restore)
++        self._ks_stage_controller = controller
++        self._ks_restore_binding = binding
++        self._ks_restore_notifications_only = True
++
+     @instrument(span_name="Prepare model")
+     def _initialize_kv_caches(self, vllm_config: VllmConfig) -> KVCacheConfig:
+         start = time.time()
+--- a/vllm/v1/executor/multiproc_executor.py
++++ b/vllm/v1/executor/multiproc_executor.py
+@@ -1074,6 +1074,9 @@
+         # Interface only. No LMCache/stream/event observer is installed here.
+         self.worker.ks_publish_stage_event = self._ks_stage_publisher.publish
+         self.worker.ks_publish_restore_ready = self._ks_stage_publisher.publish_restore_ready
++        if os.environ.get("KS_LMCACHE_STAGE_OBSERVER") == "1":
++            from lmcache.integration.vllm.ks_restore_runtime import register_worker_publisher
++            register_worker_publisher(self._ks_stage_publisher)
+ 
+     def _handle_stage_command(self, command):
+         publisher = self._ks_stage_publisher

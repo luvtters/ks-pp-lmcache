@@ -1,0 +1,19 @@
+--- installed/model_runner_local.py
++++ private/model_runner_local.py
+@@ -2407,7 +2407,15 @@
+         kv_connector_output = self.kv_connector_output
+         self.kv_connector_output = None
+         pp = get_pp_group()
+-        skip_pp_pd_broadcast = self.is_kv_producer and pp.world_size > 1
++        local_p_complete = (
++            self.vllm_config.kv_transfer_config is not None
++            and self.vllm_config.kv_transfer_config.get_from_extra_config(
++                "ks_local_p_complete", False
++            )
++        )
++        skip_pp_pd_broadcast = (
++            self.is_kv_producer and pp.world_size > 1 and not local_p_complete
++        )
+ 
+         if self.execute_model_state is None:
+             # Nothing to do (PP non-final rank case), output isn't used.

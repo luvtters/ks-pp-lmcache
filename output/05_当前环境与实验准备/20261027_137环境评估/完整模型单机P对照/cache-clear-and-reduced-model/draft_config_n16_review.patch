@@ -1,0 +1,32 @@
+--- actual137/llm_base_proposer.py
++++ private/llm_base_proposer_n16.py
+@@ -301,6 +301,29 @@
+         from vllm.compilation.backends import set_model_tag
+ 
+         draft_vllm_config = self._create_draft_vllm_config()
++        draft_model_config = self.speculative_config.draft_model_config
++        if (
++            self.speculative_config.method == "mtp"
++            and getattr(self.vllm_config.model_config.hf_config, "model_type", None) == "glm_moe_dsa"
++            and getattr(self.vllm_config.model_config.hf_config, "num_hidden_layers", None) == 16
++            and getattr(draft_model_config.hf_config, "num_hidden_layers", None) == 78
++            and getattr(draft_model_config.hf_config, "num_nextn_predict_layers", None) == 1
++        ):
++            # New-style MTP constructors read vllm_config.model_config directly.
++            # Keep target configuration and shared runtime registries unchanged.
++            draft_vllm_config = copy.copy(draft_vllm_config)
++            construction_model_config = copy.copy(draft_model_config)
++            construction_model_config.hf_config = copy.deepcopy(draft_model_config.hf_config)
++            draft_text = getattr(draft_model_config, "hf_text_config", draft_model_config.hf_config)
++            construction_model_config.hf_text_config = (
++                construction_model_config.hf_config if draft_text is draft_model_config.hf_config else copy.deepcopy(draft_text)
++            )
++            # Match the verified GLM MTP construction family: its official packed
++            # map includes fused_qkv_a_proj; deepseek_mtp's generic map does not.
++            family = self.vllm_config.model_config.hf_config.model_type
++            construction_model_config.hf_config.model_type = family
++            construction_model_config.hf_text_config.model_type = family
++            draft_vllm_config.model_config = construction_model_config
+         draft_load_config = self.speculative_config.draft_load_config
+         logger.info(
+             "[spec_decode/base] Loading draft model: method=%s, load_format=%s, model=%s",

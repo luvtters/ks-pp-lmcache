@@ -1,0 +1,225 @@
+{
+  "status": "PASS_ACTUAL_AST_CONSTRUCTOR_AND_WEIGHT_WRITES_CPU_ONLY",
+  "cases": [
+    {
+      "case": "broken_target16_draft78_none",
+      "constructed_layers": [
+        "16"
+      ],
+      "writes": [
+        {
+          "input": "rot.weight",
+          "destination": "model.layers.16.rot.weight"
+        }
+      ],
+      "not_written": [
+        "model.layers.16.enorm.weight",
+        "model.layers.16.hnorm.weight",
+        "model.layers.16.shared_head.norm.weight",
+        "model.layers.16.shared_head.head.weight",
+        "model.layers.16.eh_proj.weight",
+        "model.embed_tokens.weight"
+      ],
+      "strict_failure": "Following weights were not initialized from checkpoint: {'model.layers.16.shared_head.norm.weight', 'model.layers.16.enorm.weight', 'model.layers.16.hnorm.weight', 'model.embed_tokens.weight', 'model.layers.16.shared_head.head.weight', 'model.layers.16.eh_proj.weight'}",
+      "target_unchanged": true,
+      "runtime_config_identities_preserved": true
+    },
+    {
+      "case": "quantization_only_does_not_fix_writes",
+      "constructed_layers": [
+        "16"
+      ],
+      "writes": [
+        {
+          "input": "rot.weight",
+          "destination": "model.layers.16.rot.weight"
+        }
+      ],
+      "not_written": [
+        "model.layers.16.enorm.weight",
+        "model.layers.16.hnorm.weight",
+        "model.layers.16.shared_head.norm.weight",
+        "model.layers.16.shared_head.head.weight",
+        "model.layers.16.eh_proj.weight",
+        "model.embed_tokens.weight"
+      ],
+      "strict_failure": null,
+      "target_unchanged": true,
+      "runtime_config_identities_preserved": true
+    },
+    {
+      "case": "private_copy_fix_strict_all_seven_written",
+      "constructed_layers": [
+        "78"
+      ],
+      "writes": [
+        {
+          "input": "model.layers.78.enorm.weight",
+          "destination": "model.layers.78.enorm.weight"
+        },
+        {
+          "input": "model.layers.78.hnorm.weight",
+          "destination": "model.layers.78.hnorm.weight"
+        },
+        {
+          "input": "model.layers.78.shared_head.norm.weight",
+          "destination": "model.layers.78.shared_head.norm.weight"
+        },
+        {
+          "input": "model.layers.78.shared_head.head.weight",
+          "destination": "model.layers.78.shared_head.head.weight"
+        },
+        {
+          "input": "model.layers.78.eh_proj.weight",
+          "destination": "model.layers.78.eh_proj.weight"
+        },
+        {
+          "input": "model.layers.78.embed_tokens.weight",
+          "destination": "model.embed_tokens.weight"
+        },
+        {
+          "input": "rot.weight",
+          "destination": "model.layers.78.rot.weight"
+        }
+      ],
+      "not_written": [],
+      "strict_failure": null,
+      "target_unchanged": true,
+      "runtime_config_identities_preserved": true
+    },
+    {
+      "case": "original78_private_guard_unchanged",
+      "constructed_layers": [
+        "78"
+      ],
+      "writes": [
+        {
+          "input": "model.layers.78.enorm.weight",
+          "destination": "model.layers.78.enorm.weight"
+        },
+        {
+          "input": "model.layers.78.hnorm.weight",
+          "destination": "model.layers.78.hnorm.weight"
+        },
+        {
+          "input": "model.layers.78.shared_head.norm.weight",
+          "destination": "model.layers.78.shared_head.norm.weight"
+        },
+        {
+          "input": "model.layers.78.shared_head.head.weight",
+          "destination": "model.layers.78.shared_head.head.weight"
+        },
+        {
+          "input": "model.layers.78.eh_proj.weight",
+          "destination": "model.layers.78.eh_proj.weight"
+        },
+        {
+          "input": "model.layers.78.embed_tokens.weight",
+          "destination": "model.embed_tokens.weight"
+        },
+        {
+          "input": "rot.weight",
+          "destination": "model.layers.78.rot.weight"
+        }
+      ],
+      "not_written": [],
+      "strict_failure": null,
+      "target_unchanged": true,
+      "runtime_config_identities_preserved": true
+    }
+  ],
+  "actual_methods": [
+    {
+      "class": "DeepSeekMultiTokenPredictor",
+      "method": "__init__",
+      "begin": 127,
+      "end": 150
+    },
+    {
+      "class": "DeepSeekMTP",
+      "method": "__init__",
+      "begin": 205,
+      "end": 213
+    },
+    {
+      "class": "DeepSeekMTP",
+      "method": "load_weights",
+      "begin": 261,
+      "end": 484
+    },
+    {
+      "class": "DeepSeekMTP",
+      "method": "_rewrite_spec_layer_name",
+      "begin": 486,
+      "end": 516
+    },
+    {
+      "class": "AscendDeepSeekMTP",
+      "method": "_rewrite_spec_layer_name",
+      "begin": 63,
+      "end": 67
+    },
+    {
+      "class": "BaseModelLoader",
+      "method": "__init__",
+      "begin": 28,
+      "end": 29
+    },
+    {
+      "class": "BaseModelLoader",
+      "method": "load_model",
+      "begin": 43,
+      "end": 82
+    },
+    {
+      "class": "DefaultModelLoader",
+      "method": "load_weights",
+      "begin": 382,
+      "end": 412
+    },
+    {
+      "class": "DefaultModelLoader",
+      "method": "track_weights_loading",
+      "begin": 414,
+      "end": 437
+    },
+    {
+      "class": "SpecDecodeBaseProposer",
+      "method": "_create_draft_vllm_config",
+      "begin": 1157,
+      "end": 1184
+    },
+    {
+      "class": "AscendSpecDecodeBaseProposer",
+      "method": "_get_model",
+      "begin": 296,
+      "end": 317
+    },
+    {
+      "class": "AscendSpecDecodeBaseProposer",
+      "method": "_get_model",
+      "begin": 296,
+      "end": 329
+    }
+  ],
+  "source_weight_names": [
+    "model.layers.78.enorm.weight",
+    "model.layers.78.hnorm.weight",
+    "model.layers.78.shared_head.norm.weight",
+    "model.layers.78.shared_head.head.weight",
+    "model.layers.78.eh_proj.weight",
+    "model.layers.78.embed_tokens.weight",
+    "rot.weight"
+  ],
+  "native_parent_create_draft_model_config_replaced": false,
+  "private_fix": "guarded copy.copy(draft_vllm_config); clone.model_config=spec.draft_model_config",
+  "fixtures": [
+    "dataclass configuration containers",
+    "nn modules/parameters and scalar weight markers",
+    "device/context and quant postprocess",
+    "MoE/expert and FP8 helpers not exercised"
+  ],
+  "real_checkpoint_bytes_loaded": false,
+  "npu_actions": 0,
+  "installed_source_changes": 0
+}

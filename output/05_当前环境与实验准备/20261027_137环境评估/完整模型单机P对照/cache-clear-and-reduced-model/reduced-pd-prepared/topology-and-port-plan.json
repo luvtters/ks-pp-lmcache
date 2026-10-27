@@ -1,0 +1,80 @@
+{
+  "topology": {
+    "prefill": {
+      "dp_size": 1,
+      "tp_size": 4,
+      "pp_size": 2,
+      "pp_layer_partition": "8,8"
+    },
+    "decode": {
+      "dp_size": 2,
+      "tp_size": 4,
+      "pp_size": 1
+    }
+  },
+  "ports": {
+    "P_API": 18100,
+    "P_master": 18190,
+    "D_APIs": [
+      18200,
+      18201
+    ],
+    "DP_RPC": 18300,
+    "proxy": 18083,
+    "cache_rpc": 5565,
+    "cache_http": 15565,
+    "P_Mooncake_handshake": [
+      28000,
+      28001,
+      28002,
+      28003,
+      28004,
+      28005,
+      28006,
+      28007
+    ],
+    "D0_Mooncake_handshake": [
+      29000,
+      29001,
+      29002,
+      29003
+    ],
+    "D1_Mooncake_handshake": [
+      29004,
+      29005,
+      29006,
+      29007
+    ],
+    "automatic": [
+      "Mooncake transfer-engine RPC ports",
+      "vLLM/HCCL internal auxiliary ports"
+    ],
+    "runtime_listener_availability_checked": false
+  },
+  "P_devices": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "D0_devices": [
+    8,
+    9,
+    10,
+    11
+  ],
+  "D1_devices": [
+    12,
+    13,
+    14,
+    15
+  ],
+  "D_global_EP_world": 8,
+  "DP_external_hybrid_mode": "explicit rank per API; original argv pattern",
+  "candidate_overlay_dependency": "standalone-p/runtime/stage-launcher (root maintained)",
+  "not_runtime_validated": true
+}

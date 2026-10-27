@@ -1,0 +1,14 @@
+{
+  "status": "PASS_EXACT_OPTIONAL_N16_FINDER_CPU_ONLY",
+  "tests": 5,
+  "failures": 0,
+  "errors": 0,
+  "canonical": "vllm_ascend.distributed.kv_transfer.kv_p2p.mooncake_connector",
+  "no_override_mappings": 17,
+  "with_override_mappings": 18,
+  "draft_canonical": "vllm_ascend.spec_decode.llm_base_proposer",
+  "both_override_mappings": 19,
+  "framework_imports": [],
+  "model_or_operator_calls": 0,
+  "service_actions": 0
+}

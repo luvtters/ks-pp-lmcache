@@ -1,0 +1,44 @@
+{
+  "captured_utc": "2026-10-27T12:24:09.898344+00:00",
+  "source": "one read-only stage-candidate-trace snapshot; full runtime log intentionally excluded",
+  "events": [
+    {
+      "utc": "2026-10-27T12:22:55.599277+00:00",
+      "monotonic_ns": 4615342624143347,
+      "pid": 1443066,
+      "thread_id": 281473358413952,
+      "phase": "stage_kv_ready_observed",
+      "batch": null,
+      "stage": 1,
+      "worker_id": null,
+      "requests": [
+        [
+          "cmpl-bench-d02ce169-0-0-98c718e4",
+          0
+        ]
+      ],
+      "front_kv_ready": false,
+      "all_kv_ready": false
+    },
+    {
+      "utc": "2026-10-27T12:22:55.625699+00:00",
+      "monotonic_ns": 4615342650554881,
+      "pid": 1443066,
+      "thread_id": 281473358413952,
+      "phase": "stage_kv_ready_observed",
+      "batch": null,
+      "stage": 0,
+      "worker_id": null,
+      "requests": [
+        [
+          "cmpl-bench-d02ce169-0-0-98c718e4",
+          0
+        ]
+      ],
+      "front_kv_ready": true,
+      "all_kv_ready": true
+    }
+  ],
+  "stage_compute_entered_proven": false,
+  "DMA_completion_order_proven": false
+}

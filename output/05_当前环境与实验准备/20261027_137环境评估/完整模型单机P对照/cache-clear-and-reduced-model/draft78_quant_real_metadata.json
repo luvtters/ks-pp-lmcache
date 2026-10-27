@@ -1,0 +1,11 @@
+{
+  "source": "/opt/ks-models/GLM-5.1-w8a8c8-MTP/quant_model_description.json",
+  "metadata_only": true,
+  "keys": {
+    "model.layers.78.self_attn.q_a_proj.weight": "W8A8",
+    "model.layers.78.self_attn.kv_a_proj_with_mqa.weight": "W8A8"
+  },
+  "missing_keys": [
+    "model.layers.78.self_attn.fused_qkv_a_proj.weight"
+  ]
+}

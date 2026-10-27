@@ -1,0 +1,540 @@
+{
+  "metadata_only": true,
+  "tensor_payload_read_bytes": 0,
+  "index": "/opt/ks-models/GLM-5.1-w8a8c8-MTP/quant_model_weights.safetensors.index.json",
+  "global_weight_names": [
+    "model.embed_tokens.weight",
+    "model.norm.weight",
+    "lm_head.weight",
+    "rot.weight"
+  ],
+  "mtp_special_weight_names": [
+    "model.layers.78.enorm.weight",
+    "model.layers.78.hnorm.weight",
+    "model.layers.78.shared_head.norm.weight",
+    "model.layers.78.shared_head.head.weight",
+    "model.layers.78.eh_proj.weight",
+    "model.layers.78.embed_tokens.weight"
+  ],
+  "shard_closure_candidates": [
+    {
+      "target_layers_N": 4,
+      "required_shards": 6,
+      "spill_keys_above_N": 0,
+      "only_filter_check": true,
+      "first_spill": []
+    },
+    {
+      "target_layers_N": 5,
+      "required_shards": 8,
+      "spill_keys_above_N": 0,
+      "only_filter_check": true,
+      "first_spill": []
+    },
+    {
+      "target_layers_N": 6,
+      "required_shards": 11,
+      "spill_keys_above_N": 0,
+      "only_filter_check": true,
+      "first_spill": []
+    },
+    {
+      "target_layers_N": 7,
+      "required_shards": 13,
+      "spill_keys_above_N": 0,
+      "only_filter_check": true,
+      "first_spill": []
+    },
+    {
+      "target_layers_N": 8,
+      "required_shards": 15,
+      "spill_keys_above_N": 0,
+      "only_filter_check": true,
+      "first_spill": []
+    },
+    {
+      "target_layers_N": 9,
+      "required_shards": 18,
+      "spill_keys_above_N": 0,
+      "only_filter_check": true,
+      "first_spill": []
+    },
+    {
+      "target_layers_N": 10,
+      "required_shards": 20,
+      "spill_keys_above_N": 0,
+      "only_filter_check": true,
+      "first_spill": []
+    },
+    {
+      "target_layers_N": 11,
+      "required_shards": 22,
+      "spill_keys_above_N": 0,
+      "only_filter_check": true,
+      "first_spill": []
+    },
+    {
+      "target_layers_N": 12,
+      "required_shards": 25,
+      "spill_keys_above_N": 0,
+      "only_filter_check": true,
+      "first_spill": []
+    },
+    {
+      "target_layers_N": 13,
+      "required_shards": 27,
+      "spill_keys_above_N": 0,
+      "only_filter_check": true,
+      "first_spill": []
+    },
+    {
+      "target_layers_N": 14,
+      "required_shards": 29,
+      "spill_keys_above_N": 0,
+      "only_filter_check": true,
+      "first_spill": []
+    },
+    {
+      "target_layers_N": 15,
+      "required_shards": 32,
+      "spill_keys_above_N": 0,
+      "only_filter_check": true,
+      "first_spill": []
+    },
+    {
+      "target_layers_N": 16,
+      "required_shards": 34,
+      "spill_keys_above_N": 0,
+      "only_filter_check": true,
+      "first_spill": []
+    },
+    {
+      "target_layers_N": 17,
+      "required_shards": 36,
+      "spill_keys_above_N": 0,
+      "only_filter_check": true,
+      "first_spill": []
+    },
+    {
+      "target_layers_N": 18,
+      "required_shards": 38,
+      "spill_keys_above_N": 0,
+      "only_filter_check": true,
+      "first_spill": []
+    },
+    {
+      "target_layers_N": 19,
+      "required_shards": 41,
+      "spill_keys_above_N": 0,
+      "only_filter_check": true,
+      "first_spill": []
+    },
+    {
+      "target_layers_N": 20,
+      "required_shards": 43,
+      "spill_keys_above_N": 0,
+      "only_filter_check": true,
+      "first_spill": []
+    },
+    {
+      "target_layers_N": 21,
+      "required_shards": 45,
+      "spill_keys_above_N": 0,
+      "only_filter_check": true,
+      "first_spill": []
+    },
+    {
+      "target_layers_N": 22,
+      "required_shards": 48,
+      "spill_keys_above_N": 0,
+      "only_filter_check": true,
+      "first_spill": []
+    },
+    {
+      "target_layers_N": 23,
+      "required_shards": 50,
+      "spill_keys_above_N": 0,
+      "only_filter_check": true,
+      "first_spill": []
+    },
+    {
+      "target_layers_N": 24,
+      "required_shards": 52,
+      "spill_keys_above_N": 0,
+      "only_filter_check": true,
+      "first_spill": []
+    },
+    {
+      "target_layers_N": 25,
+      "required_shards": 55,
+      "spill_keys_above_N": 0,
+      "only_filter_check": true,
+      "first_spill": []
+    },
+    {
+      "target_layers_N": 26,
+      "required_shards": 57,
+      "spill_keys_above_N": 0,
+      "only_filter_check": true,
+      "first_spill": []
+    },
+    {
+      "target_layers_N": 27,
+      "required_shards": 59,
+      "spill_keys_above_N": 0,
+      "only_filter_check": true,
+      "first_spill": []
+    },
+    {
+      "target_layers_N": 28,
+      "required_shards": 62,
+      "spill_keys_above_N": 0,
+      "only_filter_check": true,
+      "first_spill": []
+    },
+    {
+      "target_layers_N": 29,
+      "required_shards": 64,
+      "spill_keys_above_N": 0,
+      "only_filter_check": true,
+      "first_spill": []
+    },
+    {
+      "target_layers_N": 30,
+      "required_shards": 66,
+      "spill_keys_above_N": 0,
+      "only_filter_check": true,
+      "first_spill": []
+    },
+    {
+      "target_layers_N": 31,
+      "required_shards": 69,
+      "spill_keys_above_N": 0,
+      "only_filter_check": true,
+      "first_spill": []
+    },
+    {
+      "target_layers_N": 32,
+      "required_shards": 71,
+      "spill_keys_above_N": 0,
+      "only_filter_check": true,
+      "first_spill": []
+    },
+    {
+      "target_layers_N": 33,
+      "required_shards": 73,
+      "spill_keys_above_N": 0,
+      "only_filter_check": true,
+      "first_spill": []
+    },
+    {
+      "target_layers_N": 34,
+      "required_shards": 75,
+      "spill_keys_above_N": 0,
+      "only_filter_check": true,
+      "first_spill": []
+    },
+    {
+      "target_layers_N": 35,
+      "required_shards": 78,
+      "spill_keys_above_N": 0,
+      "only_filter_check": true,
+      "first_spill": []
+    },
+    {
+      "target_layers_N": 36,
+      "required_shards": 80,
+      "spill_keys_above_N": 0,
+      "only_filter_check": true,
+      "first_spill": []
+    },
+    {
+      "target_layers_N": 37,
+      "required_shards": 82,
+      "spill_keys_above_N": 0,
+      "only_filter_check": true,
+      "first_spill": []
+    },
+    {
+      "target_layers_N": 38,
+      "required_shards": 85,
+      "spill_keys_above_N": 0,
+      "only_filter_check": true,
+      "first_spill": []
+    },
+    {
+      "target_layers_N": 39,
+      "required_shards": 87,
+      "spill_keys_above_N": 0,
+      "only_filter_check": true,
+      "first_spill": []
+    },
+    {
+      "target_layers_N": 40,
+      "required_shards": 89,
+      "spill_keys_above_N": 0,
+      "only_filter_check": true,
+      "first_spill": []
+    },
+    {
+      "target_layers_N": 41,
+      "required_shards": 92,
+      "spill_keys_above_N": 0,
+      "only_filter_check": true,
+      "first_spill": []
+    },
+    {
+      "target_layers_N": 42,
+      "required_shards": 94,
+      "spill_keys_above_N": 0,
+      "only_filter_check": true,
+      "first_spill": []
+    },
+    {
+      "target_layers_N": 43,
+      "required_shards": 96,
+      "spill_keys_above_N": 0,
+      "only_filter_check": true,
+      "first_spill": []
+    },
+    {
+      "target_layers_N": 44,
+      "required_shards": 99,
+      "spill_keys_above_N": 0,
+      "only_filter_check": true,
+      "first_spill": []
+    },
+    {
+      "target_layers_N": 45,
+      "required_shards": 101,
+      "spill_keys_above_N": 0,
+      "only_filter_check": true,
+      "first_spill": []
+    },
+    {
+      "target_layers_N": 46,
+      "required_shards": 103,
+      "spill_keys_above_N": 0,
+      "only_filter_check": true,
+      "first_spill": []
+    },
+    {
+      "target_layers_N": 47,
+      "required_shards": 106,
+      "spill_keys_above_N": 0,
+      "only_filter_check": true,
+      "first_spill": []
+    },
+    {
+      "target_layers_N": 48,
+      "required_shards": 108,
+      "spill_keys_above_N": 0,
+      "only_filter_check": true,
+      "first_spill": []
+    },
+    {
+      "target_layers_N": 49,
+      "required_shards": 110,
+      "spill_keys_above_N": 0,
+      "only_filter_check": true,
+      "first_spill": []
+    },
+    {
+      "target_layers_N": 50,
+      "required_shards": 112,
+      "spill_keys_above_N": 0,
+      "only_filter_check": true,
+      "first_spill": []
+    },
+    {
+      "target_layers_N": 51,
+      "required_shards": 115,
+      "spill_keys_above_N": 0,
+      "only_filter_check": true,
+      "first_spill": []
+    },
+    {
+      "target_layers_N": 52,
+      "required_shards": 117,
+      "spill_keys_above_N": 0,
+      "only_filter_check": true,
+      "first_spill": []
+    },
+    {
+      "target_layers_N": 53,
+      "required_shards": 119,
+      "spill_keys_above_N": 0,
+      "only_filter_check": true,
+      "first_spill": []
+    },
+    {
+      "target_layers_N": 54,
+      "required_shards": 122,
+      "spill_keys_above_N": 0,
+      "only_filter_check": true,
+      "first_spill": []
+    },
+    {
+      "target_layers_N": 55,
+      "required_shards": 124,
+      "spill_keys_above_N": 0,
+      "only_filter_check": true,
+      "first_spill": []
+    },
+    {
+      "target_layers_N": 56,
+      "required_shards": 126,
+      "spill_keys_above_N": 0,
+      "only_filter_check": true,
+      "first_spill": []
+    },
+    {
+      "target_layers_N": 57,
+      "required_shards": 129,
+      "spill_keys_above_N": 0,
+      "only_filter_check": true,
+      "first_spill": []
+    },
+    {
+      "target_layers_N": 58,
+      "required_shards": 131,
+      "spill_keys_above_N": 0,
+      "only_filter_check": true,
+      "first_spill": []
+    },
+    {
+      "target_layers_N": 59,
+      "required_shards": 133,
+      "spill_keys_above_N": 0,
+      "only_filter_check": true,
+      "first_spill": []
+    },
+    {
+      "target_layers_N": 60,
+      "required_shards": 136,
+      "spill_keys_above_N": 0,
+      "only_filter_check": true,
+      "first_spill": []
+    },
+    {
+      "target_layers_N": 61,
+      "required_shards": 138,
+      "spill_keys_above_N": 0,
+      "only_filter_check": true,
+      "first_spill": []
+    },
+    {
+      "target_layers_N": 62,
+      "required_shards": 140,
+      "spill_keys_above_N": 0,
+      "only_filter_check": true,
+      "first_spill": []
+    },
+    {
+      "target_layers_N": 63,
+      "required_shards": 143,
+      "spill_keys_above_N": 0,
+      "only_filter_check": true,
+      "first_spill": []
+    },
+    {
+      "target_layers_N": 64,
+      "required_shards": 145,
+      "spill_keys_above_N": 0,
+      "only_filter_check": true,
+      "first_spill": []
+    },
+    {
+      "target_layers_N": 65,
+      "required_shards": 147,
+      "spill_keys_above_N": 0,
+      "only_filter_check": true,
+      "first_spill": []
+    },
+    {
+      "target_layers_N": 66,
+      "required_shards": 149,
+      "spill_keys_above_N": 0,
+      "only_filter_check": true,
+      "first_spill": []
+    },
+    {
+      "target_layers_N": 67,
+      "required_shards": 152,
+      "spill_keys_above_N": 0,
+      "only_filter_check": true,
+      "first_spill": []
+    },
+    {
+      "target_layers_N": 68,
+      "required_shards": 154,
+      "spill_keys_above_N": 0,
+      "only_filter_check": true,
+      "first_spill": []
+    },
+    {
+      "target_layers_N": 69,
+      "required_shards": 156,
+      "spill_keys_above_N": 0,
+      "only_filter_check": true,
+      "first_spill": []
+    },
+    {
+      "target_layers_N": 70,
+      "required_shards": 159,
+      "spill_keys_above_N": 0,
+      "only_filter_check": true,
+      "first_spill": []
+    },
+    {
+      "target_layers_N": 71,
+      "required_shards": 161,
+      "spill_keys_above_N": 0,
+      "only_filter_check": true,
+      "first_spill": []
+    },
+    {
+      "target_layers_N": 72,
+      "required_shards": 163,
+      "spill_keys_above_N": 0,
+      "only_filter_check": true,
+      "first_spill": []
+    },
+    {
+      "target_layers_N": 73,
+      "required_shards": 166,
+      "spill_keys_above_N": 0,
+      "only_filter_check": true,
+      "first_spill": []
+    },
+    {
+      "target_layers_N": 74,
+      "required_shards": 168,
+      "spill_keys_above_N": 0,
+      "only_filter_check": true,
+      "first_spill": []
+    },
+    {
+      "target_layers_N": 75,
+      "required_shards": 170,
+      "spill_keys_above_N": 0,
+      "only_filter_check": true,
+      "first_spill": []
+    },
+    {
+      "target_layers_N": 76,
+      "required_shards": 173,
+      "spill_keys_above_N": 0,
+      "only_filter_check": true,
+      "first_spill": []
+    },
+    {
+      "target_layers_N": 77,
+      "required_shards": 175,
+      "spill_keys_above_N": 0,
+      "only_filter_check": true,
+      "first_spill": []
+    }
+  ],
+  "note": "N scan is symbolic metadata feasibility, not approved model depth or runtime acceptance"
+}

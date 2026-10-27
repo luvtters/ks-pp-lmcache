@@ -1,0 +1,37 @@
+{
+  "status": "PASS_INACTIVE_PRIVATE_CANDIDATE_AST_AND_FINDER_ONLY",
+  "root": "/opt/ks-stage-ready-luv-20261027/standalone-p/runtime/stage-candidate",
+  "source_files": 14,
+  "finder_mappings": 17,
+  "origins": {
+    "vllm.v1.core.sched.scheduler": "/opt/ks-stage-ready-luv-20261027/standalone-p/runtime/stage-candidate/vllm/v1/core/sched/scheduler.py",
+    "vllm.v1.core.sched.ks_stage_reservation": "/opt/ks-stage-ready-luv-20261027/standalone-p/runtime/stage-candidate/vllm/v1/core/sched/ks_stage_reservation.py",
+    "vllm.v1.engine.core": "/opt/ks-stage-ready-luv-20261027/standalone-p/runtime/stage-candidate/vllm/v1/engine/core.py",
+    "vllm.v1.engine.ks_restore_binding": "/opt/ks-stage-ready-luv-20261027/standalone-p/runtime/stage-candidate/vllm/v1/engine/ks_restore_binding.py",
+    "vllm.v1.executor.multiproc_executor": "/opt/ks-stage-ready-luv-20261027/standalone-p/runtime/stage-candidate/vllm/v1/executor/multiproc_executor.py",
+    "vllm_ascend.worker.worker": "/opt/ks-stage-ready-luv-20261027/standalone-p/runtime/stage-candidate/vllm_ascend/worker/worker.py",
+    "lmcache.integration.vllm.lmcache_mp_connector": "/opt/ks-stage-ready-luv-20261027/standalone-p/runtime/stage-candidate/lmcache/integration/vllm/lmcache_mp_connector.py",
+    "lmcache_mp_connector_multi17": "/opt/ks-stage-ready-luv-20261027/standalone-p/runtime/stage-candidate/lmcache/integration/vllm/lmcache_mp_connector_multi17.py",
+    "lmcache.integration.vllm.lmcache_mp_connector_multi17": "/opt/ks-stage-ready-luv-20261027/standalone-p/runtime/stage-candidate/lmcache/integration/vllm/lmcache_mp_connector_multi17.py",
+    "lmcache.integration.vllm.vllm_multi_process_adapter": "/opt/ks-stage-ready-luv-20261027/standalone-p/runtime/stage-candidate/lmcache/integration/vllm/vllm_multi_process_adapter.py",
+    "lmcache.integration.vllm.ks_restore_runtime": "/opt/ks-stage-ready-luv-20261027/standalone-p/runtime/stage-candidate/lmcache/integration/vllm/ks_restore_runtime.py",
+    "lmcache.integration.vllm.ks_restore_metadata_bridge": "/opt/ks-stage-ready-luv-20261027/standalone-p/runtime/stage-candidate/lmcache/integration/vllm/ks_restore_metadata_bridge.py",
+    "ks_stage_executor_driver": "/opt/ks-stage-ready-luv-20261027/standalone-p/runtime/stage-candidate/ks_stage_executor_driver.py",
+    "typed_stage_protocol": "/opt/ks-stage-ready-luv-20261027/standalone-p/runtime/stage-candidate/typed_stage_protocol.py",
+    "span_stage_controller": "/opt/ks-stage-ready-luv-20261027/standalone-p/runtime/stage-candidate/span_stage_controller.py",
+    "lmcache.v1.platform.base.cache_context": "/opt/ks-stage-ready-luv-20261027/standalone-p/runtime/common/lmcache_cache_context_pinned.py",
+    "vllm_ascend.worker.model_runner_v1": "/opt/ks-stage-ready-luv-20261027/standalone-p/runtime/local-completion/model_runner_local.py"
+  },
+  "framework_imports": [],
+  "full_package_imported": false,
+  "candidate_enabled": false,
+  "service_actions": 0,
+  "npu_actions": 0,
+  "required_native_extra_config": {
+    "ks_local_p_complete": false
+  },
+  "compressed_bytes": 158946,
+  "transport": "stdin gzip/base64 source JSON",
+  "host": "115.120.85.137",
+  "container": "ks-pp-m137-priv"
+}

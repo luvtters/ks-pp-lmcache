@@ -1,0 +1,24 @@
+{
+  "status": "PASS",
+  "cases": [
+    "P-stage0 actual register address slots/name selection",
+    "P-stage1 actual register address slots/name selection",
+    "D actual register address slots/name selection",
+    "D PP last-stage8..16 selects target8..15 and actual MTP78 tensor",
+    "group order/reversed cache dict/noncontiguous subset retain exact name-index pairing",
+    "original mapping unchanged outside guard target78",
+    "original mapping unchanged outside guard target16",
+    "exact target16/draft78/MTP1 guard"
+  ],
+  "case_count": 8,
+  "actual_AST_methods": [
+    "_build_kv_group2layeridx",
+    "register_kv_caches",
+    "_get_group_kv_caches",
+    "pp_layer_indices"
+  ],
+  "fixture_scope": "KV specs/tensor metadata/transport-thread event only; no inference or transfer",
+  "device_imported": false,
+  "installed_source_modified": false,
+  "NPU_test": false
+}

@@ -1,0 +1,22 @@
+{
+  "status": "PASS_EXACT_FINDER_LAUNCHER_PARENT_PATH_FIX",
+  "launcher": "/opt/ks-stage-ready-luv-20261027/standalone-p/runtime/stage-launcher",
+  "candidate_root_absent_from_sys_path": true,
+  "exact_mappings": 17,
+  "parent_packages_untouched": [
+    "vllm",
+    "vllm.v1",
+    "vllm.v1.attention",
+    "lmcache",
+    "lmcache.integration",
+    "vllm_ascend"
+  ],
+  "old_partial_root_resolves_vllm_namespace": true,
+  "old_partial_v1_attention_found": false,
+  "original_framework_import_verification": "DEFERRED_TO_AUTHORIZED_ACTUAL_IMPORT",
+  "old_loader_inserted_candidate_root": true,
+  "framework_imports": [],
+  "full_package_imported": false,
+  "service_actions": 0,
+  "npu_actions": 0
+}

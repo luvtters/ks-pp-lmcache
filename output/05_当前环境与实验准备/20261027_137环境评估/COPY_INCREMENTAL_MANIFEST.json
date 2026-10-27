@@ -1,0 +1,1177 @@
+{
+  "status": "EXACT_EXPLICIT_INCREMENTAL_ARCHIVE_SYNC_LOCAL_ONLY",
+  "updated_utc": "2026-10-27T13:49:08.470357+00:00",
+  "source_root": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估",
+  "archive_root": "E:\\work\\ks\\repos\\ks-pp-lmcache\\output\\05_当前环境与实验准备\\20261027_137环境评估",
+  "selected_files": [
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/runtime_overlay/vllm/v1/core/sched/scheduler.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "bytes": 112613,
+      "action": "unchanged",
+      "bytes_equal": true,
+      "utf8_text_equal": true
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/runtime_overlay/vllm/v1/core/sched/ks_stage_reservation.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\ks_stage_reservation.py",
+      "bytes": 8651,
+      "action": "updated_new_archive_file",
+      "bytes_equal": true,
+      "utf8_text_equal": true
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/runtime_overlay/vllm/v1/engine/core.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\engine\\core.py",
+      "bytes": 100187,
+      "action": "unchanged",
+      "bytes_equal": true,
+      "utf8_text_equal": true
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/runtime_overlay/vllm/v1/engine/ks_restore_binding.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\engine\\ks_restore_binding.py",
+      "bytes": 2330,
+      "action": "unchanged",
+      "bytes_equal": true,
+      "utf8_text_equal": true
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/runtime_overlay/vllm/v1/executor/multiproc_executor.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\executor\\multiproc_executor.py",
+      "bytes": 59638,
+      "action": "unchanged",
+      "bytes_equal": true,
+      "utf8_text_equal": true
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/runtime_overlay/vllm_ascend/worker/worker.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm_ascend\\worker\\worker.py",
+      "bytes": 58485,
+      "action": "unchanged",
+      "bytes_equal": true,
+      "utf8_text_equal": true
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/runtime_overlay/lmcache/integration/vllm/lmcache_mp_connector.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\lmcache\\integration\\vllm\\lmcache_mp_connector.py",
+      "bytes": 77389,
+      "action": "unchanged",
+      "bytes_equal": true,
+      "utf8_text_equal": true
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/runtime_overlay/lmcache/integration/vllm/lmcache_mp_connector_multi17.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\lmcache\\integration\\vllm\\lmcache_mp_connector_multi17.py",
+      "bytes": 77389,
+      "action": "unchanged",
+      "bytes_equal": true,
+      "utf8_text_equal": true
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/runtime_overlay/lmcache/integration/vllm/vllm_multi_process_adapter.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\lmcache\\integration\\vllm\\vllm_multi_process_adapter.py",
+      "bytes": 117760,
+      "action": "unchanged",
+      "bytes_equal": true,
+      "utf8_text_equal": true
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/runtime_overlay/lmcache/integration/vllm/ks_restore_runtime.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\lmcache\\integration\\vllm\\ks_restore_runtime.py",
+      "bytes": 5687,
+      "action": "unchanged",
+      "bytes_equal": true,
+      "utf8_text_equal": true
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/runtime_overlay/lmcache/integration/vllm/ks_restore_metadata_bridge.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\lmcache\\integration\\vllm\\ks_restore_metadata_bridge.py",
+      "bytes": 7188,
+      "action": "unchanged",
+      "bytes_equal": true,
+      "utf8_text_equal": true
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/runtime_overlay/ks_stage_executor_driver.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\ks_stage_executor_driver.py",
+      "bytes": 20878,
+      "action": "unchanged",
+      "bytes_equal": true,
+      "utf8_text_equal": true
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/runtime_overlay/typed_stage_protocol.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\typed_stage_protocol.py",
+      "bytes": 11250,
+      "action": "unchanged",
+      "bytes_equal": true,
+      "utf8_text_equal": true
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/runtime_overlay/span_stage_controller.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\span_stage_controller.py",
+      "bytes": 13545,
+      "action": "unchanged",
+      "bytes_equal": true,
+      "utf8_text_equal": true
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/ks_stage_reservation.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\ks_stage_reservation.py",
+      "bytes": 8651,
+      "action": "updated_new_archive_file",
+      "bytes_equal": true,
+      "utf8_text_equal": true
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/check_scheduler_reservation.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\check_scheduler_reservation.py",
+      "bytes": 15804,
+      "action": "updated_new_archive_file",
+      "bytes_equal": true,
+      "utf8_text_equal": true
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/check_integrated_first_token.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\check_integrated_first_token.py",
+      "bytes": 10801,
+      "action": "updated_new_archive_file",
+      "bytes_equal": true,
+      "utf8_text_equal": true
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/build_scheduler_reservation.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\build_scheduler_reservation.py",
+      "bytes": 4268,
+      "action": "unchanged",
+      "bytes_equal": true,
+      "utf8_text_equal": true
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/build_unified_manifest.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\build_unified_manifest.py",
+      "bytes": 3803,
+      "action": "updated_new_archive_file",
+      "bytes_equal": true,
+      "utf8_text_equal": true
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/unified_overlay_manifest.json",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\unified_overlay_manifest.json",
+      "bytes": 4347,
+      "action": "updated_new_archive_file",
+      "bytes_equal": true,
+      "utf8_text_equal": true
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/scheduler_reservation_build.json",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\scheduler_reservation_build.json",
+      "bytes": 641,
+      "action": "unchanged",
+      "bytes_equal": true,
+      "utf8_text_equal": true
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/scheduler_reservation_cpu_result.json",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\scheduler_reservation_cpu_result.json",
+      "bytes": 53037,
+      "action": "updated_new_archive_file",
+      "bytes_equal": true,
+      "utf8_text_equal": true
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/integrated_first_token_cpu_result.json",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\integrated_first_token_cpu_result.json",
+      "bytes": 3042,
+      "action": "updated_new_archive_file",
+      "bytes_equal": true,
+      "utf8_text_equal": true
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/tp_binding_delta.patch",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\tp_binding_delta.patch",
+      "bytes": 4944,
+      "action": "added",
+      "bytes_equal": true,
+      "utf8_text_equal": true
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/tp_binding_private_deployment.json",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\tp_binding_private_deployment.json",
+      "bytes": 812,
+      "action": "added",
+      "bytes_equal": true,
+      "utf8_text_equal": true
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/TP4适配与观测.md",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\TP4适配与观测.md",
+      "bytes": 3086,
+      "action": "added",
+      "bytes_equal": true,
+      "utf8_text_equal": true
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/deploy_tp_binding_delta.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\deploy_tp_binding_delta.py",
+      "bytes": 3119,
+      "action": "added",
+      "bytes_equal": true,
+      "utf8_text_equal": true
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/deploy_private_candidate.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\deploy_private_candidate.py",
+      "bytes": 9006,
+      "action": "updated_new_archive_file",
+      "bytes_equal": true,
+      "utf8_text_equal": true
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/prepare_candidate_native.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\prepare_candidate_native.py",
+      "bytes": 5661,
+      "action": "updated_new_archive_file",
+      "bytes_equal": true,
+      "utf8_text_equal": true
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/repair_private_loader.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\repair_private_loader.py",
+      "bytes": 4107,
+      "action": "added",
+      "bytes_equal": true,
+      "utf8_text_equal": true
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/loader_parent_path_fix.json",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\loader_parent_path_fix.json",
+      "bytes": 720,
+      "action": "added",
+      "bytes_equal": true,
+      "utf8_text_equal": true
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/check_mooncake_optional_finder.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\check_mooncake_optional_finder.py",
+      "bytes": 5673,
+      "action": "added",
+      "bytes_equal": true,
+      "utf8_text_equal": true
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/mooncake_optional_finder_cpu_result.json",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\mooncake_optional_finder_cpu_result.json",
+      "bytes": 441,
+      "action": "added",
+      "bytes_equal": true,
+      "utf8_text_equal": true
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/deploy_optional_mooncake_loader.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\deploy_optional_mooncake_loader.py",
+      "bytes": 6225,
+      "action": "added",
+      "bytes_equal": true,
+      "utf8_text_equal": true
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/optional_mooncake_loader.patch",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\optional_mooncake_loader.patch",
+      "bytes": 907,
+      "action": "added",
+      "bytes_equal": true,
+      "utf8_text_equal": true
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/optional_mooncake_loader_deployment.json",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\optional_mooncake_loader_deployment.json",
+      "bytes": 734,
+      "action": "added",
+      "bytes_equal": true,
+      "utf8_text_equal": true
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/optional_n16_loader.patch",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\optional_n16_loader.patch",
+      "bytes": 858,
+      "action": "added",
+      "bytes_equal": true,
+      "utf8_text_equal": true
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/optional_n16_loader_deployment.json",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\optional_n16_loader_deployment.json",
+      "bytes": 954,
+      "action": "added",
+      "bytes_equal": true,
+      "utf8_text_equal": true
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/check_baseline_import_exit.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\check_baseline_import_exit.py",
+      "bytes": 4283,
+      "action": "added",
+      "bytes_equal": true,
+      "utf8_text_equal": true
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/read_stage_runtime_snapshot.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\read_stage_runtime_snapshot.py",
+      "bytes": 3444,
+      "action": "added",
+      "bytes_equal": true,
+      "utf8_text_equal": true
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/archive_incremental_candidate.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\archive_incremental_candidate.py",
+      "bytes": 22546,
+      "action": "added",
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_action": "updated"
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/native_candidate/stage-candidate.env.native.sh",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\native_candidate\\stage-candidate.env.native.sh",
+      "bytes": 524,
+      "action": "updated_new_archive_file",
+      "bytes_equal": true,
+      "utf8_text_equal": true
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/native_candidate/p-stage-first-token.serve.native.sh",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\native_candidate\\p-stage-first-token.serve.native.sh",
+      "bytes": 1779,
+      "action": "unchanged",
+      "bytes_equal": true,
+      "utf8_text_equal": true
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/native_candidate/native.diff",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\native_candidate\\native.diff",
+      "bytes": 575,
+      "action": "unchanged",
+      "bytes_equal": true,
+      "utf8_text_equal": true
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/native_candidate/candidate_native_preparation.json",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\native_candidate\\candidate_native_preparation.json",
+      "bytes": 9031,
+      "action": "unchanged",
+      "bytes_equal": true,
+      "utf8_text_equal": true
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/runtime_snapshots/20261027-202422/事实判读.md",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_snapshots\\20261027-202422\\事实判读.md",
+      "bytes": 2102,
+      "action": "added",
+      "bytes_equal": true,
+      "utf8_text_equal": true
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/launcher_snapshot/sitecustomize.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\launcher_snapshot\\sitecustomize.py",
+      "bytes": 1979,
+      "action": "added",
+      "bytes_equal": true,
+      "utf8_text_equal": true
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/launcher_snapshot/deployment_contract.json",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\launcher_snapshot\\deployment_contract.json",
+      "bytes": 473,
+      "action": "added",
+      "bytes_equal": true,
+      "utf8_text_equal": true
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/version_snapshots/full_p_first_token/ks_stage_reservation.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\version_snapshots\\full_p_first_token\\ks_stage_reservation.py",
+      "bytes": 6186,
+      "action": "added",
+      "bytes_equal": true,
+      "utf8_text_equal": true
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/version_snapshots/full_p_first_token/sitecustomize.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\version_snapshots\\full_p_first_token\\sitecustomize.py",
+      "bytes": 1201,
+      "action": "added",
+      "bytes_equal": true,
+      "utf8_text_equal": true
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/version_snapshots/source_version_boundaries.json",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\version_snapshots\\source_version_boundaries.json",
+      "bytes": 920,
+      "action": "added",
+      "bytes_equal": true,
+      "utf8_text_equal": true
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/import_exit_summary.json",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\import_exit_summary.json",
+      "bytes": 1833,
+      "action": "added",
+      "bytes_equal": true,
+      "utf8_text_equal": true
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/runtime_snapshots/20261027-202422/stage_ready_events.json",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_snapshots\\20261027-202422\\stage_ready_events.json",
+      "bytes": 1163,
+      "action": "added",
+      "bytes_equal": true,
+      "utf8_text_equal": true
+    },
+    {
+      "relative_path": "完整模型单机P对照/cache-clear-and-reduced-model/prepare_reduced_pd_private.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\cache-clear-and-reduced-model\\prepare_reduced_pd_private.py",
+      "bytes": 16513,
+      "action": "added",
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_action": "updated"
+    },
+    {
+      "relative_path": "完整模型单机P对照/cache-clear-and-reduced-model/build_model_view.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\cache-clear-and-reduced-model\\build_model_view.py",
+      "bytes": 6437,
+      "action": "added",
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_action": "unchanged"
+    },
+    {
+      "relative_path": "完整模型单机P对照/cache-clear-and-reduced-model/prepare_mooncake_n16_overlay.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\cache-clear-and-reduced-model\\prepare_mooncake_n16_overlay.py",
+      "bytes": 17104,
+      "action": "added",
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_action": "unchanged"
+    },
+    {
+      "relative_path": "完整模型单机P对照/cache-clear-and-reduced-model/prepare_draft_config_n16.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\cache-clear-and-reduced-model\\prepare_draft_config_n16.py",
+      "bytes": 8553,
+      "action": "added",
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_action": "unchanged"
+    },
+    {
+      "relative_path": "完整模型单机P对照/cache-clear-and-reduced-model/update_reduced_pd_proxy_port.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\cache-clear-and-reduced-model\\update_reduced_pd_proxy_port.py",
+      "bytes": 2488,
+      "action": "added",
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_action": "unchanged"
+    },
+    {
+      "relative_path": "完整模型单机P对照/cache-clear-and-reduced-model/pd_actual_mooncake_connector.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\cache-clear-and-reduced-model\\pd_actual_mooncake_connector.py",
+      "bytes": 180945,
+      "action": "added",
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_action": "unchanged"
+    },
+    {
+      "relative_path": "完整模型单机P对照/cache-clear-and-reduced-model/ascend_llm_base_proposer.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\cache-clear-and-reduced-model\\ascend_llm_base_proposer.py",
+      "bytes": 105077,
+      "action": "added",
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_action": "unchanged"
+    },
+    {
+      "relative_path": "完整模型单机P对照/cache-clear-and-reduced-model/mooncake_n16_review.patch",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\cache-clear-and-reduced-model\\mooncake_n16_review.patch",
+      "bytes": 2832,
+      "action": "added",
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_action": "unchanged"
+    },
+    {
+      "relative_path": "完整模型单机P对照/cache-clear-and-reduced-model/mooncake_n16_cpu_result.json",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\cache-clear-and-reduced-model\\mooncake_n16_cpu_result.json",
+      "bytes": 906,
+      "action": "added",
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_action": "unchanged"
+    },
+    {
+      "relative_path": "完整模型单机P对照/cache-clear-and-reduced-model/mooncake_n16_deployment.json",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\cache-clear-and-reduced-model\\mooncake_n16_deployment.json",
+      "bytes": 399,
+      "action": "added",
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_action": "unchanged"
+    },
+    {
+      "relative_path": "完整模型单机P对照/cache-clear-and-reduced-model/draft_config_n16_review.patch",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\cache-clear-and-reduced-model\\draft_config_n16_review.patch",
+      "bytes": 2122,
+      "action": "added",
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_action": "unchanged"
+    },
+    {
+      "relative_path": "完整模型单机P对照/cache-clear-and-reduced-model/draft_actual_ctor_weight_cpu.json",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\cache-clear-and-reduced-model\\draft_actual_ctor_weight_cpu.json",
+      "bytes": 6556,
+      "action": "added",
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_action": "unchanged"
+    },
+    {
+      "relative_path": "完整模型单机P对照/cache-clear-and-reduced-model/draft_config_n16_deployment.json",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\cache-clear-and-reduced-model\\draft_config_n16_deployment.json",
+      "bytes": 474,
+      "action": "added",
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_action": "unchanged"
+    },
+    {
+      "relative_path": "完整模型单机P对照/cache-clear-and-reduced-model/draft_n16_family_quant_cpu.json",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\cache-clear-and-reduced-model\\draft_n16_family_quant_cpu.json",
+      "bytes": 8238,
+      "action": "added",
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_action": "unchanged"
+    },
+    {
+      "relative_path": "完整模型单机P对照/cache-clear-and-reduced-model/draft_config_n16_family_deployment.json",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\cache-clear-and-reduced-model\\draft_config_n16_family_deployment.json",
+      "bytes": 166,
+      "action": "added",
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_action": "unchanged"
+    },
+    {
+      "relative_path": "完整模型单机P对照/cache-clear-and-reduced-model/actual_parent_proposer_and_loader.txt",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\cache-clear-and-reduced-model\\actual_parent_proposer_and_loader.txt",
+      "bytes": 91132,
+      "action": "added",
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_action": "unchanged"
+    },
+    {
+      "relative_path": "完整模型单机P对照/cache-clear-and-reduced-model/model_sources_deepseek_mtp.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\cache-clear-and-reduced-model\\model_sources_deepseek_mtp.py",
+      "bytes": 20794,
+      "action": "added",
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_action": "unchanged"
+    },
+    {
+      "relative_path": "完整模型单机P对照/cache-clear-and-reduced-model/pd_actual_patch_deepseek_mtp.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\cache-clear-and-reduced-model\\pd_actual_patch_deepseek_mtp.py",
+      "bytes": 4041,
+      "action": "added",
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_action": "unchanged"
+    },
+    {
+      "relative_path": "完整模型单机P对照/cache-clear-and-reduced-model/shard_closure_metadata.json",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\cache-clear-and-reduced-model\\shard_closure_metadata.json",
+      "bytes": 13033,
+      "action": "added",
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_action": "unchanged"
+    },
+    {
+      "relative_path": "完整模型单机P对照/cache-clear-and-reduced-model/extra_models_utils.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\cache-clear-and-reduced-model\\extra_models_utils.py",
+      "bytes": 30902,
+      "action": "added",
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_action": "unchanged"
+    },
+    {
+      "relative_path": "完整模型单机P对照/cache-clear-and-reduced-model/extra_model_loader_utils.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\cache-clear-and-reduced-model\\extra_model_loader_utils.py",
+      "bytes": 11140,
+      "action": "added",
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_action": "unchanged"
+    },
+    {
+      "relative_path": "完整模型单机P对照/cache-clear-and-reduced-model/model_sources_default_loader.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\cache-clear-and-reduced-model\\model_sources_default_loader.py",
+      "bytes": 17104,
+      "action": "added",
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_action": "unchanged"
+    },
+    {
+      "relative_path": "完整模型单机P对照/cache-clear-and-reduced-model/mtp_config_construction/check_actual_draft_ctor_weights.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\cache-clear-and-reduced-model\\mtp_config_construction\\check_actual_draft_ctor_weights.py",
+      "bytes": 16351,
+      "action": "added",
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_action": "unchanged"
+    },
+    {
+      "relative_path": "完整模型单机P对照/cache-clear-and-reduced-model/mtp_config_construction/README.md",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\cache-clear-and-reduced-model\\mtp_config_construction\\README.md",
+      "bytes": 4041,
+      "action": "added",
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_action": "unchanged"
+    },
+    {
+      "relative_path": "完整模型单机P对照/cache-clear-and-reduced-model/quant_actual_modelslim_config.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\cache-clear-and-reduced-model\\quant_actual_modelslim_config.py",
+      "bytes": 39969,
+      "action": "added",
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_action": "unchanged"
+    },
+    {
+      "relative_path": "完整模型单机P对照/cache-clear-and-reduced-model/draft78_quant_real_metadata.json",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\cache-clear-and-reduced-model\\draft78_quant_real_metadata.json",
+      "bytes": 338,
+      "action": "added",
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_action": "unchanged"
+    },
+    {
+      "relative_path": "完整模型单机P对照/cache-clear-and-reduced-model/reduced_pd_private_deployment.json",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\cache-clear-and-reduced-model\\reduced_pd_private_deployment.json",
+      "bytes": 3562,
+      "action": "added",
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_action": "unchanged"
+    },
+    {
+      "relative_path": "完整模型单机P对照/cache-clear-and-reduced-model/reduced_pd_native_revision.json",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\cache-clear-and-reduced-model\\reduced_pd_native_revision.json",
+      "bytes": 221,
+      "action": "added",
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_action": "unchanged"
+    },
+    {
+      "relative_path": "完整模型单机P对照/cache-clear-and-reduced-model/reduced_pd_proxy_port_revision.json",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\cache-clear-and-reduced-model\\reduced_pd_proxy_port_revision.json",
+      "bytes": 443,
+      "action": "added",
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_action": "unchanged"
+    },
+    {
+      "relative_path": "完整模型单机P对照/cache-clear-and-reduced-model/reduced-pd-prepared/README.md",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\cache-clear-and-reduced-model\\reduced-pd-prepared\\README.md",
+      "bytes": 12567,
+      "action": "added",
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_action": "updated"
+    },
+    {
+      "relative_path": "完整模型单机P对照/cache-clear-and-reduced-model/reduced-pd-prepared/build_model_view.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\cache-clear-and-reduced-model\\reduced-pd-prepared\\build_model_view.py",
+      "bytes": 6437,
+      "action": "added",
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_action": "unchanged"
+    },
+    {
+      "relative_path": "完整模型单机P对照/cache-clear-and-reduced-model/reduced-pd-prepared/proxy_v023.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\cache-clear-and-reduced-model\\reduced-pd-prepared\\proxy_v023.py",
+      "bytes": 44237,
+      "action": "added",
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_action": "unchanged"
+    },
+    {
+      "relative_path": "完整模型单机P对照/cache-clear-and-reduced-model/reduced-pd-prepared/topology-and-port-plan.json",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\cache-clear-and-reduced-model\\reduced-pd-prepared\\topology-and-port-plan.json",
+      "bytes": 1313,
+      "action": "added",
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_action": "unchanged"
+    },
+    {
+      "relative_path": "完整模型单机P对照/cache-clear-and-reduced-model/reduced-pd-prepared/historical137_d_actual_argv.json",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\cache-clear-and-reduced-model\\reduced-pd-prepared\\historical137_d_actual_argv.json",
+      "bytes": 7809,
+      "action": "added",
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_action": "unchanged"
+    },
+    {
+      "relative_path": "完整模型单机P对照/cache-clear-and-reduced-model/reduced-pd-prepared/startup/bench-original-async-cold.native.sh",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\cache-clear-and-reduced-model\\reduced-pd-prepared\\startup\\bench-original-async-cold.native.sh",
+      "bytes": 809,
+      "action": "added",
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_action": "unchanged"
+    },
+    {
+      "relative_path": "完整模型单机P对照/cache-clear-and-reduced-model/reduced-pd-prepared/startup/bench-original-async-warm.native.sh",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\cache-clear-and-reduced-model\\reduced-pd-prepared\\startup\\bench-original-async-warm.native.sh",
+      "bytes": 809,
+      "action": "added",
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_action": "unchanged"
+    },
+    {
+      "relative_path": "完整模型单机P对照/cache-clear-and-reduced-model/reduced-pd-prepared/startup/bench-stage-candidate-cold.native.sh",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\cache-clear-and-reduced-model\\reduced-pd-prepared\\startup\\bench-stage-candidate-cold.native.sh",
+      "bytes": 810,
+      "action": "added",
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_action": "unchanged"
+    },
+    {
+      "relative_path": "完整模型单机P对照/cache-clear-and-reduced-model/reduced-pd-prepared/startup/bench-stage-candidate-warm.native.sh",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\cache-clear-and-reduced-model\\reduced-pd-prepared\\startup\\bench-stage-candidate-warm.native.sh",
+      "bytes": 810,
+      "action": "added",
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_action": "unchanged"
+    },
+    {
+      "relative_path": "完整模型单机P对照/cache-clear-and-reduced-model/reduced-pd-prepared/startup/cache-server.native.sh",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\cache-clear-and-reduced-model\\reduced-pd-prepared\\startup\\cache-server.native.sh",
+      "bytes": 474,
+      "action": "added",
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_action": "unchanged"
+    },
+    {
+      "relative_path": "完整模型单机P对照/cache-clear-and-reduced-model/reduced-pd-prepared/startup/common.env.native.sh",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\cache-clear-and-reduced-model\\reduced-pd-prepared\\startup\\common.env.native.sh",
+      "bytes": 2694,
+      "action": "added",
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_action": "unchanged"
+    },
+    {
+      "relative_path": "完整模型单机P对照/cache-clear-and-reduced-model/reduced-pd-prepared/startup/d0.env.native.sh",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\cache-clear-and-reduced-model\\reduced-pd-prepared\\startup\\d0.env.native.sh",
+      "bytes": 725,
+      "action": "added",
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_action": "unchanged"
+    },
+    {
+      "relative_path": "完整模型单机P对照/cache-clear-and-reduced-model/reduced-pd-prepared/startup/d0.serve.native.sh",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\cache-clear-and-reduced-model\\reduced-pd-prepared\\startup\\d0.serve.native.sh",
+      "bytes": 1595,
+      "action": "added",
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_action": "unchanged"
+    },
+    {
+      "relative_path": "完整模型单机P对照/cache-clear-and-reduced-model/reduced-pd-prepared/startup/d1.env.native.sh",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\cache-clear-and-reduced-model\\reduced-pd-prepared\\startup\\d1.env.native.sh",
+      "bytes": 727,
+      "action": "added",
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_action": "unchanged"
+    },
+    {
+      "relative_path": "完整模型单机P对照/cache-clear-and-reduced-model/reduced-pd-prepared/startup/d1.serve.native.sh",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\cache-clear-and-reduced-model\\reduced-pd-prepared\\startup\\d1.serve.native.sh",
+      "bytes": 1595,
+      "action": "added",
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_action": "unchanged"
+    },
+    {
+      "relative_path": "完整模型单机P对照/cache-clear-and-reduced-model/reduced-pd-prepared/startup/p-original-async.env.native.sh",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\cache-clear-and-reduced-model\\reduced-pd-prepared\\startup\\p-original-async.env.native.sh",
+      "bytes": 838,
+      "action": "added",
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_action": "updated"
+    },
+    {
+      "relative_path": "完整模型单机P对照/cache-clear-and-reduced-model/reduced-pd-prepared/startup/p-original-async.serve.native.sh",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\cache-clear-and-reduced-model\\reduced-pd-prepared\\startup\\p-original-async.serve.native.sh",
+      "bytes": 2036,
+      "action": "added",
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_action": "unchanged"
+    },
+    {
+      "relative_path": "完整模型单机P对照/cache-clear-and-reduced-model/reduced-pd-prepared/startup/p-stage-candidate.env.native.sh",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\cache-clear-and-reduced-model\\reduced-pd-prepared\\startup\\p-stage-candidate.env.native.sh",
+      "bytes": 1111,
+      "action": "added",
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_action": "updated"
+    },
+    {
+      "relative_path": "完整模型单机P对照/cache-clear-and-reduced-model/reduced-pd-prepared/startup/p-stage-candidate.serve.native.sh",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\cache-clear-and-reduced-model\\reduced-pd-prepared\\startup\\p-stage-candidate.serve.native.sh",
+      "bytes": 2037,
+      "action": "added",
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_action": "unchanged"
+    },
+    {
+      "relative_path": "完整模型单机P对照/cache-clear-and-reduced-model/reduced-pd-prepared/startup/proxy.native.sh",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\cache-clear-and-reduced-model\\reduced-pd-prepared\\startup\\proxy.native.sh",
+      "bytes": 355,
+      "action": "added",
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_action": "unchanged"
+    },
+    {
+      "relative_path": "完整模型单机P对照/cache-clear-and-reduced-model/reduced-pd-prepared/runtime/common/lmcache_cache_context_pinned.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\cache-clear-and-reduced-model\\reduced-pd-prepared\\runtime\\common\\lmcache_cache_context_pinned.py",
+      "bytes": 16577,
+      "action": "added",
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_action": "unchanged"
+    },
+    {
+      "relative_path": "完整模型单机P对照/cache-clear-and-reduced-model/reduced-pd-prepared/runtime/common/sitecustomize.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\cache-clear-and-reduced-model\\reduced-pd-prepared\\runtime\\common\\sitecustomize.py",
+      "bytes": 1777,
+      "action": "added",
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_action": "unchanged"
+    },
+    {
+      "relative_path": "完整模型单机P对照/cache-clear-and-reduced-model/reduced-pd-prepared/runtime/p-original/lmcache_mp_connector_multi17.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\cache-clear-and-reduced-model\\reduced-pd-prepared\\runtime\\p-original\\lmcache_mp_connector_multi17.py",
+      "bytes": 76967,
+      "action": "added",
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_action": "unchanged"
+    },
+    {
+      "relative_path": "完整模型单机P对照/cache-clear-and-reduced-model/reduced-pd-prepared/runtime/p-original/sitecustomize.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\cache-clear-and-reduced-model\\reduced-pd-prepared\\runtime\\p-original\\sitecustomize.py",
+      "bytes": 1818,
+      "action": "added",
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_action": "unchanged"
+    },
+    {
+      "relative_path": "完整模型单机P对照/cache-clear-and-reduced-model/reduced-pd-prepared/runtime/mooncake-n16/mooncake_connector_n16.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\cache-clear-and-reduced-model\\reduced-pd-prepared\\runtime\\mooncake-n16\\mooncake_connector_n16.py",
+      "bytes": 182565,
+      "action": "added",
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_action": "unchanged"
+    },
+    {
+      "relative_path": "完整模型单机P对照/cache-clear-and-reduced-model/reduced-pd-prepared/runtime/draft-n16/llm_base_proposer_n16.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\cache-clear-and-reduced-model\\reduced-pd-prepared\\runtime\\draft-n16\\llm_base_proposer_n16.py",
+      "bytes": 106741,
+      "action": "added",
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_action": "unchanged"
+    },
+    {
+      "relative_path": "完整模型单机P对照/cache-clear-and-reduced-model/archive_n16_selection.json",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\cache-clear-and-reduced-model\\archive_n16_selection.json",
+      "bytes": 3860,
+      "action": "added",
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_action": "updated"
+    },
+    {
+      "relative_path": "完整模型单机P对照/cache-clear-and-reduced-model/prepare_p_mc2_fallback.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\cache-clear-and-reduced-model\\prepare_p_mc2_fallback.py",
+      "action": "added_in_N16_env0_revision",
+      "bytes": 4573,
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_action": "unchanged"
+    },
+    {
+      "relative_path": "完整模型单机P对照/cache-clear-and-reduced-model/P_mc2_fallback_deployment.json",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\cache-clear-and-reduced-model\\P_mc2_fallback_deployment.json",
+      "action": "added_in_N16_env0_revision",
+      "bytes": 471,
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_action": "unchanged"
+    },
+    {
+      "relative_path": "完整模型单机P对照/cache-clear-and-reduced-model/mc2_actual_envs.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\cache-clear-and-reduced-model\\mc2_actual_envs.py",
+      "action": "added_in_N16_env0_revision",
+      "bytes": 7437,
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_action": "unchanged"
+    },
+    {
+      "relative_path": "完整模型单机P对照/cache-clear-and-reduced-model/mc2_actual_ascend_config.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\cache-clear-and-reduced-model\\mc2_actual_ascend_config.py",
+      "action": "added_in_N16_env0_revision",
+      "bytes": 47827,
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_action": "unchanged"
+    },
+    {
+      "relative_path": "完整模型单机P对照/cache-clear-and-reduced-model/mc2_actual_ascend_forward_context.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\cache-clear-and-reduced-model\\mc2_actual_ascend_forward_context.py",
+      "action": "added_in_N16_env0_revision",
+      "bytes": 17046,
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_action": "unchanged"
+    },
+    {
+      "relative_path": "完整模型单机P对照/cache-clear-and-reduced-model/mc2_actual_moe_comm_method.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\cache-clear-and-reduced-model\\mc2_actual_moe_comm_method.py",
+      "action": "added_in_N16_env0_revision",
+      "bytes": 14680,
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_action": "unchanged"
+    },
+    {
+      "relative_path": "完整模型单机P对照/cache-clear-and-reduced-model/mc2_actual_dispatch_ffn_combine_tiling.cpp",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\cache-clear-and-reduced-model\\mc2_actual_dispatch_ffn_combine_tiling.cpp",
+      "action": "added_in_N16_env0_revision",
+      "bytes": 15888,
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_action": "unchanged"
+    },
+    {
+      "relative_path": "完整模型单机P对照/cache-clear-and-reduced-model/prepare_p_hccl512.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\cache-clear-and-reduced-model\\prepare_p_hccl512.py",
+      "action": "added_in_current_archive_revision",
+      "bytes": 3550,
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_action": "updated"
+    },
+    {
+      "relative_path": "完整模型单机P对照/cache-clear-and-reduced-model/P_hccl512_deployment.json",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\cache-clear-and-reduced-model\\P_hccl512_deployment.json",
+      "action": "added_in_current_archive_revision",
+      "bytes": 301,
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_action": "updated"
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/前段先就绪_机制诊断边界.md",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\前段先就绪_机制诊断边界.md",
+      "action": "added_in_current_archive_revision",
+      "bytes": 5779,
+      "bytes_equal": true,
+      "utf8_text_equal": true,
+      "last_recheck_utc": "2026-10-27T13:49:08.470357+00:00",
+      "last_recheck_action": "updated"
+    }
+  ],
+  "selected_count": 119,
+  "selected_bytes": 2092196,
+  "actions": {
+    "added": 80,
+    "updated_new_archive_file": 11,
+    "unchanged": 18
+  },
+  "original_299_files_written": 0,
+  "allowed_write_root": "E:\\work\\ks\\repos\\ks-pp-lmcache\\output\\05_当前环境与实验准备\\20261027_137环境评估",
+  "hashes_used": false,
+  "directory_walk_used": false,
+  "git_actions": [],
+  "tests_rerun": false,
+  "remote_actions": 0,
+  "excluded": [
+    "customer prompt/data",
+    "model/weight files",
+    "venv",
+    "credentials",
+    "large runtime/import logs"
+  ],
+  "unverified_NPU_scope": [
+    "actual stage GLM compute and earlier compute",
+    "stage candidate speedup",
+    "N16 two private fixes full-model/PD correctness",
+    "output300 stage driver",
+    "full 1P1D comparison"
+  ],
+  "actions_scope": "initial snapshot sync; final N16 recheck action counts are separate",
+  "final_N16_source_recheck": {
+    "status": "FROZEN_N16_FINAL_SOURCE_AND_EXISTING_CPU_RECEIPT_MATCHED",
+    "updated_utc": "2026-10-27T13:49:08.470357+00:00",
+    "frozen_N16_files": 64,
+    "selected_with_selection_and_archive_entry": 67,
+    "N16_source_files_changed": 7,
+    "changed_archive_paths": [
+      "完整模型单机P对照/cache-clear-and-reduced-model/prepare_reduced_pd_private.py",
+      "完整模型单机P对照/cache-clear-and-reduced-model/prepare_p_hccl512.py",
+      "完整模型单机P对照/cache-clear-and-reduced-model/P_hccl512_deployment.json",
+      "完整模型单机P对照/cache-clear-and-reduced-model/reduced-pd-prepared/README.md",
+      "完整模型单机P对照/cache-clear-and-reduced-model/reduced-pd-prepared/startup/p-original-async.env.native.sh",
+      "完整模型单机P对照/cache-clear-and-reduced-model/reduced-pd-prepared/startup/p-stage-candidate.env.native.sh",
+      "完整模型单机P对照/cache-clear-and-reduced-model/archive_n16_selection.json",
+      "恢复身份与启动接线/stage_driver/archive_incremental_candidate.py",
+      "恢复身份与启动接线/stage_driver/前段先就绪_机制诊断边界.md"
+    ],
+    "final_proposer_review_diff_lines": 32,
+    "existing_CPU_receipt": {
+      "file": "draft_n16_family_quant_cpu.json",
+      "status": "PASS",
+      "special_weight_writes": 7,
+      "actual_quant_metadata_dispatch": "W8A8_DISPATCH_SUCCESS_REAL_TWO_KEYS",
+      "evidence_class": "ACTUAL_AST_CPU_ONLY",
+      "rerun": false,
+      "real_checkpoint_bytes_loaded": false
+    },
+    "runtime_boundary": {
+      "source": "root report; not remotely inspected by this archive action",
+      "D0": "ready",
+      "D1": "ready",
+      "P_previous_attempt": "target warmup DispatchFFNCombine operator error",
+      "P_env0_attempt": "MC2 reported required HCCL window 413MB exceeds actual 400MB",
+      "P_current_attempt": "original group restarting with common P-only FUSED_MC2=0 and HCCL_BUFFSIZE=512; not verified",
+      "PD_success": false,
+      "candidate_stage_compute_success": false
+    },
+    "common_P_fallback": {
+      "VLLM_ASCEND_ENABLE_FUSED_MC2": "0",
+      "HCCL_BUFFSIZE": "512",
+      "applied_to": [
+        "original-async",
+        "stage-candidate"
+      ],
+      "D_files_changed_by_fallback": false,
+      "benchmark_result_directories": "manager-compatible hyphenated paths"
+    },
+    "selected_content_review": "explicit whitelist excludes prompt/data/weights/venv/keys/logs; new additions are preparation/deployment and official source snapshots; native text references external data only",
+    "git_actions": [],
+    "tests_rerun": false,
+    "remote_actions": 0,
+    "original_299_files_written": 0,
+    "hashes_used": false
+  }
+}

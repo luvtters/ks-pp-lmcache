@@ -1,0 +1,15 @@
+{
+  "files": [
+    "startup/p-original-async.env.native.sh",
+    "startup/bench-original-async-cold.native.sh",
+    "startup/bench-original-async-warm.native.sh",
+    "startup/p-stage-candidate.env.native.sh",
+    "startup/bench-stage-candidate-cold.native.sh",
+    "startup/bench-stage-candidate-warm.native.sh",
+    "README.md"
+  ],
+  "syntax": "PASS",
+  "P_env": "VLLM_ASCEND_ENABLE_FUSED_MC2=0",
+  "D_files_changed": false,
+  "service_action": false
+}

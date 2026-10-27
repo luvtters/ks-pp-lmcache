@@ -1,0 +1,17 @@
+{
+  "full_p_first_token": {
+    "helper": "full_p_first_token/ks_stage_reservation.py",
+    "loader": "full_p_first_token/sitecustomize.py",
+    "source_confirmed_by": "recorded exact private deployment diffs",
+    "runtime_evidence": "full P cold/warm HTTP success and two full-stage KV readiness gates; no stage batch admission/execute trace"
+  },
+  "latest_private_candidate": {
+    "runtime": "../runtime_overlay",
+    "loader": "../launcher_snapshot/sitecustomize.py",
+    "TP4_binding_and_trace": "CPU TP8+TP4 Scheduler/wire/update pass, uploaded for next startup; not hot-reloaded into earlier full P",
+    "N16_optionals": "same Mooncake/draft private sources selected by common P/D and candidate env",
+    "limits": "max_tokens=1 first-token diagnostic only; no proof of stage GLM compute, speedup, output300 or full PD"
+  },
+  "archive_only": true,
+  "no_new_tests_or_runtime_actions": true
+}

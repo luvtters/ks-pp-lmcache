@@ -1,0 +1,34 @@
+{
+  "scope": "private actual137 overlay, max_tokens=1, one scheduled token, no scheduled spec, actual async=True",
+  "sys_path_prepend": ["runtime_overlay"],
+  "canonical_modules_relative_to_runtime_overlay": {
+    "vllm.v1.engine.core": "vllm/v1/engine/core.py",
+    "vllm.v1.engine.ks_restore_binding": "vllm/v1/engine/ks_restore_binding.py",
+    "vllm.v1.executor.multiproc_executor": "vllm/v1/executor/multiproc_executor.py",
+    "vllm.v1.core.sched.scheduler": "vllm/v1/core/sched/scheduler.py",
+    "vllm.v1.core.sched.ks_stage_reservation": "vllm/v1/core/sched/ks_stage_reservation.py",
+    "vllm_ascend.worker.worker": "vllm_ascend/worker/worker.py",
+    "lmcache.integration.vllm.lmcache_mp_connector": "lmcache/integration/vllm/lmcache_mp_connector_multi17.py",
+    "lmcache.integration.vllm.vllm_multi_process_adapter": "lmcache/integration/vllm/vllm_multi_process_adapter.py",
+    "lmcache.integration.vllm.ks_restore_runtime": "lmcache/integration/vllm/ks_restore_runtime.py",
+    "lmcache.integration.vllm.ks_restore_metadata_bridge": "lmcache/integration/vllm/ks_restore_metadata_bridge.py"
+  },
+  "plain_imports_from_runtime_overlay": ["ks_stage_executor_driver", "typed_stage_protocol", "span_stage_controller"],
+  "preserve_common_mappings": {
+    "vllm_ascend.worker.model_runner_v1": "local-completion/model_runner_local.py",
+    "lmcache.v1.platform.base.cache_context": "common/lmcache_cache_context_pinned.py"
+  },
+  "observer_dependency": "StageRestoreIdentity and LMCacheStageObserver are inlined into the actual137-rebased adapter module, preserving one identity class; no separate observer module import is required",
+  "required_candidate_environment": {
+    "KS_PP_STAGE_DRIVER": "1",
+    "KS_PP_STAGE_EVENTS": "1",
+    "KS_CORE_STAGE_EVENT_PUMP": "1",
+    "KS_LMCACHE_STAGE_OBSERVER": "1"
+  },
+  "optional_observation_environment": {
+    "KS_STAGE_TRACE_DIR": "container-private per-run absolute directory"
+  },
+  "loader_merge_rule": "one existing sitecustomize finder, replace its connector mapping with common17 plus notification overlay and add these canonical mappings before imports; no duplicate import under private aliases",
+  "installed_source_changes": 0,
+  "npu_actions_by_builder_or_cpu_checks": 0
+}

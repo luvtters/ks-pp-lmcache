@@ -1,0 +1,630 @@
+FILE /vllm-workspace/vllm/vllm/distributed/kv_transfer/kv_connector/utils.py
+1:# SPDX-License-Identifier: Apache-2.0
+2:# SPDX-FileCopyrightText: Copyright contributors to the vLLM project
+3:"""
+4:KV cache helper for store.
+5:"""
+6:
+7:from collections.abc import Iterator
+8:from dataclasses import dataclass
+9:from typing import TYPE_CHECKING, Any, Literal, cast
+10:
+11:import torch
+12:
+13:from vllm.config import VllmConfig, get_current_vllm_config, get_layers_from_vllm_config
+14:from vllm.distributed.kv_transfer.kv_connector.factory import KVConnectorFactory
+15:from vllm.logger import init_logger
+16:from vllm.model_executor.layers.attention_layer_base import AttentionLayerBase
+17:from vllm.platforms import current_platform
+18:from vllm.v1.attention.backend import AttentionBackend
+19:from vllm.v1.kv_cache_interface import MambaSpec
+20:from vllm.v1.outputs import KVConnectorOutput, ModelRunnerOutput
+21:
+22:if TYPE_CHECKING:
+23:    from vllm.distributed.kv_transfer.kv_connector.base import KVConnectorBase
+24:    from vllm.v1.kv_cache_interface import KVCacheSpec
+25:
+26:logger = init_logger(__name__)
+27:
+28:EngineId = str
+29:# block ids as returned by the hybrid KV cache manager. list[list[int]] are allow
+30:# mutability and are for connector internal use only.
+31:BlockIds = tuple[list[int], ...] | list[list[int]]
+32:
+33:
+34:def get_kv_connector_cache_layout():
+35:    # NOTE (NickLucche) When running disaggregated PD with NIXL, HND layout is
+36:    # used for faster transfer.
+37:    vllm_config = get_current_vllm_config()
+38:    kv_config = vllm_config.kv_transfer_config
+39:    if kv_config is not None:
+40:        connector_cls = KVConnectorFactory.get_connector_class(kv_config)
+41:        required_kvcache_layout = connector_cls.get_required_kvcache_layout(vllm_config)
+42:        if required_kvcache_layout is not None:
+43:            return required_kvcache_layout
+44:        logger.info_once(
+45:            "Connectors do not specify a kv cache layout, defaulting to NHD."
+46:        )
+47:    return "NHD"
+48:
+49:
+50:class KVOutputAggregator:
+51:    """Utility class to aggregate the output of all workers into a single
+52:    output corresponding to Rank 0 for scheduler."""
+53:
+54:    def __init__(self, expected_finished_count: int):
+55:        # Complete transfer tracker. Used to track finished requests
+56:        # [req_id -> n_remaining_workers]
+57:        self._recv_remaining_count = dict[str, int]()
+58:        self._send_remaining_count = dict[str, int]()
+59:        self._expected_finished_count = expected_finished_count
+60:
+61:    @classmethod
+62:    def from_connector(cls, connector: "KVConnectorBase", world_size: int):
+63:        return cls(connector.get_finished_count() or world_size)
+64:
+65:    def aggregate(
+66:        self, outputs: list[ModelRunnerOutput | None], output_rank: int = 0
+67:    ) -> ModelRunnerOutput | None:
+68:        if not outputs[output_rank]:
+69:            return None
+70:
+71:        # Aggregate kv_connector_output from all workers
+72:
+73:        def update_finished_set(
+74:            req_ids: set[str] | None,
+75:            remaining_count_dict: dict[str, int],
+76:            finished_set: set[str],
+77:        ) -> None:
+78:            for req_id in req_ids or ():
+79:                remaining_count = remaining_count_dict.get(
+80:                    req_id, self._expected_finished_count
+81:                )
+82:                remaining_count_dict[req_id] = remaining_count - 1
+83:                if remaining_count_dict[req_id] == 0:
+84:                    finished_set.add(req_id)
+85:                    del remaining_count_dict[req_id]
+86:
+87:        finished_sending = set[str]()
+88:        finished_recving = set[str]()
+89:        aggregated_kv_connector_stats = None
+90:        aggregated_kv_connector_worker_meta = None
+91:        combined_kv_cache_events = None
+92:        invalid_block_ids = set[int]()
+93:        for model_runner_output in outputs:
+94:            assert model_runner_output is not None
+95:            kv_output = model_runner_output.kv_connector_output
+96:            if not kv_output:
+97:                continue
+98:            # Allow the worker to dynamically update the expected number of
+99:            # finished sending/recving for new requests.
+100:            if (
+101:                kv_output.expected_finished_count > 0
+102:                and kv_output.expected_finished_count != self._expected_finished_count
+103:            ):
+104:                logger.debug(
+105:                    "Expected finished requests updated from %d to %d",
+106:                    self._expected_finished_count,
+107:                    kv_output.expected_finished_count,
+108:                )
+109:                self._expected_finished_count = kv_output.expected_finished_count
+110:
+111:            update_finished_set(
+112:                kv_output.finished_sending, self._send_remaining_count, finished_sending
+113:            )
+114:            update_finished_set(
+115:                kv_output.finished_recving, self._recv_remaining_count, finished_recving
+116:            )
+117:
+118:            # Aggregate kv_connector_stats from all workers.
+119:            if aggregated_kv_connector_stats is None:
+120:                # Use the first worker's kv_connector_stats as accumulator.
+121:                aggregated_kv_connector_stats = kv_output.kv_connector_stats
+122:            elif kv_connector_stats := kv_output.kv_connector_stats:
+123:                assert isinstance(
+124:                    aggregated_kv_connector_stats, type(kv_connector_stats)
+125:                )
+126:                aggregated_kv_connector_stats = aggregated_kv_connector_stats.aggregate(
+127:                    kv_connector_stats
+128:                )
+129:
+130:            # Aggregate kv_connector_worker_meta from all workers.
+131:            if aggregated_kv_connector_worker_meta is None:
+132:                # Use the first worker's kv_connector_worker_meta as accumulator.
+133:                aggregated_kv_connector_worker_meta = kv_output.kv_connector_worker_meta
+134:            elif kv_connector_worker_meta := kv_output.kv_connector_worker_meta:
+135:                aggregated_kv_connector_worker_meta = (
+136:                    aggregated_kv_connector_worker_meta.aggregate(
+137:                        kv_connector_worker_meta
+138:                    )
+139:                )
+140:
+141:            # Combine kv_cache_events from all workers.
+142:            if combined_kv_cache_events is None:
+143:                # Use the first worker's kv_cache events as start event list.
+144:                combined_kv_cache_events = kv_output.kv_cache_events
+145:            elif kv_cache_events := kv_output.kv_cache_events:
+146:                assert isinstance(
+147:                    combined_kv_cache_events,
+148:                    type(kv_cache_events),
+149:                )
+150:                worker_kv_cache_events = kv_cache_events.get_all_events()
+151:                combined_kv_cache_events.add_events(worker_kv_cache_events)
+152:                combined_kv_cache_events.increment_workers(1)
+153:
+154:            invalid_block_ids |= kv_output.invalid_block_ids
+155:
+156:        # select output of the worker specified by output_rank
+157:        output = outputs[output_rank]
+158:
+159:        assert output is not None
+160:        output.kv_connector_output = KVConnectorOutput(
+161:            finished_sending=finished_sending or None,
+162:            finished_recving=finished_recving or None,
+163:            kv_connector_stats=aggregated_kv_connector_stats or None,
+164:            kv_cache_events=combined_kv_cache_events or None,
+165:            kv_connector_worker_meta=aggregated_kv_connector_worker_meta or None,
+166:            invalid_block_ids=invalid_block_ids,
+167:            expected_finished_count=self._expected_finished_count,
+168:        )
+169:
+170:        return output
+171:
+172:
+173:def _make_src_and_dst_indices(
+174:    src_block_ids: list[int],
+175:    dst_block_ids: list[int],
+176:    src_device: torch.device | str,
+177:    dst_device: torch.device | str,
+178:) -> tuple[torch.Tensor, torch.Tensor]:
+179:    src_indices = torch.tensor(src_block_ids, device=src_device, dtype=torch.int64)
+180:    dst_indices = torch.tensor(dst_block_ids, device=dst_device, dtype=torch.int64)
+181:    return src_indices, dst_indices
+182:
+183:
+184:def copy_kv_blocks(
+185:    src_kv_caches: dict[str, torch.Tensor],
+186:    dst_kv_caches: dict[str, torch.Tensor],
+187:    src_block_ids: list[int],
+188:    dst_block_ids: list[int],
+189:    direction: Literal["h2d", "d2h"],
+190:) -> None:
+191:    """Copy kv blocks between different buffers."""
+192:    if (
+193:        not src_kv_caches
+194:        or not dst_kv_caches
+195:        or not src_block_ids
+196:        or not dst_block_ids
+197:        or len(src_block_ids) != len(dst_block_ids)
+198:    ):
+199:        return
+200:
+201:    src_device = next(iter(src_kv_caches.values())).device
+202:    dst_device = next(iter(dst_kv_caches.values())).device
+203:
+204:    src_indices, dst_indices = _make_src_and_dst_indices(
+205:        src_block_ids=src_block_ids,
+206:        dst_block_ids=dst_block_ids,
+207:        src_device=src_device,
+208:        dst_device=dst_device,
+209:    )
+210:
+211:    if direction == "h2d":
+212:        copy_fn = current_platform.insert_blocks_to_device
+213:    else:
+214:        copy_fn = current_platform.swap_out_blocks_to_host
+215:    for layer_name in src_kv_caches:
+216:        src_tensor = src_kv_caches[layer_name]
+217:        dst_tensor = dst_kv_caches[layer_name]
+218:        copy_fn(src_tensor, dst_tensor, src_indices, dst_indices)
+219:
+220:
+221:def kv_postprocess_blksize_on_receive(cache, indices, block_size_ratio):
+222:    """
+223:    Transforms the layout of received KV cache blocks to the local block_size.
+224:    (Only works for local blocksize > remote blocksize)
+225:
+226:    example:
+227:    local blocksize = 16 tokens, remote blocksize = 4 tokens
+228:    local block[0] = remote block[0, 1, 2, 3]
+229:    remote is |h0-b0|h1-b0|h2-b0|h3-b0|h0-b1|h1-b1|h2-b1|h3-b1|...
+230:    local is  |h0-b0..................|h1-b0..................|...
+231:    permute is to:
+232:    1. view => view remote as n_blocks * remote_shape(H,remoteN,D)
+233:    2. permute => (H, nblocks, remoteN, D)
+234:    3. flatten => (H, localN, D)
+235:    """
+236:    blocks_to_update = cache.index_select(0, indices)
+237:    # use physical order
+238:    blocks_to_update = blocks_to_update.permute(0, 2, 1, 3)
+239:    n_kv_heads, block_size, head_size = blocks_to_update.shape[1:]
+240:    remote_block_size = block_size // block_size_ratio
+241:    n_blocks = block_size_ratio
+242:
+243:    permuted_blocks = (
+244:        blocks_to_update.reshape(-1, n_blocks, n_kv_heads, remote_block_size, head_size)
+245:        .permute(0, 2, 1, 3, 4)
+246:        .flatten(2, 3)
+247:    )
+248:    permuted_blocks = permuted_blocks.permute(0, 2, 1, 3)
+249:    cache.index_copy_(0, indices, permuted_blocks)
+250:
+251:
+252:def kv_postprocess_layout_on_receive(cache, indices):
+253:    """Transforms the layout of received KV cache blocks to the local format.
+254:
+255:    This method corrects layout mismatches from direct memory copies by
+256:    permuting the tensor dimensions.
+257:
+258:    - **Source Layout:** `[num_blocks, n_kv_head, block_size, head_dim]`
+259:    - **Target Layout:** `[num_blocks, block_size, n_kv_head, head_dim]`
+260:
+261:    Implementation:
+262:    - x = blocks_to_update.reshape(src_shape) # view local kv with sender layout
+263:    - permuted_blocks = x.permute(*inv_order) # transpose n_kv_heads, block_size
+264:    - cache.index_copy_(0, indices, permuted_blocks) # copy permuted kv back
+265:
+266:    """
+267:    blocks_to_update = cache.index_select(0, indices)
+268:    target_shape = list(blocks_to_update.shape)
+269:    target_shape[0] = -1
+270:    inv_order = [0, 2, 1, 3]
+271:    src_shape = tuple(target_shape[i] for i in inv_order)
+272:    blocks_to_update = cache.index_select(0, indices)
+273:    permuted_blocks = blocks_to_update.reshape(src_shape).permute(*inv_order)
+274:    cache.index_copy_(0, indices, permuted_blocks)
+275:
+276:
+277:def kv_postprocess_blksize_and_layout_on_receive(cache, indices, block_size_ratio):
+278:    """
+279:    Transforms the layout of received KV cache to the local block_size and HND.
+280:    (Only works for local blocksize > remote blocksize)
+281:
+282:    prefill is HND, smaller block_size
+283:    decode(local) is NHD, larger block_size
+284:    """
+285:    blocks_to_update = cache.index_select(0, indices)
+286:
+287:    block_size, n_kv_heads, head_size = blocks_to_update.shape[1:]
+288:    remote_block_size = block_size // block_size_ratio
+289:    n_blocks = block_size_ratio
+290:
+291:    permuted_blocks = (
+292:        blocks_to_update.reshape(-1, n_blocks, n_kv_heads, remote_block_size, head_size)
+293:        .permute(0, 1, 3, 2, 4)
+294:        .flatten(1, 2)
+295:    )
+296:    cache.index_copy_(0, indices, permuted_blocks)
+297:
+298:
+299:def yield_req_data(
+300:    scheduler_output,
+301:) -> Iterator[tuple[str, tuple[list[int], ...] | None, bool]]:
+302:    """
+303:    Yields:
+304:        (req_id, new_block_id_groups, preempted)
+305:    """
+306:    # new requests
+307:    for req_data in scheduler_output.scheduled_new_reqs:
+308:        yield req_data.req_id, req_data.block_ids, False
+309:
+310:    # cached requests
+311:    cached_reqs = scheduler_output.scheduled_cached_reqs
+312:    yield from zip(
+313:        cached_reqs.req_ids,
+314:        cached_reqs.new_block_ids,
+315:        (req_id in cached_reqs.resumed_req_ids for req_id in cached_reqs.req_ids),
+316:    )
+317:
+318:
+319:def get_current_attn_backends(
+320:    vllm_config: VllmConfig, layer_names: list[str] | None = None
+321:) -> list[type[AttentionBackend]]:
+322:    """Get all distinct attention backends for the given layers.
+323:
+324:    Args:
+325:        vllm_config: The current vLLM configuration.
+326:        layer_names: Optional list of layer names to scope the lookup.
+327:            When None, all attention layers are considered.
+328:
+329:    Returns:
+330:        Deduplicated list of attention backend classes.
+331:    """
+332:    layer_type = cast(type[Any], AttentionLayerBase)
+333:    layers = get_layers_from_vllm_config(vllm_config, layer_type, layer_names)
+334:    if layers:
+335:        seen: dict[str, type[AttentionBackend]] = {}
+336:        for layer in layers.values():
+337:            backend = layer.get_attn_backend()
+338:            seen[backend.full_cls_name()] = backend
+339:        return list(seen.values())
+340:
+341:    # Fallback for tests, when static_forward_context is empty.
+342:    logger.debug(
+343:        "No layers found in the vLLM config. Falling back to default attention backend."
+344:    )
+345:    from vllm.v1.attention.selector import get_attn_backend
+346:
+347:    return [
+348:        get_attn_backend(
+349:            head_size=vllm_config.model_config.get_head_size(),
+350:            dtype=vllm_config.model_config.dtype,
+351:            kv_cache_dtype=vllm_config.cache_config.cache_dtype,
+352:            use_mla=vllm_config.model_config.use_mla,
+353:        )
+354:    ]
+355:
+356:
+357:def get_current_attn_backend(
+358:    vllm_config: VllmConfig, layer_names: list[str] | None = None
+359:) -> type[AttentionBackend]:
+360:    """Get the first attention backend for the given layers."""
+361:    return get_current_attn_backends(vllm_config, layer_names)[0]
+362:
+363:
+364:# ---- Per-engine transfer info ----
+365:
+366:
+367:@dataclass(frozen=True)
+368:class EngineTransferInfo:
+369:    """Common per-remote-engine transfer state, computed at handshake.
+370:
+371:    Stored per ``(engine_id, pp_rank)`` inside ``TransferTopology._engines``.
+372:    """
+373:
+374:    remote_tp_size: int
+375:
+376:    remote_block_len: int
+377:    """Block length (bytes)"""
+378:
+379:    remote_block_size: int
+380:    """Tokens per block."""
+381:
+382:    remote_physical_blocks_per_logical: int
+383:    """Physical blocks per logical block."""
+384:
+385:    remote_pp_rank: int = 0
+386:    """Remote producer PP rank for this engine."""
+387:
+388:    start_layer: int = 0
+389:    """Global index of the first layer owned by this PP rank."""
+390:
+391:    end_layer: int = 0
+392:    """Exclusive global index after the last layer owned by this PP rank."""
+393:
+394:
+395:# ---- Transfer topology ----
+396:
+397:
+398:@dataclass
+399:class TransferTopology:
+400:    """Single source of truth for local TP identity and per-engine remote info."""
+401:
+402:    tp_rank: int
+403:    tp_size: int
+404:    block_size: int
+405:    engine_id: EngineId
+406:    is_mla: bool
+407:    is_mamba: bool
+408:    total_num_kv_heads: int
+409:    attn_backends: list[type[AttentionBackend]]
+410:    tensor_shape: torch.Size | None = None
+411:
+412:    def __post_init__(self):
+413:        self.local_physical_heads = max(1, self.total_num_kv_heads // self.tp_size)
+414:
+415:        self._engines: dict[tuple[EngineId, int], EngineTransferInfo] = {}
+416:
+417:        # Figure out whether the first dimension of the cache is K/V
+418:        # or num_blocks.
+419:        attn_backend = self.attn_backends[0]
+420:        if not self.is_mamba:
+421:            _MOCK_BLOCK_SIZE = 16
+422:            kv_cache_shape: tuple[int, ...] = attn_backend.get_kv_cache_shape(
+423:                num_blocks=1,
+424:                block_size=_MOCK_BLOCK_SIZE,
+425:                num_kv_heads=1,
+426:                head_size=1,
+427:            )
+428:            logger.debug("Test kv_cache_shape: %s", kv_cache_shape)
+429:        # Non-MLA backends caches have 5 dims [num_blocks, 2, H,N,D],
+430:        # we just mock num_blocks to 1 for the dimension check below.
+431:        # Hybrid SSM models assume a single blocks_first layout
+432:        self._is_kv_layout_blocks_first = self.is_mamba or (
+433:            len(kv_cache_shape) == 5 and kv_cache_shape[0] == 1
+434:        )
+435:
+436:        self._cross_layers_blocks = False
+437:        if self.tensor_shape is not None:
+438:            self._cross_layers_blocks = (
+439:                len(self.tensor_shape) == len(kv_cache_shape) + 1
+440:            )
+441:
+442:        if self._cross_layers_blocks:
+443:            logger.debug("Using cross-layer KV cache")
+444:            _MOCK_NUM_LAYERS = 80
+445:            kv_cache_shape = (_MOCK_NUM_LAYERS,) + kv_cache_shape
+446:            try:
+447:                kv_cache_stride_order = attn_backend.get_kv_cache_stride_order(
+448:                    include_num_layers_dimension=self._cross_layers_blocks
+449:                )
+450:            except (AttributeError, NotImplementedError):
+451:                assert self.tensor_shape is not None
+452:                kv_cache_stride_order = tuple(range(len(self.tensor_shape)))
+453:            kv_cache_shape = tuple(kv_cache_shape[i] for i in kv_cache_stride_order)
+454:
+455:    # ============================================================
+456:    # Engine registration
+457:    # ============================================================
+458:
+459:    def register_remote_engine(
+460:        self,
+461:        remote_engine_id: EngineId,
+462:        info: EngineTransferInfo,
+463:    ) -> EngineTransferInfo:
+464:        """Register a remote engine, unifying worker dicts state.
+465:
+466:        The caller (worker) is responsible for computing the info via
+467:        the transfer policy.  This method only stores and deduplicates.
+468:        """
+469:        assert remote_engine_id != self.engine_id, (
+470:            f"Cannot register local engine {self.engine_id} as remote. "
+471:            f"Local identity is set via __init__ params."
+472:        )
+473:        engine_key = (remote_engine_id, info.remote_pp_rank)
+474:        if engine_key in self._engines:
+475:            return self._engines[engine_key]
+476:        self._engines[engine_key] = info
+477:        return info
+478:
+479:    def get_engine_info(
+480:        self, remote_engine_id: EngineId, remote_pp_rank: int = 0
+481:    ) -> EngineTransferInfo:
+482:        return self._engines[(remote_engine_id, remote_pp_rank)]
+483:
+484:    # ============================================================
+485:    # Layout properties
+486:    # ============================================================
+487:
+488:    @property
+489:    def is_kv_layout_blocks_first(self) -> bool:
+490:        return self._is_kv_layout_blocks_first
+491:
+492:    @property
+493:    def cross_layers_blocks(self) -> bool:
+494:        return self._cross_layers_blocks
+495:
+496:    @property
+497:    def virtually_split_kv_in_blocks(self) -> bool:
+498:        # Whether to logically split each block into K and V halves.
+499:        # Applies when K/V are interleaved within each block (blocks-first),
+500:        # but NOT when cross-layer blocks are used — cross-layer blocks have
+501:        # per-layer K/V interleaving (L0_K, L0_V, L1_K, L1_V, ...) so a
+502:        # simple half-split does not separate K from V.
+503:        return self._is_kv_layout_blocks_first and not self._cross_layers_blocks
+504:
+505:    @property
+506:    def split_k_and_v(self) -> bool:
+507:        # Whether to register regions for K and V separately (when present).
+508:        return not (
+509:            self._cross_layers_blocks or self.is_mla or self.is_kv_layout_blocks_first
+510:        )
+511:
+512:    # ============================================================
+513:    # Common methods
+514:    # ============================================================
+515:
+516:    def tp_ratio(self, remote_tp_size: int) -> int:
+517:        """Calculate the tensor parallel ratio between local and remote TP.
+518:
+519:        Positive when local_tp >= remote_tp (local workers read from the
+520:        same remote worker in groups of size ``tp_ratio``).  Negative when
+521:        remote_tp > local_tp (ratio is flipped).
+522:        """
+523:        if self.tp_size >= remote_tp_size:
+524:            assert self.tp_size % remote_tp_size == 0, (
+525:                f"Local tensor parallel size {self.tp_size} is not divisible "
+526:                f"by remote tensor parallel size {remote_tp_size}."
+527:            )
+528:            return self.tp_size // remote_tp_size
+529:        assert remote_tp_size % self.tp_size == 0, (
+530:            f"Remote tensor parallel size {remote_tp_size} is not divisible "
+531:            f"by local tensor parallel size {self.tp_size}."
+532:        )
+533:        return -(remote_tp_size // self.tp_size)
+534:
+535:    def block_size_ratio(self, remote_block_size: int) -> int:
+536:        """Calculate the block size ratio between local and remote."""
+537:        assert self.block_size % remote_block_size == 0, (
+538:            f"Local block size {self.block_size} is not divisible "
+539:            f"by remote block size {remote_block_size} or vice versa."
+540:        )
+541:        return self.block_size // remote_block_size
+542:
+543:    def is_kv_replicated(
+544:        self, remote_engine_id: EngineId, remote_pp_rank: int = 0
+545:    ) -> bool:
+546:        """Whether the KV cache is replicated across TP workers due to the
+547:        number of TP workers being greater than the number of KV heads.
+548:        """
+549:        return (
+550:            self._engines[(remote_engine_id, remote_pp_rank)].remote_tp_size
+551:            > self.total_num_kv_heads
+552:        )
+553:
+554:    def replicates_kv_cache(
+555:        self, remote_engine_id: EngineId, remote_pp_rank: int = 0
+556:    ) -> bool:
+557:        # MLA is always replicated as the hidden dim can't be split.
+558:        return self.is_mla or self.is_kv_replicated(remote_engine_id, remote_pp_rank)
+559:
+560:    @property
+561:    def local_replicates_kv_cache(self) -> bool:
+562:        """Whether the local engine's KV cache is replicated."""
+563:        return self.is_mla or self.tp_size > self.total_num_kv_heads
+564:
+565:    def handshake_target_ranks(self, remote_tp_size: int) -> list[int]:
+566:        """Pre-registration: compute which remote TP ranks to handshake with.
+567:
+568:        Pure math based on local/remote TP sizes — does not require
+569:        the remote engine to be registered yet.
+570:        """
+571:        tp_ratio = self.tp_ratio(remote_tp_size)
+572:        if tp_ratio > 0:
+573:            return [self.tp_rank // tp_ratio]
+574:        abs_ratio = -tp_ratio
+575:        return [self.tp_rank * abs_ratio + i for i in range(abs_ratio)]
+576:
+577:    def target_remote_ranks(
+578:        self, remote_engine_id: EngineId, remote_pp_rank: int = 0
+579:    ) -> list[int]:
+580:        """Get the remote TP rank(s) that the current local TP rank will
+581:        read from.  When remote tp_size > local tp_size, reads from
+582:        multiple remote ranks.
+583:        """
+584:        info = self._engines[(remote_engine_id, remote_pp_rank)]
+585:        tp_ratio = self.tp_ratio(info.remote_tp_size)
+586:        if tp_ratio > 0:
+587:            return [self.tp_rank // tp_ratio]
+588:        # remote TP > local TP: read from |tp_ratio| remote workers
+589:        abs_ratio = -tp_ratio
+590:        return [self.tp_rank * abs_ratio + i for i in range(abs_ratio)]
+591:
+592:    def get_transfer_cache_regions(
+593:        self, cache: torch.Tensor, layer_spec: "KVCacheSpec"
+594:    ) -> list[torch.Tensor] | torch.Tensor:
+595:        """Return the cache tensor(s) to register as NIXL memory regions,
+596:        also accounting for hybrid SSM models specificities.
+597:        """
+598:        if isinstance(layer_spec, MambaSpec):
+599:            # Register the whole kv cache shared tensor, including
+600:            # SSM/Conv.
+601:            conv, ssm = cache
+602:            return [conv]
+603:
+604:        # Check may be hacky but it's matching
+605:        # `_update_hybrid_attention_mamba_layout`.
+606:        if self.is_mamba and cache.shape[0] == 2:
+607:            # When MAMBA is present, all backends are blocks first, so
+608:            # that blocks can be shared between attention layers and mamba
+609:            # layers.  Runner already adjusted strides for FlashAttn-like
+610:            # backends so its num_blocks first.
+611:            # Swap [2<>num_blocks] dims for hybrid SSM layout.
+612:            cache = cache.transpose(0, 1)
+613:
+614:        # Regular case: backends like FA register K/V in separate regions
+615:        return cache if self.split_k_and_v else [cache]
+616:
+617:    def describe(self, remote_engine_id: EngineId, remote_pp_rank: int = 0) -> str:
+618:        """One-line summary of transfer config for logging."""
+619:        info = self._engines[(remote_engine_id, remote_pp_rank)]
+620:        return (
+621:            f"TransferTopology("
+622:            f"tp_ratio={self.tp_ratio(info.remote_tp_size)}, "
+623:            f"num_kv_heads={self.total_num_kv_heads if not self.is_mla else 1}, "
+624:            f"local_tp={self.tp_size}, "
+625:            f"remote_tp={info.remote_tp_size}, "
+626:            f"remote_pp={remote_pp_rank}, "
+627:            f"local_rank={self.tp_rank}, "
+628:            f"remote_block_len={info.remote_block_len})"
+629:        )

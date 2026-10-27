@@ -1,0 +1,622 @@
+{
+  "status": "LOCAL_CODE_SNAPSHOT_EXACT_SELECTED_FILES_NO_GIT_ACTIONS",
+  "created_utc": "2026-10-27T11:51:20.233612+00:00",
+  "source_root": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估",
+  "archive_root": "E:\\work\\ks\\repos\\ks-pp-lmcache\\output\\05_当前环境与实验准备\\20261027_137环境评估",
+  "copied_files": [
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/runtime_overlay/vllm/v1/core/sched/scheduler.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "bytes": 112613
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/runtime_overlay/vllm/v1/core/sched/ks_stage_reservation.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\ks_stage_reservation.py",
+      "bytes": 6186
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/runtime_overlay/vllm/v1/engine/core.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\engine\\core.py",
+      "bytes": 100187
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/runtime_overlay/vllm/v1/engine/ks_restore_binding.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\engine\\ks_restore_binding.py",
+      "bytes": 2330
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/runtime_overlay/vllm/v1/executor/multiproc_executor.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\executor\\multiproc_executor.py",
+      "bytes": 59638
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/runtime_overlay/vllm_ascend/worker/worker.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm_ascend\\worker\\worker.py",
+      "bytes": 58485
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/runtime_overlay/lmcache/integration/vllm/lmcache_mp_connector.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\lmcache\\integration\\vllm\\lmcache_mp_connector.py",
+      "bytes": 77389
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/runtime_overlay/lmcache/integration/vllm/lmcache_mp_connector_multi17.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\lmcache\\integration\\vllm\\lmcache_mp_connector_multi17.py",
+      "bytes": 77389
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/runtime_overlay/lmcache/integration/vllm/vllm_multi_process_adapter.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\lmcache\\integration\\vllm\\vllm_multi_process_adapter.py",
+      "bytes": 117760
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/runtime_overlay/lmcache/integration/vllm/ks_restore_runtime.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\lmcache\\integration\\vllm\\ks_restore_runtime.py",
+      "bytes": 5687
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/runtime_overlay/lmcache/integration/vllm/ks_restore_metadata_bridge.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\lmcache\\integration\\vllm\\ks_restore_metadata_bridge.py",
+      "bytes": 7188
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/runtime_overlay/ks_stage_executor_driver.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\ks_stage_executor_driver.py",
+      "bytes": 20878
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/runtime_overlay/typed_stage_protocol.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\typed_stage_protocol.py",
+      "bytes": 11250
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/runtime_overlay/span_stage_controller.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\span_stage_controller.py",
+      "bytes": 13545
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/build_actual137_observer.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\build_actual137_observer.py",
+      "bytes": 5189
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/build_common_connector_overlay.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\build_common_connector_overlay.py",
+      "bytes": 4890
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/build_executor_driver_overlay.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\build_executor_driver_overlay.py",
+      "bytes": 18847
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/build_scheduler_reservation.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\build_scheduler_reservation.py",
+      "bytes": 4268
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/build_span_controller.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\build_span_controller.py",
+      "bytes": 8412
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/build_unified_manifest.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\build_unified_manifest.py",
+      "bytes": 3772
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/check_executor_driver_wire_cpu.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\check_executor_driver_wire_cpu.py",
+      "bytes": 26217
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/check_import_dependency_closure.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\check_import_dependency_closure.py",
+      "bytes": 7081
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/check_integrated_first_token.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\check_integrated_first_token.py",
+      "bytes": 9262
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/check_scheduler_reservation.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\check_scheduler_reservation.py",
+      "bytes": 12694
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/check_typed_stage_protocol.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\check_typed_stage_protocol.py",
+      "bytes": 15824
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/deploy_private_candidate.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\deploy_private_candidate.py",
+      "bytes": 7669
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/prepare_candidate_native.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\prepare_candidate_native.py",
+      "bytes": 5662
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/verify_current_driver_contracts.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\verify_current_driver_contracts.py",
+      "bytes": 6576
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/archive_current_candidate.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\archive_current_candidate.py",
+      "bytes": 11891
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/typed_stage_protocol.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\typed_stage_protocol.py",
+      "bytes": 11250
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/span_stage_controller.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\span_stage_controller.py",
+      "bytes": 13545
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/ks_stage_reservation.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\ks_stage_reservation.py",
+      "bytes": 6186
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/executor_driver_build.json",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\executor_driver_build.json",
+      "bytes": 1582
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/executor_driver_cpu_result.json",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\executor_driver_cpu_result.json",
+      "bytes": 393
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/executor_driver_loader.json",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\executor_driver_loader.json",
+      "bytes": 2243
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/integrated_first_token_cpu_result.json",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\integrated_first_token_cpu_result.json",
+      "bytes": 1585
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/import_dependency_closure.json",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\import_dependency_closure.json",
+      "bytes": 5314
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/unified_overlay_manifest.json",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\unified_overlay_manifest.json",
+      "bytes": 4316
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/scheduler_reservation_build.json",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\scheduler_reservation_build.json",
+      "bytes": 641
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/scheduler_reservation_cpu_result.json",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\scheduler_reservation_cpu_result.json",
+      "bytes": 39865
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/span_controller_build.json",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\span_controller_build.json",
+      "bytes": 524
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/typed_stage_cpu_result.json",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\typed_stage_cpu_result.json",
+      "bytes": 5080
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/driver_contract_result.json",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\driver_contract_result.json",
+      "bytes": 2019
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/private_candidate_deployment.json",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\private_candidate_deployment.json",
+      "bytes": 3215
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/common17_notification_rebase.json",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\common17_notification_rebase.json",
+      "bytes": 1932
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/common17_notification_rebase.patch",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\common17_notification_rebase.patch",
+      "bytes": 1973
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/core.driver.patch",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\core.driver.patch",
+      "bytes": 12286
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/multiproc_executor.driver.patch",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\multiproc_executor.driver.patch",
+      "bytes": 22795
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/worker.driver.patch",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\worker.driver.patch",
+      "bytes": 12320
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/scheduler_reservation.patch",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\scheduler_reservation.patch",
+      "bytes": 3427
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/span_controller.patch",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\span_controller.patch",
+      "bytes": 9926
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/README.md",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\README.md",
+      "bytes": 12504
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/EXECUTOR_WIRE.md",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\EXECUTOR_WIRE.md",
+      "bytes": 14227
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/native_candidate/stage-candidate.env.native.sh",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\native_candidate\\stage-candidate.env.native.sh",
+      "bytes": 516
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/native_candidate/p-stage-first-token.serve.native.sh",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\native_candidate\\p-stage-first-token.serve.native.sh",
+      "bytes": 1779
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/native_candidate/native.diff",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\native_candidate\\native.diff",
+      "bytes": 575
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/native_candidate/candidate_native_preparation.json",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\native_candidate\\candidate_native_preparation.json",
+      "bytes": 9031
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/adapter_rebase/actual137_vllm_multi_process_adapter.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\adapter_rebase\\actual137_vllm_multi_process_adapter.py",
+      "bytes": 110220
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/adapter_rebase/actual137_observer.patch",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\adapter_rebase\\actual137_observer.patch",
+      "bytes": 12727
+    },
+    {
+      "relative_path": "恢复身份与启动接线/stage_driver/adapter_rebase/actual137_observer_build.json",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\adapter_rebase\\actual137_observer_build.json",
+      "bytes": 861
+    },
+    {
+      "relative_path": "恢复身份与启动接线/build_connector_overlay.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\build_connector_overlay.py",
+      "bytes": 9506
+    },
+    {
+      "relative_path": "恢复身份与启动接线/check_connector_overlay.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\check_connector_overlay.py",
+      "bytes": 13959
+    },
+    {
+      "relative_path": "恢复身份与启动接线/check_restore_metadata_bridge.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\check_restore_metadata_bridge.py",
+      "bytes": 9527
+    },
+    {
+      "relative_path": "恢复身份与启动接线/check_startup_hooks.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\check_startup_hooks.py",
+      "bytes": 10457
+    },
+    {
+      "relative_path": "恢复身份与启动接线/restore_metadata_bridge.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\restore_metadata_bridge.py",
+      "bytes": 7188
+    },
+    {
+      "relative_path": "恢复身份与启动接线/ks_restore_runtime.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\ks_restore_runtime.py",
+      "bytes": 5687
+    },
+    {
+      "relative_path": "恢复身份与启动接线/README.md",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\README.md",
+      "bytes": 14503
+    },
+    {
+      "relative_path": "恢复身份与启动接线/connector_overlay_build.json",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\connector_overlay_build.json",
+      "bytes": 1042
+    },
+    {
+      "relative_path": "恢复身份与启动接线/connector_overlay_cpu_result.json",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\connector_overlay_cpu_result.json",
+      "bytes": 11761
+    },
+    {
+      "relative_path": "恢复身份与启动接线/cpu_result.json",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\cpu_result.json",
+      "bytes": 1399
+    },
+    {
+      "relative_path": "恢复身份与启动接线/startup_hooks_cpu_result.json",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\startup_hooks_cpu_result.json",
+      "bytes": 17926
+    },
+    {
+      "relative_path": "恢复身份与启动接线/connector_init.patch",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\connector_init.patch",
+      "bytes": 1957
+    },
+    {
+      "relative_path": "恢复身份与启动接线/startup_hooks.patch",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\startup_hooks.patch",
+      "bytes": 2885
+    },
+    {
+      "relative_path": "恢复身份与启动接线/required_worker_publisher.patch",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\required_worker_publisher.patch",
+      "bytes": 684
+    },
+    {
+      "relative_path": "恢复身份与启动接线/overlay/vllm/v1/engine/core.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\overlay\\vllm\\v1\\engine\\core.py",
+      "bytes": 100624
+    },
+    {
+      "relative_path": "恢复身份与启动接线/overlay/vllm/v1/engine/ks_restore_binding.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\overlay\\vllm\\v1\\engine\\ks_restore_binding.py",
+      "bytes": 2330
+    },
+    {
+      "relative_path": "恢复身份与启动接线/overlay/vllm/v1/engine/ks_stage_controller.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\overlay\\vllm\\v1\\engine\\ks_stage_controller.py",
+      "bytes": 12381
+    },
+    {
+      "relative_path": "恢复身份与启动接线/overlay/vllm/v1/executor/multiproc_executor.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\overlay\\vllm\\v1\\executor\\multiproc_executor.py",
+      "bytes": 57106
+    },
+    {
+      "relative_path": "恢复身份与启动接线/overlay/lmcache/integration/vllm/lmcache_mp_connector.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\overlay\\lmcache\\integration\\vllm\\lmcache_mp_connector.py",
+      "bytes": 77389
+    },
+    {
+      "relative_path": "恢复身份与启动接线/overlay/lmcache/integration/vllm/ks_restore_runtime.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\overlay\\lmcache\\integration\\vllm\\ks_restore_runtime.py",
+      "bytes": 5687
+    },
+    {
+      "relative_path": "恢复身份与启动接线/overlay/lmcache/integration/vllm/ks_restore_metadata_bridge.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\overlay\\lmcache\\integration\\vllm\\ks_restore_metadata_bridge.py",
+      "bytes": 7188
+    },
+    {
+      "relative_path": "真实KV恢复验证/actual137_worker_source.txt",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\真实KV恢复验证\\actual137_worker_source.txt",
+      "bytes": 52475
+    },
+    {
+      "relative_path": "真实KV恢复验证/actual137_kv_aggregator.txt",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\真实KV恢复验证\\actual137_kv_aggregator.txt",
+      "bytes": 27059
+    },
+    {
+      "relative_path": "真实KV恢复验证/core_mtp_source_bundle.txt",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\真实KV恢复验证\\core_mtp_source_bundle.txt",
+      "bytes": 488876
+    },
+    {
+      "relative_path": "真实KV恢复验证/actual137_kv_mixin.txt",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\真实KV恢复验证\\actual137_kv_mixin.txt",
+      "bytes": 12217
+    },
+    {
+      "relative_path": "真实KV恢复验证/README.md",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\真实KV恢复验证\\README.md",
+      "bytes": 13861
+    },
+    {
+      "relative_path": "完整模型单机P对照/pp_core.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\pp_core.py",
+      "bytes": 93395
+    },
+    {
+      "relative_path": "完整模型单机P对照/pp_executor.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\pp_executor.py",
+      "bytes": 43395
+    },
+    {
+      "relative_path": "完整模型单机P对照/runtime/local-completion/model_runner_local.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\runtime\\local-completion\\model_runner_local.py",
+      "bytes": 258442
+    },
+    {
+      "relative_path": "完整模型单机P对照/runtime/local-completion/model_runner_local.py.patch",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\runtime\\local-completion\\model_runner_local.py.patch",
+      "bytes": 779
+    },
+    {
+      "relative_path": "完整模型单机P对照/runtime/local-completion/lmcache_mp_connector_multi17.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\runtime\\local-completion\\lmcache_mp_connector_multi17.py",
+      "bytes": 76967
+    },
+    {
+      "relative_path": "完整模型单机P对照/runtime/local-completion/lmcache_mp_connector_multi17.py.patch",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\runtime\\local-completion\\lmcache_mp_connector_multi17.py.patch",
+      "bytes": 1388
+    },
+    {
+      "relative_path": "完整模型单机P对照/runtime/local-completion/sitecustomize.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\runtime\\local-completion\\sitecustomize.py",
+      "bytes": 862
+    },
+    {
+      "relative_path": "完整模型单机P对照/runtime/local-completion/cpu_actual_methods.json",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\runtime\\local-completion\\cpu_actual_methods.json",
+      "bytes": 1193
+    },
+    {
+      "relative_path": "完整模型单机P对照/runtime/local-completion/preparation.json",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\runtime\\local-completion\\preparation.json",
+      "bytes": 668
+    },
+    {
+      "relative_path": "完整模型单机P对照/runtime/common/sitecustomize.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\runtime\\common\\sitecustomize.py",
+      "bytes": 632
+    },
+    {
+      "relative_path": "完整模型单机P对照/runtime/common/lmcache_cache_context_pinned.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\runtime\\common\\lmcache_cache_context_pinned.py",
+      "bytes": 16577
+    },
+    {
+      "relative_path": "完整模型单机P对照/check_first_token_no_feedback.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\check_first_token_no_feedback.py",
+      "bytes": 2690
+    },
+    {
+      "relative_path": "完整模型单机P对照/check_local_completion_methods.py",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\check_local_completion_methods.py",
+      "bytes": 8743
+    },
+    {
+      "relative_path": "完整模型单机P对照/first_token_no_feedback_cpu.json",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\first_token_no_feedback_cpu.json",
+      "bytes": 2330
+    },
+    {
+      "relative_path": "完整模型单机P对照/first_token_no_feedback_staged.json",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\first_token_no_feedback_staged.json",
+      "bytes": 395
+    },
+    {
+      "relative_path": "完整模型单机P对照/warm1_诊断与首token反馈边界.md",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\warm1_诊断与首token反馈边界.md",
+      "bytes": 2564
+    },
+    {
+      "relative_path": "完整模型单机P对照/common.env.native.sh",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\common.env.native.sh",
+      "bytes": 2067
+    },
+    {
+      "relative_path": "完整模型单机P对照/local-completion.env.native.sh",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\local-completion.env.native.sh",
+      "bytes": 170
+    },
+    {
+      "relative_path": "完整模型单机P对照/p-local-first-token.serve.native.sh",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\p-local-first-token.serve.native.sh",
+      "bytes": 1779
+    },
+    {
+      "relative_path": "完整模型单机P对照/cache.server.native.sh",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\cache.server.native.sh",
+      "bytes": 472
+    },
+    {
+      "relative_path": "完整模型单机P对照/bench-first-token.native.sh",
+      "source": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\完整模型单机P对照\\bench-first-token.native.sh",
+      "bytes": 895
+    },
+    {
+      "relative_path": "dependency_inputs/output/04_修改策略与验证/01_修改策略与隔离候选/KV完成通知修改策略与隔离分支_20261022/lmcache_only_followup/source_current/lmcache/integration/vllm/lmcache_mp_connector.py",
+      "source": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\lmcache_only_followup\\source_current\\lmcache\\integration\\vllm\\lmcache_mp_connector.py",
+      "bytes": 76967
+    },
+    {
+      "relative_path": "dependency_inputs/output/04_修改策略与验证/01_修改策略与隔离候选/KV完成通知修改策略与隔离分支_20261022/capacity_followup/sources/lmcache/integration/vllm/lmcache_mp_metadata.py",
+      "source": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\lmcache\\integration\\vllm\\lmcache_mp_metadata.py",
+      "bytes": 19144
+    },
+    {
+      "relative_path": "dependency_inputs/output/04_修改策略与验证/01_修改策略与隔离候选/KV完成通知修改策略与隔离分支_20261022/capacity_followup/sources/vllm/v1/core/sched/output.py",
+      "source": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\output.py",
+      "bytes": 10122
+    },
+    {
+      "relative_path": "dependency_inputs/output/04_修改策略与验证/01_修改策略与隔离候选/KV完成通知修改策略与隔离分支_20261022/capacity_followup/sources/vllm/v1/core/sched/async_scheduler.py",
+      "source": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\vllm\\v1\\core\\sched\\async_scheduler.py",
+      "bytes": 3044
+    },
+    {
+      "relative_path": "dependency_inputs/output/04_修改策略与验证/01_修改策略与隔离候选/KV完成通知修改策略与隔离分支_20261022/source_baseline/vllm/v1/outputs.py",
+      "source": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\source_baseline\\vllm\\v1\\outputs.py",
+      "bytes": 12973
+    }
+  ],
+  "existing_repository_inputs_checked_read_only": [
+    "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/controller/stage_controller.py",
+    "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/worker_split/worker.py",
+    "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/lmcache_stage_observer/stage_observer.py",
+    "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/lmcache_stage_observer/build_lmcache_stage_observer.py",
+    "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/lmcache_stage_observer/vllm_multi_process_adapter.py",
+    "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/draft_wait_followup/multiproc_executor.py",
+    "output/04_修改策略与验证/01_修改策略与隔离候选/KV完成通知修改策略与隔离分支_20261022/lmcache_only_followup/source_current/lmcache/integration/vllm/vllm_multi_process_adapter.py",
+    "output/05_当前环境与实验准备/20261027_25环境准备/25镜像源码与配置快照/sources/vllm/vllm/v1/core/sched/scheduler.py"
+  ],
+  "excluded": [
+    "customer prompt/data",
+    "model files",
+    "venv",
+    "credentials/keys",
+    "runtime logs"
+  ],
+  "git_actions": [],
+  "service_actions": [],
+  "npu_actions": 0,
+  "old_inputs_initially_missing": [
+    "output/04_修改策略与验证/01_修改策略与隔离候选/KV完成通知修改策略与隔离分支_20261022/lmcache_only_followup/source_current/lmcache/integration/vllm/lmcache_mp_connector.py",
+    "output/04_修改策略与验证/01_修改策略与隔离候选/KV完成通知修改策略与隔离分支_20261022/capacity_followup/sources/lmcache/integration/vllm/lmcache_mp_metadata.py",
+    "output/04_修改策略与验证/01_修改策略与隔离候选/KV完成通知修改策略与隔离分支_20261022/capacity_followup/sources/vllm/v1/core/sched/output.py",
+    "output/04_修改策略与验证/01_修改策略与隔离候选/KV完成通知修改策略与隔离分支_20261022/capacity_followup/sources/vllm/v1/core/sched/async_scheduler.py",
+    "output/04_修改策略与验证/01_修改策略与隔离候选/KV完成通知修改策略与隔离分支_20261022/source_baseline/vllm/v1/outputs.py"
+  ],
+  "new_repository_input_placement": [
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/KV完成通知修改策略与隔离分支_20261022/lmcache_only_followup/source_current/lmcache/integration/vllm/lmcache_mp_connector.py",
+      "status": "NEW_INPUT_CREATED_EXACT_BYTES",
+      "bytes": 76967
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/KV完成通知修改策略与隔离分支_20261022/capacity_followup/sources/lmcache/integration/vllm/lmcache_mp_metadata.py",
+      "status": "NEW_INPUT_CREATED_EXACT_BYTES",
+      "bytes": 19144
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/KV完成通知修改策略与隔离分支_20261022/capacity_followup/sources/vllm/v1/core/sched/output.py",
+      "status": "NEW_INPUT_CREATED_EXACT_BYTES",
+      "bytes": 10122
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/KV完成通知修改策略与隔离分支_20261022/capacity_followup/sources/vllm/v1/core/sched/async_scheduler.py",
+      "status": "NEW_INPUT_CREATED_EXACT_BYTES",
+      "bytes": 3044
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/KV完成通知修改策略与隔离分支_20261022/source_baseline/vllm/v1/outputs.py",
+      "status": "NEW_INPUT_CREATED_EXACT_BYTES",
+      "bytes": 12973
+    }
+  ]
+}

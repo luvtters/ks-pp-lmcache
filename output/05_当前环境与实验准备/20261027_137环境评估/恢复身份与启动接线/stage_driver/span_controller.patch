@@ -1,0 +1,194 @@
+--- a/controller/stage_controller.py
++++ b/controller/span_stage_controller.py
+@@ -48,6 +48,9 @@
+     result: Any = _NO_RESULT
+     cancelled: bool = False
+     drained: set[int] = field(default_factory=set)
++    sample_consumed: list[set[int]] = field(default_factory=lambda: [set(), set()])
++    buffer_retired: list[set[int]] = field(default_factory=lambda: [set(), set()])
++    core_consumed: bool = False
+ 
+ 
+ class StageController:
+@@ -116,34 +119,33 @@
+         return len(restore.ready[stage]) != old_size
+ 
+     def admit_batch(self, batch_id, generation, requests, token_positions):
+-        """冻结逻辑批成员；入批不代表两段模型均可执行。"""
++        """Reserve an original whole-batch slot; same-request spans may queue."""
+         key = (batch_id, generation)
+         if (not isinstance(batch_id, str) or not batch_id
+                 or type(generation) is not int or generation < 0):
+-            raise ValueError("批次ID或代次无效")
++            raise ValueError("invalid batch identity")
+         if key in self._batches or key in self._retired:
+-            raise ValueError("批次ID与代次不可重复使用")
++            raise ValueError("duplicate batch identity")
+         if self.inflight_count >= self.max_inflight_batches:
+-            raise RuntimeError("整批在途名额已满")
++            raise RuntimeError("whole-batch slots are full")
+         members = tuple(tuple(req) for req in requests)
+         positions = tuple(tuple(row) for row in token_positions)
+         if (not members or len(members) != len(positions)
+                 or any(len(req) != 2 for req in members)
+                 or len({req[0] for req in members}) != len(members)
+                 or any(not row or any(type(pos) is not int or pos < 0 for pos in row)
+-                       or tuple(sorted(set(row))) != row for row in positions)):
+-            raise ValueError("批次成员与各请求token位置必须一一对应且有序")
+-        active_requests = {req for batch in self._batches.values()
+-                           for req, _ in batch.requests}
+-        for request_id, restore_generation in members:
++                       or row != tuple(range(row[0], row[-1] + 1)) for row in positions)):
++            raise ValueError("each request requires one nonempty contiguous token span")
++        for (request_id, restore_generation), row in zip(members, positions):
+             restore = self._restores.get(request_id)
+-            if not restore or restore.generation != restore_generation:
+-                raise ValueError("批次包含未登记的请求恢复代次")
+-            if restore.invalid:
+-                raise ValueError("批次包含已失效的恢复代次")
+-            # 此最小原型不重排同一请求的多个在途token/分块。
+-            if request_id in active_requests:
+-                raise RuntimeError("同一请求仍有在途批次")
++            if not restore or restore.generation != restore_generation or restore.invalid:
++                raise ValueError("unknown, stale or invalid request restore")
++            for active in self._batches.values():
++                for (old_request, old_generation), old_row in zip(active.requests, active.token_positions):
++                    if old_request != request_id:
++                        continue
++                    if old_generation != restore_generation or row[0] <= old_row[-1]:
++                        raise ValueError("overlapping or out-of-order active token spans")
+         self._batches[key] = _Batch(key, members, positions)
+         return key
+ 
+@@ -182,25 +184,19 @@
+         return None
+ 
+     def mark_model_complete(self, key, stage, worker, *, device_complete):
+-        """worker方法返回不够；只接纳真实设备完成后的确认。"""
++        """Device completion does not consume sample output or retire buffers."""
+         self._worker(stage, worker)
+         batch = self._batches.get(key)
+-        if not batch or batch.cancelled or device_complete is not True:
++        if not batch or device_complete is not True:
+             return False
+         if batch.state[stage] == "waiting":
+-            raise RuntimeError("本段尚未派发，不能报告模型完成")
++            raise RuntimeError("stage was not dispatched")
+         if batch.state[stage] == "done":
+             return False
+         batch.completed[stage].add(worker)
+         if batch.completed[stage] != set(self.stage_workers[stage]):
+             return False
+         batch.state[stage] = "done"
+-        if stage == 0:
+-            self._busy[stage] = None
+-        else:
+-            # 后段真实执行结束后，才允许复用本批输入中间结果缓冲。
+-            batch.buffer_reserved = False
+-            # 末段runner仍保留execute_model_state等待sample，计算名额暂不释放。
+         return True
+ 
+     def mark_activation_received(self, key, stage, worker, *, device_complete):
+@@ -217,25 +213,59 @@
+         batch.received.add(worker)
+         return len(batch.received) != old_size
+ 
++    def mark_sample_consumed(self, key, stage, worker):
++        self._worker(stage, worker)
++        batch = self._batches[key]
++        if batch.state[stage] == "waiting":
++            raise RuntimeError("sample cannot precede stage dispatch")
++        previous = len(batch.sample_consumed[stage])
++        batch.sample_consumed[stage].add(worker)
++        return previous != len(batch.sample_consumed[stage])
++
++    def mark_stage_buffer_retired(self, key, stage, worker, *, device_complete):
++        self._worker(stage, worker)
++        batch = self._batches[key]
++        if (device_complete is not True or batch.state[stage] != "done"
++                or worker not in batch.sample_consumed[stage]):
++            raise RuntimeError("device/model/sample ownership is not retired")
++        if stage == 1 and not batch.core_consumed:
++            raise RuntimeError("final-stage output has not been consumed by the core")
++        previous = len(batch.buffer_retired[stage])
++        batch.buffer_retired[stage].add(worker)
++        if batch.buffer_retired[stage] == set(self.stage_workers[stage]):
++            if self._busy[stage] == key:
++                self._busy[stage] = None
++            if stage == 1:
++                batch.buffer_reserved = False
++        return previous != len(batch.buffer_retired[stage])
++
+     def mark_final_result(self, key, result):
+-        """采样等最终工作完成后再登记结果；这与后段forward完成分开。"""
+-        batch = self._batches[key]
+-        if batch.cancelled or batch.state[1] != "done":
+-            raise RuntimeError("最后段尚未完成，不能登记最终结果")
++        batch = self._batches[key]
++        if (batch.state[1] != "done" or result is None
++                or batch.sample_consumed[1] != set(self.stage_workers[1])):
++            raise RuntimeError("final model/sample result is not complete")
+         if batch.result is not _NO_RESULT:
+-            raise RuntimeError("最终结果不可重复登记")
++            raise RuntimeError("duplicate final result")
+         batch.result = result
+-        # 调用方确认sample及必要输出已真实完成，末段才可接下一批execute。
+-        self._busy[1] = None
++
++    def peek_committable(self):
++        if not self._batches:
++            return None
++        batch = next(iter(self._batches.values()))
++        if (batch.result is _NO_RESULT or batch.core_consumed
++                or batch.state != ["done", "done"]
++                or any(batch.sample_consumed[s] != set(self.stage_workers[s]) for s in (0, 1))):
++            return None
++        return Commit(batch.key, batch.result, False)
++
++    def mark_core_consumed(self, key):
++        commit = self.peek_committable()
++        if commit is None or commit.key != key:
++            raise RuntimeError("core consumption must follow ready final-result FIFO")
++        self._batches[key].core_consumed = True
+ 
+     def cancel(self, key):
+-        """停止新派发；不凭取消指令就释放未知是否仍在使用的设备资源。"""
+-        batch = self._batches.get(key)
+-        if batch:
+-            batch.cancelled = True
+-            for request_id, _ in batch.requests:
+-                # 取消/失败后的设备内容与未结束恢复可能未知，禁止复用旧就绪位。
+-                self._restores[request_id].invalid = True
++        raise NotImplementedError("device-safe multi-batch cancellation is not integrated; retain all ownership")
+ 
+     def mark_drained(self, key, worker, *, device_complete):
+         batch = self._batches.get(key)
+@@ -251,23 +281,14 @@
+         return batch.drained == set(self.stage_workers[0] + self.stage_workers[1])
+ 
+     def pop_committable(self):
+-        """按原逻辑批顺序提交；前段完成不会提前释放整批名额。"""
++        """Release a whole-batch slot only after real core consumption/retirement."""
+         if not self._batches:
+             return None
+         key = next(iter(self._batches))
+         batch = self._batches[key]
+-        if batch.cancelled:
+-            if not self._all_drained(batch):
+-                return None
+-            result = None
+-        else:
+-            if batch.state[1] != "done" or batch.result is _NO_RESULT:
+-                return None
+-            result = batch.result
+-        for stage in (0, 1):
+-            if self._busy[stage] == key:
+-                self._busy[stage] = None
+-        batch.buffer_reserved = False
++        if (not batch.core_consumed or batch.result is _NO_RESULT
++                or any(batch.buffer_retired[s] != set(self.stage_workers[s]) for s in (0, 1))):
++            return None
+         del self._batches[key]
+         self._retired.add(key)
+-        return Commit(key, result, batch.cancelled)
++        return Commit(key, batch.result, False)

@@ -1,0 +1,143 @@
+{
+  "status": "PASS_AST_CUSTOM_HELPER_CLOSURE_NOT_FULL_PACKAGE_IMPORT",
+  "source_files": 14,
+  "custom_import_edges": [
+    {
+      "from": "vllm/v1/core/sched/scheduler.py",
+      "line": 3,
+      "module": "vllm.v1.core.sched.ks_stage_reservation",
+      "mapped_to": "vllm/v1/core/sched/ks_stage_reservation.py"
+    },
+    {
+      "from": "vllm/v1/engine/core.py",
+      "line": 1017,
+      "module": "span_stage_controller",
+      "mapped_to": "span_stage_controller.py"
+    },
+    {
+      "from": "vllm/v1/engine/core.py",
+      "line": 1018,
+      "module": "vllm.v1.engine.ks_restore_binding",
+      "mapped_to": "vllm/v1/engine/ks_restore_binding.py"
+    },
+    {
+      "from": "vllm/v1/engine/core.py",
+      "line": 1020,
+      "module": "lmcache.integration.vllm.ks_restore_runtime",
+      "mapped_to": "lmcache/integration/vllm/ks_restore_runtime.py"
+    },
+    {
+      "from": "vllm/v1/engine/core.py",
+      "line": 1028,
+      "module": "ks_stage_executor_driver",
+      "mapped_to": "ks_stage_executor_driver.py"
+    },
+    {
+      "from": "vllm/v1/executor/multiproc_executor.py",
+      "line": 67,
+      "module": "ks_stage_executor_driver",
+      "mapped_to": "ks_stage_executor_driver.py"
+    },
+    {
+      "from": "vllm/v1/executor/multiproc_executor.py",
+      "line": 1376,
+      "module": "lmcache.integration.vllm.ks_restore_runtime",
+      "mapped_to": "lmcache/integration/vllm/ks_restore_runtime.py"
+    },
+    {
+      "from": "vllm_ascend/worker/worker.py",
+      "line": 21,
+      "module": "ks_stage_executor_driver",
+      "mapped_to": "ks_stage_executor_driver.py"
+    },
+    {
+      "from": "lmcache/integration/vllm/lmcache_mp_connector.py",
+      "line": 4,
+      "module": "lmcache.integration.vllm.ks_restore_runtime",
+      "mapped_to": "lmcache/integration/vllm/ks_restore_runtime.py"
+    },
+    {
+      "from": "lmcache/integration/vllm/lmcache_mp_connector_multi17.py",
+      "line": 4,
+      "module": "lmcache.integration.vllm.ks_restore_runtime",
+      "mapped_to": "lmcache/integration/vllm/ks_restore_runtime.py"
+    },
+    {
+      "from": "lmcache/integration/vllm/ks_restore_runtime.py",
+      "line": 8,
+      "module": "lmcache.integration.vllm.ks_restore_metadata_bridge",
+      "mapped_to": "lmcache/integration/vllm/ks_restore_metadata_bridge.py"
+    },
+    {
+      "from": "ks_stage_executor_driver.py",
+      "line": 19,
+      "module": "typed_stage_protocol",
+      "mapped_to": "typed_stage_protocol.py"
+    }
+  ],
+  "missing_custom_modules": [],
+  "dynamic_import_calls": [
+    {
+      "from": "lmcache/integration/vllm/ks_restore_runtime.py",
+      "line": 47,
+      "expression": "importlib.import_module(type(adapter).__module__)"
+    }
+  ],
+  "observer_embedded": [
+    "StageRestoreIdentity",
+    "LMCacheStageObserver",
+    "_Operation"
+  ],
+  "old_controller_or_observer_modules_required": false,
+  "safe_helper_load_plan": [
+    "typed_stage_protocol",
+    "span_stage_controller",
+    "ks_stage_executor_driver",
+    "vllm.v1.core.sched.ks_stage_reservation",
+    "vllm.v1.engine.ks_restore_binding",
+    "lmcache.integration.vllm.ks_restore_metadata_bridge",
+    "lmcache.integration.vllm.ks_restore_runtime"
+  ],
+  "framework_module_imports": "NOT_EXECUTED",
+  "npu_actions": 0,
+  "safe_helper_import": {
+    "status": "PASS_REAL_DEPLOYED_HELPER_SOURCE_IMPORT_ONLY",
+    "python_executable": "/opt/ks-lmcache-stage2/official-mp-v0.5.6rc5/venv/bin/python",
+    "loaded": [
+      {
+        "module": "typed_stage_protocol",
+        "source": "/opt/ks-stage-ready-luv-20261027/standalone-p/runtime/stage-candidate/typed_stage_protocol.py"
+      },
+      {
+        "module": "span_stage_controller",
+        "source": "/opt/ks-stage-ready-luv-20261027/standalone-p/runtime/stage-candidate/span_stage_controller.py"
+      },
+      {
+        "module": "ks_stage_executor_driver",
+        "source": "/opt/ks-stage-ready-luv-20261027/standalone-p/runtime/stage-candidate/ks_stage_executor_driver.py"
+      },
+      {
+        "module": "vllm.v1.core.sched.ks_stage_reservation",
+        "source": "/opt/ks-stage-ready-luv-20261027/standalone-p/runtime/stage-candidate/vllm/v1/core/sched/ks_stage_reservation.py"
+      },
+      {
+        "module": "vllm.v1.engine.ks_restore_binding",
+        "source": "/opt/ks-stage-ready-luv-20261027/standalone-p/runtime/stage-candidate/vllm/v1/engine/ks_restore_binding.py"
+      },
+      {
+        "module": "lmcache.integration.vllm.ks_restore_metadata_bridge",
+        "source": "/opt/ks-stage-ready-luv-20261027/standalone-p/runtime/stage-candidate/lmcache/integration/vllm/ks_restore_metadata_bridge.py"
+      },
+      {
+        "module": "lmcache.integration.vllm.ks_restore_runtime",
+        "source": "/opt/ks-stage-ready-luv-20261027/standalone-p/runtime/stage-candidate/lmcache/integration/vllm/ks_restore_runtime.py"
+      }
+    ],
+    "framework_parent_packages_loaded": [],
+    "torch_npu_or_ascend_loaded": [],
+    "full_package_imported": false,
+    "device_functions_called": false,
+    "method": "actual finder specs and actual source exec, canonical helper names, stdlib-only dependency order; no stubs or function fixtures",
+    "npu_actions": 0
+  }
+}

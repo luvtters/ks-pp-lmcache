@@ -1,0 +1,87 @@
+{
+  "status": "PASS_ACTUAL_SCHEDULER_WIRE_UPDATE_CPU_ONLY",
+  "tests": 2,
+  "failures": 0,
+  "errors": 0,
+  "evidence": [
+    {
+      "front_started_before_back_kv": true,
+      "cache_before_all_kv": 0,
+      "prefix_cache_commits_after_actual_output": 1,
+      "returned_token": [
+        71
+      ],
+      "whole_batch_capacity": 2,
+      "sample_calls": 16,
+      "actual_trace_rows": 62,
+      "tensor_parallel_size": 8,
+      "pipeline_parallel_size": 2
+    },
+    {
+      "front_started_before_back_kv": true,
+      "cache_before_all_kv": 0,
+      "prefix_cache_commits_after_actual_output": 1,
+      "returned_token": [
+        71
+      ],
+      "whole_batch_capacity": 2,
+      "sample_calls": 8,
+      "actual_trace_rows": 34,
+      "tensor_parallel_size": 4,
+      "pipeline_parallel_size": 2
+    }
+  ],
+  "actual_final_methods": [
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "update_from_output",
+      "begin": 1331,
+      "end": 1652
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "_handle_stopped_request",
+      "begin": 1680,
+      "end": 1696
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "_update_request_with_output",
+      "begin": 1698,
+      "end": 1714
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "update_from_output",
+      "begin": 1331,
+      "end": 1652
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "_handle_stopped_request",
+      "begin": 1680,
+      "end": 1696
+    },
+    {
+      "path": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_137环境评估\\恢复身份与启动接线\\stage_driver\\runtime_overlay\\vllm\\v1\\core\\sched\\scheduler.py",
+      "class": "Scheduler",
+      "method": "_update_request_with_output",
+      "begin": 1698,
+      "end": 1714
+    }
+  ],
+  "fixtures": [
+    "request/stop boundary",
+    "KV manager",
+    "model forward/PP/device",
+    "model initialization",
+    "EngineCore output containers"
+  ],
+  "npu_actions": 0,
+  "actual_glm_started": false
+}

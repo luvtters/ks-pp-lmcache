@@ -1,0 +1,15 @@
+{
+  "status": "PASS_CPU_ACTUAL_AST_WIRE_ONLY",
+  "passed": 9,
+  "total": 9,
+  "errors": [],
+  "failures": [],
+  "device_imports": false,
+  "real_forward_or_communication": false,
+  "actual_sources": [
+    "private actual137 worker phase methods",
+    "actual NPU front sample branch",
+    "private actual137 executor.poll_stage_events",
+    "actual137 KVOutputAggregator"
+  ]
+}

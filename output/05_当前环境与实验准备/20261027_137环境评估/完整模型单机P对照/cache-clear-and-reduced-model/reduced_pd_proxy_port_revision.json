@@ -1,0 +1,16 @@
+{
+  "proxy_port": 18083,
+  "port_free_at_check": true,
+  "listener": "",
+  "files": [
+    "startup/proxy.native.sh",
+    "README.md",
+    "topology-and-port-plan.json",
+    "startup/bench-original-async-cold.native.sh",
+    "startup/bench-original-async-warm.native.sh",
+    "startup/bench-stage-candidate-cold.native.sh",
+    "startup/bench-stage-candidate-warm.native.sh"
+  ],
+  "syntax": "PASS",
+  "service_action": false
+}

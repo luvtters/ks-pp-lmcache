@@ -1,0 +1,30 @@
+{
+  "status": "BUILT_ACTUAL137_PRIVATE_OVERLAY_NOT_DEPLOYED",
+  "vllm_commit": "0fc695fc6d1d82e9a5ac6835ac8e4e1c83703665",
+  "ascend_commit": "5cb98caaadeff42b5b62b996e34bb2aaa29d20fd",
+  "scope": "max_tokens=1 no scheduled spec actual async=True",
+  "base": [
+    "E:\\work\\ks\\output\\05_\u5f53\u524d\u73af\u5883\u4e0e\u5b9e\u9a8c\u51c6\u5907\\20261027_137\u73af\u5883\u8bc4\u4f30\\\u5b8c\u6574\u6a21\u578b\u5355\u673aP\u5bf9\u7167\\pp_core.py",
+    "E:\\work\\ks\\output\\05_\u5f53\u524d\u73af\u5883\u4e0e\u5b9e\u9a8c\u51c6\u5907\\20261027_137\u73af\u5883\u8bc4\u4f30\\\u5b8c\u6574\u6a21\u578b\u5355\u673aP\u5bf9\u7167\\pp_executor.py",
+    "actual137_worker_source.txt"
+  ],
+  "common_loader": "root combines; no sitecustomize overwritten",
+  "model_runner_override": "common local-completion canonical module remains authoritative",
+  "files": [
+    "ks_stage_executor_driver.py",
+    "span_stage_controller.py",
+    "typed_stage_protocol.py",
+    "lmcache\\integration\\vllm\\ks_restore_metadata_bridge.py",
+    "lmcache\\integration\\vllm\\ks_restore_runtime.py",
+    "lmcache\\integration\\vllm\\lmcache_mp_connector.py",
+    "lmcache\\integration\\vllm\\lmcache_mp_connector_multi17.py",
+    "lmcache\\integration\\vllm\\vllm_multi_process_adapter.py",
+    "vllm\\v1\\core\\sched\\ks_stage_reservation.py",
+    "vllm\\v1\\core\\sched\\scheduler.py",
+    "vllm\\v1\\engine\\core.py",
+    "vllm\\v1\\engine\\ks_restore_binding.py",
+    "vllm\\v1\\executor\\multiproc_executor.py",
+    "vllm_ascend\\worker\\worker.py"
+  ],
+  "npu_actions": 0
+}

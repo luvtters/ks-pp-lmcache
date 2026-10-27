@@ -1,0 +1,19 @@
+{
+  "status": "PASS_PRIVATE_LAUNCHER_N16_OPTIONALS_DEPLOYED_NOT_ACTIVATED",
+  "target": "/opt/ks-stage-ready-luv-20261027/standalone-p/runtime/stage-launcher/sitecustomize.py",
+  "canonical": "vllm_ascend.distributed.kv_transfer.kv_p2p.mooncake_connector",
+  "optional_source": "/opt/ks-stage-ready-luv-20261027/reduced-pd/runtime/mooncake-n16/mooncake_connector_n16.py",
+  "without_override_exact_mappings": 17,
+  "with_override_exact_mappings": 18,
+  "draft_canonical": "vllm_ascend.spec_decode.llm_base_proposer",
+  "optional_draft_source": "/opt/ks-stage-ready-luv-20261027/reduced-pd/runtime/draft-n16/llm_base_proposer_n16.py",
+  "both_override_exact_mappings": 19,
+  "original_mappings_unchanged": true,
+  "parent_packages_untouched": true,
+  "candidate_root_off_sys_path": true,
+  "source_files_written": 1,
+  "framework_imports": [],
+  "service_actions": 0,
+  "model_or_operator_calls": 0,
+  "compressed_payload_bytes": 870
+}

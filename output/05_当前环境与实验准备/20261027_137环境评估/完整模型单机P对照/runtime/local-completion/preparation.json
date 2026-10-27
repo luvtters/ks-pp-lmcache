@@ -1,0 +1,14 @@
+{
+  "status": "LOCAL_PREPARED_NOT_DEPLOYED_NOT_RUNTIME_ACCEPTED",
+  "outer_kv_role": "kv_producer",
+  "child_kv_role": "kv_both",
+  "children": 1,
+  "explicit_mode": "ks_local_p_complete=true",
+  "producer_CP_layer_sharding_unchanged": true,
+  "sample_broadcast_change": "restore normal existing async-PP sender and receiver only in explicit local mode",
+  "LMCache_changes": "existing approved 10-line PP setter plus 7-line cold STORE block bookkeeping",
+  "pin_change": "same approved single line through existing common target",
+  "core_draft_lifecycle": "UNDER_INDEPENDENT_AUDIT_DO_NOT_CLAIM_READY",
+  "model_started": false,
+  "npu_operations": 0
+}

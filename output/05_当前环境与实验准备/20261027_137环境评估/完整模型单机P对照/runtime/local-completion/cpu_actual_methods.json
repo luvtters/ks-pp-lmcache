@@ -1,0 +1,25 @@
+{
+  "status": "CPU_ACTUAL_METHODS_PASS_NOT_NPU_OR_FULL_LIFECYCLE",
+  "passed": 14,
+  "checks": [
+    "actual_sample_mode=False_last=False_async=False",
+    "actual_sample_mode=False_last=False_async=True",
+    "actual_sample_mode=False_last=True_async=False",
+    "actual_sample_mode=False_last=True_async=True",
+    "actual_sample_mode=True_last=False_async=False",
+    "actual_sample_mode=True_last=False_async=True",
+    "actual_sample_mode=True_last=True_async=False",
+    "actual_sample_mode=True_last=True_async=True",
+    "actual_MP_lookup_returns_real_matched_count_not_store_only",
+    "actual_approved_PP_handshake_setter_accepts_stage1",
+    "actual_cold_STORE_requires_and_preserves_approved7_block_ids",
+    "actual_Multi_single_child_hot_lookup_selects_LMCache",
+    "actual_Multi_cold_miss_supplies_empty_blocks_even_single_child",
+    "actual_Multi_finish_waits_for_single_LMCache_owner_completion"
+  ],
+  "inference_or_device_imports": false,
+  "sample_and_draft_ids": "CPU fixtures only; no generated model tokens",
+  "core_draft_batch_binding": "NOT_COVERED_SEPARATE_AUDIT",
+  "full_GLM_local_completion": "NOT_VERIFIED",
+  "services_started": []
+}

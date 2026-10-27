@@ -1,0 +1,12 @@
+{
+  "status": "INACTIVE_NATIVE_CANDIDATE_STAGED",
+  "root": "/opt/ks-stage-ready-luv-20261027/standalone-p/startup",
+  "files": [
+    "p-local-first-token.no-feedback.candidate.native.sh",
+    "first_token_no_feedback_cpu.json",
+    "first_token_no_feedback_notes.md"
+  ],
+  "existing_selected_native_files_changed": false,
+  "source_files_changed": false,
+  "service_actions": []
+}

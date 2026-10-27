@@ -1,0 +1,36 @@
+{
+  "status": "PASS_NEW_CPU_METADATA_BRIDGE_ONLY",
+  "tests": 10,
+  "failures": 0,
+  "errors": 0,
+  "original_classes": [
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\lmcache_only_followup\\source_current\\lmcache\\integration\\vllm\\vllm_multi_process_adapter.py",
+      "class": "LoadStoreOp",
+      "begin": 625,
+      "end": 664
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\lmcache\\integration\\vllm\\lmcache_mp_metadata.py",
+      "class": "LMCacheMPRequestMetadata",
+      "begin": 218,
+      "end": 407
+    },
+    {
+      "path": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\capacity_followup\\sources\\lmcache\\integration\\vllm\\lmcache_mp_metadata.py",
+      "class": "LMCacheMPConnectorMetadata",
+      "begin": 410,
+      "end": 439
+    }
+  ],
+  "fixtures": [
+    "request tracker values",
+    "single-group block slicing",
+    "parallel group/config objects",
+    "identity constructor"
+  ],
+  "normal_bootstrap_integrated": false,
+  "npu_verified": false,
+  "original_tests_rerun": 0,
+  "server_actions": 0
+}

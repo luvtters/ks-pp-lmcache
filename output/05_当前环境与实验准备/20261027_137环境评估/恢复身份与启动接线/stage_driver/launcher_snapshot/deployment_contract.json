@@ -1,0 +1,12 @@
+{
+  "source": "exact deployed LOADER literal; both private deployment patches match this version chain",
+  "remote": "/opt/ks-stage-ready-luv-20261027/standalone-p/runtime/stage-launcher/sitecustomize.py",
+  "no_optional_environment_exact_mappings": 17,
+  "mooncake_only": 18,
+  "draft_only": 18,
+  "both": 19,
+  "partial_package_source_root_on_sys_path": false,
+  "full_package_exit_pass": false,
+  "loader_cpu_only": true,
+  "service_actions_by_archive": 0
+}

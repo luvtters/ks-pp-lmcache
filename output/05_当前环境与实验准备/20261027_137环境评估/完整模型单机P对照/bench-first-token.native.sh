@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# First-token mechanism diagnosis only: original full prompt; max_tokens=1.
+# MTP3 stays configured. Original row36 output300 is recorded, diagnostic asks1.
+vllm bench serve --backend openai --base-url http://127.0.0.1:18100 --endpoint /v1/completions --model glm-5 --tokenizer /opt/ks-models/GLM-5.1-w8a8c8-MTP --dataset-name custom --dataset-path /opt/ks-stage-ready-luv-20261027/standalone-p/data/first-token-original.jsonl --custom-output-len 1 --disable-shuffle --skip-chat-template --no-oversample --num-prompts 1 --max-concurrency 1 --request-rate inf --num-warmups 0 --ready-check-timeout-sec 0 --temperature 0 --ignore-eos --seed 0 --percentile-metrics ttft,tpot,itl,e2el --metric-percentiles 50,90,95,99 --save-result --save-detailed --result-dir /opt/ks-stage-ready-luv-20261027/standalone-p/results/on-async-first-token-mechanism --result-filename benchmark.json
