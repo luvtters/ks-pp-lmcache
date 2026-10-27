@@ -1,0 +1,15 @@
+{
+  "status": "NOT_RUNTIME_INTEGRATED",
+  "actual_core": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_25环境准备\\25镜像源码与配置快照\\sources\\vllm\\vllm\\v1\\engine\\core.py",
+  "default_enabled": false,
+  "new_dependencies": [],
+  "server_actions": 0,
+  "npu_actions": 0,
+  "changed_real_methods": [
+    "step",
+    "step_with_batch_queue",
+    "shutdown"
+  ],
+  "scheduler_token_or_block_changes": false,
+  "old_future_wrapper_changed": false
+}

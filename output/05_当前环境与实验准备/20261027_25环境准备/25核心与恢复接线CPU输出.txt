@@ -1,0 +1,3 @@
+CPU task: python -X utf8 -B /opt/ks-stage-ready/output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/core_event_pump/test_core_event_pump.py
+CPU task: python -X utf8 -B /opt/ks-stage-ready/output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/restore_event_binding/test_restore_event_binding.py
+{"branch": "ks/pp-stage-ready-luv-20261027", "status": "APPLIED_ISOLATED_NOT_ENABLED", "installed_sources_changed": false}

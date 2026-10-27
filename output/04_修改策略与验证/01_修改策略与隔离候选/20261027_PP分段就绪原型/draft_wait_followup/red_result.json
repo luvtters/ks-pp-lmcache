@@ -1,0 +1,6 @@
+{
+  "status": "RED_CONFIRMED",
+  "old_draft_sync_consumed_event": false,
+  "older_model_still_pending": true,
+  "draft_updates_before_result": 0
+}

@@ -1,0 +1,15 @@
+{
+  "date": "2026-10-27",
+  "status": "CPU_PROTOCOL_PASS_NOT_RUNTIME_INTEGRATED",
+  "tests": 28,
+  "passed": 28,
+  "failed": 0,
+  "red_observed": ["Original worker lacked prepare_pp_stage_input", "String-only candidate rejected bridge tuple key", "Candidate lacked non-destructive release probe", "Front stage could release unconsumed connector output"],
+  "test_mode": "AST-extracted actual candidate methods with fake transport and device objects",
+  "npu_verified": false,
+  "hccl_verified": false,
+  "runtime_integration_verified": false,
+  "performance_verified": false,
+  "server_actions": 0,
+  "runtime_source_modified": false
+}

@@ -1,0 +1,91 @@
+--- a/vllm/v1/engine/core.py
++++ b/vllm/v1/engine/core.py
+@@ -536,7 +536,29 @@
+             finally:
+                 self._ks_event_callback_active = False
+ 
++
+     def _ks_wait_model_future(self, future):
++        return self._ks_wait_executor_future(future, model_batch=True)
++
++    def ks_draft_wait_pending(self):
++        # A draft/control RPC is not a newly admitted model batch.
++        return int(getattr(self, "_ks_waiting_draft_future", None) is not None)
++
++    def _ks_take_draft_token_ids(self):
++        reader = getattr(self, "_ks_result_reader", None)
++        if reader is None:
++            return self.model_executor.take_draft_token_ids()
++        self._ks_assert_no_event_callback_step()
++        if threading.get_ident() != reader.owner:
++            raise RuntimeError("draft RPC must be submitted by the configured core writer")
++        submit = getattr(self.model_executor, "take_draft_token_ids_async", None)
++        if not callable(submit):
++            raise RuntimeError("executor has no verified async draft RPC interface")
++        # Enqueue on the core thread. The result reader never writes broadcast MQ.
++        future = submit()
++        return self._ks_wait_executor_future(future, model_batch=False)
++
++    def _ks_wait_executor_future(self, future, *, model_batch):
+         reader = getattr(self, "_ks_result_reader", None)
+         if reader is None:
+             return future.result()
+@@ -545,7 +567,10 @@
+         outcome = reader.submit(future)
+         completed = threading.Event()
+         outcome.add_done_callback(lambda _: completed.set())
+-        self._ks_waiting_model_future = future
++        if model_batch:
++            self._ks_waiting_model_future = future
++        else:
++            self._ks_waiting_draft_future = future
+         try:
+             event_error = None
+             while True:
+@@ -565,7 +590,10 @@
+                 raise event_error
+             return result
+         finally:
+-            self._ks_waiting_model_future = None
++            if model_batch:
++                self._ks_waiting_model_future = None
++            else:
++                self._ks_waiting_draft_future = None
+ 
+     def _ks_sample_tokens_with_event_pump(self, grammar_output):
+         if getattr(self, "_ks_result_reader", None) is None:
+@@ -616,7 +644,7 @@
+         # need to update draft token ids here.
+         if not self.async_scheduling and self.use_spec_decode and model_executed:
+             # Take the draft token ids.
+-            draft_token_ids = self.model_executor.take_draft_token_ids()
++            draft_token_ids = self._ks_take_draft_token_ids()
+             if draft_token_ids is not None:
+                 self.scheduler.update_draft_token_ids(draft_token_ids)
+ 
+@@ -719,7 +747,7 @@
+             # we need to get the draft token ids from the prior step before
+             # we can compute the grammar bitmask for the deferred request.
+             if self.use_spec_decode:
+-                draft_token_ids = self.model_executor.take_draft_token_ids()
++                draft_token_ids = self._ks_take_draft_token_ids()
+                 assert draft_token_ids is not None
+                 # Update the draft token ids in the scheduler output to
+                 # filter out the invalid spec tokens, which will be padded
+--- a/vllm/v1/executor/multiproc_executor.py
++++ b/vllm/v1/executor/multiproc_executor.py
+@@ -600,6 +600,14 @@
+             "take_draft_token_ids", unique_reply_rank=self.output_rank
+         )
+ 
++
++    def take_draft_token_ids_async(self) -> Future[DraftTokenIds | None]:
++        # Explicit async entry; old take_draft_token_ids remains unchanged.
++        return self.collective_rpc(
++            "take_draft_token_ids", unique_reply_rank=self.output_rank,
++            non_block=True,
++        )
++
+     def collective_rpc(  # type: ignore[override]
+         self,
+         method: str | Callable,

@@ -1,0 +1,34 @@
+{"record_type": "probe_event", "rank": 12, "pid": 73, "index": 1, "action": "probe_enter", "monotonic_ns": 39759927645386, "utc_time": "2026-10-27T04:43:31.859610+00:00", "events_path": "/opt/ks-stage-ready/device-probe/results/20261027-124320/rank-12.events.jsonl"}
+{"record_type": "probe_event", "rank": 12, "pid": 73, "index": 2, "action": "torch_import_enter", "monotonic_ns": 39759927743797, "utc_time": "2026-10-27T04:43:31.859706+00:00"}
+{"record_type": "probe_event", "rank": 12, "pid": 73, "index": 3, "action": "torch_import_returned", "monotonic_ns": 39769009855929, "utc_time": "2026-10-27T04:43:40.941824+00:00"}
+{"record_type": "probe_event", "rank": 12, "pid": 73, "index": 4, "action": "torch_npu_import_enter", "monotonic_ns": 39769009995930, "utc_time": "2026-10-27T04:43:40.941958+00:00"}
+{"record_type": "probe_event", "rank": 12, "pid": 73, "index": 5, "action": "torch_npu_import_returned", "monotonic_ns": 39769010031580, "utc_time": "2026-10-27T04:43:40.941993+00:00"}
+{"record_type": "probe_event", "rank": 12, "pid": 73, "index": 6, "action": "torch_distributed_import_enter", "monotonic_ns": 39769010057880, "utc_time": "2026-10-27T04:43:40.942019+00:00"}
+{"record_type": "probe_event", "rank": 12, "pid": 73, "index": 7, "action": "torch_distributed_import_returned", "monotonic_ns": 39769010086060, "utc_time": "2026-10-27T04:43:40.942047+00:00"}
+{"record_type": "probe_event", "rank": 12, "pid": 73, "index": 8, "action": "vllm_import_enter", "monotonic_ns": 39769010109821, "utc_time": "2026-10-27T04:43:40.942071+00:00"}
+{"record_type": "probe_event", "rank": 12, "pid": 73, "index": 9, "action": "vllm_import_returned", "monotonic_ns": 39774075088909, "utc_time": "2026-10-27T04:43:46.007055+00:00"}
+{"record_type": "probe_event", "rank": 12, "pid": 73, "index": 10, "action": "frameworks_imported", "monotonic_ns": 39774075203530, "utc_time": "2026-10-27T04:43:46.007166+00:00"}
+{"record_type": "probe_event", "rank": 12, "pid": 73, "index": 11, "action": "set_device_enter", "monotonic_ns": 39774075298621, "utc_time": "2026-10-27T04:43:46.007260+00:00"}
+{"record_type": "probe_event", "rank": 12, "pid": 73, "index": 12, "action": "set_device_returned", "monotonic_ns": 39774854417408, "utc_time": "2026-10-27T04:43:46.786396+00:00"}
+{"record_type": "probe_event", "rank": 12, "pid": 73, "index": 13, "action": "device_selected", "monotonic_ns": 39774854692330, "utc_time": "2026-10-27T04:43:46.786655+00:00"}
+{"record_type": "probe_event", "rank": 12, "pid": 73, "index": 14, "action": "config_construction_enter", "monotonic_ns": 39774854738320, "utc_time": "2026-10-27T04:43:46.786700+00:00"}
+{"record_type": "probe_event", "rank": 12, "pid": 73, "index": 15, "action": "config_construction_returned", "monotonic_ns": 39776530029516, "utc_time": "2026-10-27T04:43:48.461994+00:00"}
+{"record_type": "probe_event", "rank": 12, "pid": 73, "index": 16, "action": "init_distributed_environment_enter", "monotonic_ns": 39776530134517, "utc_time": "2026-10-27T04:43:48.462096+00:00"}
+{"record_type": "probe_event", "rank": 12, "pid": 73, "index": 17, "action": "init_distributed_environment_returned", "monotonic_ns": 39779169129918, "utc_time": "2026-10-27T04:43:51.101099+00:00"}
+{"record_type": "probe_event", "rank": 12, "pid": 73, "index": 18, "action": "initialize_model_parallel_enter", "monotonic_ns": 39779169322300, "utc_time": "2026-10-27T04:43:51.101284+00:00"}
+{"record_type": "probe_event", "rank": 12, "pid": 73, "index": 19, "action": "initialize_model_parallel_returned", "monotonic_ns": 39779751061177, "utc_time": "2026-10-27T04:43:51.683028+00:00"}
+{"record_type": "probe_event", "rank": 12, "pid": 73, "index": 20, "action": "groups_ready", "monotonic_ns": 39779751247979, "utc_time": "2026-10-27T04:43:51.683210+00:00"}
+{"record_type": "probe_event", "rank": 12, "pid": 73, "index": 21, "action": "synthetic_local_kv_event_recorded", "monotonic_ns": 39779970971966, "utc_time": "2026-10-27T04:43:51.902939+00:00", "event_query": false}
+{"record_type": "probe_event", "rank": 12, "pid": 73, "index": 22, "action": "irecv_enter", "monotonic_ns": 39779971167618, "utc_time": "2026-10-27T04:43:51.903130+00:00"}
+{"record_type": "probe_event", "rank": 12, "pid": 73, "index": 23, "action": "irecv_method_returned", "monotonic_ns": 39780670690112, "utc_time": "2026-10-27T04:43:52.602655+00:00", "handle_count": 1, "postprocess_count": 1}
+{"record_type": "probe_event", "rank": 12, "pid": 73, "index": 24, "action": "queries_after_method_return", "monotonic_ns": 39780672268965, "utc_time": "2026-10-27T04:43:52.604231+00:00", "work_query": [false], "local_stream_event_query": false}
+{"record_type": "probe_event", "rank": 12, "pid": 73, "index": 25, "action": "bounded_work_query_finished", "monotonic_ns": 39780675409220, "utc_time": "2026-10-27T04:43:52.607376+00:00", "consensus_ready": false, "poll_rounds": 2}
+{"record_type": "probe_event", "rank": 12, "pid": 73, "index": 26, "action": "work_wait_enter", "monotonic_ns": 39780675562981, "utc_time": "2026-10-27T04:43:52.607525+00:00"}
+{"record_type": "probe_event", "rank": 12, "pid": 73, "index": 27, "action": "work_wait_returned", "monotonic_ns": 39780675655802, "utc_time": "2026-10-27T04:43:52.607618+00:00", "work_query": [false]}
+{"record_type": "probe_event", "rank": 12, "pid": 73, "index": 28, "action": "comm_fence_recorded", "monotonic_ns": 39780675901464, "utc_time": "2026-10-27T04:43:52.607863+00:00", "event_query": false}
+{"record_type": "probe_event", "rank": 12, "pid": 73, "index": 29, "action": "comm_fence_known_complete", "monotonic_ns": 39780827971873, "utc_time": "2026-10-27T04:43:52.759945+00:00", "event_query": true}
+{"record_type": "probe_event", "rank": 12, "pid": 73, "index": 30, "action": "tp_postprocess_enter", "monotonic_ns": 39780844171372, "utc_time": "2026-10-27T04:43:52.776135+00:00"}
+{"record_type": "probe_event", "rank": 12, "pid": 73, "index": 31, "action": "tp_postprocess_method_returned", "monotonic_ns": 39781167350803, "utc_time": "2026-10-27T04:43:53.099316+00:00", "event_query": false}
+{"record_type": "probe_event", "rank": 12, "pid": 73, "index": 32, "action": "activation_device_ready", "monotonic_ns": 39781462489170, "utc_time": "2026-10-27T04:43:53.394461+00:00"}
+{"record_type": "probe_event", "rank": 12, "pid": 73, "index": 33, "action": "all_ranks_protocol_complete", "monotonic_ns": 39781471845935, "utc_time": "2026-10-27T04:43:53.403813+00:00"}
+{"record_type": "probe_event", "rank": 12, "pid": 73, "index": 34, "action": "communication_groups_destroyed", "monotonic_ns": 39782036810989, "utc_time": "2026-10-27T04:43:53.968776+00:00"}

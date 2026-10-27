@@ -1,0 +1,149 @@
+{
+  "scope": "RECORDED_COMPONENT_AND_STAGE_PROTOCOL_ONLY",
+  "runs": [
+    {
+      "run_id": "20261027-124320",
+      "rank_count": 16,
+      "all_16_transfer_pass": true,
+      "all_8_back_payload_verified": true,
+      "all_8_front_source_retained": true,
+      "groups": [
+        {
+          "round": -1,
+          "all_16_query_consensus_before_wait": false,
+          "query_consensus_interval_after_method_return": {
+            "front": {
+              "min_ms": 2.995,
+              "max_ms": 391.163
+            },
+            "back": {
+              "min_ms": 3.14,
+              "max_ms": 355.79
+            }
+          },
+          "interpretation": "CPU query and TP consensus interval, NOT pure HCCL/device or model duration"
+        }
+      ],
+      "new_scheduler_integrated": false,
+      "real_lmcache_called": false,
+      "model_tested": false
+    },
+    {
+      "run_id": "20261027-124721",
+      "rank_count": 16,
+      "all_16_transfer_pass": true,
+      "all_8_back_payload_verified": true,
+      "all_8_front_source_retained": true,
+      "groups": [
+        {
+          "round": 0,
+          "all_16_query_consensus_before_wait": true,
+          "query_consensus_interval_after_method_return": {
+            "front": {
+              "min_ms": 245.722,
+              "max_ms": 276.798
+            },
+            "back": {
+              "min_ms": 204.126,
+              "max_ms": 227.008
+            }
+          },
+          "interpretation": "CPU query and TP consensus interval, NOT pure HCCL/device or model duration"
+        },
+        {
+          "round": 1,
+          "all_16_query_consensus_before_wait": true,
+          "query_consensus_interval_after_method_return": {
+            "front": {
+              "min_ms": 2.269,
+              "max_ms": 3.153
+            },
+            "back": {
+              "min_ms": 2.71,
+              "max_ms": 3.736
+            }
+          },
+          "interpretation": "CPU query and TP consensus interval, NOT pure HCCL/device or model duration"
+        }
+      ],
+      "new_scheduler_integrated": false,
+      "real_lmcache_called": false,
+      "model_tested": false
+    }
+  ],
+  "stage_dependency": {
+    "run_id": "20261027-133354",
+    "rank_count": 16,
+    "all_ranks_pass": true,
+    "legacy_denied_front_only": true,
+    "front_dispatched_with_back_restore_latched": true,
+    "activation_without_back_kv_denied": true,
+    "all_rank_content_checks": true,
+    "scope": "synthetic tensors, actual H2D/HCCL/events, prototype controller and real old scheduler predicate; no model/performance"
+  },
+  "real_event_to_core": {
+    "run_id": "20261027-133939",
+    "status": "PASS_REAL_EVENT_TO_CORE_COMPONENT_ONLY",
+    "model_future_not_done_at_callback": true,
+    "scheduler_updates_at_callback": 0,
+    "waiting_inflight_at_callback": 1,
+    "model_order": [
+      "core-event-consumed",
+      "cpu-model-result",
+      "scheduler-update"
+    ],
+    "retained_live_pids": [],
+    "scope": "real NPU IPC event to actual core AST seam; synthetic request identity and CPU model-result fixture"
+  },
+  "real_reply_queue": {
+    "status": "PASS_ACTUAL_REPLY_QUEUE_CPU_ONLY",
+    "actual_source": "/vllm-workspace/vllm/vllm/distributed/device_communicators/shm_broadcast.py",
+    "same_reader_main_to_worker_to_main": true,
+    "before_model_reply": {
+      "core_registered_restore": true,
+      "actual_dequeue_entered": true,
+      "model_future_done": false,
+      "scheduler_update_count": 0,
+      "model_wait_inflight": 1,
+      "callback_thread_is_core": true
+    },
+    "spinloop_extension_enabled": false
+  },
+  "spinloop_requested_case": {
+    "actual_extension_enabled": false,
+    "coverage": "NOT_VERIFIED_EXTENSION_UNAVAILABLE_OR_FALLBACK"
+  },
+  "dual_inflight": {
+    "status": "CPU_PASS",
+    "snapshots": [
+      {
+        "event": "B1-wait-stage-event",
+        "queue_length": 1,
+        "active_model_wait": 1,
+        "occupied_model_slots": 2,
+        "scheduler_updates": []
+      },
+      {
+        "event": "B2-wait-stage-event",
+        "queue_length": 0,
+        "active_model_wait": 1,
+        "occupied_model_slots": 1,
+        "scheduler_updates": [
+          "B1"
+        ]
+      }
+    ],
+    "model_reply_FIFO": [
+      "execute1",
+      "sample1",
+      "execute2",
+      "sample2"
+    ],
+    "scheduler_update_order": [
+      "B1",
+      "B2"
+    ],
+    "single_reader": true,
+    "threads_left_alive": 0
+  }
+}

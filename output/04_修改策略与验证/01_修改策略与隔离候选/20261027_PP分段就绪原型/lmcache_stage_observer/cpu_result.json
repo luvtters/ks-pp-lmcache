@@ -1,0 +1,29 @@
+{
+  "status": "CPU_PASS",
+  "tests_run": 15,
+  "failures": 0,
+  "errors": 0,
+  "runtime_status": "NOT_RUNTIME_INTEGRATED",
+  "actual_adapter": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\lmcache_only_followup\\source_current\\lmcache\\integration\\vllm\\vllm_multi_process_adapter.py",
+  "actual_futures": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\lmcache_only_followup\\sources\\lmcache\\v1\\multiprocess\\futures.py",
+  "server_actions": 0,
+  "npu_actions": 0,
+  "AST_executed": [
+    "MessagingFuture",
+    "DeviceMessagingFuture",
+    "submit_retrieve_request",
+    "get_finished",
+    "get_finished_with_lazy_offload",
+    "shutdown guard",
+    "LMCacheStageObserver"
+  ],
+  "NOT_VERIFIED": [
+    "scheduler generation metadata",
+    "PP/TP identity plumbing",
+    "NPU thread context",
+    "real event IPC",
+    "runtime safe unregister/reap",
+    "sidechannel/core integration",
+    "performance"
+  ]
+}

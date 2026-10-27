@@ -1,0 +1,24 @@
+{
+  "status": "CPU_PASS",
+  "tests_run": 8,
+  "errors": 0,
+  "failures": 0,
+  "runtime_status": "NOT_RUNTIME_INTEGRATED",
+  "server_actions": 0,
+  "npu_actions": 0,
+  "AST_executed": [
+    "post_step",
+    "step_with_batch_queue deferred branch",
+    "collective_rpc",
+    "take_draft_token_ids",
+    "take_draft_token_ids_async",
+    "FutureWrapper",
+    "core sole reader"
+  ],
+  "NOT_VERIFIED": [
+    "MTP computation",
+    "real draft payload",
+    "NPU/model execution",
+    "performance"
+  ]
+}

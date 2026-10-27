@@ -1,0 +1,41 @@
+{
+  "status": "CPU_PLAN_ONLY",
+  "device_imports_performed": false,
+  "device_allocation_performed": false,
+  "spawn_performed": false,
+  "planned_device": "npu:15",
+  "start_method": "spawn",
+  "children": [
+    "producer",
+    "consumer"
+  ],
+  "timeout_seconds": 90,
+  "observer_source": "/opt/ks-stage-ready/device-probe/event_ipc/stage_observer.py",
+  "fixed_output_root": "/opt/ks-stage-ready/device-probe",
+  "requested_output_directory": "/opt/ks-stage-ready/device-probe/event-ipc-results/20261027-130951",
+  "payload": "nonempty bytes event handle + True over CPU Pipe",
+  "real_components": [
+    "NpuEventIPCBackend",
+    "MessagingFuture",
+    "DeviceMessagingFuture",
+    "LMCacheStageObserver"
+  ],
+  "synthetic_component_identity": {
+    "request_id": "event-ipc-component-probe",
+    "restore_generation": 1,
+    "stage_id": 0,
+    "tp_rank": 0,
+    "pcp_rank": 0,
+    "global_worker_rank": 0
+  },
+  "evidence_scope": "single-NPU cross-process event/future/observer component only",
+  "excluded": [
+    "GLM",
+    "LMCache KV restore",
+    "MPserver",
+    "PP2 integration",
+    "performance proof"
+  ],
+  "unsupported_policy": "NOT_SUPPORTED when real check_event_support raises",
+  "unsafe_timeout_policy": "record PIDs; retain child references; parent exits without killing"
+}

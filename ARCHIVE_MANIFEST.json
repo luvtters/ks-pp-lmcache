@@ -1,0 +1,1160 @@
+{
+  "scope": "ISOLATED_SOURCE_AND_RECORDED_COMPONENT_EVIDENCE",
+  "branch": "ks/pp-stage-ready-luv-20261027",
+  "source_workspace": "E:\\work\\ks",
+  "recorded_at_utc": "2026-10-27T06:56:33.928144+00:00",
+  "preserved_output_layout": true,
+  "source_files": [
+    {
+      "path": "output/03_性能劣化原因分析/03_真机观测与原始日志/首轮TTFT观测与原始证据_20261019/source_snapshots_extra/current-callchain/vllm-workspace/vllm/vllm/distributed/parallel_state.py",
+      "bytes": 86058
+    },
+    {
+      "path": "output/03_性能劣化原因分析/03_真机观测与原始日志/首轮TTFT观测与原始证据_20261019/source_snapshots_extra/current-callchain/vllm-workspace/vllm/vllm/v1/worker/gpu_worker.py",
+      "bytes": 51460
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261026_PP分段就绪设计/PP分段就绪调度_源码依据与修改设计.html",
+      "bytes": 664756
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261026_PP分段就绪设计/PP分段就绪调度_源码依据与修改设计.md",
+      "bytes": 115938
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261026_PP分段就绪设计/README.md",
+      "bytes": 1275
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261026_PP分段就绪设计/文档检查.json",
+      "bytes": 10534
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261026_PP分段就绪设计/检查说明.mjs",
+      "bytes": 21777
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261026_PP分段就绪设计/源码摘录索引.json",
+      "bytes": 11499
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261026_PP分段就绪设计/生成说明.py",
+      "bytes": 42107
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/CPU验证日志.txt",
+      "bytes": 7501
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/CPU验证结果.json",
+      "bytes": 2060
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/README.md",
+      "bytes": 9373
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/control_sidechannel/README.md",
+      "bytes": 7135
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/control_sidechannel/build_control_sidechannel.py",
+      "bytes": 16093
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/control_sidechannel/build_result.json",
+      "bytes": 695
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/control_sidechannel/control_sidechannel.patch",
+      "bytes": 14845
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/control_sidechannel/cpu_result.json",
+      "bytes": 891
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/control_sidechannel/multiproc_executor.py",
+      "bytes": 54985
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/control_sidechannel/test_control_sidechannel.py",
+      "bytes": 18545
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/controller/cpu_green.json",
+      "bytes": 177
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/controller/cpu_red.json",
+      "bytes": 179
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/controller/cpu_red_cancel.json",
+      "bytes": 178
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/controller/cpu_red_sample_slot.json",
+      "bytes": 178
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/controller/stage_controller.py",
+      "bytes": 12381
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/controller/test_stage_controller.py",
+      "bytes": 13654
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/core_event_pump/README.md",
+      "bytes": 6569
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/core_event_pump/build_core_event_pump.py",
+      "bytes": 9285
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/core_event_pump/build_result.json",
+      "bytes": 497
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/core_event_pump/core.py",
+      "bytes": 99903
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/core_event_pump/core_event_pump.patch",
+      "bytes": 8903
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/core_event_pump/cpu_result.json",
+      "bytes": 929
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/core_event_pump/red_result.json",
+      "bytes": 490
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/core_event_pump/test_core_event_pump.py",
+      "bytes": 14880
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/draft_wait_followup/README.md",
+      "bytes": 4669
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/draft_wait_followup/build_draft_wait_followup.py",
+      "bytes": 4712
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/draft_wait_followup/build_result.json",
+      "bytes": 595
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/draft_wait_followup/core.py",
+      "bytes": 101187
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/draft_wait_followup/cpu_result.json",
+      "bytes": 524
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/draft_wait_followup/draft_wait_followup.patch",
+      "bytes": 3901
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/draft_wait_followup/multiproc_executor.py",
+      "bytes": 58273
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/draft_wait_followup/red_result.json",
+      "bytes": 153
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/draft_wait_followup/test_draft_wait_followup.py",
+      "bytes": 14011
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/dual_inflight_probe/README.md",
+      "bytes": 2337
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/dual_inflight_probe/cpu_result.json",
+      "bytes": 4543
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/dual_inflight_probe/probe_dual_inflight.py",
+      "bytes": 11712
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/executor_bridge.py",
+      "bytes": 5905
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/integration_gaps/README.md",
+      "bytes": 4182
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/integration_gaps/验证结果.json",
+      "bytes": 2273
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/integration_gaps/验证阶段控制FIFO等待.py",
+      "bytes": 7568
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/lmcache_stage_observer/README.md",
+      "bytes": 8574
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/lmcache_stage_observer/build_lmcache_stage_observer.py",
+      "bytes": 5875
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/lmcache_stage_observer/build_result.json",
+      "bytes": 630
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/lmcache_stage_observer/cpu_result.json",
+      "bytes": 1119
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/lmcache_stage_observer/lmcache_stage_observer.patch",
+      "bytes": 13187
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/lmcache_stage_observer/stage_observer.py",
+      "bytes": 8357
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/lmcache_stage_observer/test_lmcache_stage_observer.py",
+      "bytes": 20037
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/lmcache_stage_observer/vllm_multi_process_adapter.py",
+      "bytes": 122713
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/real_reply_queue_probe/README.md",
+      "bytes": 4337
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/real_reply_queue_probe/probe_real_reply_queue.py",
+      "bytes": 12424
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/real_reply_queue_probe/real_reply_ast.py",
+      "bytes": 2905
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/real_reply_queue_probe/source_bundle/core.py",
+      "bytes": 97523
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/real_reply_queue_probe/source_bundle/multiproc_executor.py",
+      "bytes": 56587
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/real_reply_queue_probe/source_bundle/restore_binding.py",
+      "bytes": 2330
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/real_reply_queue_probe/source_bundle/stage_controller.py",
+      "bytes": 12381
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/real_reply_queue_probe/source_manifest.json",
+      "bytes": 765
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/restore_event_binding/README.md",
+      "bytes": 4616
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/restore_event_binding/build_restore_event_binding.py",
+      "bytes": 5928
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/restore_event_binding/build_result.json",
+      "bytes": 467
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/restore_event_binding/cpu_result.json",
+      "bytes": 326
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/restore_event_binding/multiproc_executor.py",
+      "bytes": 56587
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/restore_event_binding/red_result.json",
+      "bytes": 310
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/restore_event_binding/restore_binding.py",
+      "bytes": 2330
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/restore_event_binding/restore_event_binding.patch",
+      "bytes": 5927
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/restore_event_binding/test_restore_event_binding.py",
+      "bytes": 15017
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/run_cpu_validation.py",
+      "bytes": 3278
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/test_composed_path.py",
+      "bytes": 5208
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/test_executor_bridge.py",
+      "bytes": 12577
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/worker_split/README.md",
+      "bytes": 6928
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/worker_split/build_worker_split.py",
+      "bytes": 13062
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/worker_split/test_worker_split.py",
+      "bytes": 15759
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/worker_split/worker.py",
+      "bytes": 58812
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/worker_split/worker_split.patch",
+      "bytes": 12327
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/worker_split/验证记录.json",
+      "bytes": 636
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/实施计划.md",
+      "bytes": 2816
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/KV完成通知修改策略与隔离分支_20261022/capacity_followup/sources/m8/vllm_ascend/worker/model_runner_v1.py",
+      "bytes": 260135
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/KV完成通知修改策略与隔离分支_20261022/capacity_followup/sources/m8/vllm_ascend/worker/worker.py",
+      "bytes": 49635
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/KV完成通知修改策略与隔离分支_20261022/lmcache_only_followup/source_current/lmcache/integration/vllm/vllm_multi_process_adapter.py",
+      "bytes": 109504
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/KV完成通知修改策略与隔离分支_20261022/lmcache_only_followup/sources/lmcache/v1/multiprocess/futures.py",
+      "bytes": 13885
+    },
+    {
+      "path": "output/04_修改策略与验证/01_修改策略与隔离候选/KV完成通知修改策略与隔离分支_20261022/source_baseline/vllm/v1/executor/multiproc_executor.py",
+      "bytes": 42839
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/25LMCache观察器CPU结果.json",
+      "bytes": 1084
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/25LMCache观察器CPU输出.txt",
+      "bytes": 0
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/25侧信道CPU结果.json",
+      "bytes": 864
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/25侧信道CPU输出.txt",
+      "bytes": 0
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/25双在途CPU输出.txt",
+      "bytes": 4570
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/25容器CPU执行.txt",
+      "bytes": 241
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/25容器CPU验证结果.json",
+      "bytes": 1990
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/25核心与恢复接线CPU输出.txt",
+      "bytes": 497
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/25草拟token等待CPU输出.txt",
+      "bytes": 255
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/25镜像源码与配置快照/sources/vllm/vllm/v1/core/sched/scheduler.py",
+      "bytes": 111874
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/25镜像源码与配置快照/sources/vllm/vllm/v1/engine/core.py",
+      "bytes": 91156
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/25镜像源码与配置快照/sources/vllm/vllm/v1/executor/multiproc_executor.py",
+      "bytes": 42333
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/core_event_pump_25CPU结果.json",
+      "bytes": 898
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/draft_wait_followup_25CPU结果.json",
+      "bytes": 500
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/dual_inflight_probe_25CPU结果.json",
+      "bytes": 4570
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/restore_event_binding_25CPU结果.json",
+      "bytes": 318
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/侧信道隔离分支应用回执.json",
+      "bytes": 1316
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/真实回复队列CPU扩展导入结果.json",
+      "bytes": 2467
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/真实回复队列CPU扩展导入输出.txt",
+      "bytes": 2777
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/真实回复队列CPU纯导入结果.json",
+      "bytes": 2467
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/真实回复队列CPU纯导入输出.txt",
+      "bytes": 2659
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/真实回复队列CPU结果.json",
+      "bytes": 393
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/真实回复队列CPU输出.txt",
+      "bytes": 393
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/README.md",
+      "bytes": 8843
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/cpu_check.json",
+      "bytes": 2698
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/cpu_plan.json",
+      "bytes": 1186
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/event_core_chain/README.md",
+      "bytes": 5326
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/event_core_chain/chain_runtime.py",
+      "bytes": 20785
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/event_core_chain/chain_source_map.json",
+      "bytes": 4221
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/event_core_chain/cpu_check.json",
+      "bytes": 1857
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/event_core_chain/device_component.py",
+      "bytes": 23993
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/event_core_chain/extract_chain_runtime.py",
+      "bytes": 3594
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/event_core_chain/lmcache_event_core_chain_probe.py",
+      "bytes": 19877
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/event_core_chain/restore_binding.py",
+      "bytes": 2330
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/event_core_chain/stage_controller.py",
+      "bytes": 12381
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/event_core_chain/stage_observer.py",
+      "bytes": 8357
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/event_core_chain/执行记录/20261027-133939/consumer.jsonl",
+      "bytes": 5934
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/event_core_chain/执行记录/20261027-133939/core.jsonl",
+      "bytes": 2022
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/event_core_chain/执行记录/20261027-133939/plan.json",
+      "bytes": 1250
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/event_core_chain/执行记录/20261027-133939/producer.jsonl",
+      "bytes": 2673
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/event_core_chain/执行记录/20261027-133939/result.json",
+      "bytes": 11778
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/event_core_chain/执行记录/20261027-133939/原始日志.txt",
+      "bytes": 17284
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/event_core_chain/执行记录/20261027-133939/实际输入源码/chain_runtime.py",
+      "bytes": 20785
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/event_core_chain/执行记录/20261027-133939/实际输入源码/chain_source_map.json",
+      "bytes": 4221
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/event_core_chain/执行记录/20261027-133939/实际输入源码/device_component.py",
+      "bytes": 23993
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/event_core_chain/执行记录/20261027-133939/实际输入源码/lmcache_event_core_chain_probe.py",
+      "bytes": 19877
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/event_core_chain/执行记录/20261027-133939/实际输入源码/restore_binding.py",
+      "bytes": 2330
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/event_core_chain/执行记录/20261027-133939/实际输入源码/stage_controller.py",
+      "bytes": 12381
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/event_core_chain/执行记录/20261027-133939/实际输入源码/stage_observer.py",
+      "bytes": 8357
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/event_core_chain/执行记录/20261027-133939/运行回执.json",
+      "bytes": 1321
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/event_ipc/README.md",
+      "bytes": 4973
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/event_ipc/cpu_check.json",
+      "bytes": 1593
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/event_ipc/lmcache_event_ipc_probe.py",
+      "bytes": 23993
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/event_ipc/执行记录/20261027-130951/consumer.jsonl",
+      "bytes": 5373
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/event_ipc/执行记录/20261027-130951/plan.json",
+      "bytes": 1296
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/event_ipc/执行记录/20261027-130951/producer.jsonl",
+      "bytes": 2854
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/event_ipc/执行记录/20261027-130951/result.json",
+      "bytes": 6021
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/event_ipc/执行记录/20261027-130951/原始日志.txt",
+      "bytes": 5921
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/event_ipc/执行记录/20261027-130951/实际输入源码/lmcache_event_ipc_probe.py",
+      "bytes": 23993
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/event_ipc/执行记录/20261027-130951/实际输入源码/stage_observer.py",
+      "bytes": 8357
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/event_ipc/执行记录/20261027-130951/运行回执.json",
+      "bytes": 912
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/event_ipc/执行记录/20261027-131520/consumer.jsonl",
+      "bytes": 5379
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/event_ipc/执行记录/20261027-131520/plan.json",
+      "bytes": 1296
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/event_ipc/执行记录/20261027-131520/producer.jsonl",
+      "bytes": 2859
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/event_ipc/执行记录/20261027-131520/result.json",
+      "bytes": 6021
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/event_ipc/执行记录/20261027-131520/原始日志.txt",
+      "bytes": 11423
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/event_ipc/执行记录/20261027-131520/实际输入源码/lmcache_event_ipc_probe.py",
+      "bytes": 23993
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/event_ipc/执行记录/20261027-131520/实际输入源码/stage_observer.py",
+      "bytes": 8357
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/event_ipc/执行记录/20261027-131520/运行回执.json",
+      "bytes": 1268
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/pp_stage_device_probe.py",
+      "bytes": 13917
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/pp_stage_warm_query_probe.py",
+      "bytes": 15684
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/probe_environment.py",
+      "bytes": 2085
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/source_reference/ascend_platform.py",
+      "bytes": 62514
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/source_reference/config/parallel.py",
+      "bytes": 41796
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/source_reference/config/vllm.py",
+      "bytes": 99611
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/source_reference/npu_communicator.py",
+      "bytes": 2810
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/stage_overlap/README.md",
+      "bytes": 4635
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/stage_overlap/cpu_check.json",
+      "bytes": 1679
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/stage_overlap/legacy_gate_source.json",
+      "bytes": 544
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/stage_overlap/legacy_scheduler_gate_excerpt.py",
+      "bytes": 1469
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/stage_overlap/pp_stage_overlap_probe.py",
+      "bytes": 22229
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/stage_overlap/stage_controller.py",
+      "bytes": 12381
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-115517/原始日志.txt",
+      "bytes": 5087
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-115517/运行回执.json",
+      "bytes": 1109
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-115832/原始日志.txt",
+      "bytes": 3565
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-115832/运行回执.json",
+      "bytes": 1473
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-122417/原始日志.txt",
+      "bytes": 10299
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-122417/运行回执.json",
+      "bytes": 1216
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-124320/原始日志.txt",
+      "bytes": 129665
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-124320/运行回执.json",
+      "bytes": 1231
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-124320/逐进程结果/rank-00.events.jsonl",
+      "bytes": 6165
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-124320/逐进程结果/rank-00.json",
+      "bytes": 9930
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-124320/逐进程结果/rank-01.events.jsonl",
+      "bytes": 6166
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-124320/逐进程结果/rank-01.json",
+      "bytes": 9931
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-124320/逐进程结果/rank-02.events.jsonl",
+      "bytes": 6165
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-124320/逐进程结果/rank-02.json",
+      "bytes": 9931
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-124320/逐进程结果/rank-03.events.jsonl",
+      "bytes": 6165
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-124320/逐进程结果/rank-03.json",
+      "bytes": 9931
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-124320/逐进程结果/rank-04.events.jsonl",
+      "bytes": 6166
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-124320/逐进程结果/rank-04.json",
+      "bytes": 9932
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-124320/逐进程结果/rank-05.events.jsonl",
+      "bytes": 6165
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-124320/逐进程结果/rank-05.json",
+      "bytes": 9931
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-124320/逐进程结果/rank-06.events.jsonl",
+      "bytes": 6165
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-124320/逐进程结果/rank-06.json",
+      "bytes": 9931
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-124320/逐进程结果/rank-07.events.jsonl",
+      "bytes": 6165
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-124320/逐进程结果/rank-07.json",
+      "bytes": 9931
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-124320/逐进程结果/rank-08.events.jsonl",
+      "bytes": 6574
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-124320/逐进程结果/rank-08.json",
+      "bytes": 10450
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-124320/逐进程结果/rank-09.events.jsonl",
+      "bytes": 6575
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-124320/逐进程结果/rank-09.json",
+      "bytes": 10451
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-124320/逐进程结果/rank-10.events.jsonl",
+      "bytes": 6608
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-124320/逐进程结果/rank-10.json",
+      "bytes": 10487
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-124320/逐进程结果/rank-11.events.jsonl",
+      "bytes": 6608
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-124320/逐进程结果/rank-11.json",
+      "bytes": 10487
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-124320/逐进程结果/rank-12.events.jsonl",
+      "bytes": 6609
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-124320/逐进程结果/rank-12.json",
+      "bytes": 10488
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-124320/逐进程结果/rank-13.events.jsonl",
+      "bytes": 6608
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-124320/逐进程结果/rank-13.json",
+      "bytes": 10487
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-124320/逐进程结果/rank-14.events.jsonl",
+      "bytes": 6608
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-124320/逐进程结果/rank-14.json",
+      "bytes": 10487
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-124320/逐进程结果/rank-15.events.jsonl",
+      "bytes": 6608
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-124320/逐进程结果/rank-15.json",
+      "bytes": 10487
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-124721/原始日志.txt",
+      "bytes": 191603
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-124721/运行回执.json",
+      "bytes": 1235
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-124721/逐进程结果/rank-00.events.jsonl",
+      "bytes": 9766
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-124721/逐进程结果/rank-00.json",
+      "bytes": 15216
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-124721/逐进程结果/rank-01.events.jsonl",
+      "bytes": 9766
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-124721/逐进程结果/rank-01.json",
+      "bytes": 15216
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-124721/逐进程结果/rank-02.events.jsonl",
+      "bytes": 9766
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-124721/逐进程结果/rank-02.json",
+      "bytes": 15217
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-124721/逐进程结果/rank-03.events.jsonl",
+      "bytes": 9766
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-124721/逐进程结果/rank-03.json",
+      "bytes": 15217
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-124721/逐进程结果/rank-04.events.jsonl",
+      "bytes": 9766
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-124721/逐进程结果/rank-04.json",
+      "bytes": 15217
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-124721/逐进程结果/rank-05.events.jsonl",
+      "bytes": 9766
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-124721/逐进程结果/rank-05.json",
+      "bytes": 15217
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-124721/逐进程结果/rank-06.events.jsonl",
+      "bytes": 9766
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-124721/逐进程结果/rank-06.json",
+      "bytes": 15217
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-124721/逐进程结果/rank-07.events.jsonl",
+      "bytes": 9766
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-124721/逐进程结果/rank-07.json",
+      "bytes": 15217
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-124721/逐进程结果/rank-08.events.jsonl",
+      "bytes": 10676
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-124721/逐进程结果/rank-08.json",
+      "bytes": 16379
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-124721/逐进程结果/rank-09.events.jsonl",
+      "bytes": 10676
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-124721/逐进程结果/rank-09.json",
+      "bytes": 16379
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-124721/逐进程结果/rank-10.events.jsonl",
+      "bytes": 10725
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-124721/逐进程结果/rank-10.json",
+      "bytes": 16431
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-124721/逐进程结果/rank-11.events.jsonl",
+      "bytes": 10725
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-124721/逐进程结果/rank-11.json",
+      "bytes": 16431
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-124721/逐进程结果/rank-12.events.jsonl",
+      "bytes": 10725
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-124721/逐进程结果/rank-12.json",
+      "bytes": 16431
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-124721/逐进程结果/rank-13.events.jsonl",
+      "bytes": 10725
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-124721/逐进程结果/rank-13.json",
+      "bytes": 16431
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-124721/逐进程结果/rank-14.events.jsonl",
+      "bytes": 10725
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-124721/逐进程结果/rank-14.json",
+      "bytes": 16431
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-124721/逐进程结果/rank-15.events.jsonl",
+      "bytes": 10725
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-124721/逐进程结果/rank-15.json",
+      "bytes": 16431
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-133121/原始日志.txt",
+      "bytes": 2743
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-133121/运行回执.json",
+      "bytes": 1225
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-133354/原始日志.txt",
+      "bytes": 134382
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-133354/运行回执.json",
+      "bytes": 1236
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-133354/逐进程结果/rank-00.events.jsonl",
+      "bytes": 6372
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-133354/逐进程结果/rank-00.json",
+      "bytes": 13051
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-133354/逐进程结果/rank-01.events.jsonl",
+      "bytes": 6372
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-133354/逐进程结果/rank-01.json",
+      "bytes": 12479
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-133354/逐进程结果/rank-02.events.jsonl",
+      "bytes": 6372
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-133354/逐进程结果/rank-02.json",
+      "bytes": 12480
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-133354/逐进程结果/rank-03.events.jsonl",
+      "bytes": 6373
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-133354/逐进程结果/rank-03.json",
+      "bytes": 12481
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-133354/逐进程结果/rank-04.events.jsonl",
+      "bytes": 6373
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-133354/逐进程结果/rank-04.json",
+      "bytes": 12481
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-133354/逐进程结果/rank-05.events.jsonl",
+      "bytes": 6373
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-133354/逐进程结果/rank-05.json",
+      "bytes": 12481
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-133354/逐进程结果/rank-06.events.jsonl",
+      "bytes": 6373
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-133354/逐进程结果/rank-06.json",
+      "bytes": 12481
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-133354/逐进程结果/rank-07.events.jsonl",
+      "bytes": 6373
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-133354/逐进程结果/rank-07.json",
+      "bytes": 12481
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-133354/逐进程结果/rank-08.events.jsonl",
+      "bytes": 6943
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-133354/逐进程结果/rank-08.json",
+      "bytes": 13221
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-133354/逐进程结果/rank-09.events.jsonl",
+      "bytes": 6944
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-133354/逐进程结果/rank-09.json",
+      "bytes": 13222
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-133354/逐进程结果/rank-10.events.jsonl",
+      "bytes": 6975
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-133354/逐进程结果/rank-10.json",
+      "bytes": 13255
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-133354/逐进程结果/rank-11.events.jsonl",
+      "bytes": 6975
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-133354/逐进程结果/rank-11.json",
+      "bytes": 13255
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-133354/逐进程结果/rank-12.events.jsonl",
+      "bytes": 6975
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-133354/逐进程结果/rank-12.json",
+      "bytes": 13255
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-133354/逐进程结果/rank-13.events.jsonl",
+      "bytes": 6975
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-133354/逐进程结果/rank-13.json",
+      "bytes": 13255
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-133354/逐进程结果/rank-14.events.jsonl",
+      "bytes": 6975
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-133354/逐进程结果/rank-14.json",
+      "bytes": 13255
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-133354/逐进程结果/rank-15.events.jsonl",
+      "bytes": 6975
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/执行记录/20261027-133354/逐进程结果/rank-15.json",
+      "bytes": 13255
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/本轮设备验证结论.md",
+      "bytes": 11964
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/汇总设备诊断.py",
+      "bytes": 5334
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/生成热轮查询诊断.py",
+      "bytes": 2350
+    },
+    {
+      "path": "output/05_当前环境与实验准备/20261027_25环境准备/设备协议诊断/设备诊断汇总.json",
+      "bytes": 4569
+    }
+  ],
+  "not_included": [
+    "customer dataset",
+    "model weights",
+    "credentials",
+    "chat images",
+    "venv",
+    "process eviction scripts"
+  ],
+  "runtime_enabled": false,
+  "model_tested": false,
+  "performance_gain": "NOT_VERIFIED"
+}

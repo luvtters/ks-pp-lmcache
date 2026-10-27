@@ -1,0 +1,87 @@
+test_acknowledgement_is_not_device_receive_completion (controller.test_stage_controller.StageControllerTests) ... ok
+test_activation_buffer_backpressure (controller.test_stage_controller.StageControllerTests) ... ok
+test_all_requests_in_logical_batch_must_be_ready (controller.test_stage_controller.StageControllerTests) ... ok
+test_back_does_not_run_with_only_received_intermediates (controller.test_stage_controller.StageControllerTests) ... ok
+test_back_needs_own_kv_and_all_received_intermediates (controller.test_stage_controller.StageControllerTests) ... ok
+test_batch_key_is_not_reused_after_commit (controller.test_stage_controller.StageControllerTests) ... ok
+test_cancel_does_not_free_unknown_inflight_resources (controller.test_stage_controller.StageControllerTests) ... ok
+test_cancelled_restore_generation_cannot_be_reused (controller.test_stage_controller.StageControllerTests) ... ok
+test_complete_before_dispatch_rejected (controller.test_stage_controller.StageControllerTests) ... ok
+test_device_incomplete_is_never_counted_as_kv_ready (controller.test_stage_controller.StageControllerTests) ... ok
+test_different_batches_overlap_front_and_back (controller.test_stage_controller.StageControllerTests) ... ok
+test_duplicate_and_wrong_generation_do_not_release_front (controller.test_stage_controller.StageControllerTests) ... ok
+test_final_result_cannot_be_published_before_last_stage_done (controller.test_stage_controller.StageControllerTests) ... ok
+test_first_blocked_batch_cannot_be_bypassed (controller.test_stage_controller.StageControllerTests) ... ok
+test_front_completion_does_not_free_whole_batch_slot (controller.test_stage_controller.StageControllerTests) ... ok
+test_front_only_dispatches_after_every_front_worker_kv_ready (controller.test_stage_controller.StageControllerTests) ... ok
+test_invalid_topology_and_mismatched_token_members_rejected (controller.test_stage_controller.StageControllerTests) ... ok
+test_last_stage_done_is_not_final_token_result (controller.test_stage_controller.StageControllerTests) ... ok
+test_last_stage_slot_is_held_until_sampling_result_ready (controller.test_stage_controller.StageControllerTests) ... ok
+test_model_completion_requires_all_workers_and_real_completion (controller.test_stage_controller.StageControllerTests) ... ok
+test_old_restore_generation_cannot_replace_active_request (controller.test_stage_controller.StageControllerTests) ... ok
+test_results_commit_in_admission_order (controller.test_stage_controller.StageControllerTests) ... ok
+test_same_stage_has_one_active_compute (controller.test_stage_controller.StageControllerTests) ... ok
+test_tp8_needs_all_eight_specific_workers (controller.test_stage_controller.StageControllerTests) ... ok
+test_unknown_worker_cannot_satisfy_stage (controller.test_stage_controller.StageControllerTests) ... ok
+
+----------------------------------------------------------------------
+Ran 25 tests in 0.001s
+
+OK
+test_back_release_probe_requires_final_core_ack (worker_split.test_worker_split.WorkerTests) ... ok
+test_bridge_batch_key_accepts_id_and_generation_tuple (worker_split.test_worker_split.WorkerTests) ... ok
+test_bridge_batch_key_rejects_invalid_id_or_generation (worker_split.test_worker_split.WorkerTests) ... ok
+test_candidate_interfaces_exist (worker_split.test_worker_split.WorkerTests) ... ok
+test_default_execute_keeps_original_receive_path (worker_split.test_worker_split.WorkerTests) ... ok
+test_duplicate_prepare_does_not_receive_twice (worker_split.test_worker_split.WorkerTests) ... ok
+test_execute_cannot_repeat_same_batch (worker_split.test_worker_split.WorkerTests) ... ok
+test_execute_consumes_prepared_input_without_second_receive (worker_split.test_worker_split.WorkerTests) ... ok
+test_execute_rejects_unready_input (worker_split.test_worker_split.WorkerTests) ... ok
+test_finalize_is_idempotent (worker_split.test_worker_split.WorkerTests) ... ok
+test_finalize_requires_received_handles (worker_split.test_worker_split.WorkerTests) ... ok
+test_first_stage_must_not_receive (worker_split.test_worker_split.WorkerTests) ... ok
+test_front_cannot_release_unconsumed_connector_output (worker_split.test_worker_split.WorkerTests) ... ok
+test_front_previous_send_pending_does_not_enter_blocking_wait (worker_split.test_worker_split.WorkerTests) ... ok
+test_front_retains_tensors_until_real_send_completion (worker_split.test_worker_split.WorkerTests) ... ok
+test_input_postprocess_failure_cannot_be_retried_as_success (worker_split.test_worker_split.WorkerTests) ... ok
+test_mismatching_members_or_tokens_rejected (worker_split.test_worker_split.WorkerTests) ... ok
+test_mixing_legacy_execute_into_stage_owned_state_rejected (worker_split.test_worker_split.WorkerTests) ... ok
+test_other_batch_cannot_overwrite_buffer (worker_split.test_worker_split.WorkerTests) ... ok
+test_pending_handles_are_not_ready (worker_split.test_worker_split.WorkerTests) ... ok
+test_prepare_receives_without_forward (worker_split.test_worker_split.WorkerTests) ... ok
+test_preserves_execute_then_sample_gate (worker_split.test_worker_split.WorkerTests) ... ok
+test_received_does_not_mean_postprocess_device_complete (worker_split.test_worker_split.WorkerTests) ... ok
+test_release_probe_pending_returns_false_without_releasing_tensors (worker_split.test_worker_split.WorkerTests) ... ok
+test_release_requires_device_completion_and_sample_consumed (worker_split.test_worker_split.WorkerTests) ... ok
+test_released_batch_key_is_never_reused (worker_split.test_worker_split.WorkerTests) ... ok
+test_unknown_device_event_does_not_imply_ready (worker_split.test_worker_split.WorkerTests) ... ok
+test_unknown_handle_fails_closed (worker_split.test_worker_split.WorkerTests) ... ok
+
+----------------------------------------------------------------------
+Ran 28 tests in 0.210s
+
+OK
+test_duplicate_worker_cannot_replace_a_missing_worker (test_executor_bridge.ExecutorBridgeTests) ... ok
+test_legacy_result_fifo_is_preserved (test_executor_bridge.ExecutorBridgeTests) ... ok
+test_missing_worker_reply_is_rejected (test_executor_bridge.ExecutorBridgeTests) ... ok
+test_model_dispatch_requires_an_explicit_scheduler_output (test_executor_bridge.ExecutorBridgeTests) ... ok
+test_non_target_worker_cannot_claim_execution (test_executor_bridge.ExecutorBridgeTests) ... ok
+test_only_target_stage_executes_with_real_collective_rpc (test_executor_bridge.ExecutorBridgeTests) ... ok
+test_real_rpc_with_parallel_worker_queues_can_receive_before_front_is_done (test_executor_bridge.ExecutorBridgeTests)
+模拟各worker独立队列，后段prepare真等待前段发消息；不是串行假回复。 ... ok
+test_receive_is_enqueued_before_front_compute_without_early_result_wait (test_executor_bridge.ExecutorBridgeTests) ... ok
+test_rejects_unrecognized_operations_and_stages (test_executor_bridge.ExecutorBridgeTests) ... ok
+test_release_requires_explicit_final_output_confirmation (test_executor_bridge.ExecutorBridgeTests) ... ok
+test_truthful_probe_is_not_a_model_result (test_executor_bridge.ExecutorBridgeTests) ... ok
+test_worker_error_is_not_swallowed (test_executor_bridge.ExecutorBridgeTests) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 0.061s
+
+OK
+test_front_compute_does_not_require_back_kv_but_back_compute_does (test_composed_path.ComposedPathTests) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.121s
+
+OK

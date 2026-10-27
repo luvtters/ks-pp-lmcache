@@ -1,0 +1,25 @@
+{
+  "status": "CPU_PASS",
+  "tests_run": 14,
+  "failures": 0,
+  "errors": 0,
+  "runtime_status": "NOT_RUNTIME_INTEGRATED",
+  "actual_source": "/opt/ks-stage-ready/output/05_当前环境与实验准备/20261027_25环境准备/25镜像源码与配置快照/sources/vllm/vllm/v1/executor/multiproc_executor.py",
+  "candidate": "/opt/ks-stage-ready/output/04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/control_sidechannel/multiproc_executor.py",
+  "actual_AST_paths": [
+    "FutureWrapper",
+    "collective_rpc",
+    "worker_busy_loop",
+    "_handle_stage_command",
+    "_init_stage_event_channel",
+    "submit_stage_command",
+    "poll_stage_events",
+    "_KSStageEventPublisher"
+  ],
+  "structural_only": [
+    "full vLLM bootstrap forwarding",
+    "legacy model AST equality"
+  ],
+  "server_actions": 0,
+  "npu_actions": 0
+}

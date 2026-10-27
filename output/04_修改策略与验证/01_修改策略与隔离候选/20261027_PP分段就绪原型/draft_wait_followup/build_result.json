@@ -1,0 +1,11 @@
+{
+  "status": "NOT_RUNTIME_INTEGRATED",
+  "core_prerequisite": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\20261027_PP分段就绪原型\\core_event_pump\\core.py",
+  "executor_prerequisite": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\20261027_PP分段就绪原型\\restore_event_binding\\multiproc_executor.py",
+  "old_draft_and_rpc_AST_preserved": true,
+  "server_actions": 0,
+  "npu_actions": 0,
+  "default_enabled": false,
+  "MTP_computation_changed": false,
+  "scheduler_token_or_block_changes": false
+}

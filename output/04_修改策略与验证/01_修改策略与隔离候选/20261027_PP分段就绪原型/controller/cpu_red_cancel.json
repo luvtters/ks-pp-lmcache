@@ -1,0 +1,7 @@
+{
+  "testsRun": 24,
+  "failures": 1,
+  "errors": 0,
+  "successful": false,
+  "scope": "CPU control contracts only; NOT_RUNTIME_INTEGRATED; no NPU or performance evidence"
+}

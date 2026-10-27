@@ -1,0 +1,195 @@
+{
+  "status": "CPU_PASS",
+  "scope": "ONE_REAL_CORE_DUAL_INFLIGHT_CASE",
+  "runtime_status": "NOT_RUNTIME_INTEGRATED",
+  "actual_core": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\20261027_PP分段就绪原型\\draft_wait_followup\\core.py",
+  "actual_FutureWrapper": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\20261027_PP分段就绪原型\\draft_wait_followup\\multiproc_executor.py",
+  "callback_snapshots": [
+    {
+      "event": "B1-wait-stage-event",
+      "queue_length": 1,
+      "active_model_wait": 1,
+      "occupied_model_slots": 2,
+      "scheduler_updates": []
+    },
+    {
+      "event": "B2-wait-stage-event",
+      "queue_length": 0,
+      "active_model_wait": 1,
+      "occupied_model_slots": 1,
+      "scheduler_updates": [
+        "B1"
+      ]
+    }
+  ],
+  "model_reply_FIFO": [
+    "execute1",
+    "sample1",
+    "execute2",
+    "sample2"
+  ],
+  "scheduler_update_order": [
+    "B1",
+    "B2"
+  ],
+  "single_model_reply_reader": true,
+  "independent_CPU_batch_gates": 2,
+  "threads_left_alive": 0,
+  "server_actions": 0,
+  "npu_actions": 0,
+  "production_source_changes": false,
+  "trace": [
+    {
+      "sequence": 1,
+      "action": "first_step_entry",
+      "thread_id": 28860,
+      "queue_length": 1,
+      "queue_capacity": 2
+    },
+    {
+      "sequence": 2,
+      "action": "scheduler_schedule",
+      "thread_id": 28860,
+      "batch": "B2"
+    },
+    {
+      "sequence": 3,
+      "action": "executor_submit",
+      "thread_id": 28860,
+      "name": "execute2"
+    },
+    {
+      "sequence": 4,
+      "action": "executor_submit",
+      "thread_id": 28860,
+      "name": "sample2"
+    },
+    {
+      "sequence": 5,
+      "action": "batch_queue_append",
+      "thread_id": 28860,
+      "batch": "B2",
+      "queue_length": 2
+    },
+    {
+      "sequence": 6,
+      "action": "batch_queue_pop",
+      "thread_id": 28860,
+      "batch": "B1",
+      "before_length": 2,
+      "queue_length": 1
+    },
+    {
+      "sequence": 7,
+      "action": "get_response_enter",
+      "thread_id": 46512,
+      "name": "execute1"
+    },
+    {
+      "sequence": 8,
+      "action": "core_callback",
+      "thread_id": 28860,
+      "event": "B1-wait-stage-event",
+      "occupied_model_slots": 2
+    },
+    {
+      "sequence": 9,
+      "action": "release_B1_only",
+      "thread_id": 55592
+    },
+    {
+      "sequence": 10,
+      "action": "get_response_return",
+      "thread_id": 46512,
+      "name": "execute1"
+    },
+    {
+      "sequence": 11,
+      "action": "get_response_enter",
+      "thread_id": 46512,
+      "name": "sample1"
+    },
+    {
+      "sequence": 12,
+      "action": "get_response_return",
+      "thread_id": 46512,
+      "name": "sample1"
+    },
+    {
+      "sequence": 13,
+      "action": "scheduler_update",
+      "thread_id": 28860,
+      "batch": "B1",
+      "model_result": "B1-final"
+    },
+    {
+      "sequence": 14,
+      "action": "after_first_step",
+      "thread_id": 28860,
+      "queue_length": 1,
+      "scheduler_updates": [
+        "B1"
+      ],
+      "B2_pending": true,
+      "B2_gate_released": false
+    },
+    {
+      "sequence": 15,
+      "action": "batch_queue_pop",
+      "thread_id": 28860,
+      "batch": "B2",
+      "before_length": 1,
+      "queue_length": 0
+    },
+    {
+      "sequence": 16,
+      "action": "get_response_enter",
+      "thread_id": 46512,
+      "name": "execute2"
+    },
+    {
+      "sequence": 17,
+      "action": "core_callback",
+      "thread_id": 28860,
+      "event": "B2-wait-stage-event",
+      "occupied_model_slots": 1
+    },
+    {
+      "sequence": 18,
+      "action": "release_B2_only",
+      "thread_id": 55592
+    },
+    {
+      "sequence": 19,
+      "action": "get_response_return",
+      "thread_id": 46512,
+      "name": "execute2"
+    },
+    {
+      "sequence": 20,
+      "action": "get_response_enter",
+      "thread_id": 46512,
+      "name": "sample2"
+    },
+    {
+      "sequence": 21,
+      "action": "get_response_return",
+      "thread_id": 46512,
+      "name": "sample2"
+    },
+    {
+      "sequence": 22,
+      "action": "scheduler_update",
+      "thread_id": 28860,
+      "batch": "B2",
+      "model_result": "B2-final"
+    }
+  ],
+  "NOT_VERIFIED": [
+    "real PP2 model",
+    "MTP/GLM",
+    "real LMCache restore",
+    "real scheduler data",
+    "performance"
+  ]
+}

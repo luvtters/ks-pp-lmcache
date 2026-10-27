@@ -1,0 +1,123 @@
+--- a/vllm/v1/executor/multiproc_executor.py
++++ b/vllm/v1/executor/multiproc_executor.py
+@@ -127,17 +127,41 @@
+             raise ValueError("invalid stage event payload")
+ 
+ 
++@dataclass(frozen=True)
++class KSRestoreEvent:
++    """Per-request restore identity; deliberately has no logical batch ID."""
++    event_id: str
++    request_id: str
++    restore_generation: int
++    stage: int
++    worker_id: int
++    tp_rank: int
++    pcp_rank: int
++    sequence: int
++
++    def validate(self):
++        if (type(self.event_id) is not str or not 0 < len(self.event_id) <= 128
++                or type(self.request_id) is not str or not self.request_id
++                or any(type(value) is not int or value < 0 for value in (
++                    self.restore_generation, self.stage, self.worker_id,
++                    self.tp_rank, self.pcp_rank))
++                or type(self.sequence) is not int or self.sequence < 1):
++            raise ValueError("invalid restore event identity")
++
++
+ class _KSStageEventPublisher:
+     """One writer thread per worker; never runs model/HCCL/Future queries.
+ 
+     Any future host observer must enqueue a previously obtained readiness fact.
+     It must NOT query the same LMCache Future as an existing completion path.
+     """
+-    def __init__(self, transport, failed, worker_id, stage):
++    def __init__(self, transport, failed, worker_id, stage, tp_size=None, pcp_size=1):
+         self.transport = transport
+         self.failed = failed
+         self.worker_id = worker_id
+         self.stage = stage
++        self.tp_size = tp_size
++        self.pcp_size = pcp_size
+         self.pending = queue.Queue(maxsize=64)
+         self.stopped = threading.Event()
+         self.lock = threading.Lock()
+@@ -159,6 +183,32 @@
+                 self.failed.set()
+                 raise RuntimeError("stage event inbox full") from None
+             self.sequence += 1
++
++    def publish_restore_ready(self, identity):
++        # Called only with success drained from the unique device-future owner.
++        # This method does not query/synchronize an event or manufacture readiness.
++        identity.validate()
++        if (self.pcp_size != 1 or type(self.tp_size) is not int or self.tp_size < 1
++                or identity.global_worker_rank != self.worker_id
++                or identity.stage_id != self.stage
++                or self.stage != self.worker_id // self.tp_size
++                or identity.tp_rank != self.worker_id % self.tp_size
++                or identity.pcp_rank != 0):
++            raise ValueError("restore identity does not match publisher PP/TP/PCP rank")
++        with self.lock:
++            if self.stopped.is_set() or self.failed.is_set():
++                raise RuntimeError("stage event channel unavailable")
++            sequence = self.sequence + 1
++            event = KSRestoreEvent(f"restore:{self.worker_id}:{sequence}",
++                identity.request_id, identity.restore_generation, self.stage,
++                self.worker_id, identity.tp_rank, identity.pcp_rank, sequence)
++            event.validate()
++            try:
++                self.pending.put_nowait(event)
++            except queue.Full:
++                self.failed.set()
++                raise RuntimeError("stage event inbox full") from None
++            self.sequence = sequence
+ 
+     def _run(self):
+         while not self.stopped.is_set():
+@@ -369,6 +419,8 @@
+         self._ks_stage_poll_owner = None
+         self._ks_stage_rpc_owner = threading.get_ident()
+         self._ks_stage_tp_size = tp_size * pcp_size
++        self._ks_restore_tp_size = tp_size
++        self._ks_restore_pcp_size = pcp_size
+         self._ks_stage_count = pp_size
+         if os.environ.get("KS_PP_STAGE_EVENTS") != "1":
+             return
+@@ -422,14 +474,19 @@
+                     event = transport.get_nowait()
+                 except queue.Empty:
+                     break
+-                if not isinstance(event, KSStageEvent):
++                if not isinstance(event, (KSStageEvent, KSRestoreEvent)):
+                     raise ValueError("unexpected stage channel payload")
+                 event.validate()
+                 if (event.worker_id != rank
+                         or event.stage != rank // self._ks_stage_tp_size
+                         or event.sequence != self._ks_stage_sequences.get(rank, 0) + 1):
+                     raise ValueError("stage event worker/sequence mismatch")
+-                if event.kind in ("CONTROL_RESULT", "CONTROL_ERROR"):
++                if isinstance(event, KSRestoreEvent):
++                    if (self._ks_restore_pcp_size != 1
++                            or event.tp_rank != rank % self._ks_restore_tp_size
++                            or event.pcp_rank != 0):
++                        raise ValueError("restore event TP/PCP identity mismatch")
++                elif event.kind in ("CONTROL_RESULT", "CONTROL_ERROR"):
+                     pending = self._ks_stage_pending.get(event.event_id)
+                     if pending is None:
+                         raise ValueError("unknown or duplicate stage command result")
+@@ -1003,9 +1060,12 @@
+                                             * parallel.prefill_context_parallel_size)
+         transport, failed = stage_event_channel
+         self._ks_stage_publisher = _KSStageEventPublisher(
+-            transport, failed, self.rank, self._ks_stage_index)
++            transport, failed, self.rank, self._ks_stage_index,
++            tp_size=parallel.tensor_parallel_size,
++            pcp_size=parallel.prefill_context_parallel_size)
+         # Interface only. No LMCache/stream/event observer is installed here.
+         self.worker.ks_publish_stage_event = self._ks_stage_publisher.publish
++        self.worker.ks_publish_restore_ready = self._ks_stage_publisher.publish_restore_ready
+ 
+     def _handle_stage_command(self, command):
+         publisher = self._ks_stage_publisher

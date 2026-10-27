@@ -1,0 +1,9 @@
+{
+  "status": "PREPARED_NOT_EXECUTED",
+  "sources": {
+    "multiproc_executor.py": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\20261027_PP分段就绪原型\\restore_event_binding\\multiproc_executor.py",
+    "core.py": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\20261027_PP分段就绪原型\\core_event_pump\\core.py",
+    "stage_controller.py": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\20261027_PP分段就绪原型\\controller\\stage_controller.py",
+    "restore_binding.py": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\20261027_PP分段就绪原型\\restore_event_binding\\restore_binding.py"
+  }
+}

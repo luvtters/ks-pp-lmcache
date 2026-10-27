@@ -1,0 +1,9 @@
+{
+  "status": "PASS_CPU_BINDING_ONLY",
+  "tests": 13,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "actual_executor": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\20261027_PP分段就绪原型\\restore_event_binding\\multiproc_executor.py",
+  "not_runtime_integrated": true
+}

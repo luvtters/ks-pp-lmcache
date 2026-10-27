@@ -1,0 +1,25 @@
+{
+  "status": "CPU_PASS",
+  "tests_run": 10,
+  "failures": 0,
+  "errors": 0,
+  "runtime_status": "NOT_RUNTIME_INTEGRATED",
+  "actual_core": "/opt/ks-stage-ready/output/05_当前环境与实验准备/20261027_25环境准备/25镜像源码与配置快照/sources/vllm/vllm/v1/engine/core.py",
+  "actual_future": "/opt/ks-stage-ready/output/05_当前环境与实验准备/20261027_25环境准备/25镜像源码与配置快照/sources/vllm/vllm/v1/executor/multiproc_executor.py",
+  "server_actions": 0,
+  "npu_actions": 0,
+  "AST_executed": [
+    "EngineCore.step",
+    "EngineCore.step_with_batch_queue",
+    "FutureWrapper",
+    "_KSModelResultReader",
+    "core callback/poll/wait seams"
+  ],
+  "NOT_VERIFIED": [
+    "real EngineCore bootstrap",
+    "executor aggregation thread affinity",
+    "live ModelRunnerOutput",
+    "scheduler stage dispatch integration",
+    "NPU/model/performance"
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "syntax": "PASS",
+  "compiled_files": [
+    "chain_runtime.py",
+    "device_component.py",
+    "extract_chain_runtime.py",
+    "lmcache_event_core_chain_probe.py",
+    "restore_binding.py",
+    "stage_controller.py",
+    "stage_observer.py"
+  ],
+  "cpu_plan": "PASS",
+  "guarded_forbidden_imports": [
+    "torch",
+    "torch_npu",
+    "lmcache",
+    "vllm"
+  ],
+  "forbidden_modules_loaded": [],
+  "exitcode": 0,
+  "device_run_performed": false,
+  "plan": {
+    "status": "CPU_PLAN_ONLY",
+    "device_imports_performed": false,
+    "device_allocation_performed": false,
+    "planned_device": "npu:15",
+    "parent": "CPU-only actual candidate EngineCore AST seam + FutureWrapper",
+    "children": [
+      "producer",
+      "consumer"
+    ],
+    "timeout_seconds": 90.0,
+    "component_topology": "two logical stages, one worker each; not TP8",
+    "synthetic_request_identity": {
+      "request_id": "event-core-chain-component",
+      "restore_generation": 1,
+      "stage_id": 0,
+      "tp_rank": 0,
+      "pcp_rank": 0,
+      "global_worker_rank": 0
+    },
+    "route": [
+      "real NPU nonempty IPC event",
+      "real DeviceMessagingFuture owner",
+      "LMCacheStageObserver.drain_success",
+      "publish_observer_success",
+      "real _KSStageEventPublisher",
+      "multiprocessing.Queue",
+      "real poll_stage_events",
+      "EngineCore.step_with_batch_queue/_ks_wait_model_future",
+      "RestoreEventBinding",
+      "StageController.mark_kv_ready"
+    ],
+    "release_rule": "core callback confirms pending Future, updates=0, waiting_inflight=1",
+    "publisher_close_rule": "only after parent CORE_CONSUMED ACK",
+    "not_verified": [
+      "full EngineCore bootstrap",
+      "GLM",
+      "real LMCache KV",
+      "TP8/PP2 model integration",
+      "performance"
+    ]
+  }
+}

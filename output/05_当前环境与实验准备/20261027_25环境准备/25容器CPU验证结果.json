@@ -1,0 +1,70 @@
+{
+  "status": "PASS",
+  "recorded_at_utc": "2026-10-27T01:29:24.926928+00:00",
+  "date_for_user": "2026-10-27 Asia/Shanghai",
+  "tests": 66,
+  "groups": [
+    {
+      "component": "阶段资格和资源",
+      "module": "controller.test_stage_controller",
+      "tests": 25,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "pass": true
+    },
+    {
+      "component": "真实worker拆分方法",
+      "module": "worker_split.test_worker_split",
+      "tests": 28,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "pass": true
+    },
+    {
+      "component": "真实RPC与并发worker队列",
+      "module": "test_executor_bridge",
+      "tests": 12,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "pass": true
+    },
+    {
+      "component": "三部分组合路径",
+      "module": "test_composed_path",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "pass": true
+    }
+  ],
+  "scope": "ISOLATED_CPU_PROTOTYPE",
+  "runtime_integration": "NOT_RUNTIME_INTEGRATED",
+  "npu_correctness": "NOT_VERIFIED",
+  "hccl_completion_semantics": "NOT_VERIFIED",
+  "model_token_correctness": "NOT_VERIFIED",
+  "performance_gain": "NOT_VERIFIED",
+  "server_connections": 0,
+  "services_started_or_stopped": 0,
+  "npu_allocations": 0,
+  "runtime_source_files_deployed": 0,
+  "real_source_methods_exercised": [
+    "archived MultiprocExecutor.collective_rpc",
+    "archived FutureWrapper",
+    "candidate NPUWorker.execute_model and split methods"
+  ],
+  "cpu_substitutes": [
+    "HCCL queues/tensors/handles and NPU events",
+    "model runner without real compute or sampling",
+    "stdlib pickle instead of cloudpickle in extracted RPC tests"
+  ],
+  "not_exercised": [
+    "full installed vLLM imports and actual EngineCore scheduling",
+    "real LMCache stage-completion event publication",
+    "NewRequestData/chunked prefill/MTP lifecycle integration",
+    "device and original 1P1D/customer benchmark"
+  ]
+}

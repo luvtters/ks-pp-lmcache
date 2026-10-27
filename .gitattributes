@@ -1,0 +1,2 @@
+# Preserve archived source/evidence bytes; do not rewrite line endings.
+* -text

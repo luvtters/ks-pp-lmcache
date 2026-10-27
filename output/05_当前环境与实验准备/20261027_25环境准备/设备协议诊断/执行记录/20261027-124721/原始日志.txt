@@ -1,0 +1,965 @@
+{"captured_utc": "2026-10-27T04:47:26.961628+00:00", "machine": "115.120.90.25", "read_only": true, "signals_sent": 0, "records": []}
+{"status": "STARTING_DEVICE_PROTOCOL_ONLY", "command": ["docker", "exec", "-e", "ASCEND_RT_VISIBLE_DEVICES=0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15", "-e", "HCCL_IF_IP=192.168.0.122", "-e", "GLOO_SOCKET_IFNAME=enp23s0f3", "-e", "TP_SOCKET_IFNAME=enp23s0f3", "-e", "HCCL_SOCKET_IFNAME=enp23s0f3", "-e", "HCCL_NPU_SOCKET_PORT_RANGE=auto", "-e", "OMP_NUM_THREADS=1", "ks-luv-m25-stage-privcheck", "timeout", "--signal=TERM", "--kill-after=15", "240", "torchrun", "--nnodes=1", "--node-rank=0", "--nproc-per-node=16", "--rdzv-backend=static", "--master-addr=127.0.0.1", "--master-port=29627", "--max-restarts=0", "/opt/ks-stage-ready/device-probe/pp_stage_warm_query_probe.py", "--run-device-probe", "--output-dir", "/opt/ks-stage-ready/device-probe/results/20261027-124721"]}
+{"record_type": "probe_event", "rank": 2, "pid": 1423, "index": 1, "action": "probe_enter", "transfer_round": -1, "monotonic_ns": 40000755047825, "utc_time": "2026-10-27T04:47:32.687012+00:00", "events_path": "/opt/ks-stage-ready/device-probe/results/20261027-124721/rank-02.events.jsonl"}
+{"record_type": "probe_event", "rank": 1, "pid": 1422, "index": 1, "action": "probe_enter", "transfer_round": -1, "monotonic_ns": 40000755097396, "utc_time": "2026-10-27T04:47:32.687062+00:00", "events_path": "/opt/ks-stage-ready/device-probe/results/20261027-124721/rank-01.events.jsonl"}{"record_type": "probe_event", "rank": 2, "pid": 1423, "index": 2, "action": "torch_import_enter", "transfer_round": -1, "monotonic_ns": 40000755156546, "utc_time": "2026-10-27T04:47:32.687119+00:00"}
+
+{"record_type": "probe_event", "rank": 0, "pid": 1421, "index": 1, "action": "probe_enter", "transfer_round": -1, "monotonic_ns": 40000755128196, "utc_time": "2026-10-27T04:47:32.687093+00:00", "events_path": "/opt/ks-stage-ready/device-probe/results/20261027-124721/rank-00.events.jsonl"}
+{"record_type": "probe_event", "rank": 1, "pid": 1422, "index": 2, "action": "torch_import_enter", "transfer_round": -1, "monotonic_ns": 40000755197347, "utc_time": "2026-10-27T04:47:32.687160+00:00"}
+{"record_type": "probe_event", "rank": 0, "pid": 1421, "index": 2, "action": "torch_import_enter", "transfer_round": -1, "monotonic_ns": 40000755210157, "utc_time": "2026-10-27T04:47:32.687172+00:00"}
+{"record_type": "probe_event", "rank": 3, "pid": 1424, "index": 1, "action": "probe_enter", "transfer_round": -1, "monotonic_ns": 40000755864352, "utc_time": "2026-10-27T04:47:32.687829+00:00", "events_path": "/opt/ks-stage-ready/device-probe/results/20261027-124721/rank-03.events.jsonl"}
+{"record_type": "probe_event", "rank": 4, "pid": 1425, "index": 1, "action": "probe_enter", "transfer_round": -1, "monotonic_ns": 40000755910332, "utc_time": "2026-10-27T04:47:32.687875+00:00", "events_path": "/opt/ks-stage-ready/device-probe/results/20261027-124721/rank-04.events.jsonl"}
+{"record_type": "probe_event", "rank": 3, "pid": 1424, "index": 2, "action": "torch_import_enter", "transfer_round": -1, "monotonic_ns": 40000755963573, "utc_time": "2026-10-27T04:47:32.687926+00:00"}
+{"record_type": "probe_event", "rank": 4, "pid": 1425, "index": 2, "action": "torch_import_enter", "transfer_round": -1, "monotonic_ns": 40000755992293, "utc_time": "2026-10-27T04:47:32.687954+00:00"}
+{"record_type": "probe_event", "rank": 5, "pid": 1426, "index": 1, "action": "probe_enter", "transfer_round": -1, "monotonic_ns": 40000756695288, "utc_time": "2026-10-27T04:47:32.688660+00:00", "events_path": "/opt/ks-stage-ready/device-probe/results/20261027-124721/rank-05.events.jsonl"}
+{"record_type": "probe_event", "rank": 5, "pid": 1426, "index": 2, "action": "torch_import_enter", "transfer_round": -1, "monotonic_ns": 40000756790299, "utc_time": "2026-10-27T04:47:32.688752+00:00"}
+{"record_type": "probe_event", "rank": 6, "pid": 1427, "index": 1, "action": "probe_enter", "transfer_round": -1, "monotonic_ns": 40000758154130, "utc_time": "2026-10-27T04:47:32.690119+00:00", "events_path": "/opt/ks-stage-ready/device-probe/results/20261027-124721/rank-06.events.jsonl"}
+{"record_type": "probe_event", "rank": 6, "pid": 1427, "index": 2, "action": "torch_import_enter", "transfer_round": -1, "monotonic_ns": 40000758253821, "utc_time": "2026-10-27T04:47:32.690216+00:00"}
+{"record_type": "probe_event", "rank": 9, "pid": 1430, "index": 1, "action": "probe_enter", "transfer_round": -1, "monotonic_ns": 40000762534705, "utc_time": "2026-10-27T04:47:32.694499+00:00", "events_path": "/opt/ks-stage-ready/device-probe/results/20261027-124721/rank-09.events.jsonl"}
+{"record_type": "probe_event", "rank": 10, "pid": 1431, "index": 1, "action": "probe_enter", "transfer_round": -1, "monotonic_ns": 40000762583445, "utc_time": "2026-10-27T04:47:32.694547+00:00", "events_path": "/opt/ks-stage-ready/device-probe/results/20261027-124721/rank-10.events.jsonl"}
+{"record_type": "probe_event", "rank": 9, "pid": 1430, "index": 2, "action": "torch_import_enter", "transfer_round": -1, "monotonic_ns": 40000762656046, "utc_time": "2026-10-27T04:47:32.694618+00:00"}
+{"record_type": "probe_event", "rank": 10, "pid": 1431, "index": 2, "action": "torch_import_enter", "transfer_round": -1, "monotonic_ns": 40000762676656, "utc_time": "2026-10-27T04:47:32.694639+00:00"}{"record_type": "probe_event", "rank": 8, "pid": 1429, "index": 1, "action": "probe_enter", "transfer_round": -1, "monotonic_ns": 40000762627406, "utc_time": "2026-10-27T04:47:32.694591+00:00", "events_path": "/opt/ks-stage-ready/device-probe/results/20261027-124721/rank-08.events.jsonl"}
+
+{"record_type": "probe_event", "rank": 8, "pid": 1429, "index": 2, "action": "torch_import_enter", "transfer_round": -1, "monotonic_ns": 40000762723496, "utc_time": "2026-10-27T04:47:32.694686+00:00"}{"record_type": "probe_event", "rank": 7, "pid": 1428, "index": 1, "action": "probe_enter", "transfer_round": -1, "monotonic_ns": 40000762674776, "utc_time": "2026-10-27T04:47:32.694639+00:00", "events_path": "/opt/ks-stage-ready/device-probe/results/20261027-124721/rank-07.events.jsonl"}
+
+{"record_type": "probe_event", "rank": 7, "pid": 1428, "index": 2, "action": "torch_import_enter", "transfer_round": -1, "monotonic_ns": 40000762768837, "utc_time": "2026-10-27T04:47:32.694731+00:00"}
+{"record_type": "probe_event", "rank": 11, "pid": 1432, "index": 1, "action": "probe_enter", "transfer_round": -1, "monotonic_ns": 40000762857588, "utc_time": "2026-10-27T04:47:32.694821+00:00", "events_path": "/opt/ks-stage-ready/device-probe/results/20261027-124721/rank-11.events.jsonl"}
+{"record_type": "probe_event", "rank": 11, "pid": 1432, "index": 2, "action": "torch_import_enter", "transfer_round": -1, "monotonic_ns": 40000762939748, "utc_time": "2026-10-27T04:47:32.694902+00:00"}
+{"record_type": "probe_event", "rank": 12, "pid": 1433, "index": 1, "action": "probe_enter", "transfer_round": -1, "monotonic_ns": 40000764042367, "utc_time": "2026-10-27T04:47:32.696006+00:00", "events_path": "/opt/ks-stage-ready/device-probe/results/20261027-124721/rank-12.events.jsonl"}
+{"record_type": "probe_event", "rank": 12, "pid": 1433, "index": 2, "action": "torch_import_enter", "transfer_round": -1, "monotonic_ns": 40000764138078, "utc_time": "2026-10-27T04:47:32.696100+00:00"}
+{"record_type": "probe_event", "rank": 13, "pid": 1434, "index": 1, "action": "probe_enter", "transfer_round": -1, "monotonic_ns": 40000764566051, "utc_time": "2026-10-27T04:47:32.696530+00:00", "events_path": "/opt/ks-stage-ready/device-probe/results/20261027-124721/rank-13.events.jsonl"}
+{"record_type": "probe_event", "rank": 13, "pid": 1434, "index": 2, "action": "torch_import_enter", "transfer_round": -1, "monotonic_ns": 40000764660002, "utc_time": "2026-10-27T04:47:32.696622+00:00"}
+{"record_type": "probe_event", "rank": 14, "pid": 1435, "index": 1, "action": "probe_enter", "transfer_round": -1, "monotonic_ns": 40000766396656, "utc_time": "2026-10-27T04:47:32.698360+00:00", "events_path": "/opt/ks-stage-ready/device-probe/results/20261027-124721/rank-14.events.jsonl"}
+{"record_type": "probe_event", "rank": 14, "pid": 1435, "index": 2, "action": "torch_import_enter", "transfer_round": -1, "monotonic_ns": 40000766488386, "utc_time": "2026-10-27T04:47:32.698450+00:00"}
+{"record_type": "probe_event", "rank": 15, "pid": 1436, "index": 1, "action": "probe_enter", "transfer_round": -1, "monotonic_ns": 40000767422084, "utc_time": "2026-10-27T04:47:32.699386+00:00", "events_path": "/opt/ks-stage-ready/device-probe/results/20261027-124721/rank-15.events.jsonl"}
+{"record_type": "probe_event", "rank": 15, "pid": 1436, "index": 2, "action": "torch_import_enter", "transfer_round": -1, "monotonic_ns": 40000767518495, "utc_time": "2026-10-27T04:47:32.699481+00:00"}
+{"record_type": "probe_event", "rank": 3, "pid": 1424, "index": 3, "action": "torch_import_returned", "transfer_round": -1, "monotonic_ns": 40009819897340, "utc_time": "2026-10-27T04:47:41.751882+00:00"}
+{"record_type": "probe_event", "rank": 3, "pid": 1424, "index": 4, "action": "torch_npu_import_enter", "transfer_round": -1, "monotonic_ns": 40009820188852, "utc_time": "2026-10-27T04:47:41.752151+00:00"}
+{"record_type": "probe_event", "rank": 3, "pid": 1424, "index": 5, "action": "torch_npu_import_returned", "transfer_round": -1, "monotonic_ns": 40009820231202, "utc_time": "2026-10-27T04:47:41.752193+00:00"}
+{"record_type": "probe_event", "rank": 3, "pid": 1424, "index": 6, "action": "torch_distributed_import_enter", "transfer_round": -1, "monotonic_ns": 40009820258053, "utc_time": "2026-10-27T04:47:41.752219+00:00"}
+{"record_type": "probe_event", "rank": 3, "pid": 1424, "index": 7, "action": "torch_distributed_import_returned", "transfer_round": -1, "monotonic_ns": 40009820287393, "utc_time": "2026-10-27T04:47:41.752249+00:00"}
+{"record_type": "probe_event", "rank": 3, "pid": 1424, "index": 8, "action": "vllm_import_enter", "transfer_round": -1, "monotonic_ns": 40009820311123, "utc_time": "2026-10-27T04:47:41.752272+00:00"}
+INFO 10-27 04:47:41 [__init__.py:44] Available plugins for group vllm.platform_plugins:
+INFO 10-27 04:47:41 [__init__.py:46] - ascend -> vllm_ascend:register
+INFO 10-27 04:47:41 [__init__.py:49] All plugins in this group will be loaded. Set `VLLM_PLUGINS` to control which plugins to load.
+INFO 10-27 04:47:42 [__init__.py:238] Platform plugin ascend is activated
+{"record_type": "probe_event", "rank": 11, "pid": 1432, "index": 3, "action": "torch_import_returned", "transfer_round": -1, "monotonic_ns": 40010120366000, "utc_time": "2026-10-27T04:47:42.052341+00:00"}
+{"record_type": "probe_event", "rank": 11, "pid": 1432, "index": 4, "action": "torch_npu_import_enter", "transfer_round": -1, "monotonic_ns": 40010120592912, "utc_time": "2026-10-27T04:47:42.052555+00:00"}
+{"record_type": "probe_event", "rank": 11, "pid": 1432, "index": 5, "action": "torch_npu_import_returned", "transfer_round": -1, "monotonic_ns": 40010120641732, "utc_time": "2026-10-27T04:47:42.052603+00:00"}
+{"record_type": "probe_event", "rank": 11, "pid": 1432, "index": 6, "action": "torch_distributed_import_enter", "transfer_round": -1, "monotonic_ns": 40010120672692, "utc_time": "2026-10-27T04:47:42.052634+00:00"}
+{"record_type": "probe_event", "rank": 11, "pid": 1432, "index": 7, "action": "torch_distributed_import_returned", "transfer_round": -1, "monotonic_ns": 40010120701632, "utc_time": "2026-10-27T04:47:42.052663+00:00"}
+{"record_type": "probe_event", "rank": 11, "pid": 1432, "index": 8, "action": "vllm_import_enter", "transfer_round": -1, "monotonic_ns": 40010120727533, "utc_time": "2026-10-27T04:47:42.052689+00:00"}
+INFO 10-27 04:47:42 [platform.py:62] Breakable cudagraph is force disabled on Ascend because DeepSeek V4 PIECEWISE cudagraph is not supported yet.
+{"record_type": "probe_event", "rank": 0, "pid": 1421, "index": 3, "action": "torch_import_returned", "transfer_round": -1, "monotonic_ns": 40010280785586, "utc_time": "2026-10-27T04:47:42.212757+00:00"}
+{"record_type": "probe_event", "rank": 0, "pid": 1421, "index": 4, "action": "torch_npu_import_enter", "transfer_round": -1, "monotonic_ns": 40010281017048, "utc_time": "2026-10-27T04:47:42.212979+00:00"}
+{"record_type": "probe_event", "rank": 0, "pid": 1421, "index": 5, "action": "torch_npu_import_returned", "transfer_round": -1, "monotonic_ns": 40010281061698, "utc_time": "2026-10-27T04:47:42.213024+00:00"}
+{"record_type": "probe_event", "rank": 0, "pid": 1421, "index": 6, "action": "torch_distributed_import_enter", "transfer_round": -1, "monotonic_ns": 40010281089328, "utc_time": "2026-10-27T04:47:42.213051+00:00"}
+{"record_type": "probe_event", "rank": 0, "pid": 1421, "index": 7, "action": "torch_distributed_import_returned", "transfer_round": -1, "monotonic_ns": 40010281120828, "utc_time": "2026-10-27T04:47:42.213082+00:00"}
+{"record_type": "probe_event", "rank": 0, "pid": 1421, "index": 8, "action": "vllm_import_enter", "transfer_round": -1, "monotonic_ns": 40010281150919, "utc_time": "2026-10-27T04:47:42.213112+00:00"}
+{"record_type": "probe_event", "rank": 8, "pid": 1429, "index": 3, "action": "torch_import_returned", "transfer_round": -1, "monotonic_ns": 40010322787210, "utc_time": "2026-10-27T04:47:42.254761+00:00"}
+{"record_type": "probe_event", "rank": 8, "pid": 1429, "index": 4, "action": "torch_npu_import_enter", "transfer_round": -1, "monotonic_ns": 40010322990382, "utc_time": "2026-10-27T04:47:42.254953+00:00"}
+{"record_type": "probe_event", "rank": 8, "pid": 1429, "index": 5, "action": "torch_npu_import_returned", "transfer_round": -1, "monotonic_ns": 40010323043852, "utc_time": "2026-10-27T04:47:42.255006+00:00"}
+{"record_type": "probe_event", "rank": 8, "pid": 1429, "index": 6, "action": "torch_distributed_import_enter", "transfer_round": -1, "monotonic_ns": 40010323079162, "utc_time": "2026-10-27T04:47:42.255040+00:00"}
+{"record_type": "probe_event", "rank": 8, "pid": 1429, "index": 7, "action": "torch_distributed_import_returned", "transfer_round": -1, "monotonic_ns": 40010323106002, "utc_time": "2026-10-27T04:47:42.255067+00:00"}
+{"record_type": "probe_event", "rank": 8, "pid": 1429, "index": 8, "action": "vllm_import_enter", "transfer_round": -1, "monotonic_ns": 40010323131443, "utc_time": "2026-10-27T04:47:42.255093+00:00"}
+INFO 10-27 04:47:42 [__init__.py:44] Available plugins for group vllm.platform_plugins:
+INFO 10-27 04:47:42 [__init__.py:46] - ascend -> vllm_ascend:register
+INFO 10-27 04:47:42 [__init__.py:49] All plugins in this group will be loaded. Set `VLLM_PLUGINS` to control which plugins to load.
+{"record_type": "probe_event", "rank": 6, "pid": 1427, "index": 3, "action": "torch_import_returned", "transfer_round": -1, "monotonic_ns": 40010373172011, "utc_time": "2026-10-27T04:47:42.305138+00:00"}
+{"record_type": "probe_event", "rank": 6, "pid": 1427, "index": 4, "action": "torch_npu_import_enter", "transfer_round": -1, "monotonic_ns": 40010373308172, "utc_time": "2026-10-27T04:47:42.305270+00:00"}
+{"record_type": "probe_event", "rank": 6, "pid": 1427, "index": 5, "action": "torch_npu_import_returned", "transfer_round": -1, "monotonic_ns": 40010373353322, "utc_time": "2026-10-27T04:47:42.305315+00:00"}
+{"record_type": "probe_event", "rank": 6, "pid": 1427, "index": 6, "action": "torch_distributed_import_enter", "transfer_round": -1, "monotonic_ns": 40010373387092, "utc_time": "2026-10-27T04:47:42.305348+00:00"}
+{"record_type": "probe_event", "rank": 6, "pid": 1427, "index": 7, "action": "torch_distributed_import_returned", "transfer_round": -1, "monotonic_ns": 40010373417943, "utc_time": "2026-10-27T04:47:42.305379+00:00"}
+{"record_type": "probe_event", "rank": 6, "pid": 1427, "index": 8, "action": "vllm_import_enter", "transfer_round": -1, "monotonic_ns": 40010373444723, "utc_time": "2026-10-27T04:47:42.305406+00:00"}
+{"record_type": "probe_event", "rank": 13, "pid": 1434, "index": 3, "action": "torch_import_returned", "transfer_round": -1, "monotonic_ns": 40010395838771, "utc_time": "2026-10-27T04:47:42.327806+00:00"}
+{"record_type": "probe_event", "rank": 13, "pid": 1434, "index": 4, "action": "torch_npu_import_enter", "transfer_round": -1, "monotonic_ns": 40010396038863, "utc_time": "2026-10-27T04:47:42.328001+00:00"}
+{"record_type": "probe_event", "rank": 13, "pid": 1434, "index": 5, "action": "torch_npu_import_returned", "transfer_round": -1, "monotonic_ns": 40010396083683, "utc_time": "2026-10-27T04:47:42.328045+00:00"}
+{"record_type": "probe_event", "rank": 13, "pid": 1434, "index": 6, "action": "torch_distributed_import_enter", "transfer_round": -1, "monotonic_ns": 40010396116393, "utc_time": "2026-10-27T04:47:42.328078+00:00"}
+{"record_type": "probe_event", "rank": 13, "pid": 1434, "index": 7, "action": "torch_distributed_import_returned", "transfer_round": -1, "monotonic_ns": 40010396144113, "utc_time": "2026-10-27T04:47:42.328105+00:00"}
+{"record_type": "probe_event", "rank": 13, "pid": 1434, "index": 8, "action": "vllm_import_enter", "transfer_round": -1, "monotonic_ns": 40010396170574, "utc_time": "2026-10-27T04:47:42.328132+00:00"}
+INFO 10-27 04:47:42 [__init__.py:238] Platform plugin ascend is activated
+INFO 10-27 04:47:42 [platform.py:62] Breakable cudagraph is force disabled on Ascend because DeepSeek V4 PIECEWISE cudagraph is not supported yet.
+{"record_type": "probe_event", "rank": 12, "pid": 1433, "index": 3, "action": "torch_import_returned", "transfer_round": -1, "monotonic_ns": 40010455209323, "utc_time": "2026-10-27T04:47:42.387177+00:00"}
+{"record_type": "probe_event", "rank": 12, "pid": 1433, "index": 4, "action": "torch_npu_import_enter", "transfer_round": -1, "monotonic_ns": 40010455343234, "utc_time": "2026-10-27T04:47:42.387305+00:00"}
+{"record_type": "probe_event", "rank": 12, "pid": 1433, "index": 5, "action": "torch_npu_import_returned", "transfer_round": -1, "monotonic_ns": 40010455384475, "utc_time": "2026-10-27T04:47:42.387346+00:00"}
+{"record_type": "probe_event", "rank": 12, "pid": 1433, "index": 6, "action": "torch_distributed_import_enter", "transfer_round": -1, "monotonic_ns": 40010455414975, "utc_time": "2026-10-27T04:47:42.387376+00:00"}
+{"record_type": "probe_event", "rank": 12, "pid": 1433, "index": 7, "action": "torch_distributed_import_returned", "transfer_round": -1, "monotonic_ns": 40010455443565, "utc_time": "2026-10-27T04:47:42.387405+00:00"}
+{"record_type": "probe_event", "rank": 12, "pid": 1433, "index": 8, "action": "vllm_import_enter", "transfer_round": -1, "monotonic_ns": 40010455467555, "utc_time": "2026-10-27T04:47:42.387429+00:00"}
+{"record_type": "probe_event", "rank": 2, "pid": 1423, "index": 3, "action": "torch_import_returned", "transfer_round": -1, "monotonic_ns": 40010473073185, "utc_time": "2026-10-27T04:47:42.405047+00:00"}
+{"record_type": "probe_event", "rank": 2, "pid": 1423, "index": 4, "action": "torch_npu_import_enter", "transfer_round": -1, "monotonic_ns": 40010473255727, "utc_time": "2026-10-27T04:47:42.405218+00:00"}
+{"record_type": "probe_event", "rank": 2, "pid": 1423, "index": 5, "action": "torch_npu_import_returned", "transfer_round": -1, "monotonic_ns": 40010473303067, "utc_time": "2026-10-27T04:47:42.405265+00:00"}
+{"record_type": "probe_event", "rank": 2, "pid": 1423, "index": 6, "action": "torch_distributed_import_enter", "transfer_round": -1, "monotonic_ns": 40010473334547, "utc_time": "2026-10-27T04:47:42.405296+00:00"}
+{"record_type": "probe_event", "rank": 2, "pid": 1423, "index": 7, "action": "torch_distributed_import_returned", "transfer_round": -1, "monotonic_ns": 40010473369608, "utc_time": "2026-10-27T04:47:42.405331+00:00"}
+{"record_type": "probe_event", "rank": 2, "pid": 1423, "index": 8, "action": "vllm_import_enter", "transfer_round": -1, "monotonic_ns": 40010473397238, "utc_time": "2026-10-27T04:47:42.405359+00:00"}
+INFO 10-27 04:47:42 [__init__.py:44] Available plugins for group vllm.platform_plugins:
+INFO 10-27 04:47:42 [__init__.py:46] - ascend -> vllm_ascend:register
+INFO 10-27 04:47:42 [__init__.py:49] All plugins in this group will be loaded. Set `VLLM_PLUGINS` to control which plugins to load.
+{"record_type": "probe_event", "rank": 10, "pid": 1431, "index": 3, "action": "torch_import_returned", "transfer_round": -1, "monotonic_ns": 40010519558605, "utc_time": "2026-10-27T04:47:42.451537+00:00"}
+{"record_type": "probe_event", "rank": 10, "pid": 1431, "index": 4, "action": "torch_npu_import_enter", "transfer_round": -1, "monotonic_ns": 40010519778017, "utc_time": "2026-10-27T04:47:42.451740+00:00"}
+{"record_type": "probe_event", "rank": 10, "pid": 1431, "index": 5, "action": "torch_npu_import_returned", "transfer_round": -1, "monotonic_ns": 40010519814417, "utc_time": "2026-10-27T04:47:42.451776+00:00"}
+{"record_type": "probe_event", "rank": 10, "pid": 1431, "index": 6, "action": "torch_distributed_import_enter", "transfer_round": -1, "monotonic_ns": 40010519842067, "utc_time": "2026-10-27T04:47:42.451803+00:00"}
+{"record_type": "probe_event", "rank": 10, "pid": 1431, "index": 7, "action": "torch_distributed_import_returned", "transfer_round": -1, "monotonic_ns": 40010519867558, "utc_time": "2026-10-27T04:47:42.451829+00:00"}
+{"record_type": "probe_event", "rank": 10, "pid": 1431, "index": 8, "action": "vllm_import_enter", "transfer_round": -1, "monotonic_ns": 40010519889968, "utc_time": "2026-10-27T04:47:42.451851+00:00"}
+INFO 10-27 04:47:42 [__init__.py:44] Available plugins for group vllm.platform_plugins:
+INFO 10-27 04:47:42 [__init__.py:46] - ascend -> vllm_ascend:register
+INFO 10-27 04:47:42 [__init__.py:49] All plugins in this group will be loaded. Set `VLLM_PLUGINS` to control which plugins to load.
+INFO 10-27 04:47:42 [__init__.py:238] Platform plugin ascend is activated
+{"record_type": "probe_event", "rank": 1, "pid": 1422, "index": 3, "action": "torch_import_returned", "transfer_round": -1, "monotonic_ns": 40010578603085, "utc_time": "2026-10-27T04:47:42.510594+00:00"}
+{"record_type": "probe_event", "rank": 1, "pid": 1422, "index": 4, "action": "torch_npu_import_enter", "transfer_round": -1, "monotonic_ns": 40010578769866, "utc_time": "2026-10-27T04:47:42.510732+00:00"}
+{"record_type": "probe_event", "rank": 1, "pid": 1422, "index": 5, "action": "torch_npu_import_returned", "transfer_round": -1, "monotonic_ns": 40010578816166, "utc_time": "2026-10-27T04:47:42.510778+00:00"}
+{"record_type": "probe_event", "rank": 1, "pid": 1422, "index": 6, "action": "torch_distributed_import_enter", "transfer_round": -1, "monotonic_ns": 40010578848427, "utc_time": "2026-10-27T04:47:42.510810+00:00"}
+{"record_type": "probe_event", "rank": 1, "pid": 1422, "index": 7, "action": "torch_distributed_import_returned", "transfer_round": -1, "monotonic_ns": 40010578876607, "utc_time": "2026-10-27T04:47:42.510838+00:00"}
+{"record_type": "probe_event", "rank": 1, "pid": 1422, "index": 8, "action": "vllm_import_enter", "transfer_round": -1, "monotonic_ns": 40010578902217, "utc_time": "2026-10-27T04:47:42.510863+00:00"}
+{"record_type": "probe_event", "rank": 4, "pid": 1425, "index": 3, "action": "torch_import_returned", "transfer_round": -1, "monotonic_ns": 40010584359861, "utc_time": "2026-10-27T04:47:42.516330+00:00"}
+{"record_type": "probe_event", "rank": 4, "pid": 1425, "index": 4, "action": "torch_npu_import_enter", "transfer_round": -1, "monotonic_ns": 40010584495922, "utc_time": "2026-10-27T04:47:42.516458+00:00"}
+{"record_type": "probe_event", "rank": 4, "pid": 1425, "index": 5, "action": "torch_npu_import_returned", "transfer_round": -1, "monotonic_ns": 40010584539632, "utc_time": "2026-10-27T04:47:42.516501+00:00"}
+{"record_type": "probe_event", "rank": 4, "pid": 1425, "index": 6, "action": "torch_distributed_import_enter", "transfer_round": -1, "monotonic_ns": 40010584571692, "utc_time": "2026-10-27T04:47:42.516533+00:00"}
+{"record_type": "probe_event", "rank": 4, "pid": 1425, "index": 7, "action": "torch_distributed_import_returned", "transfer_round": -1, "monotonic_ns": 40010584600842, "utc_time": "2026-10-27T04:47:42.516562+00:00"}
+{"record_type": "probe_event", "rank": 4, "pid": 1425, "index": 8, "action": "vllm_import_enter", "transfer_round": -1, "monotonic_ns": 40010584625293, "utc_time": "2026-10-27T04:47:42.516587+00:00"}
+INFO 10-27 04:47:42 [__init__.py:238] Platform plugin ascend is activated
+INFO 10-27 04:47:42 [platform.py:62] Breakable cudagraph is force disabled on Ascend because DeepSeek V4 PIECEWISE cudagraph is not supported yet.
+INFO 10-27 04:47:42 [__init__.py:44] Available plugins for group vllm.platform_plugins:
+INFO 10-27 04:47:42 [__init__.py:46] - ascend -> vllm_ascend:register
+INFO 10-27 04:47:42 [__init__.py:49] All plugins in this group will be loaded. Set `VLLM_PLUGINS` to control which plugins to load.
+{"record_type": "probe_event", "rank": 9, "pid": 1430, "index": 3, "action": "torch_import_returned", "transfer_round": -1, "monotonic_ns": 40010607598715, "utc_time": "2026-10-27T04:47:42.539566+00:00"}
+{"record_type": "probe_event", "rank": 9, "pid": 1430, "index": 4, "action": "torch_npu_import_enter", "transfer_round": -1, "monotonic_ns": 40010607735256, "utc_time": "2026-10-27T04:47:42.539697+00:00"}
+{"record_type": "probe_event", "rank": 9, "pid": 1430, "index": 5, "action": "torch_npu_import_returned", "transfer_round": -1, "monotonic_ns": 40010607778487, "utc_time": "2026-10-27T04:47:42.539741+00:00"}
+{"record_type": "probe_event", "rank": 9, "pid": 1430, "index": 6, "action": "torch_distributed_import_enter", "transfer_round": -1, "monotonic_ns": 40010607808097, "utc_time": "2026-10-27T04:47:42.539769+00:00"}
+{"record_type": "probe_event", "rank": 9, "pid": 1430, "index": 7, "action": "torch_distributed_import_returned", "transfer_round": -1, "monotonic_ns": 40010607838647, "utc_time": "2026-10-27T04:47:42.539800+00:00"}
+{"record_type": "probe_event", "rank": 9, "pid": 1430, "index": 8, "action": "vllm_import_enter", "transfer_round": -1, "monotonic_ns": 40010607861847, "utc_time": "2026-10-27T04:47:42.539823+00:00"}
+INFO 10-27 04:47:42 [__init__.py:44] Available plugins for group vllm.platform_plugins:
+INFO 10-27 04:47:42 [__init__.py:46] - ascend -> vllm_ascend:register
+INFO 10-27 04:47:42 [__init__.py:49] All plugins in this group will be loaded. Set `VLLM_PLUGINS` to control which plugins to load.
+INFO 10-27 04:47:42 [platform.py:62] Breakable cudagraph is force disabled on Ascend because DeepSeek V4 PIECEWISE cudagraph is not supported yet.
+{"record_type": "probe_event", "rank": 14, "pid": 1435, "index": 3, "action": "torch_import_returned", "transfer_round": -1, "monotonic_ns": 40010621760498, "utc_time": "2026-10-27T04:47:42.553731+00:00"}
+{"record_type": "probe_event", "rank": 14, "pid": 1435, "index": 4, "action": "torch_npu_import_enter", "transfer_round": -1, "monotonic_ns": 40010621895229, "utc_time": "2026-10-27T04:47:42.553857+00:00"}
+{"record_type": "probe_event", "rank": 14, "pid": 1435, "index": 5, "action": "torch_npu_import_returned", "transfer_round": -1, "monotonic_ns": 40010621935219, "utc_time": "2026-10-27T04:47:42.553897+00:00"}
+{"record_type": "probe_event", "rank": 14, "pid": 1435, "index": 6, "action": "torch_distributed_import_enter", "transfer_round": -1, "monotonic_ns": 40010621965260, "utc_time": "2026-10-27T04:47:42.553927+00:00"}
+{"record_type": "probe_event", "rank": 14, "pid": 1435, "index": 7, "action": "torch_distributed_import_returned", "transfer_round": -1, "monotonic_ns": 40010621991960, "utc_time": "2026-10-27T04:47:42.553953+00:00"}
+{"record_type": "probe_event", "rank": 14, "pid": 1435, "index": 8, "action": "vllm_import_enter", "transfer_round": -1, "monotonic_ns": 40010622016150, "utc_time": "2026-10-27T04:47:42.553977+00:00"}
+INFO 10-27 04:47:42 [__init__.py:238] Platform plugin ascend is activated
+INFO 10-27 04:47:42 [__init__.py:44] Available plugins for group vllm.platform_plugins:
+INFO 10-27 04:47:42 [__init__.py:46] - ascend -> vllm_ascend:register
+INFO 10-27 04:47:42 [__init__.py:49] All plugins in this group will be loaded. Set `VLLM_PLUGINS` to control which plugins to load.
+INFO 10-27 04:47:42 [__init__.py:238] Platform plugin ascend is activated
+{"record_type": "probe_event", "rank": 5, "pid": 1426, "index": 3, "action": "torch_import_returned", "transfer_round": -1, "monotonic_ns": 40010670700467, "utc_time": "2026-10-27T04:47:42.602670+00:00"}
+{"record_type": "probe_event", "rank": 5, "pid": 1426, "index": 4, "action": "torch_npu_import_enter", "transfer_round": -1, "monotonic_ns": 40010670822658, "utc_time": "2026-10-27T04:47:42.602785+00:00"}
+{"record_type": "probe_event", "rank": 5, "pid": 1426, "index": 5, "action": "torch_npu_import_returned", "transfer_round": -1, "monotonic_ns": 40010670864559, "utc_time": "2026-10-27T04:47:42.602826+00:00"}
+{"record_type": "probe_event", "rank": 5, "pid": 1426, "index": 6, "action": "torch_distributed_import_enter", "transfer_round": -1, "monotonic_ns": 40010670893619, "utc_time": "2026-10-27T04:47:42.602855+00:00"}
+{"record_type": "probe_event", "rank": 5, "pid": 1426, "index": 7, "action": "torch_distributed_import_returned", "transfer_round": -1, "monotonic_ns": 40010670919849, "utc_time": "2026-10-27T04:47:42.602881+00:00"}
+{"record_type": "probe_event", "rank": 5, "pid": 1426, "index": 8, "action": "vllm_import_enter", "transfer_round": -1, "monotonic_ns": 40010670942959, "utc_time": "2026-10-27T04:47:42.602904+00:00"}
+INFO 10-27 04:47:42 [platform.py:62] Breakable cudagraph is force disabled on Ascend because DeepSeek V4 PIECEWISE cudagraph is not supported yet.
+{"record_type": "probe_event", "rank": 15, "pid": 1436, "index": 3, "action": "torch_import_returned", "transfer_round": -1, "monotonic_ns": 40010687874994, "utc_time": "2026-10-27T04:47:42.619845+00:00"}
+{"record_type": "probe_event", "rank": 15, "pid": 1436, "index": 4, "action": "torch_npu_import_enter", "transfer_round": -1, "monotonic_ns": 40010687995545, "utc_time": "2026-10-27T04:47:42.619958+00:00"}
+{"record_type": "probe_event", "rank": 15, "pid": 1436, "index": 5, "action": "torch_npu_import_returned", "transfer_round": -1, "monotonic_ns": 40010688057195, "utc_time": "2026-10-27T04:47:42.620019+00:00"}
+{"record_type": "probe_event", "rank": 15, "pid": 1436, "index": 6, "action": "torch_distributed_import_enter", "transfer_round": -1, "monotonic_ns": 40010688090156, "utc_time": "2026-10-27T04:47:42.620051+00:00"}
+{"record_type": "probe_event", "rank": 15, "pid": 1436, "index": 7, "action": "torch_distributed_import_returned", "transfer_round": -1, "monotonic_ns": 40010688119136, "utc_time": "2026-10-27T04:47:42.620080+00:00"}
+{"record_type": "probe_event", "rank": 15, "pid": 1436, "index": 8, "action": "vllm_import_enter", "transfer_round": -1, "monotonic_ns": 40010688143106, "utc_time": "2026-10-27T04:47:42.620104+00:00"}
+INFO 10-27 04:47:42 [__init__.py:44] Available plugins for group vllm.platform_plugins:
+INFO 10-27 04:47:42 [__init__.py:46] - ascend -> vllm_ascend:register
+INFO 10-27 04:47:42 [__init__.py:49] All plugins in this group will be loaded. Set `VLLM_PLUGINS` to control which plugins to load.
+INFO 10-27 04:47:42 [platform.py:62] Breakable cudagraph is force disabled on Ascend because DeepSeek V4 PIECEWISE cudagraph is not supported yet.
+INFO 10-27 04:47:42 [__init__.py:44] Available plugins for group vllm.platform_plugins:
+INFO 10-27 04:47:42 [__init__.py:46] - ascend -> vllm_ascend:register
+INFO 10-27 04:47:42 [__init__.py:49] All plugins in this group will be loaded. Set `VLLM_PLUGINS` to control which plugins to load.
+INFO 10-27 04:47:42 [__init__.py:238] Platform plugin ascend is activated
+{"record_type": "probe_event", "rank": 7, "pid": 1428, "index": 3, "action": "torch_import_returned", "transfer_round": -1, "monotonic_ns": 40010743275485, "utc_time": "2026-10-27T04:47:42.675244+00:00"}
+{"record_type": "probe_event", "rank": 7, "pid": 1428, "index": 4, "action": "torch_npu_import_enter", "transfer_round": -1, "monotonic_ns": 40010743429356, "utc_time": "2026-10-27T04:47:42.675391+00:00"}
+{"record_type": "probe_event", "rank": 7, "pid": 1428, "index": 5, "action": "torch_npu_import_returned", "transfer_round": -1, "monotonic_ns": 40010743467766, "utc_time": "2026-10-27T04:47:42.675430+00:00"}
+{"record_type": "probe_event", "rank": 7, "pid": 1428, "index": 6, "action": "torch_distributed_import_enter", "transfer_round": -1, "monotonic_ns": 40010743497936, "utc_time": "2026-10-27T04:47:42.675459+00:00"}
+{"record_type": "probe_event", "rank": 7, "pid": 1428, "index": 7, "action": "torch_distributed_import_returned", "transfer_round": -1, "monotonic_ns": 40010743525897, "utc_time": "2026-10-27T04:47:42.675487+00:00"}
+{"record_type": "probe_event", "rank": 7, "pid": 1428, "index": 8, "action": "vllm_import_enter", "transfer_round": -1, "monotonic_ns": 40010743550027, "utc_time": "2026-10-27T04:47:42.675511+00:00"}
+INFO 10-27 04:47:42 [__init__.py:238] Platform plugin ascend is activated
+INFO 10-27 04:47:42 [platform.py:62] Breakable cudagraph is force disabled on Ascend because DeepSeek V4 PIECEWISE cudagraph is not supported yet.
+INFO 10-27 04:47:42 [__init__.py:238] Platform plugin ascend is activated
+INFO 10-27 04:47:42 [platform.py:62] Breakable cudagraph is force disabled on Ascend because DeepSeek V4 PIECEWISE cudagraph is not supported yet.
+INFO 10-27 04:47:42 [__init__.py:44] Available plugins for group vllm.platform_plugins:
+INFO 10-27 04:47:42 [__init__.py:46] - ascend -> vllm_ascend:register
+INFO 10-27 04:47:42 [__init__.py:49] All plugins in this group will be loaded. Set `VLLM_PLUGINS` to control which plugins to load.
+INFO 10-27 04:47:42 [platform.py:62] Breakable cudagraph is force disabled on Ascend because DeepSeek V4 PIECEWISE cudagraph is not supported yet.
+INFO 10-27 04:47:42 [__init__.py:44] Available plugins for group vllm.platform_plugins:
+INFO 10-27 04:47:42 [__init__.py:46] - ascend -> vllm_ascend:register
+INFO 10-27 04:47:42 [__init__.py:49] All plugins in this group will be loaded. Set `VLLM_PLUGINS` to control which plugins to load.
+INFO 10-27 04:47:42 [__init__.py:44] Available plugins for group vllm.platform_plugins:
+INFO 10-27 04:47:42 [__init__.py:46] - ascend -> vllm_ascend:register
+INFO 10-27 04:47:42 [__init__.py:49] All plugins in this group will be loaded. Set `VLLM_PLUGINS` to control which plugins to load.
+INFO 10-27 04:47:42 [__init__.py:44] Available plugins for group vllm.platform_plugins:
+INFO 10-27 04:47:42 [__init__.py:46] - ascend -> vllm_ascend:register
+INFO 10-27 04:47:42 [__init__.py:49] All plugins in this group will be loaded. Set `VLLM_PLUGINS` to control which plugins to load.
+INFO 10-27 04:47:42 [__init__.py:238] Platform plugin ascend is activated
+INFO 10-27 04:47:42 [__init__.py:44] Available plugins for group vllm.platform_plugins:
+INFO 10-27 04:47:42 [__init__.py:46] - ascend -> vllm_ascend:register
+INFO 10-27 04:47:42 [__init__.py:49] All plugins in this group will be loaded. Set `VLLM_PLUGINS` to control which plugins to load.
+INFO 10-27 04:47:42 [__init__.py:238] Platform plugin ascend is activated
+INFO 10-27 04:47:42 [__init__.py:238] Platform plugin ascend is activated
+INFO 10-27 04:47:42 [__init__.py:238] Platform plugin ascend is activated
+INFO 10-27 04:47:42 [platform.py:62] Breakable cudagraph is force disabled on Ascend because DeepSeek V4 PIECEWISE cudagraph is not supported yet.
+INFO 10-27 04:47:42 [__init__.py:44] Available plugins for group vllm.platform_plugins:
+INFO 10-27 04:47:42 [__init__.py:46] - ascend -> vllm_ascend:register
+INFO 10-27 04:47:42 [__init__.py:49] All plugins in this group will be loaded. Set `VLLM_PLUGINS` to control which plugins to load.
+INFO 10-27 04:47:42 [platform.py:62] Breakable cudagraph is force disabled on Ascend because DeepSeek V4 PIECEWISE cudagraph is not supported yet.
+INFO 10-27 04:47:42 [platform.py:62] Breakable cudagraph is force disabled on Ascend because DeepSeek V4 PIECEWISE cudagraph is not supported yet.
+INFO 10-27 04:47:42 [platform.py:62] Breakable cudagraph is force disabled on Ascend because DeepSeek V4 PIECEWISE cudagraph is not supported yet.
+INFO 10-27 04:47:42 [__init__.py:238] Platform plugin ascend is activated
+INFO 10-27 04:47:42 [__init__.py:238] Platform plugin ascend is activated
+INFO 10-27 04:47:42 [platform.py:62] Breakable cudagraph is force disabled on Ascend because DeepSeek V4 PIECEWISE cudagraph is not supported yet.
+INFO 10-27 04:47:42 [__init__.py:44] Available plugins for group vllm.platform_plugins:
+INFO 10-27 04:47:42 [__init__.py:46] - ascend -> vllm_ascend:register
+INFO 10-27 04:47:42 [__init__.py:49] All plugins in this group will be loaded. Set `VLLM_PLUGINS` to control which plugins to load.
+INFO 10-27 04:47:42 [platform.py:62] Breakable cudagraph is force disabled on Ascend because DeepSeek V4 PIECEWISE cudagraph is not supported yet.
+INFO 10-27 04:47:42 [__init__.py:238] Platform plugin ascend is activated
+INFO 10-27 04:47:42 [platform.py:62] Breakable cudagraph is force disabled on Ascend because DeepSeek V4 PIECEWISE cudagraph is not supported yet.
+{"record_type": "probe_event", "rank": 3, "pid": 1424, "index": 9, "action": "vllm_import_returned", "transfer_round": -1, "monotonic_ns": 40014509205370, "utc_time": "2026-10-27T04:47:46.441171+00:00"}
+{"record_type": "probe_event", "rank": 3, "pid": 1424, "index": 10, "action": "frameworks_imported", "transfer_round": -1, "monotonic_ns": 40014509326851, "utc_time": "2026-10-27T04:47:46.441289+00:00"}
+{"record_type": "probe_event", "rank": 3, "pid": 1424, "index": 11, "action": "set_device_enter", "transfer_round": -1, "monotonic_ns": 40014509431602, "utc_time": "2026-10-27T04:47:46.441393+00:00"}
+{"record_type": "probe_event", "rank": 11, "pid": 1432, "index": 9, "action": "vllm_import_returned", "transfer_round": -1, "monotonic_ns": 40014714640734, "utc_time": "2026-10-27T04:47:46.646609+00:00"}
+{"record_type": "probe_event", "rank": 11, "pid": 1432, "index": 10, "action": "frameworks_imported", "transfer_round": -1, "monotonic_ns": 40014714768045, "utc_time": "2026-10-27T04:47:46.646730+00:00"}
+{"record_type": "probe_event", "rank": 11, "pid": 1432, "index": 11, "action": "set_device_enter", "transfer_round": -1, "monotonic_ns": 40014714846646, "utc_time": "2026-10-27T04:47:46.646808+00:00"}
+{"record_type": "probe_event", "rank": 0, "pid": 1421, "index": 9, "action": "vllm_import_returned", "transfer_round": -1, "monotonic_ns": 40015019836762, "utc_time": "2026-10-27T04:47:46.951804+00:00"}
+{"record_type": "probe_event", "rank": 0, "pid": 1421, "index": 10, "action": "frameworks_imported", "transfer_round": -1, "monotonic_ns": 40015019958933, "utc_time": "2026-10-27T04:47:46.951921+00:00"}
+{"record_type": "probe_event", "rank": 0, "pid": 1421, "index": 11, "action": "set_device_enter", "transfer_round": -1, "monotonic_ns": 40015020078833, "utc_time": "2026-10-27T04:47:46.952040+00:00"}
+{"record_type": "probe_event", "rank": 12, "pid": 1433, "index": 9, "action": "vllm_import_returned", "transfer_round": -1, "monotonic_ns": 40015074132913, "utc_time": "2026-10-27T04:47:47.006100+00:00"}
+{"record_type": "probe_event", "rank": 12, "pid": 1433, "index": 10, "action": "frameworks_imported", "transfer_round": -1, "monotonic_ns": 40015074264184, "utc_time": "2026-10-27T04:47:47.006226+00:00"}
+{"record_type": "probe_event", "rank": 12, "pid": 1433, "index": 11, "action": "set_device_enter", "transfer_round": -1, "monotonic_ns": 40015074383365, "utc_time": "2026-10-27T04:47:47.006345+00:00"}
+{"record_type": "probe_event", "rank": 13, "pid": 1434, "index": 9, "action": "vllm_import_returned", "transfer_round": -1, "monotonic_ns": 40015152749939, "utc_time": "2026-10-27T04:47:47.084715+00:00"}
+{"record_type": "probe_event", "rank": 13, "pid": 1434, "index": 10, "action": "frameworks_imported", "transfer_round": -1, "monotonic_ns": 40015152867670, "utc_time": "2026-10-27T04:47:47.084829+00:00"}
+{"record_type": "probe_event", "rank": 13, "pid": 1434, "index": 11, "action": "set_device_enter", "transfer_round": -1, "monotonic_ns": 40015152970001, "utc_time": "2026-10-27T04:47:47.084931+00:00"}
+{"record_type": "probe_event", "rank": 8, "pid": 1429, "index": 9, "action": "vllm_import_returned", "transfer_round": -1, "monotonic_ns": 40015161564209, "utc_time": "2026-10-27T04:47:47.093529+00:00"}
+{"record_type": "probe_event", "rank": 8, "pid": 1429, "index": 10, "action": "frameworks_imported", "transfer_round": -1, "monotonic_ns": 40015161688700, "utc_time": "2026-10-27T04:47:47.093651+00:00"}
+{"record_type": "probe_event", "rank": 8, "pid": 1429, "index": 11, "action": "set_device_enter", "transfer_round": -1, "monotonic_ns": 40015161793431, "utc_time": "2026-10-27T04:47:47.093755+00:00"}
+{"record_type": "probe_event", "rank": 10, "pid": 1431, "index": 9, "action": "vllm_import_returned", "transfer_round": -1, "monotonic_ns": 40015277868054, "utc_time": "2026-10-27T04:47:47.209836+00:00"}
+{"record_type": "probe_event", "rank": 10, "pid": 1431, "index": 10, "action": "frameworks_imported", "transfer_round": -1, "monotonic_ns": 40015277993735, "utc_time": "2026-10-27T04:47:47.209955+00:00"}
+{"record_type": "probe_event", "rank": 10, "pid": 1431, "index": 11, "action": "set_device_enter", "transfer_round": -1, "monotonic_ns": 40015278090336, "utc_time": "2026-10-27T04:47:47.210052+00:00"}
+{"record_type": "probe_event", "rank": 5, "pid": 1426, "index": 9, "action": "vllm_import_returned", "transfer_round": -1, "monotonic_ns": 40015289480176, "utc_time": "2026-10-27T04:47:47.221447+00:00"}
+{"record_type": "probe_event", "rank": 5, "pid": 1426, "index": 10, "action": "frameworks_imported", "transfer_round": -1, "monotonic_ns": 40015289612107, "utc_time": "2026-10-27T04:47:47.221574+00:00"}
+{"record_type": "probe_event", "rank": 5, "pid": 1426, "index": 11, "action": "set_device_enter", "transfer_round": -1, "monotonic_ns": 40015289722098, "utc_time": "2026-10-27T04:47:47.221684+00:00"}
+{"record_type": "probe_event", "rank": 14, "pid": 1435, "index": 9, "action": "vllm_import_returned", "transfer_round": -1, "monotonic_ns": 40015308297726, "utc_time": "2026-10-27T04:47:47.240264+00:00"}
+{"record_type": "probe_event", "rank": 14, "pid": 1435, "index": 10, "action": "frameworks_imported", "transfer_round": -1, "monotonic_ns": 40015308415547, "utc_time": "2026-10-27T04:47:47.240377+00:00"}
+{"record_type": "probe_event", "rank": 14, "pid": 1435, "index": 11, "action": "set_device_enter", "transfer_round": -1, "monotonic_ns": 40015308527528, "utc_time": "2026-10-27T04:47:47.240489+00:00"}
+{"record_type": "probe_event", "rank": 2, "pid": 1423, "index": 9, "action": "vllm_import_returned", "transfer_round": -1, "monotonic_ns": 40015335318941, "utc_time": "2026-10-27T04:47:47.267285+00:00"}
+{"record_type": "probe_event", "rank": 2, "pid": 1423, "index": 10, "action": "frameworks_imported", "transfer_round": -1, "monotonic_ns": 40015335446172, "utc_time": "2026-10-27T04:47:47.267408+00:00"}
+{"record_type": "probe_event", "rank": 2, "pid": 1423, "index": 11, "action": "set_device_enter", "transfer_round": -1, "monotonic_ns": 40015335547713, "utc_time": "2026-10-27T04:47:47.267509+00:00"}
+{"record_type": "probe_event", "rank": 3, "pid": 1424, "index": 12, "action": "set_device_returned", "transfer_round": -1, "monotonic_ns": 40015339216942, "utc_time": "2026-10-27T04:47:47.271190+00:00"}
+{"record_type": "probe_event", "rank": 3, "pid": 1424, "index": 13, "action": "device_selected", "transfer_round": -1, "monotonic_ns": 40015339623885, "utc_time": "2026-10-27T04:47:47.271586+00:00"}
+{"record_type": "probe_event", "rank": 3, "pid": 1424, "index": 14, "action": "config_construction_enter", "transfer_round": -1, "monotonic_ns": 40015339685966, "utc_time": "2026-10-27T04:47:47.271647+00:00"}
+{"record_type": "probe_event", "rank": 15, "pid": 1436, "index": 9, "action": "vllm_import_returned", "transfer_round": -1, "monotonic_ns": 40015376281757, "utc_time": "2026-10-27T04:47:47.308248+00:00"}
+{"record_type": "probe_event", "rank": 15, "pid": 1436, "index": 10, "action": "frameworks_imported", "transfer_round": -1, "monotonic_ns": 40015376410848, "utc_time": "2026-10-27T04:47:47.308373+00:00"}
+{"record_type": "probe_event", "rank": 15, "pid": 1436, "index": 11, "action": "set_device_enter", "transfer_round": -1, "monotonic_ns": 40015376515559, "utc_time": "2026-10-27T04:47:47.308477+00:00"}
+{"record_type": "probe_event", "rank": 9, "pid": 1430, "index": 9, "action": "vllm_import_returned", "transfer_round": -1, "monotonic_ns": 40015380771563, "utc_time": "2026-10-27T04:47:47.312738+00:00"}
+{"record_type": "probe_event", "rank": 9, "pid": 1430, "index": 10, "action": "frameworks_imported", "transfer_round": -1, "monotonic_ns": 40015380893804, "utc_time": "2026-10-27T04:47:47.312856+00:00"}
+{"record_type": "probe_event", "rank": 9, "pid": 1430, "index": 11, "action": "set_device_enter", "transfer_round": -1, "monotonic_ns": 40015381008024, "utc_time": "2026-10-27T04:47:47.312970+00:00"}
+{"record_type": "probe_event", "rank": 4, "pid": 1425, "index": 9, "action": "vllm_import_returned", "transfer_round": -1, "monotonic_ns": 40015394091758, "utc_time": "2026-10-27T04:47:47.326059+00:00"}
+{"record_type": "probe_event", "rank": 4, "pid": 1425, "index": 10, "action": "frameworks_imported", "transfer_round": -1, "monotonic_ns": 40015394226400, "utc_time": "2026-10-27T04:47:47.326188+00:00"}
+{"record_type": "probe_event", "rank": 4, "pid": 1425, "index": 11, "action": "set_device_enter", "transfer_round": -1, "monotonic_ns": 40015394341040, "utc_time": "2026-10-27T04:47:47.326302+00:00"}
+{"record_type": "probe_event", "rank": 6, "pid": 1427, "index": 9, "action": "vllm_import_returned", "transfer_round": -1, "monotonic_ns": 40015441529756, "utc_time": "2026-10-27T04:47:47.373496+00:00"}
+{"record_type": "probe_event", "rank": 6, "pid": 1427, "index": 10, "action": "frameworks_imported", "transfer_round": -1, "monotonic_ns": 40015441648257, "utc_time": "2026-10-27T04:47:47.373610+00:00"}
+{"record_type": "probe_event", "rank": 6, "pid": 1427, "index": 11, "action": "set_device_enter", "transfer_round": -1, "monotonic_ns": 40015441759058, "utc_time": "2026-10-27T04:47:47.373720+00:00"}
+{"record_type": "probe_event", "rank": 1, "pid": 1422, "index": 9, "action": "vllm_import_returned", "transfer_round": -1, "monotonic_ns": 40015487244129, "utc_time": "2026-10-27T04:47:47.419235+00:00"}
+{"record_type": "probe_event", "rank": 1, "pid": 1422, "index": 10, "action": "frameworks_imported", "transfer_round": -1, "monotonic_ns": 40015487415421, "utc_time": "2026-10-27T04:47:47.419377+00:00"}
+{"record_type": "probe_event", "rank": 1, "pid": 1422, "index": 11, "action": "set_device_enter", "transfer_round": -1, "monotonic_ns": 40015487530932, "utc_time": "2026-10-27T04:47:47.419492+00:00"}
+{"record_type": "probe_event", "rank": 11, "pid": 1432, "index": 12, "action": "set_device_returned", "transfer_round": -1, "monotonic_ns": 40015547333657, "utc_time": "2026-10-27T04:47:47.479301+00:00"}
+{"record_type": "probe_event", "rank": 11, "pid": 1432, "index": 13, "action": "device_selected", "transfer_round": -1, "monotonic_ns": 40015547618370, "utc_time": "2026-10-27T04:47:47.479581+00:00"}
+{"record_type": "probe_event", "rank": 11, "pid": 1432, "index": 14, "action": "config_construction_enter", "transfer_round": -1, "monotonic_ns": 40015547681390, "utc_time": "2026-10-27T04:47:47.479643+00:00"}
+{"record_type": "probe_event", "rank": 7, "pid": 1428, "index": 9, "action": "vllm_import_returned", "transfer_round": -1, "monotonic_ns": 40015639644982, "utc_time": "2026-10-27T04:47:47.571612+00:00"}
+{"record_type": "probe_event", "rank": 7, "pid": 1428, "index": 10, "action": "frameworks_imported", "transfer_round": -1, "monotonic_ns": 40015639770983, "utc_time": "2026-10-27T04:47:47.571733+00:00"}
+{"record_type": "probe_event", "rank": 7, "pid": 1428, "index": 11, "action": "set_device_enter", "transfer_round": -1, "monotonic_ns": 40015639886484, "utc_time": "2026-10-27T04:47:47.571848+00:00"}
+{"record_type": "probe_event", "rank": 0, "pid": 1421, "index": 12, "action": "set_device_returned", "transfer_round": -1, "monotonic_ns": 40015800912794, "utc_time": "2026-10-27T04:47:47.732885+00:00"}
+{"record_type": "probe_event", "rank": 0, "pid": 1421, "index": 13, "action": "device_selected", "transfer_round": -1, "monotonic_ns": 40015801235977, "utc_time": "2026-10-27T04:47:47.733198+00:00"}
+{"record_type": "probe_event", "rank": 0, "pid": 1421, "index": 14, "action": "config_construction_enter", "transfer_round": -1, "monotonic_ns": 40015801291487, "utc_time": "2026-10-27T04:47:47.733253+00:00"}
+{"record_type": "probe_event", "rank": 12, "pid": 1433, "index": 12, "action": "set_device_returned", "transfer_round": -1, "monotonic_ns": 40015891673116, "utc_time": "2026-10-27T04:47:47.823887+00:00"}
+{"record_type": "probe_event", "rank": 12, "pid": 1433, "index": 13, "action": "device_selected", "transfer_round": -1, "monotonic_ns": 40015892521183, "utc_time": "2026-10-27T04:47:47.824487+00:00"}
+{"record_type": "probe_event", "rank": 12, "pid": 1433, "index": 14, "action": "config_construction_enter", "transfer_round": -1, "monotonic_ns": 40015892587584, "utc_time": "2026-10-27T04:47:47.824550+00:00"}
+{"record_type": "probe_event", "rank": 8, "pid": 1429, "index": 12, "action": "set_device_returned", "transfer_round": -1, "monotonic_ns": 40015995173650, "utc_time": "2026-10-27T04:47:47.927146+00:00"}
+{"record_type": "probe_event", "rank": 13, "pid": 1434, "index": 12, "action": "set_device_returned", "transfer_round": -1, "monotonic_ns": 40015995397031, "utc_time": "2026-10-27T04:47:47.927365+00:00"}
+{"record_type": "probe_event", "rank": 8, "pid": 1429, "index": 13, "action": "device_selected", "transfer_round": -1, "monotonic_ns": 40015995533563, "utc_time": "2026-10-27T04:47:47.927496+00:00"}
+{"record_type": "probe_event", "rank": 8, "pid": 1429, "index": 14, "action": "config_construction_enter", "transfer_round": -1, "monotonic_ns": 40015995586493, "utc_time": "2026-10-27T04:47:47.927548+00:00"}
+{"record_type": "probe_event", "rank": 13, "pid": 1434, "index": 13, "action": "device_selected", "transfer_round": -1, "monotonic_ns": 40015995650233, "utc_time": "2026-10-27T04:47:47.927613+00:00"}
+{"record_type": "probe_event", "rank": 13, "pid": 1434, "index": 14, "action": "config_construction_enter", "transfer_round": -1, "monotonic_ns": 40015995695674, "utc_time": "2026-10-27T04:47:47.927657+00:00"}
+{"record_type": "probe_event", "rank": 10, "pid": 1431, "index": 12, "action": "set_device_returned", "transfer_round": -1, "monotonic_ns": 40016060860302, "utc_time": "2026-10-27T04:47:47.992833+00:00"}
+{"record_type": "probe_event", "rank": 10, "pid": 1431, "index": 13, "action": "device_selected", "transfer_round": -1, "monotonic_ns": 40016061293056, "utc_time": "2026-10-27T04:47:47.993255+00:00"}
+{"record_type": "probe_event", "rank": 10, "pid": 1431, "index": 14, "action": "config_construction_enter", "transfer_round": -1, "monotonic_ns": 40016061351986, "utc_time": "2026-10-27T04:47:47.993313+00:00"}
+{"record_type": "probe_event", "rank": 5, "pid": 1426, "index": 12, "action": "set_device_returned", "transfer_round": -1, "monotonic_ns": 40016096331094, "utc_time": "2026-10-27T04:47:48.028310+00:00"}
+{"record_type": "probe_event", "rank": 5, "pid": 1426, "index": 13, "action": "device_selected", "transfer_round": -1, "monotonic_ns": 40016096736638, "utc_time": "2026-10-27T04:47:48.028699+00:00"}
+{"record_type": "probe_event", "rank": 5, "pid": 1426, "index": 14, "action": "config_construction_enter", "transfer_round": -1, "monotonic_ns": 40016096788458, "utc_time": "2026-10-27T04:47:48.028750+00:00"}
+{"record_type": "probe_event", "rank": 14, "pid": 1435, "index": 12, "action": "set_device_returned", "transfer_round": -1, "monotonic_ns": 40016100736709, "utc_time": "2026-10-27T04:47:48.032703+00:00"}
+{"record_type": "probe_event", "rank": 14, "pid": 1435, "index": 13, "action": "device_selected", "transfer_round": -1, "monotonic_ns": 40016101150053, "utc_time": "2026-10-27T04:47:48.033112+00:00"}
+{"record_type": "probe_event", "rank": 14, "pid": 1435, "index": 14, "action": "config_construction_enter", "transfer_round": -1, "monotonic_ns": 40016101200293, "utc_time": "2026-10-27T04:47:48.033162+00:00"}
+{"record_type": "probe_event", "rank": 2, "pid": 1423, "index": 12, "action": "set_device_returned", "transfer_round": -1, "monotonic_ns": 40016158843852, "utc_time": "2026-10-27T04:47:48.090813+00:00"}
+{"record_type": "probe_event", "rank": 2, "pid": 1423, "index": 13, "action": "device_selected", "transfer_round": -1, "monotonic_ns": 40016159139524, "utc_time": "2026-10-27T04:47:48.091102+00:00"}
+{"record_type": "probe_event", "rank": 2, "pid": 1423, "index": 14, "action": "config_construction_enter", "transfer_round": -1, "monotonic_ns": 40016159191914, "utc_time": "2026-10-27T04:47:48.091153+00:00"}
+{"record_type": "probe_event", "rank": 15, "pid": 1436, "index": 12, "action": "set_device_returned", "transfer_round": -1, "monotonic_ns": 40016174877159, "utc_time": "2026-10-27T04:47:48.106847+00:00"}
+{"record_type": "probe_event", "rank": 15, "pid": 1436, "index": 13, "action": "device_selected", "transfer_round": -1, "monotonic_ns": 40016175139191, "utc_time": "2026-10-27T04:47:48.107102+00:00"}
+{"record_type": "probe_event", "rank": 15, "pid": 1436, "index": 14, "action": "config_construction_enter", "transfer_round": -1, "monotonic_ns": 40016175189522, "utc_time": "2026-10-27T04:47:48.107151+00:00"}
+{"record_type": "probe_event", "rank": 9, "pid": 1430, "index": 12, "action": "set_device_returned", "transfer_round": -1, "monotonic_ns": 40016184497096, "utc_time": "2026-10-27T04:47:48.116470+00:00"}
+{"record_type": "probe_event", "rank": 9, "pid": 1430, "index": 13, "action": "device_selected", "transfer_round": -1, "monotonic_ns": 40016184845188, "utc_time": "2026-10-27T04:47:48.116808+00:00"}
+{"record_type": "probe_event", "rank": 9, "pid": 1430, "index": 14, "action": "config_construction_enter", "transfer_round": -1, "monotonic_ns": 40016184899119, "utc_time": "2026-10-27T04:47:48.116860+00:00"}
+{"record_type": "probe_event", "rank": 4, "pid": 1425, "index": 12, "action": "set_device_returned", "transfer_round": -1, "monotonic_ns": 40016217999012, "utc_time": "2026-10-27T04:47:48.149976+00:00"}
+{"record_type": "probe_event", "rank": 4, "pid": 1425, "index": 13, "action": "device_selected", "transfer_round": -1, "monotonic_ns": 40016218341035, "utc_time": "2026-10-27T04:47:48.150303+00:00"}
+{"record_type": "probe_event", "rank": 4, "pid": 1425, "index": 14, "action": "config_construction_enter", "transfer_round": -1, "monotonic_ns": 40016218395695, "utc_time": "2026-10-27T04:47:48.150357+00:00"}
+INFO 10-27 04:47:48 [scheduler.py:239] Chunked prefill is enabled with max_num_batched_tokens=2048.
+INFO 10-27 04:47:48 [vllm.py:999] Asynchronous scheduling is enabled.
+INFO 10-27 04:47:48 [kernel.py:270] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['native'], fused_add_rms_norm=['native'])
+{"record_type": "probe_event", "rank": 1, "pid": 1422, "index": 12, "action": "set_device_returned", "transfer_round": -1, "monotonic_ns": 40016276976291, "utc_time": "2026-10-27T04:47:48.208944+00:00"}
+{"record_type": "probe_event", "rank": 1, "pid": 1422, "index": 13, "action": "device_selected", "transfer_round": -1, "monotonic_ns": 40016277223753, "utc_time": "2026-10-27T04:47:48.209186+00:00"}
+{"record_type": "probe_event", "rank": 1, "pid": 1422, "index": 14, "action": "config_construction_enter", "transfer_round": -1, "monotonic_ns": 40016277281384, "utc_time": "2026-10-27T04:47:48.209243+00:00"}
+{"record_type": "probe_event", "rank": 6, "pid": 1427, "index": 12, "action": "set_device_returned", "transfer_round": -1, "monotonic_ns": 40016281637338, "utc_time": "2026-10-27T04:47:48.213607+00:00"}
+{"record_type": "probe_event", "rank": 6, "pid": 1427, "index": 13, "action": "device_selected", "transfer_round": -1, "monotonic_ns": 40016281962071, "utc_time": "2026-10-27T04:47:48.213924+00:00"}
+{"record_type": "probe_event", "rank": 6, "pid": 1427, "index": 14, "action": "config_construction_enter", "transfer_round": -1, "monotonic_ns": 40016282019851, "utc_time": "2026-10-27T04:47:48.213981+00:00"}
+INFO 10-27 04:47:48 [scheduler.py:239] Chunked prefill is enabled with max_num_batched_tokens=2048.
+INFO 10-27 04:47:48 [vllm.py:999] Asynchronous scheduling is enabled.
+INFO 10-27 04:47:48 [kernel.py:270] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['native'], fused_add_rms_norm=['native'])
+{"record_type": "probe_event", "rank": 7, "pid": 1428, "index": 12, "action": "set_device_returned", "transfer_round": -1, "monotonic_ns": 40016457127024, "utc_time": "2026-10-27T04:47:48.389094+00:00"}
+{"record_type": "probe_event", "rank": 7, "pid": 1428, "index": 13, "action": "device_selected", "transfer_round": -1, "monotonic_ns": 40016457429867, "utc_time": "2026-10-27T04:47:48.389392+00:00"}
+{"record_type": "probe_event", "rank": 7, "pid": 1428, "index": 14, "action": "config_construction_enter", "transfer_round": -1, "monotonic_ns": 40016457484267, "utc_time": "2026-10-27T04:47:48.389446+00:00"}
+INFO 10-27 04:47:48 [scheduler.py:239] Chunked prefill is enabled with max_num_batched_tokens=2048.
+INFO 10-27 04:47:48 [vllm.py:999] Asynchronous scheduling is enabled.
+INFO 10-27 04:47:48 [kernel.py:270] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['native'], fused_add_rms_norm=['native'])
+INFO 10-27 04:47:48 [scheduler.py:239] Chunked prefill is enabled with max_num_batched_tokens=2048.
+INFO 10-27 04:47:48 [vllm.py:999] Asynchronous scheduling is enabled.
+INFO 10-27 04:47:48 [kernel.py:270] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['native'], fused_add_rms_norm=['native'])
+INFO 10-27 04:47:48 [scheduler.py:239] Chunked prefill is enabled with max_num_batched_tokens=2048.
+INFO 10-27 04:47:49 [vllm.py:999] Asynchronous scheduling is enabled.
+INFO 10-27 04:47:49 [kernel.py:270] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['native'], fused_add_rms_norm=['native'])
+INFO 10-27 04:47:49 [scheduler.py:239] Chunked prefill is enabled with max_num_batched_tokens=2048.
+INFO 10-27 04:47:49 [scheduler.py:239] Chunked prefill is enabled with max_num_batched_tokens=2048.
+INFO 10-27 04:47:49 [vllm.py:999] Asynchronous scheduling is enabled.
+INFO 10-27 04:47:49 [kernel.py:270] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['native'], fused_add_rms_norm=['native'])
+INFO 10-27 04:47:49 [vllm.py:999] Asynchronous scheduling is enabled.
+INFO 10-27 04:47:49 [kernel.py:270] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['native'], fused_add_rms_norm=['native'])
+INFO 10-27 04:47:49 [scheduler.py:239] Chunked prefill is enabled with max_num_batched_tokens=2048.
+INFO 10-27 04:47:49 [scheduler.py:239] Chunked prefill is enabled with max_num_batched_tokens=2048.
+INFO 10-27 04:47:49 [vllm.py:999] Asynchronous scheduling is enabled.
+INFO 10-27 04:47:49 [kernel.py:270] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['native'], fused_add_rms_norm=['native'])
+INFO 10-27 04:47:49 [scheduler.py:239] Chunked prefill is enabled with max_num_batched_tokens=2048.
+INFO 10-27 04:47:49 [vllm.py:999] Asynchronous scheduling is enabled.
+INFO 10-27 04:47:49 [kernel.py:270] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['native'], fused_add_rms_norm=['native'])
+INFO 10-27 04:47:49 [vllm.py:999] Asynchronous scheduling is enabled.
+INFO 10-27 04:47:49 [kernel.py:270] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['native'], fused_add_rms_norm=['native'])
+WARNING 10-27 04:47:49 [platform.py:462] Model config is missing. Skipping Ascend-specific config updates.
+INFO 10-27 04:47:49 [scheduler.py:239] Chunked prefill is enabled with max_num_batched_tokens=2048.
+INFO 10-27 04:47:49 [compilation.py:321] Enabled custom fusions: norm_quant, act_quant
+{"record_type": "probe_event", "rank": 3, "pid": 1424, "index": 15, "action": "config_construction_returned", "transfer_round": -1, "monotonic_ns": 40017349615803, "utc_time": "2026-10-27T04:47:49.281580+00:00"}
+{"record_type": "probe_event", "rank": 3, "pid": 1424, "index": 16, "action": "init_distributed_environment_enter", "transfer_round": -1, "monotonic_ns": 40017349728854, "utc_time": "2026-10-27T04:47:49.281691+00:00"}
+INFO 10-27 04:47:49 [parallel_state.py:1568] world_size=16 rank=3 local_rank=3 distributed_init_method=env:// backend=hccl
+INFO 10-27 04:47:49 [scheduler.py:239] Chunked prefill is enabled with max_num_batched_tokens=2048.
+INFO 10-27 04:47:49 [scheduler.py:239] Chunked prefill is enabled with max_num_batched_tokens=2048.
+INFO 10-27 04:47:49 [scheduler.py:239] Chunked prefill is enabled with max_num_batched_tokens=2048.
+INFO 10-27 04:47:49 [vllm.py:999] Asynchronous scheduling is enabled.
+INFO 10-27 04:47:49 [kernel.py:270] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['native'], fused_add_rms_norm=['native'])
+INFO 10-27 04:47:49 [vllm.py:999] Asynchronous scheduling is enabled.
+INFO 10-27 04:47:49 [kernel.py:270] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['native'], fused_add_rms_norm=['native'])
+INFO 10-27 04:47:49 [vllm.py:999] Asynchronous scheduling is enabled.
+INFO 10-27 04:47:49 [kernel.py:270] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['native'], fused_add_rms_norm=['native'])
+INFO 10-27 04:47:49 [vllm.py:999] Asynchronous scheduling is enabled.
+INFO 10-27 04:47:49 [kernel.py:270] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['native'], fused_add_rms_norm=['native'])
+INFO 10-27 04:47:49 [scheduler.py:239] Chunked prefill is enabled with max_num_batched_tokens=2048.
+INFO 10-27 04:47:49 [vllm.py:999] Asynchronous scheduling is enabled.
+INFO 10-27 04:47:49 [kernel.py:270] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['native'], fused_add_rms_norm=['native'])
+INFO 10-27 04:47:49 [scheduler.py:239] Chunked prefill is enabled with max_num_batched_tokens=2048.
+INFO 10-27 04:47:49 [vllm.py:999] Asynchronous scheduling is enabled.
+INFO 10-27 04:47:49 [kernel.py:270] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['native'], fused_add_rms_norm=['native'])
+WARNING 10-27 04:47:49 [platform.py:462] Model config is missing. Skipping Ascend-specific config updates.
+INFO 10-27 04:47:49 [compilation.py:321] Enabled custom fusions: norm_quant, act_quant
+{"record_type": "probe_event", "rank": 11, "pid": 1432, "index": 15, "action": "config_construction_returned", "transfer_round": -1, "monotonic_ns": 40017599584812, "utc_time": "2026-10-27T04:47:49.531550+00:00"}
+{"record_type": "probe_event", "rank": 11, "pid": 1432, "index": 16, "action": "init_distributed_environment_enter", "transfer_round": -1, "monotonic_ns": 40017599689732, "utc_time": "2026-10-27T04:47:49.531651+00:00"}
+INFO 10-27 04:47:49 [parallel_state.py:1568] world_size=16 rank=11 local_rank=11 distributed_init_method=env:// backend=hccl
+WARNING 10-27 04:47:49 [platform.py:462] Model config is missing. Skipping Ascend-specific config updates.
+INFO 10-27 04:47:49 [compilation.py:321] Enabled custom fusions: norm_quant, act_quant
+{"record_type": "probe_event", "rank": 0, "pid": 1421, "index": 15, "action": "config_construction_returned", "transfer_round": -1, "monotonic_ns": 40017695018231, "utc_time": "2026-10-27T04:47:49.626983+00:00"}
+{"record_type": "probe_event", "rank": 0, "pid": 1421, "index": 16, "action": "init_distributed_environment_enter", "transfer_round": -1, "monotonic_ns": 40017695129852, "utc_time": "2026-10-27T04:47:49.627092+00:00"}
+INFO 10-27 04:47:49 [parallel_state.py:1568] world_size=16 rank=0 local_rank=0 distributed_init_method=env:// backend=hccl
+[W1027 04:47:49.699254434 ProcessGroupHCCL.cpp:1294] Warning: The watchdog timeout 90000ms(which is set by init_process_group) is less than or equal to HCCL execution timeout 1836000ms! The plog may not be recorded. (function ProcessGroupHCCL)
+WARNING 10-27 04:47:49 [platform.py:462] Model config is missing. Skipping Ascend-specific config updates.
+INFO 10-27 04:47:49 [compilation.py:321] Enabled custom fusions: norm_quant, act_quant
+{"record_type": "probe_event", "rank": 12, "pid": 1433, "index": 15, "action": "config_construction_returned", "transfer_round": -1, "monotonic_ns": 40017872503472, "utc_time": "2026-10-27T04:47:49.804468+00:00"}
+{"record_type": "probe_event", "rank": 12, "pid": 1433, "index": 16, "action": "init_distributed_environment_enter", "transfer_round": -1, "monotonic_ns": 40017872613643, "utc_time": "2026-10-27T04:47:49.804575+00:00"}
+INFO 10-27 04:47:49 [parallel_state.py:1568] world_size=16 rank=12 local_rank=12 distributed_init_method=env:// backend=hccl
+WARNING 10-27 04:47:50 [platform.py:462] Model config is missing. Skipping Ascend-specific config updates.
+INFO 10-27 04:47:50 [compilation.py:321] Enabled custom fusions: norm_quant, act_quant
+{"record_type": "probe_event", "rank": 10, "pid": 1431, "index": 15, "action": "config_construction_returned", "transfer_round": -1, "monotonic_ns": 40018102710784, "utc_time": "2026-10-27T04:47:50.034675+00:00"}
+{"record_type": "probe_event", "rank": 10, "pid": 1431, "index": 16, "action": "init_distributed_environment_enter", "transfer_round": -1, "monotonic_ns": 40018102821184, "utc_time": "2026-10-27T04:47:50.034783+00:00"}
+INFO 10-27 04:47:50 [parallel_state.py:1568] world_size=16 rank=10 local_rank=10 distributed_init_method=env:// backend=hccl
+WARNING 10-27 04:47:50 [platform.py:462] Model config is missing. Skipping Ascend-specific config updates.
+INFO 10-27 04:47:50 [compilation.py:321] Enabled custom fusions: norm_quant, act_quant
+{"record_type": "probe_event", "rank": 1, "pid": 1422, "index": 15, "action": "config_construction_returned", "transfer_round": -1, "monotonic_ns": 40018274947614, "utc_time": "2026-10-27T04:47:50.206912+00:00"}
+{"record_type": "probe_event", "rank": 1, "pid": 1422, "index": 16, "action": "init_distributed_environment_enter", "transfer_round": -1, "monotonic_ns": 40018275053624, "utc_time": "2026-10-27T04:47:50.207015+00:00"}
+INFO 10-27 04:47:50 [parallel_state.py:1568] world_size=16 rank=1 local_rank=1 distributed_init_method=env:// backend=hccl
+WARNING 10-27 04:47:50 [platform.py:462] Model config is missing. Skipping Ascend-specific config updates.
+INFO 10-27 04:47:50 [compilation.py:321] Enabled custom fusions: norm_quant, act_quant
+{"record_type": "probe_event", "rank": 13, "pid": 1434, "index": 15, "action": "config_construction_returned", "transfer_round": -1, "monotonic_ns": 40018471697559, "utc_time": "2026-10-27T04:47:50.403663+00:00"}
+{"record_type": "probe_event", "rank": 13, "pid": 1434, "index": 16, "action": "init_distributed_environment_enter", "transfer_round": -1, "monotonic_ns": 40018471842260, "utc_time": "2026-10-27T04:47:50.403804+00:00"}
+INFO 10-27 04:47:50 [parallel_state.py:1568] world_size=16 rank=13 local_rank=13 distributed_init_method=env:// backend=hccl
+WARNING 10-27 04:47:50 [platform.py:462] Model config is missing. Skipping Ascend-specific config updates.
+INFO 10-27 04:47:50 [compilation.py:321] Enabled custom fusions: norm_quant, act_quant
+{"record_type": "probe_event", "rank": 8, "pid": 1429, "index": 15, "action": "config_construction_returned", "transfer_round": -1, "monotonic_ns": 40018476895560, "utc_time": "2026-10-27T04:47:50.408860+00:00"}
+{"record_type": "probe_event", "rank": 8, "pid": 1429, "index": 16, "action": "init_distributed_environment_enter", "transfer_round": -1, "monotonic_ns": 40018477009701, "utc_time": "2026-10-27T04:47:50.408972+00:00"}
+INFO 10-27 04:47:50 [parallel_state.py:1568] world_size=16 rank=8 local_rank=8 distributed_init_method=env:// backend=hccl
+WARNING 10-27 04:47:50 [platform.py:462] Model config is missing. Skipping Ascend-specific config updates.
+INFO 10-27 04:47:50 [compilation.py:321] Enabled custom fusions: norm_quant, act_quant
+{"record_type": "probe_event", "rank": 5, "pid": 1426, "index": 15, "action": "config_construction_returned", "transfer_round": -1, "monotonic_ns": 40018678233141, "utc_time": "2026-10-27T04:47:50.610199+00:00"}
+{"record_type": "probe_event", "rank": 5, "pid": 1426, "index": 16, "action": "init_distributed_environment_enter", "transfer_round": -1, "monotonic_ns": 40018678351042, "utc_time": "2026-10-27T04:47:50.610313+00:00"}
+INFO 10-27 04:47:50 [parallel_state.py:1568] world_size=16 rank=5 local_rank=5 distributed_init_method=env:// backend=hccl
+WARNING 10-27 04:47:50 [platform.py:462] Model config is missing. Skipping Ascend-specific config updates.
+INFO 10-27 04:47:50 [compilation.py:321] Enabled custom fusions: norm_quant, act_quant
+{"record_type": "probe_event", "rank": 14, "pid": 1435, "index": 15, "action": "config_construction_returned", "transfer_round": -1, "monotonic_ns": 40018710891071, "utc_time": "2026-10-27T04:47:50.642855+00:00"}
+{"record_type": "probe_event", "rank": 14, "pid": 1435, "index": 16, "action": "init_distributed_environment_enter", "transfer_round": -1, "monotonic_ns": 40018710998402, "utc_time": "2026-10-27T04:47:50.642960+00:00"}
+INFO 10-27 04:47:50 [parallel_state.py:1568] world_size=16 rank=14 local_rank=14 distributed_init_method=env:// backend=hccl
+WARNING 10-27 04:47:50 [platform.py:462] Model config is missing. Skipping Ascend-specific config updates.
+INFO 10-27 04:47:50 [compilation.py:321] Enabled custom fusions: norm_quant, act_quant
+{"record_type": "probe_event", "rank": 4, "pid": 1425, "index": 15, "action": "config_construction_returned", "transfer_round": -1, "monotonic_ns": 40018748263059, "utc_time": "2026-10-27T04:47:50.680228+00:00"}
+{"record_type": "probe_event", "rank": 4, "pid": 1425, "index": 16, "action": "init_distributed_environment_enter", "transfer_round": -1, "monotonic_ns": 40018748371069, "utc_time": "2026-10-27T04:47:50.680333+00:00"}
+INFO 10-27 04:47:50 [parallel_state.py:1568] world_size=16 rank=4 local_rank=4 distributed_init_method=env:// backend=hccl
+WARNING 10-27 04:47:50 [platform.py:462] Model config is missing. Skipping Ascend-specific config updates.
+INFO 10-27 04:47:50 [compilation.py:321] Enabled custom fusions: norm_quant, act_quant
+{"record_type": "probe_event", "rank": 2, "pid": 1423, "index": 15, "action": "config_construction_returned", "transfer_round": -1, "monotonic_ns": 40018775361384, "utc_time": "2026-10-27T04:47:50.707326+00:00"}
+{"record_type": "probe_event", "rank": 2, "pid": 1423, "index": 16, "action": "init_distributed_environment_enter", "transfer_round": -1, "monotonic_ns": 40018775472155, "utc_time": "2026-10-27T04:47:50.707434+00:00"}
+INFO 10-27 04:47:50 [parallel_state.py:1568] world_size=16 rank=2 local_rank=2 distributed_init_method=env:// backend=hccl
+WARNING 10-27 04:47:50 [platform.py:462] Model config is missing. Skipping Ascend-specific config updates.
+INFO 10-27 04:47:50 [compilation.py:321] Enabled custom fusions: norm_quant, act_quant
+{"record_type": "probe_event", "rank": 6, "pid": 1427, "index": 15, "action": "config_construction_returned", "transfer_round": -1, "monotonic_ns": 40018791767345, "utc_time": "2026-10-27T04:47:50.723732+00:00"}
+{"record_type": "probe_event", "rank": 6, "pid": 1427, "index": 16, "action": "init_distributed_environment_enter", "transfer_round": -1, "monotonic_ns": 40018791880935, "utc_time": "2026-10-27T04:47:50.723843+00:00"}
+INFO 10-27 04:47:50 [parallel_state.py:1568] world_size=16 rank=6 local_rank=6 distributed_init_method=env:// backend=hccl
+WARNING 10-27 04:47:50 [platform.py:462] Model config is missing. Skipping Ascend-specific config updates.
+INFO 10-27 04:47:50 [compilation.py:321] Enabled custom fusions: norm_quant, act_quant
+{"record_type": "probe_event", "rank": 7, "pid": 1428, "index": 15, "action": "config_construction_returned", "transfer_round": -1, "monotonic_ns": 40018821128678, "utc_time": "2026-10-27T04:47:50.753093+00:00"}
+{"record_type": "probe_event", "rank": 7, "pid": 1428, "index": 16, "action": "init_distributed_environment_enter", "transfer_round": -1, "monotonic_ns": 40018821231389, "utc_time": "2026-10-27T04:47:50.753193+00:00"}
+INFO 10-27 04:47:50 [parallel_state.py:1568] world_size=16 rank=7 local_rank=7 distributed_init_method=env:// backend=hccl
+WARNING 10-27 04:47:50 [platform.py:462] Model config is missing. Skipping Ascend-specific config updates.
+INFO 10-27 04:47:50 [compilation.py:321] Enabled custom fusions: norm_quant, act_quant
+{"record_type": "probe_event", "rank": 9, "pid": 1430, "index": 15, "action": "config_construction_returned", "transfer_round": -1, "monotonic_ns": 40018831628442, "utc_time": "2026-10-27T04:47:50.763592+00:00"}
+{"record_type": "probe_event", "rank": 9, "pid": 1430, "index": 16, "action": "init_distributed_environment_enter", "transfer_round": -1, "monotonic_ns": 40018831728042, "utc_time": "2026-10-27T04:47:50.763690+00:00"}
+INFO 10-27 04:47:50 [parallel_state.py:1568] world_size=16 rank=9 local_rank=9 distributed_init_method=env:// backend=hccl
+WARNING 10-27 04:47:50 [platform.py:462] Model config is missing. Skipping Ascend-specific config updates.
+INFO 10-27 04:47:50 [compilation.py:321] Enabled custom fusions: norm_quant, act_quant
+{"record_type": "probe_event", "rank": 15, "pid": 1436, "index": 15, "action": "config_construction_returned", "transfer_round": -1, "monotonic_ns": 40018861276007, "utc_time": "2026-10-27T04:47:50.793240+00:00"}
+{"record_type": "probe_event", "rank": 15, "pid": 1436, "index": 16, "action": "init_distributed_environment_enter", "transfer_round": -1, "monotonic_ns": 40018861374418, "utc_time": "2026-10-27T04:47:50.793336+00:00"}
+INFO 10-27 04:47:50 [parallel_state.py:1568] world_size=16 rank=15 local_rank=15 distributed_init_method=env:// backend=hccl
+{"record_type": "probe_event", "rank": 1, "pid": 1422, "index": 17, "action": "init_distributed_environment_returned", "transfer_round": -1, "monotonic_ns": 40020036916869, "utc_time": "2026-10-27T04:47:51.968882+00:00"}
+{"record_type": "probe_event", "rank": 0, "pid": 1421, "index": 17, "action": "init_distributed_environment_returned", "transfer_round": -1, "monotonic_ns": 40020036925349, "utc_time": "2026-10-27T04:47:51.968891+00:00"}
+{"record_type": "probe_event", "rank": 1, "pid": 1422, "index": 18, "action": "initialize_model_parallel_enter", "transfer_round": -1, "monotonic_ns": 40020037043410, "utc_time": "2026-10-27T04:47:51.969005+00:00"}{"record_type": "probe_event", "rank": 0, "pid": 1421, "index": 18, "action": "initialize_model_parallel_enter", "transfer_round": -1, "monotonic_ns": 40020037052230, "utc_time": "2026-10-27T04:47:51.969014+00:00"}
+
+{"record_type": "probe_event", "rank": 15, "pid": 1436, "index": 17, "action": "init_distributed_environment_returned", "transfer_round": -1, "monotonic_ns": 40020037008890, "utc_time": "2026-10-27T04:47:51.968975+00:00"}
+{"record_type": "probe_event", "rank": 15, "pid": 1436, "index": 18, "action": "initialize_model_parallel_enter", "transfer_round": -1, "monotonic_ns": 40020037133411, "utc_time": "2026-10-27T04:47:51.969095+00:00"}
+{"record_type": "probe_event", "rank": 14, "pid": 1435, "index": 17, "action": "init_distributed_environment_returned", "transfer_round": -1, "monotonic_ns": 40020037141521, "utc_time": "2026-10-27T04:47:51.969106+00:00"}{"record_type": "probe_event", "rank": 3, "pid": 1424, "index": 17, "action": "init_distributed_environment_returned", "transfer_round": -1, "monotonic_ns": 40020037106310, "utc_time": "2026-10-27T04:47:51.969073+00:00"}
+
+{"record_type": "probe_event", "rank": 2, "pid": 1423, "index": 17, "action": "init_distributed_environment_returned", "transfer_round": -1, "monotonic_ns": 40020037108980, "utc_time": "2026-10-27T04:47:51.969078+00:00"}{"record_type": "probe_event", "rank": 14, "pid": 1435, "index": 18, "action": "initialize_model_parallel_enter", "transfer_round": -1, "monotonic_ns": 40020037247671, "utc_time": "2026-10-27T04:47:51.969209+00:00"}
+
+{"record_type": "probe_event", "rank": 3, "pid": 1424, "index": 18, "action": "initialize_model_parallel_enter", "transfer_round": -1, "monotonic_ns": 40020037252362, "utc_time": "2026-10-27T04:47:51.969214+00:00"}
+{"record_type": "probe_event", "rank": 5, "pid": 1426, "index": 17, "action": "init_distributed_environment_returned", "transfer_round": -1, "monotonic_ns": 40020037199991, "utc_time": "2026-10-27T04:47:51.969166+00:00"}
+{"record_type": "probe_event", "rank": 2, "pid": 1423, "index": 18, "action": "initialize_model_parallel_enter", "transfer_round": -1, "monotonic_ns": 40020037290892, "utc_time": "2026-10-27T04:47:51.969253+00:00"}
+{"record_type": "probe_event", "rank": 13, "pid": 1434, "index": 17, "action": "init_distributed_environment_returned", "transfer_round": -1, "monotonic_ns": 40020037239941, "utc_time": "2026-10-27T04:47:51.969204+00:00"}
+{"record_type": "probe_event", "rank": 5, "pid": 1426, "index": 18, "action": "initialize_model_parallel_enter", "transfer_round": -1, "monotonic_ns": 40020037311482, "utc_time": "2026-10-27T04:47:51.969273+00:00"}
+{"record_type": "probe_event", "rank": 4, "pid": 1425, "index": 17, "action": "init_distributed_environment_returned", "transfer_round": -1, "monotonic_ns": 40020037208941, "utc_time": "2026-10-27T04:47:51.969175+00:00"}
+{"record_type": "probe_event", "rank": 6, "pid": 1427, "index": 17, "action": "init_distributed_environment_returned", "transfer_round": -1, "monotonic_ns": 40020037269552, "utc_time": "2026-10-27T04:47:51.969235+00:00"}
+{"record_type": "probe_event", "rank": 13, "pid": 1434, "index": 18, "action": "initialize_model_parallel_enter", "transfer_round": -1, "monotonic_ns": 40020037350672, "utc_time": "2026-10-27T04:47:51.969313+00:00"}
+{"record_type": "probe_event", "rank": 4, "pid": 1425, "index": 18, "action": "initialize_model_parallel_enter", "transfer_round": -1, "monotonic_ns": 40020037370472, "utc_time": "2026-10-27T04:47:51.969332+00:00"}
+{"record_type": "probe_event", "rank": 6, "pid": 1427, "index": 18, "action": "initialize_model_parallel_enter", "transfer_round": -1, "monotonic_ns": 40020037383953, "utc_time": "2026-10-27T04:47:51.969346+00:00"}
+{"record_type": "probe_event", "rank": 12, "pid": 1433, "index": 17, "action": "init_distributed_environment_returned", "transfer_round": -1, "monotonic_ns": 40020037408803, "utc_time": "2026-10-27T04:47:51.969376+00:00"}
+{"record_type": "probe_event", "rank": 10, "pid": 1431, "index": 17, "action": "init_distributed_environment_returned", "transfer_round": -1, "monotonic_ns": 40020037461923, "utc_time": "2026-10-27T04:47:51.969426+00:00"}{"record_type": "probe_event", "rank": 12, "pid": 1433, "index": 18, "action": "initialize_model_parallel_enter", "transfer_round": -1, "monotonic_ns": 40020037517914, "utc_time": "2026-10-27T04:47:51.969480+00:00"}
+
+{"record_type": "probe_event", "rank": 10, "pid": 1431, "index": 18, "action": "initialize_model_parallel_enter", "transfer_round": -1, "monotonic_ns": 40020037556624, "utc_time": "2026-10-27T04:47:51.969518+00:00"}
+{"record_type": "probe_event", "rank": 9, "pid": 1430, "index": 17, "action": "init_distributed_environment_returned", "transfer_round": -1, "monotonic_ns": 40020037526424, "utc_time": "2026-10-27T04:47:51.969491+00:00"}{"record_type": "probe_event", "rank": 11, "pid": 1432, "index": 17, "action": "init_distributed_environment_returned", "transfer_round": -1, "monotonic_ns": 40020037487983, "utc_time": "2026-10-27T04:47:51.969455+00:00"}{"record_type": "probe_event", "rank": 7, "pid": 1428, "index": 17, "action": "init_distributed_environment_returned", "transfer_round": -1, "monotonic_ns": 40020037537174, "utc_time": "2026-10-27T04:47:51.969501+00:00"}
+
+
+{"record_type": "probe_event", "rank": 9, "pid": 1430, "index": 18, "action": "initialize_model_parallel_enter", "transfer_round": -1, "monotonic_ns": 40020037637395, "utc_time": "2026-10-27T04:47:51.969599+00:00"}{"record_type": "probe_event", "rank": 8, "pid": 1429, "index": 17, "action": "init_distributed_environment_returned", "transfer_round": -1, "monotonic_ns": 40020037570434, "utc_time": "2026-10-27T04:47:51.969535+00:00"}{"record_type": "probe_event", "rank": 7, "pid": 1428, "index": 18, "action": "initialize_model_parallel_enter", "transfer_round": -1, "monotonic_ns": 40020037642625, "utc_time": "2026-10-27T04:47:51.969604+00:00"}
+{"record_type": "probe_event", "rank": 11, "pid": 1432, "index": 18, "action": "initialize_model_parallel_enter", "transfer_round": -1, "monotonic_ns": 40020037642085, "utc_time": "2026-10-27T04:47:51.969604+00:00"}
+
+
+{"record_type": "probe_event", "rank": 8, "pid": 1429, "index": 18, "action": "initialize_model_parallel_enter", "transfer_round": -1, "monotonic_ns": 40020037699365, "utc_time": "2026-10-27T04:47:51.969661+00:00"}
+{"record_type": "probe_event", "rank": 14, "pid": 1435, "index": 19, "action": "initialize_model_parallel_returned", "transfer_round": -1, "monotonic_ns": 40020547872593, "utc_time": "2026-10-27T04:47:52.479841+00:00"}
+{"record_type": "probe_event", "rank": 14, "pid": 1435, "index": 20, "action": "groups_ready", "transfer_round": -1, "monotonic_ns": 40020548093695, "utc_time": "2026-10-27T04:47:52.480056+00:00"}
+{"record_type": "probe_event", "rank": 3, "pid": 1424, "index": 19, "action": "initialize_model_parallel_returned", "transfer_round": -1, "monotonic_ns": 40020548224006, "utc_time": "2026-10-27T04:47:52.480192+00:00"}
+{"record_type": "probe_event", "rank": 5, "pid": 1426, "index": 19, "action": "initialize_model_parallel_returned", "transfer_round": -1, "monotonic_ns": 40020548293226, "utc_time": "2026-10-27T04:47:52.480258+00:00"}
+{"record_type": "probe_event", "rank": 2, "pid": 1423, "index": 19, "action": "initialize_model_parallel_returned", "transfer_round": -1, "monotonic_ns": 40020548326357, "utc_time": "2026-10-27T04:47:52.480290+00:00"}
+INFO 10-27 04:47:52 [parallel_state.py:1903] rank 0 in world size 16 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 0, EP rank 0, EPLB rank N/A
+{"record_type": "probe_event", "rank": 1, "pid": 1422, "index": 19, "action": "initialize_model_parallel_returned", "transfer_round": -1, "monotonic_ns": 40020548292776, "utc_time": "2026-10-27T04:47:52.480265+00:00"}{"record_type": "probe_event", "rank": 3, "pid": 1424, "index": 20, "action": "groups_ready", "transfer_round": -1, "monotonic_ns": 40020548395517, "utc_time": "2026-10-27T04:47:52.480358+00:00"}{"record_type": "probe_event", "rank": 4, "pid": 1425, "index": 19, "action": "initialize_model_parallel_returned", "transfer_round": -1, "monotonic_ns": 40020548363517, "utc_time": "2026-10-27T04:47:52.480329+00:00"}{"record_type": "probe_event", "rank": 11, "pid": 1432, "index": 19, "action": "initialize_model_parallel_returned", "transfer_round": -1, "monotonic_ns": 40020548370557, "utc_time": "2026-10-27T04:47:52.480338+00:00"}{"record_type": "probe_event", "rank": 9, "pid": 1430, "index": 19, "action": "initialize_model_parallel_returned", "transfer_round": -1, "monotonic_ns": 40020548370797, "utc_time": "2026-10-27T04:47:52.480336+00:00"}
+{"record_type": "probe_event", "rank": 5, "pid": 1426, "index": 20, "action": "groups_ready", "transfer_round": -1, "monotonic_ns": 40020548417027, "utc_time": "2026-10-27T04:47:52.480379+00:00"}
+
+
+
+
+{"record_type": "probe_event", "rank": 2, "pid": 1423, "index": 20, "action": "groups_ready", "transfer_round": -1, "monotonic_ns": 40020548441108, "utc_time": "2026-10-27T04:47:52.480403+00:00"}{"record_type": "probe_event", "rank": 13, "pid": 1434, "index": 19, "action": "initialize_model_parallel_returned", "transfer_round": -1, "monotonic_ns": 40020548389927, "utc_time": "2026-10-27T04:47:52.480354+00:00"}
+
+{"record_type": "probe_event", "rank": 7, "pid": 1428, "index": 19, "action": "initialize_model_parallel_returned", "transfer_round": -1, "monotonic_ns": 40020548401467, "utc_time": "2026-10-27T04:47:52.480368+00:00"}
+{"record_type": "probe_event", "rank": 0, "pid": 1421, "index": 19, "action": "initialize_model_parallel_returned", "transfer_round": -1, "monotonic_ns": 40020548494738, "utc_time": "2026-10-27T04:47:52.480459+00:00"}{"record_type": "probe_event", "rank": 4, "pid": 1425, "index": 20, "action": "groups_ready", "transfer_round": -1, "monotonic_ns": 40020548521898, "utc_time": "2026-10-27T04:47:52.480484+00:00"}
+
+{"record_type": "probe_event", "rank": 9, "pid": 1430, "index": 20, "action": "groups_ready", "transfer_round": -1, "monotonic_ns": 40020548537988, "utc_time": "2026-10-27T04:47:52.480500+00:00"}{"record_type": "probe_event", "rank": 11, "pid": 1432, "index": 20, "action": "groups_ready", "transfer_round": -1, "monotonic_ns": 40020548532078, "utc_time": "2026-10-27T04:47:52.480494+00:00"}{"record_type": "probe_event", "rank": 1, "pid": 1422, "index": 20, "action": "groups_ready", "transfer_round": -1, "monotonic_ns": 40020548526008, "utc_time": "2026-10-27T04:47:52.480488+00:00"}{"record_type": "probe_event", "rank": 13, "pid": 1434, "index": 20, "action": "groups_ready", "transfer_round": -1, "monotonic_ns": 40020548542518, "utc_time": "2026-10-27T04:47:52.480504+00:00"}
+
+
+
+{"record_type": "probe_event", "rank": 7, "pid": 1428, "index": 20, "action": "groups_ready", "transfer_round": -1, "monotonic_ns": 40020548555149, "utc_time": "2026-10-27T04:47:52.480517+00:00"}
+{"record_type": "probe_event", "rank": 10, "pid": 1431, "index": 19, "action": "initialize_model_parallel_returned", "transfer_round": -1, "monotonic_ns": 40020548562939, "utc_time": "2026-10-27T04:47:52.480529+00:00"}{"record_type": "probe_event", "rank": 0, "pid": 1421, "index": 20, "action": "groups_ready", "transfer_round": -1, "monotonic_ns": 40020548622159, "utc_time": "2026-10-27T04:47:52.480584+00:00"}
+
+{"record_type": "probe_event", "rank": 8, "pid": 1429, "index": 19, "action": "initialize_model_parallel_returned", "transfer_round": -1, "monotonic_ns": 40020548599629, "utc_time": "2026-10-27T04:47:52.480565+00:00"}
+{"record_type": "probe_event", "rank": 10, "pid": 1431, "index": 20, "action": "groups_ready", "transfer_round": -1, "monotonic_ns": 40020548718030, "utc_time": "2026-10-27T04:47:52.480681+00:00"}
+{"record_type": "probe_event", "rank": 8, "pid": 1429, "index": 20, "action": "groups_ready", "transfer_round": -1, "monotonic_ns": 40020548745870, "utc_time": "2026-10-27T04:47:52.480708+00:00"}
+{"record_type": "probe_event", "rank": 6, "pid": 1427, "index": 19, "action": "initialize_model_parallel_returned", "transfer_round": -1, "monotonic_ns": 40020548699010, "utc_time": "2026-10-27T04:47:52.480666+00:00"}
+{"record_type": "probe_event", "rank": 6, "pid": 1427, "index": 20, "action": "groups_ready", "transfer_round": -1, "monotonic_ns": 40020548861031, "utc_time": "2026-10-27T04:47:52.480823+00:00"}
+{"record_type": "probe_event", "rank": 15, "pid": 1436, "index": 19, "action": "initialize_model_parallel_returned", "transfer_round": -1, "monotonic_ns": 40020548971372, "utc_time": "2026-10-27T04:47:52.480939+00:00"}
+{"record_type": "probe_event", "rank": 12, "pid": 1433, "index": 19, "action": "initialize_model_parallel_returned", "transfer_round": -1, "monotonic_ns": 40020549051943, "utc_time": "2026-10-27T04:47:52.481020+00:00"}{"record_type": "probe_event", "rank": 15, "pid": 1436, "index": 20, "action": "groups_ready", "transfer_round": -1, "monotonic_ns": 40020549131243, "utc_time": "2026-10-27T04:47:52.481093+00:00"}
+
+{"record_type": "probe_event", "rank": 12, "pid": 1433, "index": 20, "action": "groups_ready", "transfer_round": -1, "monotonic_ns": 40020549232524, "utc_time": "2026-10-27T04:47:52.481195+00:00"}
+[rank0]:[W1027 04:47:52.554012432 NPUCachingAllocator.cpp:202] Warning: The current CANN and HDK(driver) versions require processing for 32 padding size, with memory allocation. (function operator())
+{"record_type": "probe_event", "rank": 4, "pid": 1425, "index": 21, "action": "synthetic_local_kv_event_recorded", "transfer_round": -1, "monotonic_ns": 40020736521804, "utc_time": "2026-10-27T04:47:52.668487+00:00", "event_query": false}
+{"record_type": "probe_event", "rank": 6, "pid": 1427, "index": 21, "action": "synthetic_local_kv_event_recorded", "transfer_round": -1, "monotonic_ns": 40020749592148, "utc_time": "2026-10-27T04:47:52.681559+00:00", "event_query": false}
+{"record_type": "probe_event", "rank": 8, "pid": 1429, "index": 21, "action": "synthetic_local_kv_event_recorded", "transfer_round": -1, "monotonic_ns": 40020754267675, "utc_time": "2026-10-27T04:47:52.686233+00:00", "event_query": false}{"record_type": "probe_event", "rank": 0, "pid": 1421, "index": 21, "action": "synthetic_local_kv_event_recorded", "transfer_round": -1, "monotonic_ns": 40020754276885, "utc_time": "2026-10-27T04:47:52.686243+00:00", "event_query": false}
+
+{"record_type": "probe_event", "rank": 13, "pid": 1434, "index": 21, "action": "synthetic_local_kv_event_recorded", "transfer_round": -1, "monotonic_ns": 40020754333535, "utc_time": "2026-10-27T04:47:52.686299+00:00", "event_query": false}
+{"record_type": "probe_event", "rank": 1, "pid": 1422, "index": 21, "action": "synthetic_local_kv_event_recorded", "transfer_round": -1, "monotonic_ns": 40020756487173, "utc_time": "2026-10-27T04:47:52.688452+00:00", "event_query": false}{"record_type": "probe_event", "rank": 9, "pid": 1430, "index": 21, "action": "synthetic_local_kv_event_recorded", "transfer_round": -1, "monotonic_ns": 40020756481092, "utc_time": "2026-10-27T04:47:52.688447+00:00", "event_query": false}
+
+{"record_type": "probe_event", "rank": 3, "pid": 1424, "index": 21, "action": "synthetic_local_kv_event_recorded", "transfer_round": -1, "monotonic_ns": 40020763440268, "utc_time": "2026-10-27T04:47:52.695408+00:00", "event_query": false}
+{"record_type": "probe_event", "rank": 15, "pid": 1436, "index": 21, "action": "synthetic_local_kv_event_recorded", "transfer_round": -1, "monotonic_ns": 40020767379569, "utc_time": "2026-10-27T04:47:52.699346+00:00", "event_query": false}
+{"record_type": "probe_event", "rank": 14, "pid": 1435, "index": 21, "action": "synthetic_local_kv_event_recorded", "transfer_round": -1, "monotonic_ns": 40020767627181, "utc_time": "2026-10-27T04:47:52.699592+00:00", "event_query": false}
+{"record_type": "probe_event", "rank": 10, "pid": 1431, "index": 21, "action": "synthetic_local_kv_event_recorded", "transfer_round": -1, "monotonic_ns": 40020770218212, "utc_time": "2026-10-27T04:47:52.702184+00:00", "event_query": false}{"record_type": "probe_event", "rank": 12, "pid": 1433, "index": 21, "action": "synthetic_local_kv_event_recorded", "transfer_round": -1, "monotonic_ns": 40020770232312, "utc_time": "2026-10-27T04:47:52.702199+00:00", "event_query": false}
+
+{"record_type": "probe_event", "rank": 2, "pid": 1423, "index": 21, "action": "synthetic_local_kv_event_recorded", "transfer_round": -1, "monotonic_ns": 40020774783298, "utc_time": "2026-10-27T04:47:52.706750+00:00", "event_query": false}
+{"record_type": "probe_event", "rank": 7, "pid": 1428, "index": 21, "action": "synthetic_local_kv_event_recorded", "transfer_round": -1, "monotonic_ns": 40020797839721, "utc_time": "2026-10-27T04:47:52.729804+00:00", "event_query": false}
+{"record_type": "probe_event", "rank": 11, "pid": 1432, "index": 21, "action": "synthetic_local_kv_event_recorded", "transfer_round": -1, "monotonic_ns": 40020933665092, "utc_time": "2026-10-27T04:47:52.865632+00:00", "event_query": false}
+{"record_type": "probe_event", "rank": 5, "pid": 1426, "index": 21, "action": "synthetic_local_kv_event_recorded", "transfer_round": -1, "monotonic_ns": 40020985312903, "utc_time": "2026-10-27T04:47:52.917280+00:00", "event_query": false}
+{"record_type": "probe_event", "rank": 6, "pid": 1427, "index": 22, "action": "transfer_round_start", "transfer_round": 0, "monotonic_ns": 40020986265090, "utc_time": "2026-10-27T04:47:52.918229+00:00"}
+{"record_type": "probe_event", "rank": 14, "pid": 1435, "index": 22, "action": "transfer_round_start", "transfer_round": 0, "monotonic_ns": 40020986273860, "utc_time": "2026-10-27T04:47:52.918238+00:00"}
+{"record_type": "probe_event", "rank": 2, "pid": 1423, "index": 22, "action": "transfer_round_start", "transfer_round": 0, "monotonic_ns": 40020986299690, "utc_time": "2026-10-27T04:47:52.918266+00:00"}
+{"record_type": "probe_event", "rank": 14, "pid": 1435, "index": 23, "action": "irecv_enter", "transfer_round": 0, "monotonic_ns": 40020986376301, "utc_time": "2026-10-27T04:47:52.918338+00:00"}
+{"record_type": "probe_event", "rank": 10, "pid": 1431, "index": 22, "action": "transfer_round_start", "transfer_round": 0, "monotonic_ns": 40020986319791, "utc_time": "2026-10-27T04:47:52.918286+00:00"}{"record_type": "probe_event", "rank": 12, "pid": 1433, "index": 22, "action": "transfer_round_start", "transfer_round": 0, "monotonic_ns": 40020986331521, "utc_time": "2026-10-27T04:47:52.918300+00:00"}{"record_type": "probe_event", "rank": 4, "pid": 1425, "index": 22, "action": "transfer_round_start", "transfer_round": 0, "monotonic_ns": 40020986319611, "utc_time": "2026-10-27T04:47:52.918284+00:00"}{"record_type": "probe_event", "rank": 15, "pid": 1436, "index": 22, "action": "transfer_round_start", "transfer_round": 0, "monotonic_ns": 40020986359181, "utc_time": "2026-10-27T04:47:52.918323+00:00"}
+
+
+
+{"record_type": "probe_event", "rank": 9, "pid": 1430, "index": 22, "action": "transfer_round_start", "transfer_round": 0, "monotonic_ns": 40020986347391, "utc_time": "2026-10-27T04:47:52.918314+00:00"}{"record_type": "probe_event", "rank": 1, "pid": 1422, "index": 22, "action": "transfer_round_start", "transfer_round": 0, "monotonic_ns": 40020986363301, "utc_time": "2026-10-27T04:47:52.918330+00:00"}
+
+{"record_type": "probe_event", "rank": 7, "pid": 1428, "index": 22, "action": "transfer_round_start", "transfer_round": 0, "monotonic_ns": 40020986385101, "utc_time": "2026-10-27T04:47:52.918350+00:00"}
+{"record_type": "probe_event", "rank": 12, "pid": 1433, "index": 23, "action": "irecv_enter", "transfer_round": 0, "monotonic_ns": 40020986456762, "utc_time": "2026-10-27T04:47:52.918418+00:00"}{"record_type": "probe_event", "rank": 8, "pid": 1429, "index": 22, "action": "transfer_round_start", "transfer_round": 0, "monotonic_ns": 40020986387771, "utc_time": "2026-10-27T04:47:52.918353+00:00"}{"record_type": "probe_event", "rank": 13, "pid": 1434, "index": 22, "action": "transfer_round_start", "transfer_round": 0, "monotonic_ns": 40020986369631, "utc_time": "2026-10-27T04:47:52.918338+00:00"}
+{"record_type": "probe_event", "rank": 0, "pid": 1421, "index": 22, "action": "transfer_round_start", "transfer_round": 0, "monotonic_ns": 40020986371911, "utc_time": "2026-10-27T04:47:52.918338+00:00"}
+{"record_type": "probe_event", "rank": 10, "pid": 1431, "index": 23, "action": "irecv_enter", "transfer_round": 0, "monotonic_ns": 40020986465542, "utc_time": "2026-10-27T04:47:52.918428+00:00"}{"record_type": "probe_event", "rank": 15, "pid": 1436, "index": 23, "action": "irecv_enter", "transfer_round": 0, "monotonic_ns": 40020986467512, "utc_time": "2026-10-27T04:47:52.918429+00:00"}
+
+
+{"record_type": "probe_event", "rank": 9, "pid": 1430, "index": 23, "action": "irecv_enter", "transfer_round": 0, "monotonic_ns": 40020986491412, "utc_time": "2026-10-27T04:47:52.918453+00:00"}
+
+{"record_type": "probe_event", "rank": 11, "pid": 1432, "index": 22, "action": "transfer_round_start", "transfer_round": 0, "monotonic_ns": 40020986370561, "utc_time": "2026-10-27T04:47:52.918339+00:00"}
+{"record_type": "probe_event", "rank": 8, "pid": 1429, "index": 23, "action": "irecv_enter", "transfer_round": 0, "monotonic_ns": 40020986524102, "utc_time": "2026-10-27T04:47:52.918486+00:00"}
+{"record_type": "probe_event", "rank": 13, "pid": 1434, "index": 23, "action": "irecv_enter", "transfer_round": 0, "monotonic_ns": 40020986540332, "utc_time": "2026-10-27T04:47:52.918502+00:00"}
+{"record_type": "probe_event", "rank": 5, "pid": 1426, "index": 22, "action": "transfer_round_start", "transfer_round": 0, "monotonic_ns": 40020986422461, "utc_time": "2026-10-27T04:47:52.918393+00:00"}
+{"record_type": "probe_event", "rank": 11, "pid": 1432, "index": 23, "action": "irecv_enter", "transfer_round": 0, "monotonic_ns": 40020986556723, "utc_time": "2026-10-27T04:47:52.918519+00:00"}
+{"record_type": "probe_event", "rank": 3, "pid": 1424, "index": 22, "action": "transfer_round_start", "transfer_round": 0, "monotonic_ns": 40020986563373, "utc_time": "2026-10-27T04:47:52.918532+00:00"}
+{"record_type": "probe_event", "rank": 4, "pid": 1425, "index": 23, "action": "front_placeholder_tensor_ready", "transfer_round": 0, "monotonic_ns": 40020996148809, "utc_time": "2026-10-27T04:47:52.928113+00:00"}
+{"record_type": "probe_event", "rank": 4, "pid": 1425, "index": 24, "action": "isend_enter", "transfer_round": 0, "monotonic_ns": 40020996254140, "utc_time": "2026-10-27T04:47:52.928216+00:00"}
+/vllm-workspace/vllm/vllm/distributed/parallel_state.py:779: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /pytorch/torch/csrc/utils/tensor_new.cpp:1581.)
+  object_tensor = torch.frombuffer(pickle.dumps(obj), dtype=torch.uint8)
+{"record_type": "probe_event", "rank": 2, "pid": 1423, "index": 23, "action": "front_placeholder_tensor_ready", "transfer_round": 0, "monotonic_ns": 40020997601920, "utc_time": "2026-10-27T04:47:52.929566+00:00"}
+{"record_type": "probe_event", "rank": 2, "pid": 1423, "index": 24, "action": "isend_enter", "transfer_round": 0, "monotonic_ns": 40020997709401, "utc_time": "2026-10-27T04:47:52.929671+00:00"}
+{"record_type": "probe_event", "rank": 1, "pid": 1422, "index": 23, "action": "front_placeholder_tensor_ready", "transfer_round": 0, "monotonic_ns": 40020998136265, "utc_time": "2026-10-27T04:47:52.930100+00:00"}
+{"record_type": "probe_event", "rank": 1, "pid": 1422, "index": 24, "action": "isend_enter", "transfer_round": 0, "monotonic_ns": 40020998226435, "utc_time": "2026-10-27T04:47:52.930188+00:00"}
+{"record_type": "probe_event", "rank": 0, "pid": 1421, "index": 23, "action": "front_placeholder_tensor_ready", "transfer_round": 0, "monotonic_ns": 40020998209925, "utc_time": "2026-10-27T04:47:52.930174+00:00"}
+{"record_type": "probe_event", "rank": 0, "pid": 1421, "index": 24, "action": "isend_enter", "transfer_round": 0, "monotonic_ns": 40020998303336, "utc_time": "2026-10-27T04:47:52.930265+00:00"}
+{"record_type": "probe_event", "rank": 3, "pid": 1424, "index": 23, "action": "front_placeholder_tensor_ready", "transfer_round": 0, "monotonic_ns": 40020998352896, "utc_time": "2026-10-27T04:47:52.930318+00:00"}
+{"record_type": "probe_event", "rank": 3, "pid": 1424, "index": 24, "action": "isend_enter", "transfer_round": 0, "monotonic_ns": 40020998487327, "utc_time": "2026-10-27T04:47:52.930449+00:00"}
+{"record_type": "probe_event", "rank": 6, "pid": 1427, "index": 23, "action": "front_placeholder_tensor_ready", "transfer_round": 0, "monotonic_ns": 40020998451387, "utc_time": "2026-10-27T04:47:52.930415+00:00"}
+/vllm-workspace/vllm/vllm/distributed/parallel_state.py:779: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /pytorch/torch/csrc/utils/tensor_new.cpp:1581.)
+  object_tensor = torch.frombuffer(pickle.dumps(obj), dtype=torch.uint8)
+{"record_type": "probe_event", "rank": 6, "pid": 1427, "index": 24, "action": "isend_enter", "transfer_round": 0, "monotonic_ns": 40020998540828, "utc_time": "2026-10-27T04:47:52.930502+00:00"}
+{"record_type": "probe_event", "rank": 5, "pid": 1426, "index": 23, "action": "front_placeholder_tensor_ready", "transfer_round": 0, "monotonic_ns": 40020999067832, "utc_time": "2026-10-27T04:47:52.931032+00:00"}
+{"record_type": "probe_event", "rank": 5, "pid": 1426, "index": 24, "action": "isend_enter", "transfer_round": 0, "monotonic_ns": 40020999177003, "utc_time": "2026-10-27T04:47:52.931139+00:00"}
+{"record_type": "probe_event", "rank": 7, "pid": 1428, "index": 23, "action": "front_placeholder_tensor_ready", "transfer_round": 0, "monotonic_ns": 40020999145303, "utc_time": "2026-10-27T04:47:52.931109+00:00"}
+/vllm-workspace/vllm/vllm/distributed/parallel_state.py:779: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /pytorch/torch/csrc/utils/tensor_new.cpp:1581.)
+  object_tensor = torch.frombuffer(pickle.dumps(obj), dtype=torch.uint8)
+/vllm-workspace/vllm/vllm/distributed/parallel_state.py:779: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /pytorch/torch/csrc/utils/tensor_new.cpp:1581.)
+  object_tensor = torch.frombuffer(pickle.dumps(obj), dtype=torch.uint8)
+{"record_type": "probe_event", "rank": 7, "pid": 1428, "index": 24, "action": "isend_enter", "transfer_round": 0, "monotonic_ns": 40020999236833, "utc_time": "2026-10-27T04:47:52.931198+00:00"}
+/vllm-workspace/vllm/vllm/distributed/parallel_state.py:779: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /pytorch/torch/csrc/utils/tensor_new.cpp:1581.)
+  object_tensor = torch.frombuffer(pickle.dumps(obj), dtype=torch.uint8)
+/vllm-workspace/vllm/vllm/distributed/parallel_state.py:779: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /pytorch/torch/csrc/utils/tensor_new.cpp:1581.)
+  object_tensor = torch.frombuffer(pickle.dumps(obj), dtype=torch.uint8)
+/vllm-workspace/vllm/vllm/distributed/parallel_state.py:779: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /pytorch/torch/csrc/utils/tensor_new.cpp:1581.)
+  object_tensor = torch.frombuffer(pickle.dumps(obj), dtype=torch.uint8)
+/vllm-workspace/vllm/vllm/distributed/parallel_state.py:779: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /pytorch/torch/csrc/utils/tensor_new.cpp:1581.)
+  object_tensor = torch.frombuffer(pickle.dumps(obj), dtype=torch.uint8)
+{"record_type": "probe_event", "rank": 5, "pid": 1426, "index": 25, "action": "isend_method_returned", "transfer_round": 0, "monotonic_ns": 40021338351861, "utc_time": "2026-10-27T04:47:53.270322+00:00", "handle_count": 1}
+{"record_type": "probe_event", "rank": 5, "pid": 1426, "index": 26, "action": "queries_after_method_return", "transfer_round": 0, "monotonic_ns": 40021339859233, "utc_time": "2026-10-27T04:47:53.271823+00:00", "work_query": [false], "local_stream_event_query": false}
+{"record_type": "probe_event", "rank": 3, "pid": 1424, "index": 25, "action": "isend_method_returned", "transfer_round": 0, "monotonic_ns": 40021347016200, "utc_time": "2026-10-27T04:47:53.278985+00:00", "handle_count": 1}
+{"record_type": "probe_event", "rank": 3, "pid": 1424, "index": 26, "action": "queries_after_method_return", "transfer_round": 0, "monotonic_ns": 40021348359410, "utc_time": "2026-10-27T04:47:53.280328+00:00", "work_query": [false], "local_stream_event_query": false}
+{"record_type": "probe_event", "rank": 4, "pid": 1425, "index": 25, "action": "isend_method_returned", "transfer_round": 0, "monotonic_ns": 40021348704833, "utc_time": "2026-10-27T04:47:53.280671+00:00", "handle_count": 1}
+{"record_type": "probe_event", "rank": 4, "pid": 1425, "index": 26, "action": "queries_after_method_return", "transfer_round": 0, "monotonic_ns": 40021350072354, "utc_time": "2026-10-27T04:47:53.282036+00:00", "work_query": [false], "local_stream_event_query": false}
+{"record_type": "probe_event", "rank": 2, "pid": 1423, "index": 25, "action": "isend_method_returned", "transfer_round": 0, "monotonic_ns": 40021352783876, "utc_time": "2026-10-27T04:47:53.284753+00:00", "handle_count": 1}
+{"record_type": "probe_event", "rank": 2, "pid": 1423, "index": 26, "action": "queries_after_method_return", "transfer_round": 0, "monotonic_ns": 40021354063486, "utc_time": "2026-10-27T04:47:53.286030+00:00", "work_query": [false], "local_stream_event_query": false}
+{"record_type": "probe_event", "rank": 0, "pid": 1421, "index": 25, "action": "isend_method_returned", "transfer_round": 0, "monotonic_ns": 40021358527801, "utc_time": "2026-10-27T04:47:53.290496+00:00", "handle_count": 1}
+{"record_type": "probe_event", "rank": 0, "pid": 1421, "index": 26, "action": "queries_after_method_return", "transfer_round": 0, "monotonic_ns": 40021359840992, "utc_time": "2026-10-27T04:47:53.291804+00:00", "work_query": [false], "local_stream_event_query": false}
+{"record_type": "probe_event", "rank": 1, "pid": 1422, "index": 25, "action": "isend_method_returned", "transfer_round": 0, "monotonic_ns": 40021367677774, "utc_time": "2026-10-27T04:47:53.299649+00:00", "handle_count": 1}
+{"record_type": "probe_event", "rank": 7, "pid": 1428, "index": 25, "action": "isend_method_returned", "transfer_round": 0, "monotonic_ns": 40021368526991, "utc_time": "2026-10-27T04:47:53.300498+00:00", "handle_count": 1}
+{"record_type": "probe_event", "rank": 6, "pid": 1427, "index": 25, "action": "isend_method_returned", "transfer_round": 0, "monotonic_ns": 40021369219806, "utc_time": "2026-10-27T04:47:53.301189+00:00", "handle_count": 1}
+{"record_type": "probe_event", "rank": 1, "pid": 1422, "index": 26, "action": "queries_after_method_return", "transfer_round": 0, "monotonic_ns": 40021369604599, "utc_time": "2026-10-27T04:47:53.301568+00:00", "work_query": [false], "local_stream_event_query": false}
+{"record_type": "probe_event", "rank": 7, "pid": 1428, "index": 26, "action": "queries_after_method_return", "transfer_round": 0, "monotonic_ns": 40021370609037, "utc_time": "2026-10-27T04:47:53.302577+00:00", "work_query": [false], "local_stream_event_query": false}
+{"record_type": "probe_event", "rank": 6, "pid": 1427, "index": 26, "action": "queries_after_method_return", "transfer_round": 0, "monotonic_ns": 40021370834679, "utc_time": "2026-10-27T04:47:53.302804+00:00", "work_query": [false], "local_stream_event_query": false}
+{"record_type": "probe_event", "rank": 12, "pid": 1433, "index": 24, "action": "irecv_method_returned", "transfer_round": 0, "monotonic_ns": 40021388374749, "utc_time": "2026-10-27T04:47:53.320343+00:00", "handle_count": 1, "postprocess_count": 1}
+{"record_type": "probe_event", "rank": 12, "pid": 1433, "index": 25, "action": "queries_after_method_return", "transfer_round": 0, "monotonic_ns": 40021389802670, "utc_time": "2026-10-27T04:47:53.321766+00:00", "work_query": [false], "local_stream_event_query": false}
+{"record_type": "probe_event", "rank": 13, "pid": 1434, "index": 24, "action": "irecv_method_returned", "transfer_round": 0, "monotonic_ns": 40021392787074, "utc_time": "2026-10-27T04:47:53.324754+00:00", "handle_count": 1, "postprocess_count": 1}
+{"record_type": "probe_event", "rank": 15, "pid": 1436, "index": 24, "action": "irecv_method_returned", "transfer_round": 0, "monotonic_ns": 40021392864424, "utc_time": "2026-10-27T04:47:53.324831+00:00", "handle_count": 1, "postprocess_count": 1}
+{"record_type": "probe_event", "rank": 13, "pid": 1434, "index": 25, "action": "queries_after_method_return", "transfer_round": 0, "monotonic_ns": 40021394399257, "utc_time": "2026-10-27T04:47:53.326362+00:00", "work_query": [false], "local_stream_event_query": false}
+{"record_type": "probe_event", "rank": 15, "pid": 1436, "index": 25, "action": "queries_after_method_return", "transfer_round": 0, "monotonic_ns": 40021394553928, "utc_time": "2026-10-27T04:47:53.326518+00:00", "work_query": [false], "local_stream_event_query": false}
+{"record_type": "probe_event", "rank": 8, "pid": 1429, "index": 24, "action": "irecv_method_returned", "transfer_round": 0, "monotonic_ns": 40021401804026, "utc_time": "2026-10-27T04:47:53.333769+00:00", "handle_count": 1, "postprocess_count": 1}
+{"record_type": "probe_event", "rank": 8, "pid": 1429, "index": 25, "action": "queries_after_method_return", "transfer_round": 0, "monotonic_ns": 40021403025035, "utc_time": "2026-10-27T04:47:53.334987+00:00", "work_query": [false], "local_stream_event_query": false}
+{"record_type": "probe_event", "rank": 10, "pid": 1431, "index": 24, "action": "irecv_method_returned", "transfer_round": 0, "monotonic_ns": 40021407114788, "utc_time": "2026-10-27T04:47:53.339081+00:00", "handle_count": 1, "postprocess_count": 1}
+{"record_type": "probe_event", "rank": 10, "pid": 1431, "index": 25, "action": "queries_after_method_return", "transfer_round": 0, "monotonic_ns": 40021408595040, "utc_time": "2026-10-27T04:47:53.340557+00:00", "work_query": [false], "local_stream_event_query": false}
+{"record_type": "probe_event", "rank": 14, "pid": 1435, "index": 24, "action": "irecv_method_returned", "transfer_round": 0, "monotonic_ns": 40021408549599, "utc_time": "2026-10-27T04:47:53.340517+00:00", "handle_count": 1, "postprocess_count": 1}
+{"record_type": "probe_event", "rank": 11, "pid": 1432, "index": 24, "action": "irecv_method_returned", "transfer_round": 0, "monotonic_ns": 40021409279195, "utc_time": "2026-10-27T04:47:53.341244+00:00", "handle_count": 1, "postprocess_count": 1}
+{"record_type": "probe_event", "rank": 11, "pid": 1432, "index": 25, "action": "queries_after_method_return", "transfer_round": 0, "monotonic_ns": 40021409840379, "utc_time": "2026-10-27T04:47:53.341803+00:00", "work_query": [false], "local_stream_event_query": false}
+{"record_type": "probe_event", "rank": 14, "pid": 1435, "index": 25, "action": "queries_after_method_return", "transfer_round": 0, "monotonic_ns": 40021410405724, "utc_time": "2026-10-27T04:47:53.342373+00:00", "work_query": [false], "local_stream_event_query": false}
+{"record_type": "probe_event", "rank": 9, "pid": 1430, "index": 24, "action": "irecv_method_returned", "transfer_round": 0, "monotonic_ns": 40021411550633, "utc_time": "2026-10-27T04:47:53.343516+00:00", "handle_count": 1, "postprocess_count": 1}
+{"record_type": "probe_event", "rank": 9, "pid": 1430, "index": 25, "action": "queries_after_method_return", "transfer_round": 0, "monotonic_ns": 40021412772253, "utc_time": "2026-10-27T04:47:53.344735+00:00", "work_query": [false], "local_stream_event_query": false}
+{"record_type": "probe_event", "rank": 8, "pid": 1429, "index": 26, "action": "bounded_work_query_finished", "transfer_round": 0, "monotonic_ns": 40021616501143, "utc_time": "2026-10-27T04:47:53.548468+00:00", "consensus_ready": true, "poll_rounds": 206}
+{"record_type": "probe_event", "rank": 0, "pid": 1421, "index": 27, "action": "bounded_work_query_finished", "transfer_round": 0, "monotonic_ns": 40021616510223, "utc_time": "2026-10-27T04:47:53.548488+00:00", "consensus_ready": true, "poll_rounds": 280}
+{"record_type": "probe_event", "rank": 8, "pid": 1429, "index": 27, "action": "work_wait_enter", "transfer_round": 0, "monotonic_ns": 40021616653745, "utc_time": "2026-10-27T04:47:53.548616+00:00"}{"record_type": "probe_event", "rank": 6, "pid": 1427, "index": 27, "action": "bounded_work_query_finished", "transfer_round": 0, "monotonic_ns": 40021616556724, "utc_time": "2026-10-27T04:47:53.548524+00:00", "consensus_ready": true, "poll_rounds": 280}{"record_type": "probe_event", "rank": 7, "pid": 1428, "index": 27, "action": "bounded_work_query_finished", "transfer_round": 0, "monotonic_ns": 40021616506633, "utc_time": "2026-10-27T04:47:53.548475+00:00", "consensus_ready": true, "poll_rounds": 280}
+
+
+{"record_type": "probe_event", "rank": 15, "pid": 1436, "index": 26, "action": "bounded_work_query_finished", "transfer_round": 0, "monotonic_ns": 40021616558934, "utc_time": "2026-10-27T04:47:53.548527+00:00", "consensus_ready": true, "poll_rounds": 206}
+{"record_type": "probe_event", "rank": 0, "pid": 1421, "index": 28, "action": "work_wait_enter", "transfer_round": 0, "monotonic_ns": 40021616691835, "utc_time": "2026-10-27T04:47:53.548654+00:00"}
+{"record_type": "probe_event", "rank": 6, "pid": 1427, "index": 28, "action": "work_wait_enter", "transfer_round": 0, "monotonic_ns": 40021616709275, "utc_time": "2026-10-27T04:47:53.548671+00:00"}{"record_type": "probe_event", "rank": 7, "pid": 1428, "index": 28, "action": "work_wait_enter", "transfer_round": 0, "monotonic_ns": 40021616709815, "utc_time": "2026-10-27T04:47:53.548672+00:00"}
+
+{"record_type": "probe_event", "rank": 4, "pid": 1425, "index": 27, "action": "bounded_work_query_finished", "transfer_round": 0, "monotonic_ns": 40021616637444, "utc_time": "2026-10-27T04:47:53.548603+00:00", "consensus_ready": true, "poll_rounds": 280}{"record_type": "probe_event", "rank": 13, "pid": 1434, "index": 26, "action": "bounded_work_query_finished", "transfer_round": 0, "monotonic_ns": 40021616641134, "utc_time": "2026-10-27T04:47:53.548606+00:00", "consensus_ready": true, "poll_rounds": 206}
+{"record_type": "probe_event", "rank": 15, "pid": 1436, "index": 27, "action": "work_wait_enter", "transfer_round": 0, "monotonic_ns": 40021616731895, "utc_time": "2026-10-27T04:47:53.548694+00:00"}{"record_type": "probe_event", "rank": 14, "pid": 1435, "index": 26, "action": "bounded_work_query_finished", "transfer_round": 0, "monotonic_ns": 40021616626244, "utc_time": "2026-10-27T04:47:53.548594+00:00", "consensus_ready": true, "poll_rounds": 206}
+
+
+{"record_type": "probe_event", "rank": 8, "pid": 1429, "index": 28, "action": "work_wait_returned", "transfer_round": 0, "monotonic_ns": 40021616769615, "utc_time": "2026-10-27T04:47:53.548731+00:00", "work_query": [true]}
+{"record_type": "probe_event", "rank": 4, "pid": 1425, "index": 28, "action": "work_wait_enter", "transfer_round": 0, "monotonic_ns": 40021616778986, "utc_time": "2026-10-27T04:47:53.548741+00:00"}{"record_type": "probe_event", "rank": 3, "pid": 1424, "index": 27, "action": "bounded_work_query_finished", "transfer_round": 0, "monotonic_ns": 40021616678325, "utc_time": "2026-10-27T04:47:53.548646+00:00", "consensus_ready": true, "poll_rounds": 280}
+{"record_type": "probe_event", "rank": 13, "pid": 1434, "index": 27, "action": "work_wait_enter", "transfer_round": 0, "monotonic_ns": 40021616788406, "utc_time": "2026-10-27T04:47:53.548750+00:00"}
+
+{"record_type": "probe_event", "rank": 14, "pid": 1435, "index": 27, "action": "work_wait_enter", "transfer_round": 0, "monotonic_ns": 40021616795066, "utc_time": "2026-10-27T04:47:53.548758+00:00"}{"record_type": "probe_event", "rank": 0, "pid": 1421, "index": 29, "action": "work_wait_returned", "transfer_round": 0, "monotonic_ns": 40021616810346, "utc_time": "2026-10-27T04:47:53.548772+00:00", "work_query": [true]}
+
+{"record_type": "probe_event", "rank": 3, "pid": 1424, "index": 28, "action": "work_wait_enter", "transfer_round": 0, "monotonic_ns": 40021616833156, "utc_time": "2026-10-27T04:47:53.548795+00:00"}{"record_type": "probe_event", "rank": 7, "pid": 1428, "index": 29, "action": "work_wait_returned", "transfer_round": 0, "monotonic_ns": 40021616839086, "utc_time": "2026-10-27T04:47:53.548801+00:00", "work_query": [true]}{"record_type": "probe_event", "rank": 6, "pid": 1427, "index": 29, "action": "work_wait_returned", "transfer_round": 0, "monotonic_ns": 40021616841436, "utc_time": "2026-10-27T04:47:53.548803+00:00", "work_query": [true]}
+
+
+{"record_type": "probe_event", "rank": 15, "pid": 1436, "index": 28, "action": "work_wait_returned", "transfer_round": 0, "monotonic_ns": 40021616842956, "utc_time": "2026-10-27T04:47:53.548805+00:00", "work_query": [true]}
+{"record_type": "probe_event", "rank": 5, "pid": 1426, "index": 27, "action": "bounded_work_query_finished", "transfer_round": 0, "monotonic_ns": 40021616656945, "utc_time": "2026-10-27T04:47:53.548641+00:00", "consensus_ready": true, "poll_rounds": 280}{"record_type": "probe_event", "rank": 1, "pid": 1422, "index": 27, "action": "bounded_work_query_finished", "transfer_round": 0, "monotonic_ns": 40021616784206, "utc_time": "2026-10-27T04:47:53.548751+00:00", "consensus_ready": true, "poll_rounds": 280}
+
+{"record_type": "probe_event", "rank": 4, "pid": 1425, "index": 29, "action": "work_wait_returned", "transfer_round": 0, "monotonic_ns": 40021616892886, "utc_time": "2026-10-27T04:47:53.548854+00:00", "work_query": [true]}
+{"record_type": "probe_event", "rank": 13, "pid": 1434, "index": 28, "action": "work_wait_returned", "transfer_round": 0, "monotonic_ns": 40021616899586, "utc_time": "2026-10-27T04:47:53.548861+00:00", "work_query": [true]}{"record_type": "probe_event", "rank": 11, "pid": 1432, "index": 26, "action": "bounded_work_query_finished", "transfer_round": 0, "monotonic_ns": 40021616799866, "utc_time": "2026-10-27T04:47:53.548766+00:00", "consensus_ready": true, "poll_rounds": 206}{"record_type": "probe_event", "rank": 12, "pid": 1433, "index": 26, "action": "bounded_work_query_finished", "transfer_round": 0, "monotonic_ns": 40021616810216, "utc_time": "2026-10-27T04:47:53.548778+00:00", "consensus_ready": true, "poll_rounds": 206}
+{"record_type": "probe_event", "rank": 10, "pid": 1431, "index": 26, "action": "bounded_work_query_finished", "transfer_round": 0, "monotonic_ns": 40021616821186, "utc_time": "2026-10-27T04:47:53.548789+00:00", "consensus_ready": true, "poll_rounds": 206}
+{"record_type": "probe_event", "rank": 14, "pid": 1435, "index": 28, "action": "work_wait_returned", "transfer_round": 0, "monotonic_ns": 40021616909617, "utc_time": "2026-10-27T04:47:53.548872+00:00", "work_query": [true]}
+{"record_type": "probe_event", "rank": 1, "pid": 1422, "index": 28, "action": "work_wait_enter", "transfer_round": 0, "monotonic_ns": 40021616927487, "utc_time": "2026-10-27T04:47:53.548889+00:00"}{"record_type": "probe_event", "rank": 5, "pid": 1426, "index": 28, "action": "work_wait_enter", "transfer_round": 0, "monotonic_ns": 40021616931427, "utc_time": "2026-10-27T04:47:53.548893+00:00"}
+
+
+
+{"record_type": "probe_event", "rank": 3, "pid": 1424, "index": 29, "action": "work_wait_returned", "transfer_round": 0, "monotonic_ns": 40021616946827, "utc_time": "2026-10-27T04:47:53.548909+00:00", "work_query": [true]}{"record_type": "probe_event", "rank": 8, "pid": 1429, "index": 29, "action": "comm_fence_recorded", "transfer_round": 0, "monotonic_ns": 40021616966657, "utc_time": "2026-10-27T04:47:53.548928+00:00", "event_query": false}
+{"record_type": "probe_event", "rank": 2, "pid": 1423, "index": 27, "action": "bounded_work_query_finished", "transfer_round": 0, "monotonic_ns": 40021616823156, "utc_time": "2026-10-27T04:47:53.548799+00:00", "consensus_ready": true, "poll_rounds": 280}
+{"record_type": "probe_event", "rank": 11, "pid": 1432, "index": 27, "action": "work_wait_enter", "transfer_round": 0, "monotonic_ns": 40021616968987, "utc_time": "2026-10-27T04:47:53.548931+00:00"}
+
+{"record_type": "probe_event", "rank": 12, "pid": 1433, "index": 27, "action": "work_wait_enter", "transfer_round": 0, "monotonic_ns": 40021616975217, "utc_time": "2026-10-27T04:47:53.548938+00:00"}
+{"record_type": "probe_event", "rank": 10, "pid": 1431, "index": 27, "action": "work_wait_enter", "transfer_round": 0, "monotonic_ns": 40021616988027, "utc_time": "2026-10-27T04:47:53.548951+00:00"}
+{"record_type": "probe_event", "rank": 9, "pid": 1430, "index": 26, "action": "bounded_work_query_finished", "transfer_round": 0, "monotonic_ns": 40021616898236, "utc_time": "2026-10-27T04:47:53.548872+00:00", "consensus_ready": true, "poll_rounds": 206}{"record_type": "probe_event", "rank": 2, "pid": 1423, "index": 28, "action": "work_wait_enter", "transfer_round": 0, "monotonic_ns": 40021617023507, "utc_time": "2026-10-27T04:47:53.548985+00:00"}
+
+{"record_type": "probe_event", "rank": 0, "pid": 1421, "index": 30, "action": "comm_fence_recorded", "transfer_round": 0, "monotonic_ns": 40021617047748, "utc_time": "2026-10-27T04:47:53.549009+00:00", "event_query": false}
+{"record_type": "probe_event", "rank": 4, "pid": 1425, "index": 30, "action": "comm_fence_recorded", "transfer_round": 0, "monotonic_ns": 40021617060578, "utc_time": "2026-10-27T04:47:53.549022+00:00", "event_query": false}{"record_type": "probe_event", "rank": 5, "pid": 1426, "index": 29, "action": "work_wait_returned", "transfer_round": 0, "monotonic_ns": 40021617055728, "utc_time": "2026-10-27T04:47:53.549017+00:00", "work_query": [true]}{"record_type": "probe_event", "rank": 1, "pid": 1422, "index": 29, "action": "work_wait_returned", "transfer_round": 0, "monotonic_ns": 40021617054708, "utc_time": "2026-10-27T04:47:53.549016+00:00", "work_query": [true]}{"record_type": "probe_event", "rank": 15, "pid": 1436, "index": 29, "action": "comm_fence_recorded", "transfer_round": 0, "monotonic_ns": 40021617066598, "utc_time": "2026-10-27T04:47:53.549029+00:00", "event_query": false}
+
+
+
+{"record_type": "probe_event", "rank": 9, "pid": 1430, "index": 27, "action": "work_wait_enter", "transfer_round": 0, "monotonic_ns": 40021617071068, "utc_time": "2026-10-27T04:47:53.549033+00:00"}{"record_type": "probe_event", "rank": 6, "pid": 1427, "index": 30, "action": "comm_fence_recorded", "transfer_round": 0, "monotonic_ns": 40021617090118, "utc_time": "2026-10-27T04:47:53.549052+00:00", "event_query": false}{"record_type": "probe_event", "rank": 7, "pid": 1428, "index": 30, "action": "comm_fence_recorded", "transfer_round": 0, "monotonic_ns": 40021617085608, "utc_time": "2026-10-27T04:47:53.549047+00:00", "event_query": false}
+
+
+{"record_type": "probe_event", "rank": 8, "pid": 1429, "index": 30, "action": "comm_fence_known_complete", "transfer_round": 0, "monotonic_ns": 40021617107478, "utc_time": "2026-10-27T04:47:53.549069+00:00", "event_query": true}
+{"record_type": "probe_event", "rank": 13, "pid": 1434, "index": 29, "action": "comm_fence_recorded", "transfer_round": 0, "monotonic_ns": 40021617116768, "utc_time": "2026-10-27T04:47:53.549078+00:00", "event_query": false}{"record_type": "probe_event", "rank": 12, "pid": 1433, "index": 28, "action": "work_wait_returned", "transfer_round": 0, "monotonic_ns": 40021617097368, "utc_time": "2026-10-27T04:47:53.549060+00:00", "work_query": [true]}{"record_type": "probe_event", "rank": 4, "pid": 1425, "index": 31, "action": "comm_fence_known_complete", "transfer_round": 0, "monotonic_ns": 40021617135458, "utc_time": "2026-10-27T04:47:53.549097+00:00", "event_query": true}
+
+
+{"record_type": "probe_event", "rank": 2, "pid": 1423, "index": 29, "action": "work_wait_returned", "transfer_round": 0, "monotonic_ns": 40021617140988, "utc_time": "2026-10-27T04:47:53.549103+00:00", "work_query": [true]}{"record_type": "probe_event", "rank": 0, "pid": 1421, "index": 31, "action": "comm_fence_known_complete", "transfer_round": 0, "monotonic_ns": 40021617135818, "utc_time": "2026-10-27T04:47:53.549098+00:00", "event_query": true}
+
+{"record_type": "probe_event", "rank": 14, "pid": 1435, "index": 29, "action": "comm_fence_recorded", "transfer_round": 0, "monotonic_ns": 40021617157979, "utc_time": "2026-10-27T04:47:53.549120+00:00", "event_query": false}{"record_type": "probe_event", "rank": 7, "pid": 1428, "index": 31, "action": "comm_fence_known_complete", "transfer_round": 0, "monotonic_ns": 40021617167749, "utc_time": "2026-10-27T04:47:53.549129+00:00", "event_query": true}
+
+{"record_type": "probe_event", "rank": 3, "pid": 1424, "index": 30, "action": "comm_fence_recorded", "transfer_round": 0, "monotonic_ns": 40021617176999, "utc_time": "2026-10-27T04:47:53.549139+00:00", "event_query": false}{"record_type": "probe_event", "rank": 11, "pid": 1432, "index": 28, "action": "work_wait_returned", "transfer_round": 0, "monotonic_ns": 40021617164099, "utc_time": "2026-10-27T04:47:53.549126+00:00", "work_query": [true]}{"record_type": "probe_event", "rank": 6, "pid": 1427, "index": 31, "action": "comm_fence_known_complete", "transfer_round": 0, "monotonic_ns": 40021617185869, "utc_time": "2026-10-27T04:47:53.549148+00:00", "event_query": true}
+
+
+{"record_type": "probe_event", "rank": 10, "pid": 1431, "index": 28, "action": "work_wait_returned", "transfer_round": 0, "monotonic_ns": 40021617179349, "utc_time": "2026-10-27T04:47:53.549142+00:00", "work_query": [true]}{"record_type": "probe_event", "rank": 9, "pid": 1430, "index": 28, "action": "work_wait_returned", "transfer_round": 0, "monotonic_ns": 40021617204879, "utc_time": "2026-10-27T04:47:53.549167+00:00", "work_query": [true]}
+
+{"record_type": "probe_event", "rank": 13, "pid": 1434, "index": 30, "action": "comm_fence_known_complete", "transfer_round": 0, "monotonic_ns": 40021617253569, "utc_time": "2026-10-27T04:47:53.549215+00:00", "event_query": true}{"record_type": "probe_event", "rank": 3, "pid": 1424, "index": 31, "action": "comm_fence_known_complete", "transfer_round": 0, "monotonic_ns": 40021617263279, "utc_time": "2026-10-27T04:47:53.549225+00:00", "event_query": true}
+
+{"record_type": "probe_event", "rank": 12, "pid": 1433, "index": 29, "action": "comm_fence_recorded", "transfer_round": 0, "monotonic_ns": 40021617289660, "utc_time": "2026-10-27T04:47:53.549252+00:00", "event_query": false}
+{"record_type": "probe_event", "rank": 14, "pid": 1435, "index": 30, "action": "comm_fence_known_complete", "transfer_round": 0, "monotonic_ns": 40021617316720, "utc_time": "2026-10-27T04:47:53.549278+00:00", "event_query": true}
+{"record_type": "probe_event", "rank": 11, "pid": 1432, "index": 29, "action": "comm_fence_recorded", "transfer_round": 0, "monotonic_ns": 40021617360270, "utc_time": "2026-10-27T04:47:53.549322+00:00", "event_query": false}
+{"record_type": "probe_event", "rank": 12, "pid": 1433, "index": 30, "action": "comm_fence_known_complete", "transfer_round": 0, "monotonic_ns": 40021617441511, "utc_time": "2026-10-27T04:47:53.549404+00:00", "event_query": true}
+{"record_type": "probe_event", "rank": 2, "pid": 1423, "index": 30, "action": "comm_fence_recorded", "transfer_round": 0, "monotonic_ns": 40021617453421, "utc_time": "2026-10-27T04:47:53.549415+00:00", "event_query": false}{"record_type": "probe_event", "rank": 15, "pid": 1436, "index": 30, "action": "comm_fence_known_complete", "transfer_round": 0, "monotonic_ns": 40021617337420, "utc_time": "2026-10-27T04:47:53.549306+00:00", "event_query": true}
+
+{"record_type": "probe_event", "rank": 1, "pid": 1422, "index": 30, "action": "comm_fence_recorded", "transfer_round": 0, "monotonic_ns": 40021617396360, "utc_time": "2026-10-27T04:47:53.549362+00:00", "event_query": false}{"record_type": "probe_event", "rank": 5, "pid": 1426, "index": 30, "action": "comm_fence_recorded", "transfer_round": 0, "monotonic_ns": 40021617475181, "utc_time": "2026-10-27T04:47:53.549437+00:00", "event_query": false}{"record_type": "probe_event", "rank": 9, "pid": 1430, "index": 29, "action": "comm_fence_recorded", "transfer_round": 0, "monotonic_ns": 40021617470711, "utc_time": "2026-10-27T04:47:53.549432+00:00", "event_query": false}
+
+
+{"record_type": "probe_event", "rank": 10, "pid": 1431, "index": 29, "action": "comm_fence_recorded", "transfer_round": 0, "monotonic_ns": 40021617484651, "utc_time": "2026-10-27T04:47:53.549446+00:00", "event_query": false}
+{"record_type": "probe_event", "rank": 2, "pid": 1423, "index": 31, "action": "comm_fence_known_complete", "transfer_round": 0, "monotonic_ns": 40021617521311, "utc_time": "2026-10-27T04:47:53.549483+00:00", "event_query": true}{"record_type": "probe_event", "rank": 11, "pid": 1432, "index": 30, "action": "comm_fence_known_complete", "transfer_round": 0, "monotonic_ns": 40021617523521, "utc_time": "2026-10-27T04:47:53.549485+00:00", "event_query": true}
+
+{"record_type": "probe_event", "rank": 5, "pid": 1426, "index": 31, "action": "comm_fence_known_complete", "transfer_round": 0, "monotonic_ns": 40021617544732, "utc_time": "2026-10-27T04:47:53.549506+00:00", "event_query": true}
+{"record_type": "probe_event", "rank": 1, "pid": 1422, "index": 31, "action": "comm_fence_known_complete", "transfer_round": 0, "monotonic_ns": 40021617550252, "utc_time": "2026-10-27T04:47:53.549512+00:00", "event_query": true}
+{"record_type": "probe_event", "rank": 9, "pid": 1430, "index": 30, "action": "comm_fence_known_complete", "transfer_round": 0, "monotonic_ns": 40021617616282, "utc_time": "2026-10-27T04:47:53.549578+00:00", "event_query": true}
+{"record_type": "probe_event", "rank": 10, "pid": 1431, "index": 30, "action": "comm_fence_known_complete", "transfer_round": 0, "monotonic_ns": 40021617665653, "utc_time": "2026-10-27T04:47:53.549627+00:00", "event_query": true}
+{"record_type": "probe_event", "rank": 10, "pid": 1431, "index": 31, "action": "tp_postprocess_enter", "transfer_round": 0, "monotonic_ns": 40021618087216, "utc_time": "2026-10-27T04:47:53.550050+00:00"}
+{"record_type": "probe_event", "rank": 14, "pid": 1435, "index": 31, "action": "tp_postprocess_enter", "transfer_round": 0, "monotonic_ns": 40021618106616, "utc_time": "2026-10-27T04:47:53.550068+00:00"}
+{"record_type": "probe_event", "rank": 0, "pid": 1421, "index": 32, "action": "transfer_round_complete", "transfer_round": 0, "monotonic_ns": 40021618120836, "utc_time": "2026-10-27T04:47:53.550083+00:00"}
+{"record_type": "probe_event", "rank": 4, "pid": 1425, "index": 32, "action": "transfer_round_complete", "transfer_round": 0, "monotonic_ns": 40021618126056, "utc_time": "2026-10-27T04:47:53.550088+00:00"}{"record_type": "probe_event", "rank": 5, "pid": 1426, "index": 32, "action": "transfer_round_complete", "transfer_round": 0, "monotonic_ns": 40021618132686, "utc_time": "2026-10-27T04:47:53.550094+00:00"}
+
+{"record_type": "probe_event", "rank": 2, "pid": 1423, "index": 32, "action": "transfer_round_complete", "transfer_round": 0, "monotonic_ns": 40021618147336, "utc_time": "2026-10-27T04:47:53.550109+00:00"}{"record_type": "probe_event", "rank": 6, "pid": 1427, "index": 32, "action": "transfer_round_complete", "transfer_round": 0, "monotonic_ns": 40021618132046, "utc_time": "2026-10-27T04:47:53.550095+00:00"}
+
+{"record_type": "probe_event", "rank": 3, "pid": 1424, "index": 32, "action": "transfer_round_complete", "transfer_round": 0, "monotonic_ns": 40021618106936, "utc_time": "2026-10-27T04:47:53.550071+00:00"}
+{"record_type": "probe_event", "rank": 7, "pid": 1428, "index": 32, "action": "transfer_round_complete", "transfer_round": 0, "monotonic_ns": 40021618118106, "utc_time": "2026-10-27T04:47:53.550082+00:00"}
+{"record_type": "probe_event", "rank": 11, "pid": 1432, "index": 31, "action": "tp_postprocess_enter", "transfer_round": 0, "monotonic_ns": 40021618222667, "utc_time": "2026-10-27T04:47:53.550184+00:00"}{"record_type": "probe_event", "rank": 8, "pid": 1429, "index": 31, "action": "tp_postprocess_enter", "transfer_round": 0, "monotonic_ns": 40021618211327, "utc_time": "2026-10-27T04:47:53.550174+00:00"}{"record_type": "probe_event", "rank": 13, "pid": 1434, "index": 31, "action": "tp_postprocess_enter", "transfer_round": 0, "monotonic_ns": 40021618229347, "utc_time": "2026-10-27T04:47:53.550191+00:00"}
+
+
+{"record_type": "probe_event", "rank": 9, "pid": 1430, "index": 31, "action": "tp_postprocess_enter", "transfer_round": 0, "monotonic_ns": 40021618256707, "utc_time": "2026-10-27T04:47:53.550219+00:00"}
+{"record_type": "probe_event", "rank": 1, "pid": 1422, "index": 32, "action": "transfer_round_complete", "transfer_round": 0, "monotonic_ns": 40021618194437, "utc_time": "2026-10-27T04:47:53.550159+00:00"}
+{"record_type": "probe_event", "rank": 15, "pid": 1436, "index": 31, "action": "tp_postprocess_enter", "transfer_round": 0, "monotonic_ns": 40021618238807, "utc_time": "2026-10-27T04:47:53.550203+00:00"}
+{"record_type": "probe_event", "rank": 12, "pid": 1433, "index": 31, "action": "tp_postprocess_enter", "transfer_round": 0, "monotonic_ns": 40021618310038, "utc_time": "2026-10-27T04:47:53.550279+00:00"}
+{"record_type": "probe_event", "rank": 8, "pid": 1429, "index": 32, "action": "tp_postprocess_method_returned", "transfer_round": 0, "monotonic_ns": 40021839944371, "utc_time": "2026-10-27T04:47:53.771910+00:00", "event_query": false}
+{"record_type": "probe_event", "rank": 10, "pid": 1431, "index": 32, "action": "tp_postprocess_method_returned", "transfer_round": 0, "monotonic_ns": 40021911921053, "utc_time": "2026-10-27T04:47:53.843887+00:00", "event_query": false}
+{"record_type": "probe_event", "rank": 11, "pid": 1432, "index": 32, "action": "tp_postprocess_method_returned", "transfer_round": 0, "monotonic_ns": 40021913062582, "utc_time": "2026-10-27T04:47:53.845028+00:00", "event_query": false}
+{"record_type": "probe_event", "rank": 9, "pid": 1430, "index": 32, "action": "tp_postprocess_method_returned", "transfer_round": 0, "monotonic_ns": 40021916057516, "utc_time": "2026-10-27T04:47:53.848022+00:00", "event_query": false}
+{"record_type": "probe_event", "rank": 14, "pid": 1435, "index": 32, "action": "tp_postprocess_method_returned", "transfer_round": 0, "monotonic_ns": 40021916435009, "utc_time": "2026-10-27T04:47:53.848401+00:00", "event_query": false}
+{"record_type": "probe_event", "rank": 15, "pid": 1436, "index": 32, "action": "tp_postprocess_method_returned", "transfer_round": 0, "monotonic_ns": 40021916817192, "utc_time": "2026-10-27T04:47:53.848782+00:00", "event_query": false}
+{"record_type": "probe_event", "rank": 12, "pid": 1433, "index": 32, "action": "tp_postprocess_method_returned", "transfer_round": 0, "monotonic_ns": 40021916926883, "utc_time": "2026-10-27T04:47:53.848894+00:00", "event_query": false}
+{"record_type": "probe_event", "rank": 13, "pid": 1434, "index": 32, "action": "tp_postprocess_method_returned", "transfer_round": 0, "monotonic_ns": 40021921693081, "utc_time": "2026-10-27T04:47:53.853659+00:00", "event_query": false}
+{"record_type": "probe_event", "rank": 11, "pid": 1432, "index": 33, "action": "activation_device_ready", "transfer_round": 0, "monotonic_ns": 40022106370070, "utc_time": "2026-10-27T04:47:54.038334+00:00"}
+{"record_type": "probe_event", "rank": 12, "pid": 1433, "index": 33, "action": "activation_device_ready", "transfer_round": 0, "monotonic_ns": 40022106384710, "utc_time": "2026-10-27T04:47:54.038351+00:00"}
+{"record_type": "probe_event", "rank": 9, "pid": 1430, "index": 33, "action": "activation_device_ready", "transfer_round": 0, "monotonic_ns": 40022106391470, "utc_time": "2026-10-27T04:47:54.038358+00:00"}
+{"record_type": "probe_event", "rank": 8, "pid": 1429, "index": 33, "action": "activation_device_ready", "transfer_round": 0, "monotonic_ns": 40022106382490, "utc_time": "2026-10-27T04:47:54.038350+00:00"}{"record_type": "probe_event", "rank": 14, "pid": 1435, "index": 33, "action": "activation_device_ready", "transfer_round": 0, "monotonic_ns": 40022106396630, "utc_time": "2026-10-27T04:47:54.038366+00:00"}
+
+{"record_type": "probe_event", "rank": 10, "pid": 1431, "index": 33, "action": "activation_device_ready", "transfer_round": 0, "monotonic_ns": 40022106409210, "utc_time": "2026-10-27T04:47:54.038380+00:00"}
+{"record_type": "probe_event", "rank": 13, "pid": 1434, "index": 33, "action": "activation_device_ready", "transfer_round": 0, "monotonic_ns": 40022106391790, "utc_time": "2026-10-27T04:47:54.038359+00:00"}
+{"record_type": "probe_event", "rank": 15, "pid": 1436, "index": 33, "action": "activation_device_ready", "transfer_round": 0, "monotonic_ns": 40022106444830, "utc_time": "2026-10-27T04:47:54.038421+00:00"}
+{"record_type": "probe_event", "rank": 10, "pid": 1431, "index": 34, "action": "transfer_round_complete", "transfer_round": 0, "monotonic_ns": 40022107626390, "utc_time": "2026-10-27T04:47:54.039590+00:00"}
+{"record_type": "probe_event", "rank": 11, "pid": 1432, "index": 34, "action": "transfer_round_complete", "transfer_round": 0, "monotonic_ns": 40022107655130, "utc_time": "2026-10-27T04:47:54.039618+00:00"}
+{"record_type": "probe_event", "rank": 9, "pid": 1430, "index": 34, "action": "transfer_round_complete", "transfer_round": 0, "monotonic_ns": 40022107698010, "utc_time": "2026-10-27T04:47:54.039663+00:00"}
+{"record_type": "probe_event", "rank": 12, "pid": 1433, "index": 34, "action": "transfer_round_complete", "transfer_round": 0, "monotonic_ns": 40022107711571, "utc_time": "2026-10-27T04:47:54.039676+00:00"}
+{"record_type": "probe_event", "rank": 15, "pid": 1436, "index": 34, "action": "transfer_round_complete", "transfer_round": 0, "monotonic_ns": 40022108067163, "utc_time": "2026-10-27T04:47:54.040032+00:00"}
+{"record_type": "probe_event", "rank": 13, "pid": 1434, "index": 34, "action": "transfer_round_complete", "transfer_round": 0, "monotonic_ns": 40022108237355, "utc_time": "2026-10-27T04:47:54.040202+00:00"}
+{"record_type": "probe_event", "rank": 14, "pid": 1435, "index": 34, "action": "transfer_round_complete", "transfer_round": 0, "monotonic_ns": 40022108394646, "utc_time": "2026-10-27T04:47:54.040358+00:00"}
+{"record_type": "probe_event", "rank": 8, "pid": 1429, "index": 34, "action": "transfer_round_complete", "transfer_round": 0, "monotonic_ns": 40022108586297, "utc_time": "2026-10-27T04:47:54.040550+00:00"}
+{"record_type": "probe_event", "rank": 8, "pid": 1429, "index": 35, "action": "transfer_round_start", "transfer_round": 1, "monotonic_ns": 40022109416824, "utc_time": "2026-10-27T04:47:54.041379+00:00"}
+{"record_type": "probe_event", "rank": 8, "pid": 1429, "index": 36, "action": "irecv_enter", "transfer_round": 1, "monotonic_ns": 40022109489505, "utc_time": "2026-10-27T04:47:54.041451+00:00"}
+{"record_type": "probe_event", "rank": 12, "pid": 1433, "index": 35, "action": "transfer_round_start", "transfer_round": 1, "monotonic_ns": 40022109476245, "utc_time": "2026-10-27T04:47:54.041439+00:00"}
+{"record_type": "probe_event", "rank": 14, "pid": 1435, "index": 35, "action": "transfer_round_start", "transfer_round": 1, "monotonic_ns": 40022109512365, "utc_time": "2026-10-27T04:47:54.041475+00:00"}
+{"record_type": "probe_event", "rank": 0, "pid": 1421, "index": 33, "action": "transfer_round_start", "transfer_round": 1, "monotonic_ns": 40022109490065, "utc_time": "2026-10-27T04:47:54.041456+00:00"}{"record_type": "probe_event", "rank": 11, "pid": 1432, "index": 35, "action": "transfer_round_start", "transfer_round": 1, "monotonic_ns": 40022109542545, "utc_time": "2026-10-27T04:47:54.041505+00:00"}{"record_type": "probe_event", "rank": 12, "pid": 1433, "index": 36, "action": "irecv_enter", "transfer_round": 1, "monotonic_ns": 40022109561045, "utc_time": "2026-10-27T04:47:54.041523+00:00"}
+
+{"record_type": "probe_event", "rank": 15, "pid": 1436, "index": 35, "action": "transfer_round_start", "transfer_round": 1, "monotonic_ns": 40022109540725, "utc_time": "2026-10-27T04:47:54.041504+00:00"}{"record_type": "probe_event", "rank": 14, "pid": 1435, "index": 36, "action": "irecv_enter", "transfer_round": 1, "monotonic_ns": 40022109576475, "utc_time": "2026-10-27T04:47:54.041538+00:00"}
+{"record_type": "probe_event", "rank": 9, "pid": 1430, "index": 35, "action": "transfer_round_start", "transfer_round": 1, "monotonic_ns": 40022109531645, "utc_time": "2026-10-27T04:47:54.041495+00:00"}
+
+{"record_type": "probe_event", "rank": 13, "pid": 1434, "index": 35, "action": "transfer_round_start", "transfer_round": 1, "monotonic_ns": 40022109557225, "utc_time": "2026-10-27T04:47:54.041520+00:00"}
+
+{"record_type": "probe_event", "rank": 11, "pid": 1432, "index": 36, "action": "irecv_enter", "transfer_round": 1, "monotonic_ns": 40022109606256, "utc_time": "2026-10-27T04:47:54.041568+00:00"}
+{"record_type": "probe_event", "rank": 15, "pid": 1436, "index": 36, "action": "irecv_enter", "transfer_round": 1, "monotonic_ns": 40022109623696, "utc_time": "2026-10-27T04:47:54.041585+00:00"}
+{"record_type": "probe_event", "rank": 9, "pid": 1430, "index": 36, "action": "irecv_enter", "transfer_round": 1, "monotonic_ns": 40022109633156, "utc_time": "2026-10-27T04:47:54.041595+00:00"}
+{"record_type": "probe_event", "rank": 13, "pid": 1434, "index": 36, "action": "irecv_enter", "transfer_round": 1, "monotonic_ns": 40022109638636, "utc_time": "2026-10-27T04:47:54.041600+00:00"}
+{"record_type": "probe_event", "rank": 4, "pid": 1425, "index": 33, "action": "transfer_round_start", "transfer_round": 1, "monotonic_ns": 40022109544605, "utc_time": "2026-10-27T04:47:54.041513+00:00"}
+{"record_type": "probe_event", "rank": 2, "pid": 1423, "index": 33, "action": "transfer_round_start", "transfer_round": 1, "monotonic_ns": 40022109545545, "utc_time": "2026-10-27T04:47:54.041516+00:00"}{"record_type": "probe_event", "rank": 3, "pid": 1424, "index": 33, "action": "transfer_round_start", "transfer_round": 1, "monotonic_ns": 40022109591675, "utc_time": "2026-10-27T04:47:54.041558+00:00"}
+
+{"record_type": "probe_event", "rank": 6, "pid": 1427, "index": 33, "action": "transfer_round_start", "transfer_round": 1, "monotonic_ns": 40022109590065, "utc_time": "2026-10-27T04:47:54.041558+00:00"}
+{"record_type": "probe_event", "rank": 10, "pid": 1431, "index": 35, "action": "transfer_round_start", "transfer_round": 1, "monotonic_ns": 40022109552365, "utc_time": "2026-10-27T04:47:54.041522+00:00"}
+{"record_type": "probe_event", "rank": 7, "pid": 1428, "index": 33, "action": "transfer_round_start", "transfer_round": 1, "monotonic_ns": 40022109594765, "utc_time": "2026-10-27T04:47:54.041565+00:00"}
+{"record_type": "probe_event", "rank": 1, "pid": 1422, "index": 33, "action": "transfer_round_start", "transfer_round": 1, "monotonic_ns": 40022109596046, "utc_time": "2026-10-27T04:47:54.041565+00:00"}
+{"record_type": "probe_event", "rank": 10, "pid": 1431, "index": 36, "action": "irecv_enter", "transfer_round": 1, "monotonic_ns": 40022109751147, "utc_time": "2026-10-27T04:47:54.041714+00:00"}
+{"record_type": "probe_event", "rank": 5, "pid": 1426, "index": 33, "action": "transfer_round_start", "transfer_round": 1, "monotonic_ns": 40022109649756, "utc_time": "2026-10-27T04:47:54.041618+00:00"}
+{"record_type": "probe_event", "rank": 0, "pid": 1421, "index": 34, "action": "front_placeholder_tensor_ready", "transfer_round": 1, "monotonic_ns": 40022110163340, "utc_time": "2026-10-27T04:47:54.042126+00:00"}
+{"record_type": "probe_event", "rank": 0, "pid": 1421, "index": 35, "action": "isend_enter", "transfer_round": 1, "monotonic_ns": 40022110244141, "utc_time": "2026-10-27T04:47:54.042206+00:00"}
+{"record_type": "probe_event", "rank": 3, "pid": 1424, "index": 34, "action": "front_placeholder_tensor_ready", "transfer_round": 1, "monotonic_ns": 40022110322781, "utc_time": "2026-10-27T04:47:54.042285+00:00"}{"record_type": "probe_event", "rank": 2, "pid": 1423, "index": 34, "action": "front_placeholder_tensor_ready", "transfer_round": 1, "monotonic_ns": 40022110338531, "utc_time": "2026-10-27T04:47:54.042302+00:00"}
+
+{"record_type": "probe_event", "rank": 2, "pid": 1423, "index": 35, "action": "isend_enter", "transfer_round": 1, "monotonic_ns": 40022110407472, "utc_time": "2026-10-27T04:47:54.042369+00:00"}
+{"record_type": "probe_event", "rank": 3, "pid": 1424, "index": 35, "action": "isend_enter", "transfer_round": 1, "monotonic_ns": 40022110407222, "utc_time": "2026-10-27T04:47:54.042369+00:00"}
+{"record_type": "probe_event", "rank": 4, "pid": 1425, "index": 34, "action": "front_placeholder_tensor_ready", "transfer_round": 1, "monotonic_ns": 40022110402932, "utc_time": "2026-10-27T04:47:54.042366+00:00"}
+{"record_type": "probe_event", "rank": 4, "pid": 1425, "index": 35, "action": "isend_enter", "transfer_round": 1, "monotonic_ns": 40022110501783, "utc_time": "2026-10-27T04:47:54.042464+00:00"}
+{"record_type": "probe_event", "rank": 1, "pid": 1422, "index": 34, "action": "front_placeholder_tensor_ready", "transfer_round": 1, "monotonic_ns": 40022110446122, "utc_time": "2026-10-27T04:47:54.042412+00:00"}
+{"record_type": "probe_event", "rank": 1, "pid": 1422, "index": 35, "action": "isend_enter", "transfer_round": 1, "monotonic_ns": 40022110570343, "utc_time": "2026-10-27T04:47:54.042532+00:00"}
+{"record_type": "probe_event", "rank": 7, "pid": 1428, "index": 34, "action": "front_placeholder_tensor_ready", "transfer_round": 1, "monotonic_ns": 40022110599963, "utc_time": "2026-10-27T04:47:54.042566+00:00"}
+{"record_type": "probe_event", "rank": 6, "pid": 1427, "index": 34, "action": "front_placeholder_tensor_ready", "transfer_round": 1, "monotonic_ns": 40022110607514, "utc_time": "2026-10-27T04:47:54.042575+00:00"}
+{"record_type": "probe_event", "rank": 7, "pid": 1428, "index": 35, "action": "isend_enter", "transfer_round": 1, "monotonic_ns": 40022110742025, "utc_time": "2026-10-27T04:47:54.042704+00:00"}
+{"record_type": "probe_event", "rank": 5, "pid": 1426, "index": 34, "action": "front_placeholder_tensor_ready", "transfer_round": 1, "monotonic_ns": 40022110720784, "utc_time": "2026-10-27T04:47:54.042685+00:00"}{"record_type": "probe_event", "rank": 6, "pid": 1427, "index": 35, "action": "isend_enter", "transfer_round": 1, "monotonic_ns": 40022110767295, "utc_time": "2026-10-27T04:47:54.042730+00:00"}
+
+{"record_type": "probe_event", "rank": 5, "pid": 1426, "index": 35, "action": "isend_enter", "transfer_round": 1, "monotonic_ns": 40022110812595, "utc_time": "2026-10-27T04:47:54.042774+00:00"}
+{"record_type": "probe_event", "rank": 0, "pid": 1421, "index": 36, "action": "isend_method_returned", "transfer_round": 1, "monotonic_ns": 40022111052437, "utc_time": "2026-10-27T04:47:54.043015+00:00", "handle_count": 1}
+{"record_type": "probe_event", "rank": 3, "pid": 1424, "index": 36, "action": "isend_method_returned", "transfer_round": 1, "monotonic_ns": 40022111193088, "utc_time": "2026-10-27T04:47:54.043156+00:00", "handle_count": 1}{"record_type": "probe_event", "rank": 2, "pid": 1423, "index": 36, "action": "isend_method_returned", "transfer_round": 1, "monotonic_ns": 40022111204558, "utc_time": "2026-10-27T04:47:54.043167+00:00", "handle_count": 1}
+
+{"record_type": "probe_event", "rank": 0, "pid": 1421, "index": 37, "action": "queries_after_method_return", "transfer_round": 1, "monotonic_ns": 40022111228268, "utc_time": "2026-10-27T04:47:54.043190+00:00", "work_query": [false], "local_stream_event_query": false}
+{"record_type": "probe_event", "rank": 11, "pid": 1432, "index": 37, "action": "irecv_method_returned", "transfer_round": 1, "monotonic_ns": 40022111266459, "utc_time": "2026-10-27T04:47:54.043229+00:00", "handle_count": 1, "postprocess_count": 1}
+{"record_type": "probe_event", "rank": 1, "pid": 1422, "index": 36, "action": "isend_method_returned", "transfer_round": 1, "monotonic_ns": 40022111264939, "utc_time": "2026-10-27T04:47:54.043228+00:00", "handle_count": 1}
+{"record_type": "probe_event", "rank": 8, "pid": 1429, "index": 37, "action": "irecv_method_returned", "transfer_round": 1, "monotonic_ns": 40022111315509, "utc_time": "2026-10-27T04:47:54.043279+00:00", "handle_count": 1, "postprocess_count": 1}{"record_type": "probe_event", "rank": 2, "pid": 1423, "index": 37, "action": "queries_after_method_return", "transfer_round": 1, "monotonic_ns": 40022111349749, "utc_time": "2026-10-27T04:47:54.043311+00:00", "work_query": [false], "local_stream_event_query": false}
+
+{"record_type": "probe_event", "rank": 3, "pid": 1424, "index": 37, "action": "queries_after_method_return", "transfer_round": 1, "monotonic_ns": 40022111361980, "utc_time": "2026-10-27T04:47:54.043324+00:00", "work_query": [false], "local_stream_event_query": false}
+{"record_type": "probe_event", "rank": 4, "pid": 1425, "index": 36, "action": "isend_method_returned", "transfer_round": 1, "monotonic_ns": 40022111367360, "utc_time": "2026-10-27T04:47:54.043331+00:00", "handle_count": 1}
+{"record_type": "probe_event", "rank": 12, "pid": 1433, "index": 37, "action": "irecv_method_returned", "transfer_round": 1, "monotonic_ns": 40022111415140, "utc_time": "2026-10-27T04:47:54.043378+00:00", "handle_count": 1, "postprocess_count": 1}{"record_type": "probe_event", "rank": 1, "pid": 1422, "index": 37, "action": "queries_after_method_return", "transfer_round": 1, "monotonic_ns": 40022111443950, "utc_time": "2026-10-27T04:47:54.043406+00:00", "work_query": [false], "local_stream_event_query": false}
+
+{"record_type": "probe_event", "rank": 9, "pid": 1430, "index": 37, "action": "irecv_method_returned", "transfer_round": 1, "monotonic_ns": 40022111435520, "utc_time": "2026-10-27T04:47:54.043399+00:00", "handle_count": 1, "postprocess_count": 1}
+{"record_type": "probe_event", "rank": 6, "pid": 1427, "index": 36, "action": "isend_method_returned", "transfer_round": 1, "monotonic_ns": 40022111511461, "utc_time": "2026-10-27T04:47:54.043475+00:00", "handle_count": 1}
+{"record_type": "probe_event", "rank": 4, "pid": 1425, "index": 37, "action": "queries_after_method_return", "transfer_round": 1, "monotonic_ns": 40022111577701, "utc_time": "2026-10-27T04:47:54.043540+00:00", "work_query": [false], "local_stream_event_query": false}{"record_type": "probe_event", "rank": 11, "pid": 1432, "index": 38, "action": "queries_after_method_return", "transfer_round": 1, "monotonic_ns": 40022111563021, "utc_time": "2026-10-27T04:47:54.043525+00:00", "work_query": [false], "local_stream_event_query": false}
+
+{"record_type": "probe_event", "rank": 10, "pid": 1431, "index": 37, "action": "irecv_method_returned", "transfer_round": 1, "monotonic_ns": 40022111530951, "utc_time": "2026-10-27T04:47:54.043496+00:00", "handle_count": 1, "postprocess_count": 1}
+{"record_type": "probe_event", "rank": 8, "pid": 1429, "index": 38, "action": "queries_after_method_return", "transfer_round": 1, "monotonic_ns": 40022111607892, "utc_time": "2026-10-27T04:47:54.043570+00:00", "work_query": [false], "local_stream_event_query": false}
+{"record_type": "probe_event", "rank": 5, "pid": 1426, "index": 36, "action": "isend_method_returned", "transfer_round": 1, "monotonic_ns": 40022111684982, "utc_time": "2026-10-27T04:47:54.043648+00:00", "handle_count": 1}{"record_type": "probe_event", "rank": 6, "pid": 1427, "index": 37, "action": "queries_after_method_return", "transfer_round": 1, "monotonic_ns": 40022111710432, "utc_time": "2026-10-27T04:47:54.043673+00:00", "work_query": [false], "local_stream_event_query": false}{"record_type": "probe_event", "rank": 14, "pid": 1435, "index": 37, "action": "irecv_method_returned", "transfer_round": 1, "monotonic_ns": 40022111697462, "utc_time": "2026-10-27T04:47:54.043660+00:00", "handle_count": 1, "postprocess_count": 1}
+
+
+{"record_type": "probe_event", "rank": 12, "pid": 1433, "index": 38, "action": "queries_after_method_return", "transfer_round": 1, "monotonic_ns": 40022111697952, "utc_time": "2026-10-27T04:47:54.043660+00:00", "work_query": [false], "local_stream_event_query": false}
+{"record_type": "probe_event", "rank": 9, "pid": 1430, "index": 38, "action": "queries_after_method_return", "transfer_round": 1, "monotonic_ns": 40022111716162, "utc_time": "2026-10-27T04:47:54.043679+00:00", "work_query": [false], "local_stream_event_query": false}
+{"record_type": "probe_event", "rank": 7, "pid": 1428, "index": 36, "action": "isend_method_returned", "transfer_round": 1, "monotonic_ns": 40022111686992, "utc_time": "2026-10-27T04:47:54.043653+00:00", "handle_count": 1}{"record_type": "probe_event", "rank": 15, "pid": 1436, "index": 37, "action": "irecv_method_returned", "transfer_round": 1, "monotonic_ns": 40022111721342, "utc_time": "2026-10-27T04:47:54.043684+00:00", "handle_count": 1, "postprocess_count": 1}
+
+{"record_type": "probe_event", "rank": 5, "pid": 1426, "index": 37, "action": "queries_after_method_return", "transfer_round": 1, "monotonic_ns": 40022111864304, "utc_time": "2026-10-27T04:47:54.043826+00:00", "work_query": [false], "local_stream_event_query": false}
+{"record_type": "probe_event", "rank": 7, "pid": 1428, "index": 37, "action": "queries_after_method_return", "transfer_round": 1, "monotonic_ns": 40022111944254, "utc_time": "2026-10-27T04:47:54.043906+00:00", "work_query": [false], "local_stream_event_query": false}
+{"record_type": "probe_event", "rank": 10, "pid": 1431, "index": 38, "action": "queries_after_method_return", "transfer_round": 1, "monotonic_ns": 40022111972964, "utc_time": "2026-10-27T04:47:54.043936+00:00", "work_query": [false], "local_stream_event_query": false}
+{"record_type": "probe_event", "rank": 14, "pid": 1435, "index": 38, "action": "queries_after_method_return", "transfer_round": 1, "monotonic_ns": 40022111998735, "utc_time": "2026-10-27T04:47:54.043961+00:00", "work_query": [false], "local_stream_event_query": false}
+{"record_type": "probe_event", "rank": 13, "pid": 1434, "index": 37, "action": "irecv_method_returned", "transfer_round": 1, "monotonic_ns": 40022112066025, "utc_time": "2026-10-27T04:47:54.044029+00:00", "handle_count": 1, "postprocess_count": 1}
+{"record_type": "probe_event", "rank": 15, "pid": 1436, "index": 38, "action": "queries_after_method_return", "transfer_round": 1, "monotonic_ns": 40022112119366, "utc_time": "2026-10-27T04:47:54.044081+00:00", "work_query": [false], "local_stream_event_query": false}
+{"record_type": "probe_event", "rank": 13, "pid": 1434, "index": 38, "action": "queries_after_method_return", "transfer_round": 1, "monotonic_ns": 40022112383738, "utc_time": "2026-10-27T04:47:54.044345+00:00", "work_query": [false], "local_stream_event_query": false}
+{"record_type": "probe_event", "rank": 7, "pid": 1428, "index": 38, "action": "bounded_work_query_finished", "transfer_round": 1, "monotonic_ns": 40022114213652, "utc_time": "2026-10-27T04:47:54.046177+00:00", "consensus_ready": true, "poll_rounds": 2}
+{"record_type": "probe_event", "rank": 6, "pid": 1427, "index": 38, "action": "bounded_work_query_finished", "transfer_round": 1, "monotonic_ns": 40022114270103, "utc_time": "2026-10-27T04:47:54.046233+00:00", "consensus_ready": true, "poll_rounds": 2}{"record_type": "probe_event", "rank": 0, "pid": 1421, "index": 38, "action": "bounded_work_query_finished", "transfer_round": 1, "monotonic_ns": 40022114214552, "utc_time": "2026-10-27T04:47:54.046182+00:00", "consensus_ready": true, "poll_rounds": 2}
+
+{"record_type": "probe_event", "rank": 7, "pid": 1428, "index": 39, "action": "work_wait_enter", "transfer_round": 1, "monotonic_ns": 40022114338993, "utc_time": "2026-10-27T04:47:54.046301+00:00"}
+{"record_type": "probe_event", "rank": 6, "pid": 1427, "index": 39, "action": "work_wait_enter", "transfer_round": 1, "monotonic_ns": 40022114368753, "utc_time": "2026-10-27T04:47:54.046331+00:00"}{"record_type": "probe_event", "rank": 0, "pid": 1421, "index": 39, "action": "work_wait_enter", "transfer_round": 1, "monotonic_ns": 40022114375264, "utc_time": "2026-10-27T04:47:54.046337+00:00"}
+
+{"record_type": "probe_event", "rank": 5, "pid": 1426, "index": 38, "action": "bounded_work_query_finished", "transfer_round": 1, "monotonic_ns": 40022114361243, "utc_time": "2026-10-27T04:47:54.046323+00:00", "consensus_ready": true, "poll_rounds": 2}
+{"record_type": "probe_event", "rank": 5, "pid": 1426, "index": 39, "action": "work_wait_enter", "transfer_round": 1, "monotonic_ns": 40022114435134, "utc_time": "2026-10-27T04:47:54.046396+00:00"}
+{"record_type": "probe_event", "rank": 3, "pid": 1424, "index": 38, "action": "bounded_work_query_finished", "transfer_round": 1, "monotonic_ns": 40022114427644, "utc_time": "2026-10-27T04:47:54.046390+00:00", "consensus_ready": true, "poll_rounds": 2}
+{"record_type": "probe_event", "rank": 4, "pid": 1425, "index": 38, "action": "bounded_work_query_finished", "transfer_round": 1, "monotonic_ns": 40022114389724, "utc_time": "2026-10-27T04:47:54.046356+00:00", "consensus_ready": true, "poll_rounds": 2}{"record_type": "probe_event", "rank": 3, "pid": 1424, "index": 39, "action": "work_wait_enter", "transfer_round": 1, "monotonic_ns": 40022114515205, "utc_time": "2026-10-27T04:47:54.046477+00:00"}
+
+{"record_type": "probe_event", "rank": 4, "pid": 1425, "index": 39, "action": "work_wait_enter", "transfer_round": 1, "monotonic_ns": 40022114566005, "utc_time": "2026-10-27T04:47:54.046528+00:00"}{"record_type": "probe_event", "rank": 7, "pid": 1428, "index": 40, "action": "work_wait_returned", "transfer_round": 1, "monotonic_ns": 40022114569565, "utc_time": "2026-10-27T04:47:54.046531+00:00", "work_query": [true]}
+{"record_type": "probe_event", "rank": 6, "pid": 1427, "index": 40, "action": "work_wait_returned", "transfer_round": 1, "monotonic_ns": 40022114574635, "utc_time": "2026-10-27T04:47:54.046537+00:00", "work_query": [true]}
+
+{"record_type": "probe_event", "rank": 5, "pid": 1426, "index": 40, "action": "work_wait_returned", "transfer_round": 1, "monotonic_ns": 40022114604895, "utc_time": "2026-10-27T04:47:54.046566+00:00", "work_query": [true]}
+{"record_type": "probe_event", "rank": 1, "pid": 1422, "index": 38, "action": "bounded_work_query_finished", "transfer_round": 1, "monotonic_ns": 40022114545035, "utc_time": "2026-10-27T04:47:54.046509+00:00", "consensus_ready": true, "poll_rounds": 2}
+{"record_type": "probe_event", "rank": 2, "pid": 1423, "index": 38, "action": "bounded_work_query_finished", "transfer_round": 1, "monotonic_ns": 40022114502255, "utc_time": "2026-10-27T04:47:54.046470+00:00", "consensus_ready": true, "poll_rounds": 2}{"record_type": "probe_event", "rank": 0, "pid": 1421, "index": 40, "action": "work_wait_returned", "transfer_round": 1, "monotonic_ns": 40022114632456, "utc_time": "2026-10-27T04:47:54.046595+00:00", "work_query": [true]}
+{"record_type": "probe_event", "rank": 1, "pid": 1422, "index": 39, "action": "work_wait_enter", "transfer_round": 1, "monotonic_ns": 40022114655986, "utc_time": "2026-10-27T04:47:54.046617+00:00"}
+
+{"record_type": "probe_event", "rank": 3, "pid": 1424, "index": 40, "action": "work_wait_returned", "transfer_round": 1, "monotonic_ns": 40022114695496, "utc_time": "2026-10-27T04:47:54.046657+00:00", "work_query": [true]}
+{"record_type": "probe_event", "rank": 2, "pid": 1423, "index": 39, "action": "work_wait_enter", "transfer_round": 1, "monotonic_ns": 40022114695726, "utc_time": "2026-10-27T04:47:54.046658+00:00"}{"record_type": "probe_event", "rank": 7, "pid": 1428, "index": 41, "action": "comm_fence_recorded", "transfer_round": 1, "monotonic_ns": 40022114718236, "utc_time": "2026-10-27T04:47:54.046680+00:00", "event_query": false}{"record_type": "probe_event", "rank": 6, "pid": 1427, "index": 41, "action": "comm_fence_recorded", "transfer_round": 1, "monotonic_ns": 40022114721726, "utc_time": "2026-10-27T04:47:54.046683+00:00", "event_query": false}
+{"record_type": "probe_event", "rank": 5, "pid": 1426, "index": 41, "action": "comm_fence_recorded", "transfer_round": 1, "monotonic_ns": 40022114722076, "utc_time": "2026-10-27T04:47:54.046684+00:00", "event_query": false}
+
+
+{"record_type": "probe_event", "rank": 5, "pid": 1426, "index": 42, "action": "comm_fence_known_complete", "transfer_round": 1, "monotonic_ns": 40022114785077, "utc_time": "2026-10-27T04:47:54.046746+00:00", "event_query": true}
+{"record_type": "probe_event", "rank": 7, "pid": 1428, "index": 42, "action": "comm_fence_known_complete", "transfer_round": 1, "monotonic_ns": 40022114793987, "utc_time": "2026-10-27T04:47:54.046755+00:00", "event_query": true}
+{"record_type": "probe_event", "rank": 6, "pid": 1427, "index": 42, "action": "comm_fence_known_complete", "transfer_round": 1, "monotonic_ns": 40022114801177, "utc_time": "2026-10-27T04:47:54.046763+00:00", "event_query": true}
+{"record_type": "probe_event", "rank": 3, "pid": 1424, "index": 41, "action": "comm_fence_recorded", "transfer_round": 1, "monotonic_ns": 40022114810777, "utc_time": "2026-10-27T04:47:54.046772+00:00", "event_query": false}
+{"record_type": "probe_event", "rank": 4, "pid": 1425, "index": 40, "action": "work_wait_returned", "transfer_round": 1, "monotonic_ns": 40022114826487, "utc_time": "2026-10-27T04:47:54.046789+00:00", "work_query": [true]}
+{"record_type": "probe_event", "rank": 3, "pid": 1424, "index": 42, "action": "comm_fence_known_complete", "transfer_round": 1, "monotonic_ns": 40022114867177, "utc_time": "2026-10-27T04:47:54.046828+00:00", "event_query": true}
+{"record_type": "probe_event", "rank": 0, "pid": 1421, "index": 41, "action": "comm_fence_recorded", "transfer_round": 1, "monotonic_ns": 40022114878568, "utc_time": "2026-10-27T04:47:54.046840+00:00", "event_query": false}
+{"record_type": "probe_event", "rank": 0, "pid": 1421, "index": 42, "action": "comm_fence_known_complete", "transfer_round": 1, "monotonic_ns": 40022114954698, "utc_time": "2026-10-27T04:47:54.046916+00:00", "event_query": true}{"record_type": "probe_event", "rank": 1, "pid": 1422, "index": 40, "action": "work_wait_returned", "transfer_round": 1, "monotonic_ns": 40022114945418, "utc_time": "2026-10-27T04:47:54.046908+00:00", "work_query": [true]}
+
+{"record_type": "probe_event", "rank": 8, "pid": 1429, "index": 39, "action": "bounded_work_query_finished", "transfer_round": 1, "monotonic_ns": 40022115009759, "utc_time": "2026-10-27T04:47:54.046972+00:00", "consensus_ready": true, "poll_rounds": 2}
+{"record_type": "probe_event", "rank": 2, "pid": 1423, "index": 40, "action": "work_wait_returned", "transfer_round": 1, "monotonic_ns": 40022115012799, "utc_time": "2026-10-27T04:47:54.046976+00:00", "work_query": [true]}
+{"record_type": "probe_event", "rank": 15, "pid": 1436, "index": 39, "action": "bounded_work_query_finished", "transfer_round": 1, "monotonic_ns": 40022115026289, "utc_time": "2026-10-27T04:47:54.046989+00:00", "consensus_ready": true, "poll_rounds": 2}
+{"record_type": "probe_event", "rank": 4, "pid": 1425, "index": 41, "action": "comm_fence_recorded", "transfer_round": 1, "monotonic_ns": 40022115053099, "utc_time": "2026-10-27T04:47:54.047015+00:00", "event_query": false}
+{"record_type": "probe_event", "rank": 8, "pid": 1429, "index": 40, "action": "work_wait_enter", "transfer_round": 1, "monotonic_ns": 40022115070299, "utc_time": "2026-10-27T04:47:54.047032+00:00"}
+{"record_type": "probe_event", "rank": 14, "pid": 1435, "index": 39, "action": "bounded_work_query_finished", "transfer_round": 1, "monotonic_ns": 40022115072109, "utc_time": "2026-10-27T04:47:54.047034+00:00", "consensus_ready": true, "poll_rounds": 2}{"record_type": "probe_event", "rank": 15, "pid": 1436, "index": 40, "action": "work_wait_enter", "transfer_round": 1, "monotonic_ns": 40022115090769, "utc_time": "2026-10-27T04:47:54.047052+00:00"}
+
+{"record_type": "probe_event", "rank": 4, "pid": 1425, "index": 42, "action": "comm_fence_known_complete", "transfer_round": 1, "monotonic_ns": 40022115122859, "utc_time": "2026-10-27T04:47:54.047084+00:00", "event_query": true}{"record_type": "probe_event", "rank": 13, "pid": 1434, "index": 39, "action": "bounded_work_query_finished", "transfer_round": 1, "monotonic_ns": 40022115093939, "utc_time": "2026-10-27T04:47:54.047056+00:00", "consensus_ready": true, "poll_rounds": 2}
+
+{"record_type": "probe_event", "rank": 14, "pid": 1435, "index": 40, "action": "work_wait_enter", "transfer_round": 1, "monotonic_ns": 40022115134570, "utc_time": "2026-10-27T04:47:54.047096+00:00"}
+{"record_type": "probe_event", "rank": 8, "pid": 1429, "index": 41, "action": "work_wait_returned", "transfer_round": 1, "monotonic_ns": 40022115149130, "utc_time": "2026-10-27T04:47:54.047111+00:00", "work_query": [true]}
+{"record_type": "probe_event", "rank": 13, "pid": 1434, "index": 40, "action": "work_wait_enter", "transfer_round": 1, "monotonic_ns": 40022115158550, "utc_time": "2026-10-27T04:47:54.047120+00:00"}
+{"record_type": "probe_event", "rank": 1, "pid": 1422, "index": 41, "action": "comm_fence_recorded", "transfer_round": 1, "monotonic_ns": 40022115189380, "utc_time": "2026-10-27T04:47:54.047151+00:00", "event_query": false}
+{"record_type": "probe_event", "rank": 15, "pid": 1436, "index": 41, "action": "work_wait_returned", "transfer_round": 1, "monotonic_ns": 40022115207200, "utc_time": "2026-10-27T04:47:54.047169+00:00", "work_query": [true]}
+{"record_type": "probe_event", "rank": 14, "pid": 1435, "index": 41, "action": "work_wait_returned", "transfer_round": 1, "monotonic_ns": 40022115225290, "utc_time": "2026-10-27T04:47:54.047187+00:00", "work_query": [true]}
+{"record_type": "probe_event", "rank": 13, "pid": 1434, "index": 41, "action": "work_wait_returned", "transfer_round": 1, "monotonic_ns": 40022115242040, "utc_time": "2026-10-27T04:47:54.047204+00:00", "work_query": [true]}{"record_type": "probe_event", "rank": 8, "pid": 1429, "index": 42, "action": "comm_fence_recorded", "transfer_round": 1, "monotonic_ns": 40022115252421, "utc_time": "2026-10-27T04:47:54.047214+00:00", "event_query": false}{"record_type": "probe_event", "rank": 1, "pid": 1422, "index": 42, "action": "comm_fence_known_complete", "transfer_round": 1, "monotonic_ns": 40022115258351, "utc_time": "2026-10-27T04:47:54.047220+00:00", "event_query": true}
+
+
+{"record_type": "probe_event", "rank": 2, "pid": 1423, "index": 41, "action": "comm_fence_recorded", "transfer_round": 1, "monotonic_ns": 40022115274171, "utc_time": "2026-10-27T04:47:54.047237+00:00", "event_query": false}
+{"record_type": "probe_event", "rank": 12, "pid": 1433, "index": 39, "action": "bounded_work_query_finished", "transfer_round": 1, "monotonic_ns": 40022115286251, "utc_time": "2026-10-27T04:47:54.047249+00:00", "consensus_ready": true, "poll_rounds": 2}
+{"record_type": "probe_event", "rank": 8, "pid": 1429, "index": 43, "action": "comm_fence_known_complete", "transfer_round": 1, "monotonic_ns": 40022115322441, "utc_time": "2026-10-27T04:47:54.047284+00:00", "event_query": true}{"record_type": "probe_event", "rank": 15, "pid": 1436, "index": 42, "action": "comm_fence_recorded", "transfer_round": 1, "monotonic_ns": 40022115323871, "utc_time": "2026-10-27T04:47:54.047285+00:00", "event_query": false}
+{"record_type": "probe_event", "rank": 14, "pid": 1435, "index": 42, "action": "comm_fence_recorded", "transfer_round": 1, "monotonic_ns": 40022115331661, "utc_time": "2026-10-27T04:47:54.047293+00:00", "event_query": false}
+
+{"record_type": "probe_event", "rank": 11, "pid": 1432, "index": 39, "action": "bounded_work_query_finished", "transfer_round": 1, "monotonic_ns": 40022115299201, "utc_time": "2026-10-27T04:47:54.047262+00:00", "consensus_ready": true, "poll_rounds": 2}
+{"record_type": "probe_event", "rank": 12, "pid": 1433, "index": 40, "action": "work_wait_enter", "transfer_round": 1, "monotonic_ns": 40022115350191, "utc_time": "2026-10-27T04:47:54.047312+00:00"}
+{"record_type": "probe_event", "rank": 2, "pid": 1423, "index": 42, "action": "comm_fence_known_complete", "transfer_round": 1, "monotonic_ns": 40022115356641, "utc_time": "2026-10-27T04:47:54.047318+00:00", "event_query": true}
+{"record_type": "probe_event", "rank": 11, "pid": 1432, "index": 40, "action": "work_wait_enter", "transfer_round": 1, "monotonic_ns": 40022115368821, "utc_time": "2026-10-27T04:47:54.047330+00:00"}
+{"record_type": "probe_event", "rank": 14, "pid": 1435, "index": 43, "action": "comm_fence_known_complete", "transfer_round": 1, "monotonic_ns": 40022115396202, "utc_time": "2026-10-27T04:47:54.047358+00:00", "event_query": true}
+{"record_type": "probe_event", "rank": 12, "pid": 1433, "index": 41, "action": "work_wait_returned", "transfer_round": 1, "monotonic_ns": 40022115425102, "utc_time": "2026-10-27T04:47:54.047387+00:00", "work_query": [true]}{"record_type": "probe_event", "rank": 15, "pid": 1436, "index": 43, "action": "comm_fence_known_complete", "transfer_round": 1, "monotonic_ns": 40022115432002, "utc_time": "2026-10-27T04:47:54.047393+00:00", "event_query": true}
+
+{"record_type": "probe_event", "rank": 13, "pid": 1434, "index": 42, "action": "comm_fence_recorded", "transfer_round": 1, "monotonic_ns": 40022115439512, "utc_time": "2026-10-27T04:47:54.047401+00:00", "event_query": false}
+{"record_type": "probe_event", "rank": 10, "pid": 1431, "index": 39, "action": "bounded_work_query_finished", "transfer_round": 1, "monotonic_ns": 40022115384702, "utc_time": "2026-10-27T04:47:54.047348+00:00", "consensus_ready": true, "poll_rounds": 2}{"record_type": "probe_event", "rank": 11, "pid": 1432, "index": 41, "action": "work_wait_returned", "transfer_round": 1, "monotonic_ns": 40022115448032, "utc_time": "2026-10-27T04:47:54.047410+00:00", "work_query": [true]}
+
+{"record_type": "probe_event", "rank": 10, "pid": 1431, "index": 40, "action": "work_wait_enter", "transfer_round": 1, "monotonic_ns": 40022115489712, "utc_time": "2026-10-27T04:47:54.047452+00:00"}{"record_type": "probe_event", "rank": 13, "pid": 1434, "index": 43, "action": "comm_fence_known_complete", "transfer_round": 1, "monotonic_ns": 40022115498572, "utc_time": "2026-10-27T04:47:54.047460+00:00", "event_query": true}
+
+{"record_type": "probe_event", "rank": 9, "pid": 1430, "index": 39, "action": "bounded_work_query_finished", "transfer_round": 1, "monotonic_ns": 40022115439802, "utc_time": "2026-10-27T04:47:54.047405+00:00", "consensus_ready": true, "poll_rounds": 2}
+{"record_type": "probe_event", "rank": 12, "pid": 1433, "index": 42, "action": "comm_fence_recorded", "transfer_round": 1, "monotonic_ns": 40022115549803, "utc_time": "2026-10-27T04:47:54.047511+00:00", "event_query": false}
+{"record_type": "probe_event", "rank": 9, "pid": 1430, "index": 40, "action": "work_wait_enter", "transfer_round": 1, "monotonic_ns": 40022115554583, "utc_time": "2026-10-27T04:47:54.047516+00:00"}
+{"record_type": "probe_event", "rank": 11, "pid": 1432, "index": 42, "action": "comm_fence_recorded", "transfer_round": 1, "monotonic_ns": 40022115577533, "utc_time": "2026-10-27T04:47:54.047539+00:00", "event_query": false}
+{"record_type": "probe_event", "rank": 12, "pid": 1433, "index": 43, "action": "comm_fence_known_complete", "transfer_round": 1, "monotonic_ns": 40022115603823, "utc_time": "2026-10-27T04:47:54.047565+00:00", "event_query": true}
+{"record_type": "probe_event", "rank": 10, "pid": 1431, "index": 41, "action": "work_wait_returned", "transfer_round": 1, "monotonic_ns": 40022115594663, "utc_time": "2026-10-27T04:47:54.047557+00:00", "work_query": [true]}
+{"record_type": "probe_event", "rank": 11, "pid": 1432, "index": 43, "action": "comm_fence_known_complete", "transfer_round": 1, "monotonic_ns": 40022115630294, "utc_time": "2026-10-27T04:47:54.047592+00:00", "event_query": true}
+{"record_type": "probe_event", "rank": 9, "pid": 1430, "index": 41, "action": "work_wait_returned", "transfer_round": 1, "monotonic_ns": 40022115686154, "utc_time": "2026-10-27T04:47:54.047648+00:00", "work_query": [true]}
+{"record_type": "probe_event", "rank": 2, "pid": 1423, "index": 43, "action": "transfer_round_complete", "transfer_round": 1, "monotonic_ns": 40022115732984, "utc_time": "2026-10-27T04:47:54.047695+00:00"}{"record_type": "probe_event", "rank": 6, "pid": 1427, "index": 43, "action": "transfer_round_complete", "transfer_round": 1, "monotonic_ns": 40022115743354, "utc_time": "2026-10-27T04:47:54.047705+00:00"}
+
+{"record_type": "probe_event", "rank": 10, "pid": 1431, "index": 42, "action": "comm_fence_recorded", "transfer_round": 1, "monotonic_ns": 40022115761865, "utc_time": "2026-10-27T04:47:54.047723+00:00", "event_query": false}
+{"record_type": "probe_event", "rank": 10, "pid": 1431, "index": 43, "action": "comm_fence_known_complete", "transfer_round": 1, "monotonic_ns": 40022115824735, "utc_time": "2026-10-27T04:47:54.047786+00:00", "event_query": true}
+{"record_type": "probe_event", "rank": 4, "pid": 1425, "index": 43, "action": "transfer_round_complete", "transfer_round": 1, "monotonic_ns": 40022115822155, "utc_time": "2026-10-27T04:47:54.047784+00:00"}
+{"record_type": "probe_event", "rank": 9, "pid": 1430, "index": 42, "action": "comm_fence_recorded", "transfer_round": 1, "monotonic_ns": 40022115845875, "utc_time": "2026-10-27T04:47:54.047808+00:00", "event_query": false}{"record_type": "probe_event", "rank": 0, "pid": 1421, "index": 43, "action": "transfer_round_complete", "transfer_round": 1, "monotonic_ns": 40022115828835, "utc_time": "2026-10-27T04:47:54.047792+00:00"}
+
+{"record_type": "probe_event", "rank": 1, "pid": 1422, "index": 43, "action": "transfer_round_complete", "transfer_round": 1, "monotonic_ns": 40022115858755, "utc_time": "2026-10-27T04:47:54.047821+00:00"}
+{"record_type": "probe_event", "rank": 3, "pid": 1424, "index": 43, "action": "transfer_round_complete", "transfer_round": 1, "monotonic_ns": 40022115877865, "utc_time": "2026-10-27T04:47:54.047839+00:00"}
+{"record_type": "probe_event", "rank": 5, "pid": 1426, "index": 43, "action": "transfer_round_complete", "transfer_round": 1, "monotonic_ns": 40022115893076, "utc_time": "2026-10-27T04:47:54.047855+00:00"}
+{"record_type": "probe_event", "rank": 9, "pid": 1430, "index": 43, "action": "comm_fence_known_complete", "transfer_round": 1, "monotonic_ns": 40022115955256, "utc_time": "2026-10-27T04:47:54.047917+00:00", "event_query": true}
+{"record_type": "probe_event", "rank": 7, "pid": 1428, "index": 43, "action": "transfer_round_complete", "transfer_round": 1, "monotonic_ns": 40022115981136, "utc_time": "2026-10-27T04:47:54.047949+00:00"}
+{"record_type": "probe_event", "rank": 10, "pid": 1431, "index": 44, "action": "tp_postprocess_enter", "transfer_round": 1, "monotonic_ns": 40022116484710, "utc_time": "2026-10-27T04:47:54.048446+00:00"}
+{"record_type": "probe_event", "rank": 8, "pid": 1429, "index": 44, "action": "tp_postprocess_enter", "transfer_round": 1, "monotonic_ns": 40022116502420, "utc_time": "2026-10-27T04:47:54.048464+00:00"}{"record_type": "probe_event", "rank": 14, "pid": 1435, "index": 44, "action": "tp_postprocess_enter", "transfer_round": 1, "monotonic_ns": 40022116498300, "utc_time": "2026-10-27T04:47:54.048460+00:00"}
+
+{"record_type": "probe_event", "rank": 13, "pid": 1434, "index": 44, "action": "tp_postprocess_enter", "transfer_round": 1, "monotonic_ns": 40022116494600, "utc_time": "2026-10-27T04:47:54.048457+00:00"}{"record_type": "probe_event", "rank": 11, "pid": 1432, "index": 44, "action": "tp_postprocess_enter", "transfer_round": 1, "monotonic_ns": 40022116518611, "utc_time": "2026-10-27T04:47:54.048481+00:00"}
+{"record_type": "probe_event", "rank": 9, "pid": 1430, "index": 44, "action": "tp_postprocess_enter", "transfer_round": 1, "monotonic_ns": 40022116525771, "utc_time": "2026-10-27T04:47:54.048487+00:00"}
+{"record_type": "probe_event", "rank": 15, "pid": 1436, "index": 44, "action": "tp_postprocess_enter", "transfer_round": 1, "monotonic_ns": 40022116529051, "utc_time": "2026-10-27T04:47:54.048491+00:00"}
+
+{"record_type": "probe_event", "rank": 12, "pid": 1433, "index": 44, "action": "tp_postprocess_enter", "transfer_round": 1, "monotonic_ns": 40022116576081, "utc_time": "2026-10-27T04:47:54.048545+00:00"}
+{"record_type": "probe_event", "rank": 8, "pid": 1429, "index": 45, "action": "tp_postprocess_method_returned", "transfer_round": 1, "monotonic_ns": 40022116945124, "utc_time": "2026-10-27T04:47:54.048907+00:00", "event_query": false}
+{"record_type": "probe_event", "rank": 11, "pid": 1432, "index": 45, "action": "tp_postprocess_method_returned", "transfer_round": 1, "monotonic_ns": 40022116952874, "utc_time": "2026-10-27T04:47:54.048915+00:00", "event_query": false}
+{"record_type": "probe_event", "rank": 15, "pid": 1436, "index": 45, "action": "tp_postprocess_method_returned", "transfer_round": 1, "monotonic_ns": 40022116983154, "utc_time": "2026-10-27T04:47:54.048946+00:00", "event_query": false}
+{"record_type": "probe_event", "rank": 9, "pid": 1430, "index": 45, "action": "tp_postprocess_method_returned", "transfer_round": 1, "monotonic_ns": 40022116994204, "utc_time": "2026-10-27T04:47:54.048956+00:00", "event_query": false}
+{"record_type": "probe_event", "rank": 14, "pid": 1435, "index": 45, "action": "tp_postprocess_method_returned", "transfer_round": 1, "monotonic_ns": 40022117021935, "utc_time": "2026-10-27T04:47:54.048984+00:00", "event_query": false}{"record_type": "probe_event", "rank": 10, "pid": 1431, "index": 45, "action": "tp_postprocess_method_returned", "transfer_round": 1, "monotonic_ns": 40022117016575, "utc_time": "2026-10-27T04:47:54.048979+00:00", "event_query": false}
+
+{"record_type": "probe_event", "rank": 13, "pid": 1434, "index": 45, "action": "tp_postprocess_method_returned", "transfer_round": 1, "monotonic_ns": 40022117106995, "utc_time": "2026-10-27T04:47:54.049069+00:00", "event_query": false}
+{"record_type": "probe_event", "rank": 12, "pid": 1433, "index": 45, "action": "tp_postprocess_method_returned", "transfer_round": 1, "monotonic_ns": 40022117985472, "utc_time": "2026-10-27T04:47:54.049948+00:00", "event_query": false}
+{"record_type": "probe_event", "rank": 13, "pid": 1434, "index": 46, "action": "activation_device_ready", "transfer_round": 1, "monotonic_ns": 40022118566517, "utc_time": "2026-10-27T04:47:54.050528+00:00"}
+{"record_type": "probe_event", "rank": 15, "pid": 1436, "index": 46, "action": "activation_device_ready", "transfer_round": 1, "monotonic_ns": 40022118568997, "utc_time": "2026-10-27T04:47:54.050531+00:00"}{"record_type": "probe_event", "rank": 9, "pid": 1430, "index": 46, "action": "activation_device_ready", "transfer_round": 1, "monotonic_ns": 40022118567337, "utc_time": "2026-10-27T04:47:54.050529+00:00"}{"record_type": "probe_event", "rank": 8, "pid": 1429, "index": 46, "action": "activation_device_ready", "transfer_round": 1, "monotonic_ns": 40022118572867, "utc_time": "2026-10-27T04:47:54.050534+00:00"}{"record_type": "probe_event", "rank": 10, "pid": 1431, "index": 46, "action": "activation_device_ready", "transfer_round": 1, "monotonic_ns": 40022118572117, "utc_time": "2026-10-27T04:47:54.050534+00:00"}{"record_type": "probe_event", "rank": 11, "pid": 1432, "index": 46, "action": "activation_device_ready", "transfer_round": 1, "monotonic_ns": 40022118572157, "utc_time": "2026-10-27T04:47:54.050534+00:00"}{"record_type": "probe_event", "rank": 14, "pid": 1435, "index": 46, "action": "activation_device_ready", "transfer_round": 1, "monotonic_ns": 40022118571997, "utc_time": "2026-10-27T04:47:54.050534+00:00"}{"record_type": "probe_event", "rank": 12, "pid": 1433, "index": 46, "action": "activation_device_ready", "transfer_round": 1, "monotonic_ns": 40022118576027, "utc_time": "2026-10-27T04:47:54.050538+00:00"}
+
+
+
+
+
+
+{"record_type": "probe_event", "rank": 15, "pid": 1436, "index": 47, "action": "transfer_round_complete", "transfer_round": 1, "monotonic_ns": 40022118799069, "utc_time": "2026-10-27T04:47:54.050761+00:00"}{"record_type": "probe_event", "rank": 13, "pid": 1434, "index": 47, "action": "transfer_round_complete", "transfer_round": 1, "monotonic_ns": 40022118804789, "utc_time": "2026-10-27T04:47:54.050767+00:00"}{"record_type": "probe_event", "rank": 14, "pid": 1435, "index": 47, "action": "transfer_round_complete", "transfer_round": 1, "monotonic_ns": 40022118816349, "utc_time": "2026-10-27T04:47:54.050778+00:00"}
+
+{"record_type": "probe_event", "rank": 9, "pid": 1430, "index": 47, "action": "transfer_round_complete", "transfer_round": 1, "monotonic_ns": 40022118827429, "utc_time": "2026-10-27T04:47:54.050790+00:00"}
+
+{"record_type": "probe_event", "rank": 11, "pid": 1432, "index": 47, "action": "transfer_round_complete", "transfer_round": 1, "monotonic_ns": 40022118846699, "utc_time": "2026-10-27T04:47:54.050809+00:00"}{"record_type": "probe_event", "rank": 8, "pid": 1429, "index": 47, "action": "transfer_round_complete", "transfer_round": 1, "monotonic_ns": 40022118858119, "utc_time": "2026-10-27T04:47:54.050820+00:00"}
+
+{"record_type": "probe_event", "rank": 10, "pid": 1431, "index": 47, "action": "transfer_round_complete", "transfer_round": 1, "monotonic_ns": 40022118862729, "utc_time": "2026-10-27T04:47:54.050825+00:00"}
+{"record_type": "probe_event", "rank": 12, "pid": 1433, "index": 47, "action": "transfer_round_complete", "transfer_round": 1, "monotonic_ns": 40022118901190, "utc_time": "2026-10-27T04:47:54.050863+00:00"}
+{"record_type": "probe_event", "rank": 8, "pid": 1429, "index": 48, "action": "all_ranks_protocol_complete", "transfer_round": 1, "monotonic_ns": 40022119624715, "utc_time": "2026-10-27T04:47:54.051586+00:00"}
+{"record_type": "probe_event", "rank": 3, "pid": 1424, "index": 44, "action": "all_ranks_protocol_complete", "transfer_round": 1, "monotonic_ns": 40022119659876, "utc_time": "2026-10-27T04:47:54.051621+00:00"}
+{"record_type": "probe_event", "rank": 11, "pid": 1432, "index": 48, "action": "all_ranks_protocol_complete", "transfer_round": 1, "monotonic_ns": 40022119665506, "utc_time": "2026-10-27T04:47:54.051627+00:00"}{"record_type": "probe_event", "rank": 12, "pid": 1433, "index": 48, "action": "all_ranks_protocol_complete", "transfer_round": 1, "monotonic_ns": 40022119631065, "utc_time": "2026-10-27T04:47:54.051593+00:00"}
+
+{"record_type": "probe_event", "rank": 15, "pid": 1436, "index": 48, "action": "all_ranks_protocol_complete", "transfer_round": 1, "monotonic_ns": 40022119709576, "utc_time": "2026-10-27T04:47:54.051671+00:00"}
+{"record_type": "probe_event", "rank": 9, "pid": 1430, "index": 48, "action": "all_ranks_protocol_complete", "transfer_round": 1, "monotonic_ns": 40022119716486, "utc_time": "2026-10-27T04:47:54.051678+00:00"}
+{"record_type": "probe_event", "rank": 0, "pid": 1421, "index": 44, "action": "all_ranks_protocol_complete", "transfer_round": 1, "monotonic_ns": 40022119620365, "utc_time": "2026-10-27T04:47:54.051583+00:00"}{"record_type": "probe_event", "rank": 13, "pid": 1434, "index": 48, "action": "all_ranks_protocol_complete", "transfer_round": 1, "monotonic_ns": 40022119730866, "utc_time": "2026-10-27T04:47:54.051693+00:00"}
+
+{"record_type": "probe_event", "rank": 10, "pid": 1431, "index": 48, "action": "all_ranks_protocol_complete", "transfer_round": 1, "monotonic_ns": 40022119750676, "utc_time": "2026-10-27T04:47:54.051713+00:00"}
+{"record_type": "probe_event", "rank": 5, "pid": 1426, "index": 44, "action": "all_ranks_protocol_complete", "transfer_round": 1, "monotonic_ns": 40022119753416, "utc_time": "2026-10-27T04:47:54.051715+00:00"}{"record_type": "probe_event", "rank": 6, "pid": 1427, "index": 44, "action": "all_ranks_protocol_complete", "transfer_round": 1, "monotonic_ns": 40022119758406, "utc_time": "2026-10-27T04:47:54.051721+00:00"}{"record_type": "probe_event", "rank": 1, "pid": 1422, "index": 44, "action": "all_ranks_protocol_complete", "transfer_round": 1, "monotonic_ns": 40022119758966, "utc_time": "2026-10-27T04:47:54.051721+00:00"}
+
+
+{"record_type": "probe_event", "rank": 2, "pid": 1423, "index": 44, "action": "all_ranks_protocol_complete", "transfer_round": 1, "monotonic_ns": 40022119764706, "utc_time": "2026-10-27T04:47:54.051728+00:00"}
+{"record_type": "probe_event", "rank": 4, "pid": 1425, "index": 44, "action": "all_ranks_protocol_complete", "transfer_round": 1, "monotonic_ns": 40022119710196, "utc_time": "2026-10-27T04:47:54.051679+00:00"}
+{"record_type": "probe_event", "rank": 7, "pid": 1428, "index": 44, "action": "all_ranks_protocol_complete", "transfer_round": 1, "monotonic_ns": 40022119782167, "utc_time": "2026-10-27T04:47:54.051752+00:00"}
+{"record_type": "probe_event", "rank": 14, "pid": 1435, "index": 48, "action": "all_ranks_protocol_complete", "transfer_round": 1, "monotonic_ns": 40022119828587, "utc_time": "2026-10-27T04:47:54.051798+00:00"}
+{"record_type": "probe_event", "rank": 0, "pid": 1421, "index": 45, "action": "communication_groups_destroyed", "transfer_round": 1, "monotonic_ns": 40022643292831, "utc_time": "2026-10-27T04:47:54.575259+00:00"}
+{"rank": 0, "status": "PASS_DEVICE_TRANSFER_ONLY", "result": "/opt/ks-stage-ready/device-probe/results/20261027-124721/rank-00.json"}
+{"record_type": "probe_event", "rank": 1, "pid": 1422, "index": 45, "action": "communication_groups_destroyed", "transfer_round": 1, "monotonic_ns": 40022653267850, "utc_time": "2026-10-27T04:47:54.585234+00:00"}
+{"rank": 1, "status": "PASS_DEVICE_TRANSFER_ONLY", "result": "/opt/ks-stage-ready/device-probe/results/20261027-124721/rank-01.json"}
+{"record_type": "probe_event", "rank": 5, "pid": 1426, "index": 45, "action": "communication_groups_destroyed", "transfer_round": 1, "monotonic_ns": 40022663473441, "utc_time": "2026-10-27T04:47:54.595441+00:00"}
+{"record_type": "probe_event", "rank": 2, "pid": 1423, "index": 45, "action": "communication_groups_destroyed", "transfer_round": 1, "monotonic_ns": 40022663477191, "utc_time": "2026-10-27T04:47:54.595448+00:00"}
+{"rank": 5, "status": "PASS_DEVICE_TRANSFER_ONLY", "result": "/opt/ks-stage-ready/device-probe/results/20261027-124721/rank-05.json"}
+{"rank": 2, "status": "PASS_DEVICE_TRANSFER_ONLY", "result": "/opt/ks-stage-ready/device-probe/results/20261027-124721/rank-02.json"}
+{"record_type": "probe_event", "rank": 8, "pid": 1429, "index": 49, "action": "communication_groups_destroyed", "transfer_round": 1, "monotonic_ns": 40022673177068, "utc_time": "2026-10-27T04:47:54.605142+00:00"}
+{"record_type": "probe_event", "rank": 7, "pid": 1428, "index": 45, "action": "communication_groups_destroyed", "transfer_round": 1, "monotonic_ns": 40022673482951, "utc_time": "2026-10-27T04:47:54.605451+00:00"}
+{"record_type": "probe_event", "rank": 4, "pid": 1425, "index": 45, "action": "communication_groups_destroyed", "transfer_round": 1, "monotonic_ns": 40022673641492, "utc_time": "2026-10-27T04:47:54.605610+00:00"}
+{"record_type": "probe_event", "rank": 3, "pid": 1424, "index": 45, "action": "communication_groups_destroyed", "transfer_round": 1, "monotonic_ns": 40022673650832, "utc_time": "2026-10-27T04:47:54.605619+00:00"}
+{"record_type": "probe_event", "rank": 6, "pid": 1427, "index": 45, "action": "communication_groups_destroyed", "transfer_round": 1, "monotonic_ns": 40022673745643, "utc_time": "2026-10-27T04:47:54.605714+00:00"}
+{"rank": 8, "status": "PASS_DEVICE_TRANSFER_ONLY", "result": "/opt/ks-stage-ready/device-probe/results/20261027-124721/rank-08.json"}
+{"rank": 7, "status": "PASS_DEVICE_TRANSFER_ONLY", "result": "/opt/ks-stage-ready/device-probe/results/20261027-124721/rank-07.json"}
+{"rank": 3, "status": "PASS_DEVICE_TRANSFER_ONLY", "result": "/opt/ks-stage-ready/device-probe/results/20261027-124721/rank-03.json"}
+{"rank": 4, "status": "PASS_DEVICE_TRANSFER_ONLY", "result": "/opt/ks-stage-ready/device-probe/results/20261027-124721/rank-04.json"}
+{"rank": 6, "status": "PASS_DEVICE_TRANSFER_ONLY", "result": "/opt/ks-stage-ready/device-probe/results/20261027-124721/rank-06.json"}
+{"record_type": "probe_event", "rank": 11, "pid": 1432, "index": 49, "action": "communication_groups_destroyed", "transfer_round": 1, "monotonic_ns": 40022684209726, "utc_time": "2026-10-27T04:47:54.616175+00:00"}
+{"record_type": "probe_event", "rank": 10, "pid": 1431, "index": 49, "action": "communication_groups_destroyed", "transfer_round": 1, "monotonic_ns": 40022684305097, "utc_time": "2026-10-27T04:47:54.616272+00:00"}
+{"rank": 11, "status": "PASS_DEVICE_TRANSFER_ONLY", "result": "/opt/ks-stage-ready/device-probe/results/20261027-124721/rank-11.json"}
+{"rank": 10, "status": "PASS_DEVICE_TRANSFER_ONLY", "result": "/opt/ks-stage-ready/device-probe/results/20261027-124721/rank-10.json"}
+{"record_type": "probe_event", "rank": 9, "pid": 1430, "index": 49, "action": "communication_groups_destroyed", "transfer_round": 1, "monotonic_ns": 40022713661610, "utc_time": "2026-10-27T04:47:54.645627+00:00"}
+{"rank": 9, "status": "PASS_DEVICE_TRANSFER_ONLY", "result": "/opt/ks-stage-ready/device-probe/results/20261027-124721/rank-09.json"}
+{"record_type": "probe_event", "rank": 12, "pid": 1433, "index": 49, "action": "communication_groups_destroyed", "transfer_round": 1, "monotonic_ns": 40022723882232, "utc_time": "2026-10-27T04:47:54.655850+00:00"}
+{"record_type": "probe_event", "rank": 13, "pid": 1434, "index": 49, "action": "communication_groups_destroyed", "transfer_round": 1, "monotonic_ns": 40022724067843, "utc_time": "2026-10-27T04:47:54.656033+00:00"}
+{"record_type": "probe_event", "rank": 14, "pid": 1435, "index": 49, "action": "communication_groups_destroyed", "transfer_round": 1, "monotonic_ns": 40022724101343, "utc_time": "2026-10-27T04:47:54.656067+00:00"}
+{"rank": 12, "status": "PASS_DEVICE_TRANSFER_ONLY", "result": "/opt/ks-stage-ready/device-probe/results/20261027-124721/rank-12.json"}
+{"rank": 13, "status": "PASS_DEVICE_TRANSFER_ONLY", "result": "/opt/ks-stage-ready/device-probe/results/20261027-124721/rank-13.json"}
+{"rank": 14, "status": "PASS_DEVICE_TRANSFER_ONLY", "result": "/opt/ks-stage-ready/device-probe/results/20261027-124721/rank-14.json"}
+{"record_type": "probe_event", "rank": 15, "pid": 1436, "index": 49, "action": "communication_groups_destroyed", "transfer_round": 1, "monotonic_ns": 40022733820891, "utc_time": "2026-10-27T04:47:54.665786+00:00"}
+{"rank": 15, "status": "PASS_DEVICE_TRANSFER_ONLY", "result": "/opt/ks-stage-ready/device-probe/results/20261027-124721/rank-15.json"}

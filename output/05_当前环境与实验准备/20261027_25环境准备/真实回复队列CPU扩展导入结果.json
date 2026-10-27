@@ -1,0 +1,84 @@
+{
+  "status": "PASS_ACTUAL_REPLY_QUEUE_CPU_ONLY",
+  "scope": "actual_reply_queue_CPU_component_only",
+  "not_model_or_performance_test": true,
+  "source_root": "/opt/ks-stage-ready/real_reply_queue_probe/source_bundle",
+  "device_nodes": [],
+  "vllm": "0.23.0+empty",
+  "actual_message_queue": "/vllm-workspace/vllm/vllm/distributed/device_communicators/shm_broadcast.py",
+  "dequeue_signature": "(self, timeout: float | None = None, indefinite: bool = False)",
+  "spinloop_extension_enabled": false,
+  "bootstrap_reader_thread": 281473146071776,
+  "reader_object_id": 281472566770480,
+  "model_reply_payload_bytes": 16384,
+  "max_chunk_bytes": 4096,
+  "mq_busy_loop_seconds": 1.0,
+  "empty_model_reply_hold_seconds": 1.25,
+  "before_model_reply": {
+    "core_registered_restore": true,
+    "actual_dequeue_entered": true,
+    "model_future_done": false,
+    "scheduler_update_count": 0,
+    "model_wait_inflight": 1,
+    "callback_thread_is_core": true
+  },
+  "final_update_count": 1,
+  "final_future_done": true,
+  "process_group_initialized": false,
+  "actual_reader_thread": 281472528871680,
+  "same_reader_main_to_worker_to_main": true,
+  "thread_migration_supported_in_general": "NOT_VERIFIED",
+  "trace": [
+    {
+      "action": "writer_handshake_complete",
+      "thread": 281472520417536,
+      "ns": 44056431948223
+    },
+    {
+      "action": "main_reader_handshake_complete",
+      "thread": 281473146071776,
+      "ns": 44056432148995
+    },
+    {
+      "action": "main_bootstrap_reply_consumed",
+      "thread": 281473146071776,
+      "ns": 44056432306686
+    },
+    {
+      "action": "actual_dequeue_begin",
+      "thread": 281472528871680,
+      "ns": 44056433208513
+    },
+    {
+      "action": "independent_cpu_restore_notification_published",
+      "thread": 281472275443968,
+      "ns": 44057683367184
+    },
+    {
+      "action": "core_registered_restore_before_model_reply",
+      "thread": 281473146071776,
+      "ns": 44057688960029
+    },
+    {
+      "action": "model_reply_write_begin",
+      "thread": 281472520417536,
+      "ns": 44057689035340
+    },
+    {
+      "action": "model_reply_written",
+      "thread": 281472520417536,
+      "ns": 44057689403263
+    },
+    {
+      "action": "actual_dequeue_return",
+      "thread": 281472528871680,
+      "ns": 44057690031898
+    },
+    {
+      "action": "main_tail_reply_consumed_same_reader",
+      "thread": 281473146071776,
+      "ns": 44057690677273
+    }
+  ],
+  "background_errors": []
+}

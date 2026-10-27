@@ -1,0 +1,199 @@
+{
+  "utc": "2026-10-27T05:16:10.378175+00:00",
+  "monotonic": 41718.446247711,
+  "pid": 2882,
+  "thread_id": 281473838099168,
+  "status": "PASS_COMPONENT_ONLY",
+  "output_directory": "/opt/ks-stage-ready/device-probe/event-ipc-results/20261027-131520",
+  "device": "npu:15",
+  "finals": {
+    "producer": {
+      "utc": "2026-10-27T05:16:06.523320+00:00",
+      "monotonic": 41714.591375742,
+      "pid": 2884,
+      "thread_id": 281473203149536,
+      "role": "producer",
+      "phase": "final",
+      "status": "PASS",
+      "safe_device_completion": true,
+      "producer_event_query": true,
+      "source_retained_until_safe_ack": true,
+      "tensor_check": true,
+      "tensor_elements": 64,
+      "tensor_first": 3.0,
+      "tensor_last": 66.0,
+      "tensor_sum": 2208.0,
+      "consumer_validation_ok": true
+    },
+    "consumer": {
+      "utc": "2026-10-27T05:16:06.522077+00:00",
+      "monotonic": 41714.590124462,
+      "pid": 2885,
+      "thread_id": 281473774906080,
+      "role": "consumer",
+      "phase": "final",
+      "status": "PASS",
+      "safe_device_completion": true,
+      "proxy_result": true,
+      "success_events": [
+        {
+          "request_id": "event-ipc-component-probe",
+          "restore_generation": 1,
+          "stage_id": 0,
+          "tp_rank": 0,
+          "pcp_rank": 0,
+          "global_worker_rank": 0
+        }
+      ],
+      "duplicate_success_events": [],
+      "owner_only_import_query_result": true,
+      "owner_audit": {
+        "owner": {
+          "utc": "2026-10-27T05:16:06.299164+00:00",
+          "monotonic": 41714.367227321,
+          "pid": 2885,
+          "thread_id": 281470731940096,
+          "device": "npu:15",
+          "current_device": 15
+        },
+        "methods": {
+          "real.query": {
+            "calls": 1,
+            "returns": 1,
+            "thread_ids": [
+              281470731940096
+            ],
+            "first_call": {
+              "utc": "2026-10-27T05:16:06.498217+00:00",
+              "monotonic": 41714.566273661,
+              "pid": 2885,
+              "thread_id": 281470731940096
+            },
+            "last_return": {
+              "utc": "2026-10-27T05:16:06.501257+00:00",
+              "monotonic": 41714.569298625,
+              "pid": 2885,
+              "thread_id": 281470731940096
+            },
+            "last_bool": true,
+            "first_true_return": {
+              "utc": "2026-10-27T05:16:06.501261+00:00",
+              "monotonic": 41714.569302855,
+              "pid": 2885,
+              "thread_id": 281470731940096
+            }
+          },
+          "backend.import_event": {
+            "calls": 1,
+            "returns": 1,
+            "thread_ids": [
+              281470731940096
+            ],
+            "first_call": {
+              "utc": "2026-10-27T05:16:06.498285+00:00",
+              "monotonic": 41714.566328162,
+              "pid": 2885,
+              "thread_id": 281470731940096
+            },
+            "last_return": {
+              "utc": "2026-10-27T05:16:06.501093+00:00",
+              "monotonic": 41714.569146144,
+              "pid": 2885,
+              "thread_id": 281470731940096
+            }
+          },
+          "backend.query_event": {
+            "calls": 1,
+            "returns": 1,
+            "thread_ids": [
+              281470731940096
+            ],
+            "first_call": {
+              "utc": "2026-10-27T05:16:06.501122+00:00",
+              "monotonic": 41714.569164574,
+              "pid": 2885,
+              "thread_id": 281470731940096
+            },
+            "last_return": {
+              "utc": "2026-10-27T05:16:06.501241+00:00",
+              "monotonic": 41714.569284905,
+              "pid": 2885,
+              "thread_id": 281470731940096
+            },
+            "last_bool": true,
+            "first_true_return": {
+              "utc": "2026-10-27T05:16:06.501249+00:00",
+              "monotonic": 41714.569290405,
+              "pid": 2885,
+              "thread_id": 281470731940096
+            }
+          },
+          "real.result": {
+            "calls": 1,
+            "returns": 1,
+            "thread_ids": [
+              281470731940096
+            ],
+            "first_call": {
+              "utc": "2026-10-27T05:16:06.501271+00:00",
+              "monotonic": 41714.569312455,
+              "pid": 2885,
+              "thread_id": 281470731940096
+            },
+            "last_return": {
+              "utc": "2026-10-27T05:16:06.501461+00:00",
+              "monotonic": 41714.569502607,
+              "pid": 2885,
+              "thread_id": 281470731940096
+            },
+            "last_bool": true,
+            "first_true_return": {
+              "utc": "2026-10-27T05:16:06.501465+00:00",
+              "monotonic": 41714.569506497,
+              "pid": 2885,
+              "thread_id": 281470731940096
+            }
+          },
+          "backend.synchronize_event": {
+            "calls": 1,
+            "returns": 1,
+            "thread_ids": [
+              281470731940096
+            ],
+            "first_call": {
+              "utc": "2026-10-27T05:16:06.501286+00:00",
+              "monotonic": 41714.569327456,
+              "pid": 2885,
+              "thread_id": 281470731940096
+            },
+            "last_return": {
+              "utc": "2026-10-27T05:16:06.501450+00:00",
+              "monotonic": 41714.569493727,
+              "pid": 2885,
+              "thread_id": 281470731940096
+            }
+          }
+        }
+      },
+      "observed_pending_query": false,
+      "observer_closed_safe": true,
+      "safe_ack_sent": true
+    }
+  },
+  "children": [
+    {
+      "name": "event-ipc-producer",
+      "pid": 2884,
+      "exitcode": 0
+    },
+    {
+      "name": "event-ipc-consumer",
+      "pid": 2885,
+      "exitcode": 0
+    }
+  ],
+  "retained_live_pids": [],
+  "forced_termination_performed": false,
+  "safe_device_completion": true,
+  "evidence_scope": "event IPC/future/owner-thread component only; no PP2/GLM/KV/performance proof"
+}

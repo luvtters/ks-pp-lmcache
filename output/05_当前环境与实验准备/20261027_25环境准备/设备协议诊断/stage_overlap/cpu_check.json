@@ -1,0 +1,51 @@
+{
+  "syntax": "PASS",
+  "compiled_files": [
+    "legacy_scheduler_gate_excerpt.py",
+    "pp_stage_overlap_probe.py",
+    "stage_controller.py"
+  ],
+  "cpu_plan": "PASS",
+  "guarded_forbidden_imports": [
+    "torch",
+    "torch_npu",
+    "lmcache",
+    "vllm"
+  ],
+  "forbidden_modules_loaded": [],
+  "exitcode": 0,
+  "device_run_performed": false,
+  "plan": {
+    "scope": "SYNTHETIC_STAGE_DEPENDENCY_DEVICE_PROTOCOL_ONLY",
+    "world_size": 16,
+    "tp": 8,
+    "pp": 2,
+    "shape": [
+      8,
+      32
+    ],
+    "device_backend": "hccl",
+    "control_backend": "existing world.cpu_group Gloo",
+    "core": "rank0 original CPU StageController prototype; not vLLM EngineCore",
+    "legacy_baseline": "unchanged AST-extracted scheduler predicate lines 2188-2219",
+    "controlled_latch": "back-stage H2D is not submitted until rank0 release",
+    "rounds": [
+      "front actual H2D+event completion; back not submitted",
+      "legacy predicate rejects while StageController dispatches front",
+      "front actual compute event completion",
+      "real HCCL PP isend/irecv and back TP postprocess completion",
+      "activation-only does not dispatch back; explicit latch release",
+      "back actual H2D+event completion; global legacy gate now opens",
+      "back actual compute, contents, all-rank checks, ordered commit"
+    ],
+    "group_timeout_seconds": 90,
+    "required_external_task_timeout_seconds": 240,
+    "background_device_threads": false,
+    "not_verified": [
+      "vLLM core integration",
+      "GLM",
+      "real LMCache KV",
+      "performance or speedup; artificial latch has no timing value"
+    ]
+  }
+}

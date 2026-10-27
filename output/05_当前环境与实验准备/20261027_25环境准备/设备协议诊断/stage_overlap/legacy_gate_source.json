@@ -1,0 +1,8 @@
+{
+  "source_filepath": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_25环境准备\\25镜像源码与配置快照\\sources\\vllm\\vllm\\v1\\core\\sched\\scheduler.py",
+  "source_line_start": 2188,
+  "source_line_end": 2219,
+  "function": "_try_promote_blocked_waiting_request",
+  "extraction": "ast.get_source_segment; unchanged function body; compile with CPU request/status fixtures",
+  "note": "Only global remote-KV promotion predicate is original scheduler code; update helper after gate is a recording fixture"
+}

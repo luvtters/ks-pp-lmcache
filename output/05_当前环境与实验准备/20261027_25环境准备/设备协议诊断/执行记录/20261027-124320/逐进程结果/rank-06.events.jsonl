@@ -1,0 +1,32 @@
+{"record_type": "probe_event", "rank": 6, "pid": 67, "index": 1, "action": "probe_enter", "monotonic_ns": 39759922444585, "utc_time": "2026-10-27T04:43:31.854409+00:00", "events_path": "/opt/ks-stage-ready/device-probe/results/20261027-124320/rank-06.events.jsonl"}
+{"record_type": "probe_event", "rank": 6, "pid": 67, "index": 2, "action": "torch_import_enter", "monotonic_ns": 39759922538766, "utc_time": "2026-10-27T04:43:31.854501+00:00"}
+{"record_type": "probe_event", "rank": 6, "pid": 67, "index": 3, "action": "torch_import_returned", "monotonic_ns": 39769012796062, "utc_time": "2026-10-27T04:43:40.944761+00:00"}
+{"record_type": "probe_event", "rank": 6, "pid": 67, "index": 4, "action": "torch_npu_import_enter", "monotonic_ns": 39769012921863, "utc_time": "2026-10-27T04:43:40.944884+00:00"}
+{"record_type": "probe_event", "rank": 6, "pid": 67, "index": 5, "action": "torch_npu_import_returned", "monotonic_ns": 39769012961853, "utc_time": "2026-10-27T04:43:40.944924+00:00"}
+{"record_type": "probe_event", "rank": 6, "pid": 67, "index": 6, "action": "torch_distributed_import_enter", "monotonic_ns": 39769012990364, "utc_time": "2026-10-27T04:43:40.944952+00:00"}
+{"record_type": "probe_event", "rank": 6, "pid": 67, "index": 7, "action": "torch_distributed_import_returned", "monotonic_ns": 39769013017704, "utc_time": "2026-10-27T04:43:40.944979+00:00"}
+{"record_type": "probe_event", "rank": 6, "pid": 67, "index": 8, "action": "vllm_import_enter", "monotonic_ns": 39769013041454, "utc_time": "2026-10-27T04:43:40.945003+00:00"}
+{"record_type": "probe_event", "rank": 6, "pid": 67, "index": 9, "action": "vllm_import_returned", "monotonic_ns": 39773664022159, "utc_time": "2026-10-27T04:43:45.595987+00:00"}
+{"record_type": "probe_event", "rank": 6, "pid": 67, "index": 10, "action": "frameworks_imported", "monotonic_ns": 39773664143740, "utc_time": "2026-10-27T04:43:45.596106+00:00"}
+{"record_type": "probe_event", "rank": 6, "pid": 67, "index": 11, "action": "set_device_enter", "monotonic_ns": 39773664241421, "utc_time": "2026-10-27T04:43:45.596203+00:00"}
+{"record_type": "probe_event", "rank": 6, "pid": 67, "index": 12, "action": "set_device_returned", "monotonic_ns": 39774457971724, "utc_time": "2026-10-27T04:43:46.389946+00:00"}
+{"record_type": "probe_event", "rank": 6, "pid": 67, "index": 13, "action": "device_selected", "monotonic_ns": 39774458298917, "utc_time": "2026-10-27T04:43:46.390262+00:00"}
+{"record_type": "probe_event", "rank": 6, "pid": 67, "index": 14, "action": "config_construction_enter", "monotonic_ns": 39774458356918, "utc_time": "2026-10-27T04:43:46.390318+00:00"}
+{"record_type": "probe_event", "rank": 6, "pid": 67, "index": 15, "action": "config_construction_returned", "monotonic_ns": 39776478635507, "utc_time": "2026-10-27T04:43:48.410600+00:00"}
+{"record_type": "probe_event", "rank": 6, "pid": 67, "index": 16, "action": "init_distributed_environment_enter", "monotonic_ns": 39776478745998, "utc_time": "2026-10-27T04:43:48.410708+00:00"}
+{"record_type": "probe_event", "rank": 6, "pid": 67, "index": 17, "action": "init_distributed_environment_returned", "monotonic_ns": 39779169348910, "utc_time": "2026-10-27T04:43:51.101314+00:00"}
+{"record_type": "probe_event", "rank": 6, "pid": 67, "index": 18, "action": "initialize_model_parallel_enter", "monotonic_ns": 39779169450371, "utc_time": "2026-10-27T04:43:51.101412+00:00"}
+{"record_type": "probe_event", "rank": 6, "pid": 67, "index": 19, "action": "initialize_model_parallel_returned", "monotonic_ns": 39779750585443, "utc_time": "2026-10-27T04:43:51.682551+00:00"}
+{"record_type": "probe_event", "rank": 6, "pid": 67, "index": 20, "action": "groups_ready", "monotonic_ns": 39779750747705, "utc_time": "2026-10-27T04:43:51.682709+00:00"}
+{"record_type": "probe_event", "rank": 6, "pid": 67, "index": 21, "action": "synthetic_local_kv_event_recorded", "monotonic_ns": 39779938958512, "utc_time": "2026-10-27T04:43:51.870925+00:00", "event_query": false}
+{"record_type": "probe_event", "rank": 6, "pid": 67, "index": 22, "action": "front_placeholder_tensor_ready", "monotonic_ns": 39779946305890, "utc_time": "2026-10-27T04:43:51.878270+00:00"}
+{"record_type": "probe_event", "rank": 6, "pid": 67, "index": 23, "action": "isend_enter", "monotonic_ns": 39779946410191, "utc_time": "2026-10-27T04:43:51.878372+00:00"}
+{"record_type": "probe_event", "rank": 6, "pid": 67, "index": 24, "action": "isend_method_returned", "monotonic_ns": 39780281804009, "utc_time": "2026-10-27T04:43:52.213771+00:00", "handle_count": 1}
+{"record_type": "probe_event", "rank": 6, "pid": 67, "index": 25, "action": "queries_after_method_return", "monotonic_ns": 39780283243300, "utc_time": "2026-10-27T04:43:52.215206+00:00", "work_query": [false], "local_stream_event_query": false}
+{"record_type": "probe_event", "rank": 6, "pid": 67, "index": 26, "action": "bounded_work_query_finished", "monotonic_ns": 39780674406202, "utc_time": "2026-10-27T04:43:52.606371+00:00", "consensus_ready": false, "poll_rounds": 2}
+{"record_type": "probe_event", "rank": 6, "pid": 67, "index": 27, "action": "work_wait_enter", "monotonic_ns": 39780674503993, "utc_time": "2026-10-27T04:43:52.606466+00:00"}
+{"record_type": "probe_event", "rank": 6, "pid": 67, "index": 28, "action": "work_wait_returned", "monotonic_ns": 39780674606273, "utc_time": "2026-10-27T04:43:52.606568+00:00", "work_query": [true]}
+{"record_type": "probe_event", "rank": 6, "pid": 67, "index": 29, "action": "comm_fence_recorded", "monotonic_ns": 39780674751824, "utc_time": "2026-10-27T04:43:52.606713+00:00", "event_query": false}
+{"record_type": "probe_event", "rank": 6, "pid": 67, "index": 30, "action": "comm_fence_known_complete", "monotonic_ns": 39780674807695, "utc_time": "2026-10-27T04:43:52.606769+00:00", "event_query": true}
+{"record_type": "probe_event", "rank": 6, "pid": 67, "index": 31, "action": "all_ranks_protocol_complete", "monotonic_ns": 39781471883755, "utc_time": "2026-10-27T04:43:53.403851+00:00"}
+{"record_type": "probe_event", "rank": 6, "pid": 67, "index": 32, "action": "communication_groups_destroyed", "monotonic_ns": 39781976551139, "utc_time": "2026-10-27T04:43:53.908519+00:00"}

@@ -1,0 +1,97 @@
+{
+  "extraction": "selected original AST bodies; ast.unparse; module stable chain_runtime",
+  "excluded": "framework imports, EngineCore bootstrap and unselected executor methods",
+  "sources": [
+    {
+      "source_filepath": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\20261027_PP分段就绪原型\\restore_event_binding\\multiproc_executor.py",
+      "name": "constants",
+      "source_line_start": 72,
+      "source_line_end": 78,
+      "selected_methods": null
+    },
+    {
+      "source_filepath": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\20261027_PP分段就绪原型\\restore_event_binding\\multiproc_executor.py",
+      "name": "constants",
+      "source_line_start": 79,
+      "source_line_end": 81,
+      "selected_methods": null
+    },
+    {
+      "source_filepath": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\20261027_PP分段就绪原型\\restore_event_binding\\multiproc_executor.py",
+      "name": "_ks_identity",
+      "source_line_start": 84,
+      "source_line_end": 89,
+      "selected_methods": null
+    },
+    {
+      "source_filepath": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\20261027_PP分段就绪原型\\restore_event_binding\\multiproc_executor.py",
+      "name": "KSStageCommand",
+      "source_line_start": 93,
+      "source_line_end": 106,
+      "selected_methods": null
+    },
+    {
+      "source_filepath": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\20261027_PP分段就绪原型\\restore_event_binding\\multiproc_executor.py",
+      "name": "KSStageEvent",
+      "source_line_start": 110,
+      "source_line_end": 127,
+      "selected_methods": null
+    },
+    {
+      "source_filepath": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\20261027_PP分段就绪原型\\restore_event_binding\\multiproc_executor.py",
+      "name": "KSRestoreEvent",
+      "source_line_start": 131,
+      "source_line_end": 149,
+      "selected_methods": null
+    },
+    {
+      "source_filepath": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\20261027_PP分段就绪原型\\restore_event_binding\\multiproc_executor.py",
+      "name": "_KSStageEventPublisher",
+      "source_line_start": 152,
+      "source_line_end": 230,
+      "selected_methods": null
+    },
+    {
+      "source_filepath": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\20261027_PP分段就绪原型\\restore_event_binding\\multiproc_executor.py",
+      "name": "FutureWrapper",
+      "source_line_start": 233,
+      "source_line_end": 263,
+      "selected_methods": null
+    },
+    {
+      "source_filepath": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\20261027_PP分段就绪原型\\restore_event_binding\\multiproc_executor.py",
+      "name": "MultiprocExecutor",
+      "source_line_start": 266,
+      "source_line_end": 777,
+      "selected_methods": [
+        "_close_stage_event_channels",
+        "_init_stage_event_channels",
+        "poll_stage_events"
+      ]
+    },
+    {
+      "source_filepath": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\20261027_PP分段就绪原型\\core_event_pump\\core.py",
+      "name": "_KSModelResultReader",
+      "source_line_start": 99,
+      "source_line_end": 147,
+      "selected_methods": null
+    },
+    {
+      "source_filepath": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\20261027_PP分段就绪原型\\core_event_pump\\core.py",
+      "name": "EngineCore",
+      "source_line_start": 150,
+      "source_line_end": 992,
+      "selected_methods": [
+        "_ks_assert_no_event_callback_step",
+        "_ks_close_core_event_pump",
+        "_ks_consume_stage_events",
+        "_ks_sample_tokens_with_event_pump",
+        "_ks_wait_model_future",
+        "configure_ks_core_event_pump",
+        "ks_model_wait_inflight",
+        "step",
+        "step_with_batch_queue"
+      ]
+    }
+  ]
+}

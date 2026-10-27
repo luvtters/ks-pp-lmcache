@@ -1,0 +1,55 @@
+{
+  "scope": "SYNTHETIC_PAYLOAD_DEVICE_PROTOCOL_ONLY",
+  "world_size": 16,
+  "tensor_parallel_size": 8,
+  "pipeline_parallel_size": 2,
+  "backend": "hccl",
+  "backend_fallback_allowed": false,
+  "payload_shape": [
+    8,
+    32
+  ],
+  "payload_dtype": "float32",
+  "full_tensor_bytes_each_front_rank": 1024,
+  "expected_tensor_slice_bytes_per_pp_lane": 128,
+  "kv_payload": "32-float local NPU tensor; not real LMCache restore",
+  "front_ranks": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "back_ranks": [
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15
+  ],
+  "device_operations": [
+    "allocate small tensors",
+    "one placeholder add on front",
+    "vLLM isend/irecv_tensor_dict",
+    "TP reconstruction",
+    "NPU event queries"
+  ],
+  "nonblocking_query_window_seconds": 0.25,
+  "artificial_sleep": false,
+  "model_loaded": false,
+  "lmcache_called": false,
+  "not_verified": [
+    "GLM outputs",
+    "real KV restore and completion publication",
+    "stage scheduler integration",
+    "DSA CP/MoE/MTP execution",
+    "Mooncake consumption",
+    "TTFT/TPOT/throughput or acceleration"
+  ]
+}

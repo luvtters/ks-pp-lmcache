@@ -1,0 +1,7 @@
+{
+  "status": "RED_CONFIRMED",
+  "core_consumed_stage_event_before_old_result": false,
+  "old_model_still_pending": true,
+  "actual_core": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_25环境准备\\25镜像源码与配置快照\\sources\\vllm\\vllm\\v1\\engine\\core.py",
+  "actual_future": "E:\\work\\ks\\output\\05_当前环境与实验准备\\20261027_25环境准备\\25镜像源码与配置快照\\sources\\vllm\\vllm\\v1\\executor\\multiproc_executor.py"
+}

@@ -1,0 +1,593 @@
+{
+  "rank": 1,
+  "local_rank": 1,
+  "plan": {
+    "scope": "SYNTHETIC_PAYLOAD_DEVICE_PROTOCOL_ONLY",
+    "world_size": 16,
+    "tensor_parallel_size": 8,
+    "pipeline_parallel_size": 2,
+    "backend": "hccl",
+    "backend_fallback_allowed": false,
+    "payload_shape": [
+      8,
+      32
+    ],
+    "payload_dtype": "float32",
+    "full_tensor_bytes_each_front_rank": 1024,
+    "expected_tensor_slice_bytes_per_pp_lane": 128,
+    "kv_payload": "32-float local NPU tensor; not real LMCache restore",
+    "front_ranks": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "back_ranks": [
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ],
+    "device_operations": [
+      "allocate small tensors",
+      "one placeholder add on front",
+      "vLLM isend/irecv_tensor_dict",
+      "TP reconstruction",
+      "NPU event queries"
+    ],
+    "nonblocking_query_window_seconds": 2.0,
+    "query_probe": "two_round_diagnostic",
+    "artificial_sleep": false,
+    "transfer_rounds": 2,
+    "model_loaded": false,
+    "lmcache_called": false,
+    "not_verified": [
+      "GLM outputs",
+      "real KV restore and completion publication",
+      "stage scheduler integration",
+      "DSA CP/MoE/MTP execution",
+      "Mooncake consumption",
+      "TTFT/TPOT/throughput or acceleration"
+    ]
+  },
+  "status": "PASS_DEVICE_TRANSFER_ONLY",
+  "candidate_stage_ready_route": "NOT_VERIFIED",
+  "full_design_validation": "NOT_TESTED",
+  "pp_rank": 0,
+  "tp_rank": 1,
+  "pp_global_ranks": [
+    1,
+    9
+  ],
+  "tp_global_ranks": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "round_results": [
+    {
+      "round": 0,
+      "kind": "first_transfer",
+      "nonblocking_query_consensus": true,
+      "query_poll_rounds": 280,
+      "work_query_at_return": [
+        false
+      ],
+      "tensor_content_verified": null,
+      "source_retained_until_send_completed": true
+    },
+    {
+      "round": 1,
+      "kind": "warm_transfer",
+      "nonblocking_query_consensus": true,
+      "query_poll_rounds": 2,
+      "work_query_at_return": [
+        false
+      ],
+      "tensor_content_verified": null,
+      "source_retained_until_send_completed": true
+    }
+  ],
+  "work_query_at_return": [
+    false
+  ],
+  "nonblocking_query_consensus": true,
+  "nonblocking_readiness_contract": "OBSERVED_READY_BEFORE_WAIT",
+  "query_poll_rounds": 2,
+  "source_retained_until_send_completed": true,
+  "synthetic_kv_event_complete": true,
+  "synthetic_kv_elements": 32,
+  "events": [
+    {
+      "record_type": "probe_event",
+      "rank": 1,
+      "pid": 1422,
+      "index": 1,
+      "action": "probe_enter",
+      "transfer_round": -1,
+      "monotonic_ns": 40000755097396,
+      "utc_time": "2026-10-27T04:47:32.687062+00:00",
+      "events_path": "/opt/ks-stage-ready/device-probe/results/20261027-124721/rank-01.events.jsonl"
+    },
+    {
+      "record_type": "probe_event",
+      "rank": 1,
+      "pid": 1422,
+      "index": 2,
+      "action": "torch_import_enter",
+      "transfer_round": -1,
+      "monotonic_ns": 40000755197347,
+      "utc_time": "2026-10-27T04:47:32.687160+00:00"
+    },
+    {
+      "record_type": "probe_event",
+      "rank": 1,
+      "pid": 1422,
+      "index": 3,
+      "action": "torch_import_returned",
+      "transfer_round": -1,
+      "monotonic_ns": 40010578603085,
+      "utc_time": "2026-10-27T04:47:42.510594+00:00"
+    },
+    {
+      "record_type": "probe_event",
+      "rank": 1,
+      "pid": 1422,
+      "index": 4,
+      "action": "torch_npu_import_enter",
+      "transfer_round": -1,
+      "monotonic_ns": 40010578769866,
+      "utc_time": "2026-10-27T04:47:42.510732+00:00"
+    },
+    {
+      "record_type": "probe_event",
+      "rank": 1,
+      "pid": 1422,
+      "index": 5,
+      "action": "torch_npu_import_returned",
+      "transfer_round": -1,
+      "monotonic_ns": 40010578816166,
+      "utc_time": "2026-10-27T04:47:42.510778+00:00"
+    },
+    {
+      "record_type": "probe_event",
+      "rank": 1,
+      "pid": 1422,
+      "index": 6,
+      "action": "torch_distributed_import_enter",
+      "transfer_round": -1,
+      "monotonic_ns": 40010578848427,
+      "utc_time": "2026-10-27T04:47:42.510810+00:00"
+    },
+    {
+      "record_type": "probe_event",
+      "rank": 1,
+      "pid": 1422,
+      "index": 7,
+      "action": "torch_distributed_import_returned",
+      "transfer_round": -1,
+      "monotonic_ns": 40010578876607,
+      "utc_time": "2026-10-27T04:47:42.510838+00:00"
+    },
+    {
+      "record_type": "probe_event",
+      "rank": 1,
+      "pid": 1422,
+      "index": 8,
+      "action": "vllm_import_enter",
+      "transfer_round": -1,
+      "monotonic_ns": 40010578902217,
+      "utc_time": "2026-10-27T04:47:42.510863+00:00"
+    },
+    {
+      "record_type": "probe_event",
+      "rank": 1,
+      "pid": 1422,
+      "index": 9,
+      "action": "vllm_import_returned",
+      "transfer_round": -1,
+      "monotonic_ns": 40015487244129,
+      "utc_time": "2026-10-27T04:47:47.419235+00:00"
+    },
+    {
+      "record_type": "probe_event",
+      "rank": 1,
+      "pid": 1422,
+      "index": 10,
+      "action": "frameworks_imported",
+      "transfer_round": -1,
+      "monotonic_ns": 40015487415421,
+      "utc_time": "2026-10-27T04:47:47.419377+00:00"
+    },
+    {
+      "record_type": "probe_event",
+      "rank": 1,
+      "pid": 1422,
+      "index": 11,
+      "action": "set_device_enter",
+      "transfer_round": -1,
+      "monotonic_ns": 40015487530932,
+      "utc_time": "2026-10-27T04:47:47.419492+00:00"
+    },
+    {
+      "record_type": "probe_event",
+      "rank": 1,
+      "pid": 1422,
+      "index": 12,
+      "action": "set_device_returned",
+      "transfer_round": -1,
+      "monotonic_ns": 40016276976291,
+      "utc_time": "2026-10-27T04:47:48.208944+00:00"
+    },
+    {
+      "record_type": "probe_event",
+      "rank": 1,
+      "pid": 1422,
+      "index": 13,
+      "action": "device_selected",
+      "transfer_round": -1,
+      "monotonic_ns": 40016277223753,
+      "utc_time": "2026-10-27T04:47:48.209186+00:00"
+    },
+    {
+      "record_type": "probe_event",
+      "rank": 1,
+      "pid": 1422,
+      "index": 14,
+      "action": "config_construction_enter",
+      "transfer_round": -1,
+      "monotonic_ns": 40016277281384,
+      "utc_time": "2026-10-27T04:47:48.209243+00:00"
+    },
+    {
+      "record_type": "probe_event",
+      "rank": 1,
+      "pid": 1422,
+      "index": 15,
+      "action": "config_construction_returned",
+      "transfer_round": -1,
+      "monotonic_ns": 40018274947614,
+      "utc_time": "2026-10-27T04:47:50.206912+00:00"
+    },
+    {
+      "record_type": "probe_event",
+      "rank": 1,
+      "pid": 1422,
+      "index": 16,
+      "action": "init_distributed_environment_enter",
+      "transfer_round": -1,
+      "monotonic_ns": 40018275053624,
+      "utc_time": "2026-10-27T04:47:50.207015+00:00"
+    },
+    {
+      "record_type": "probe_event",
+      "rank": 1,
+      "pid": 1422,
+      "index": 17,
+      "action": "init_distributed_environment_returned",
+      "transfer_round": -1,
+      "monotonic_ns": 40020036916869,
+      "utc_time": "2026-10-27T04:47:51.968882+00:00"
+    },
+    {
+      "record_type": "probe_event",
+      "rank": 1,
+      "pid": 1422,
+      "index": 18,
+      "action": "initialize_model_parallel_enter",
+      "transfer_round": -1,
+      "monotonic_ns": 40020037043410,
+      "utc_time": "2026-10-27T04:47:51.969005+00:00"
+    },
+    {
+      "record_type": "probe_event",
+      "rank": 1,
+      "pid": 1422,
+      "index": 19,
+      "action": "initialize_model_parallel_returned",
+      "transfer_round": -1,
+      "monotonic_ns": 40020548292776,
+      "utc_time": "2026-10-27T04:47:52.480265+00:00"
+    },
+    {
+      "record_type": "probe_event",
+      "rank": 1,
+      "pid": 1422,
+      "index": 20,
+      "action": "groups_ready",
+      "transfer_round": -1,
+      "monotonic_ns": 40020548526008,
+      "utc_time": "2026-10-27T04:47:52.480488+00:00"
+    },
+    {
+      "record_type": "probe_event",
+      "rank": 1,
+      "pid": 1422,
+      "index": 21,
+      "action": "synthetic_local_kv_event_recorded",
+      "transfer_round": -1,
+      "monotonic_ns": 40020756487173,
+      "utc_time": "2026-10-27T04:47:52.688452+00:00",
+      "event_query": false
+    },
+    {
+      "record_type": "probe_event",
+      "rank": 1,
+      "pid": 1422,
+      "index": 22,
+      "action": "transfer_round_start",
+      "transfer_round": 0,
+      "monotonic_ns": 40020986363301,
+      "utc_time": "2026-10-27T04:47:52.918330+00:00"
+    },
+    {
+      "record_type": "probe_event",
+      "rank": 1,
+      "pid": 1422,
+      "index": 23,
+      "action": "front_placeholder_tensor_ready",
+      "transfer_round": 0,
+      "monotonic_ns": 40020998136265,
+      "utc_time": "2026-10-27T04:47:52.930100+00:00"
+    },
+    {
+      "record_type": "probe_event",
+      "rank": 1,
+      "pid": 1422,
+      "index": 24,
+      "action": "isend_enter",
+      "transfer_round": 0,
+      "monotonic_ns": 40020998226435,
+      "utc_time": "2026-10-27T04:47:52.930188+00:00"
+    },
+    {
+      "record_type": "probe_event",
+      "rank": 1,
+      "pid": 1422,
+      "index": 25,
+      "action": "isend_method_returned",
+      "transfer_round": 0,
+      "monotonic_ns": 40021367677774,
+      "utc_time": "2026-10-27T04:47:53.299649+00:00",
+      "handle_count": 1
+    },
+    {
+      "record_type": "probe_event",
+      "rank": 1,
+      "pid": 1422,
+      "index": 26,
+      "action": "queries_after_method_return",
+      "transfer_round": 0,
+      "monotonic_ns": 40021369604599,
+      "utc_time": "2026-10-27T04:47:53.301568+00:00",
+      "work_query": [
+        false
+      ],
+      "local_stream_event_query": false
+    },
+    {
+      "record_type": "probe_event",
+      "rank": 1,
+      "pid": 1422,
+      "index": 27,
+      "action": "bounded_work_query_finished",
+      "transfer_round": 0,
+      "monotonic_ns": 40021616784206,
+      "utc_time": "2026-10-27T04:47:53.548751+00:00",
+      "consensus_ready": true,
+      "poll_rounds": 280
+    },
+    {
+      "record_type": "probe_event",
+      "rank": 1,
+      "pid": 1422,
+      "index": 28,
+      "action": "work_wait_enter",
+      "transfer_round": 0,
+      "monotonic_ns": 40021616927487,
+      "utc_time": "2026-10-27T04:47:53.548889+00:00"
+    },
+    {
+      "record_type": "probe_event",
+      "rank": 1,
+      "pid": 1422,
+      "index": 29,
+      "action": "work_wait_returned",
+      "transfer_round": 0,
+      "monotonic_ns": 40021617054708,
+      "utc_time": "2026-10-27T04:47:53.549016+00:00",
+      "work_query": [
+        true
+      ]
+    },
+    {
+      "record_type": "probe_event",
+      "rank": 1,
+      "pid": 1422,
+      "index": 30,
+      "action": "comm_fence_recorded",
+      "transfer_round": 0,
+      "monotonic_ns": 40021617396360,
+      "utc_time": "2026-10-27T04:47:53.549362+00:00",
+      "event_query": false
+    },
+    {
+      "record_type": "probe_event",
+      "rank": 1,
+      "pid": 1422,
+      "index": 31,
+      "action": "comm_fence_known_complete",
+      "transfer_round": 0,
+      "monotonic_ns": 40021617550252,
+      "utc_time": "2026-10-27T04:47:53.549512+00:00",
+      "event_query": true
+    },
+    {
+      "record_type": "probe_event",
+      "rank": 1,
+      "pid": 1422,
+      "index": 32,
+      "action": "transfer_round_complete",
+      "transfer_round": 0,
+      "monotonic_ns": 40021618194437,
+      "utc_time": "2026-10-27T04:47:53.550159+00:00"
+    },
+    {
+      "record_type": "probe_event",
+      "rank": 1,
+      "pid": 1422,
+      "index": 33,
+      "action": "transfer_round_start",
+      "transfer_round": 1,
+      "monotonic_ns": 40022109596046,
+      "utc_time": "2026-10-27T04:47:54.041565+00:00"
+    },
+    {
+      "record_type": "probe_event",
+      "rank": 1,
+      "pid": 1422,
+      "index": 34,
+      "action": "front_placeholder_tensor_ready",
+      "transfer_round": 1,
+      "monotonic_ns": 40022110446122,
+      "utc_time": "2026-10-27T04:47:54.042412+00:00"
+    },
+    {
+      "record_type": "probe_event",
+      "rank": 1,
+      "pid": 1422,
+      "index": 35,
+      "action": "isend_enter",
+      "transfer_round": 1,
+      "monotonic_ns": 40022110570343,
+      "utc_time": "2026-10-27T04:47:54.042532+00:00"
+    },
+    {
+      "record_type": "probe_event",
+      "rank": 1,
+      "pid": 1422,
+      "index": 36,
+      "action": "isend_method_returned",
+      "transfer_round": 1,
+      "monotonic_ns": 40022111264939,
+      "utc_time": "2026-10-27T04:47:54.043228+00:00",
+      "handle_count": 1
+    },
+    {
+      "record_type": "probe_event",
+      "rank": 1,
+      "pid": 1422,
+      "index": 37,
+      "action": "queries_after_method_return",
+      "transfer_round": 1,
+      "monotonic_ns": 40022111443950,
+      "utc_time": "2026-10-27T04:47:54.043406+00:00",
+      "work_query": [
+        false
+      ],
+      "local_stream_event_query": false
+    },
+    {
+      "record_type": "probe_event",
+      "rank": 1,
+      "pid": 1422,
+      "index": 38,
+      "action": "bounded_work_query_finished",
+      "transfer_round": 1,
+      "monotonic_ns": 40022114545035,
+      "utc_time": "2026-10-27T04:47:54.046509+00:00",
+      "consensus_ready": true,
+      "poll_rounds": 2
+    },
+    {
+      "record_type": "probe_event",
+      "rank": 1,
+      "pid": 1422,
+      "index": 39,
+      "action": "work_wait_enter",
+      "transfer_round": 1,
+      "monotonic_ns": 40022114655986,
+      "utc_time": "2026-10-27T04:47:54.046617+00:00"
+    },
+    {
+      "record_type": "probe_event",
+      "rank": 1,
+      "pid": 1422,
+      "index": 40,
+      "action": "work_wait_returned",
+      "transfer_round": 1,
+      "monotonic_ns": 40022114945418,
+      "utc_time": "2026-10-27T04:47:54.046908+00:00",
+      "work_query": [
+        true
+      ]
+    },
+    {
+      "record_type": "probe_event",
+      "rank": 1,
+      "pid": 1422,
+      "index": 41,
+      "action": "comm_fence_recorded",
+      "transfer_round": 1,
+      "monotonic_ns": 40022115189380,
+      "utc_time": "2026-10-27T04:47:54.047151+00:00",
+      "event_query": false
+    },
+    {
+      "record_type": "probe_event",
+      "rank": 1,
+      "pid": 1422,
+      "index": 42,
+      "action": "comm_fence_known_complete",
+      "transfer_round": 1,
+      "monotonic_ns": 40022115258351,
+      "utc_time": "2026-10-27T04:47:54.047220+00:00",
+      "event_query": true
+    },
+    {
+      "record_type": "probe_event",
+      "rank": 1,
+      "pid": 1422,
+      "index": 43,
+      "action": "transfer_round_complete",
+      "transfer_round": 1,
+      "monotonic_ns": 40022115858755,
+      "utc_time": "2026-10-27T04:47:54.047821+00:00"
+    },
+    {
+      "record_type": "probe_event",
+      "rank": 1,
+      "pid": 1422,
+      "index": 44,
+      "action": "all_ranks_protocol_complete",
+      "transfer_round": 1,
+      "monotonic_ns": 40022119758966,
+      "utc_time": "2026-10-27T04:47:54.051721+00:00"
+    },
+    {
+      "record_type": "probe_event",
+      "rank": 1,
+      "pid": 1422,
+      "index": 45,
+      "action": "communication_groups_destroyed",
+      "transfer_round": 1,
+      "monotonic_ns": 40022653267850,
+      "utc_time": "2026-10-27T04:47:54.585234+00:00"
+    }
+  ],
+  "completed_at_utc": "2026-10-27T04:47:54.585412+00:00",
+  "normal_cleanup": true
+}

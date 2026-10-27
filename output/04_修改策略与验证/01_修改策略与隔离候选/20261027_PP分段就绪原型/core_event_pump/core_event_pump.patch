@@ -1,0 +1,211 @@
+--- a/vllm/v1/engine/core.py
++++ b/vllm/v1/engine/core.py
+@@ -6,6 +6,7 @@
+ import signal
+ import threading
+ import time
++import weakref
+ from collections import defaultdict, deque
+ from collections.abc import Callable, Generator
+ from concurrent.futures import Future
+@@ -92,6 +93,60 @@
+ _R = TypeVar("_R")  # Return type for collective_rpc
+ 
+ 
++
++# KS candidate: only one old-result reader may be active for this EngineCore.
++# NOT_RUNTIME_INTEGRATED: executor aggregation thread affinity is not verified.
++class _KSModelResultReader:
++    def __init__(self):
++        self.owner = threading.get_ident()
++        self.tasks = queue.Queue(maxsize=1)
++        self.results = weakref.WeakKeyDictionary()
++        self.active = None
++        self.closed = False
++        self.thread = threading.Thread(target=self._run, daemon=True,
++                                       name="KSModelResultReader")
++        self.thread.start()
++
++    def submit(self, future):
++        if threading.get_ident() != self.owner:
++            raise RuntimeError("model wait must stay on the configured core thread")
++        cached = self.results.get(future)
++        if cached is not None:
++            return cached
++        if self.closed:
++            raise RuntimeError("model result reader is closed")
++        if self.active is not None and not self.active.done():
++            raise RuntimeError("another old model future already has the sole reader")
++        outcome = Future()
++        self.results[future] = outcome
++        self.active = outcome
++        self.tasks.put_nowait((future, outcome))
++        return outcome
++
++    def _run(self):
++        while True:
++            task = self.tasks.get()
++            if task is None:
++                return
++            future, outcome = task
++            try:
++                outcome.set_result(future.result())
++            except BaseException as error:
++                outcome.set_exception(error)
++            finally:
++                # No permanent strong reference from this thread to old batches.
++                del task, future, outcome
++
++    def close(self, timeout=0.2):
++        if self.active is not None and not self.active.done():
++            return False
++        if not self.closed:
++            self.closed = True
++            self.tasks.put_nowait(None)
++        self.thread.join(timeout=timeout)
++        return not self.thread.is_alive()
++
++
+ class EngineCore:
+     """Inner loop of vLLM's Engine."""
+ 
+@@ -440,6 +495,89 @@
+         )
+         self._iteration_index += 1
+ 
++
++    def configure_ks_core_event_pump(self, callback, dispatcher=None,
++                                     poll_interval=0.005):
++        # Explicit hook only: enabling an env var does not configure a scheduler.
++        if os.environ.get("KS_CORE_STAGE_EVENT_PUMP") != "1":
++            raise RuntimeError("core stage event pump is disabled")
++        if getattr(self, "_ks_result_reader", None) is not None:
++            raise RuntimeError("core event pump is already configured")
++        if not callable(callback) or (dispatcher is not None and not callable(dispatcher)):
++            raise ValueError("event callback and optional dispatcher must be callable")
++        if not callable(getattr(self.model_executor, "poll_stage_events", None)):
++            raise ValueError("independent executor stage event channel is required")
++        if not 0 < poll_interval <= 0.1:
++            raise ValueError("poll interval must be between zero and 0.1 seconds")
++        self._ks_event_callback = callback
++        self._ks_event_dispatcher = dispatcher
++        self._ks_event_poll_interval = poll_interval
++        self._ks_event_callback_active = False
++        self._ks_waiting_model_future = None
++        self._ks_result_reader = _KSModelResultReader()
++
++    def ks_model_wait_inflight(self):
++        # batch_queue.pop() has happened, but this model batch still owns a slot.
++        return int(getattr(self, "_ks_waiting_model_future", None) is not None)
++
++    def _ks_assert_no_event_callback_step(self):
++        if getattr(self, "_ks_event_callback_active", False):
++            raise RuntimeError("event callback cannot recursively schedule a model step")
++
++    def _ks_consume_stage_events(self):
++        # This method only runs on the core thread. No token/block progress here.
++        for event in self.model_executor.poll_stage_events():
++            self._ks_event_callback_active = True
++            try:
++                if self._ks_event_callback(event) is not None:
++                    raise ValueError("event callback must return None")
++                if self._ks_event_dispatcher is not None:
++                    self._ks_event_dispatcher(event)
++            finally:
++                self._ks_event_callback_active = False
++
++    def _ks_wait_model_future(self, future):
++        reader = getattr(self, "_ks_result_reader", None)
++        if reader is None:
++            return future.result()
++        if getattr(self, "_ks_event_callback_active", False):
++            raise RuntimeError("event callback cannot consume old model results")
++        outcome = reader.submit(future)
++        completed = threading.Event()
++        outcome.add_done_callback(lambda _: completed.set())
++        self._ks_waiting_model_future = future
++        try:
++            event_error = None
++            while True:
++                if event_error is None:
++                    try:
++                        self._ks_consume_stage_events()
++                    except BaseException as error:
++                        # Keep the sole reader and batch alive until the real result
++                        # is terminal. Do not update scheduler after callback failure.
++                        event_error = error
++                if completed.is_set():
++                    break
++                completed.wait(self._ks_event_poll_interval)
++            # CPU relay Future, never the old FutureWrapper a second time.
++            result = outcome.result()
++            if event_error is not None:
++                raise event_error
++            return result
++        finally:
++            self._ks_waiting_model_future = None
++
++    def _ks_sample_tokens_with_event_pump(self, grammar_output):
++        if getattr(self, "_ks_result_reader", None) is None:
++            return self.model_executor.sample_tokens(grammar_output)
++        return self._ks_wait_model_future(
++            self.model_executor.sample_tokens(grammar_output, non_block=True))
++
++    def _ks_close_core_event_pump(self):
++        reader = getattr(self, "_ks_result_reader", None)
++        if reader is not None and not reader.close():
++            raise RuntimeError("old result reader is still active after executor shutdown")
++
+     def step(self) -> tuple[dict[int, EngineCoreOutputs], bool]:
+         """Schedule, execute, and make output.
+ 
+@@ -447,6 +585,7 @@
+         was executed.
+         """
+ 
++        self._ks_assert_no_event_callback_step()
+         # Check for any requests remaining in the scheduler - unfinished,
+         # or finished and not yet removed from the batch.
+         if not self.scheduler.has_requests():
+@@ -458,9 +597,9 @@
+             self.log_error_detail(scheduler_output),
+             self.log_iteration_details(scheduler_output),
+         ):
+-            model_output = future.result()
++            model_output = self._ks_wait_model_future(future)
+             if model_output is None:
+-                model_output = self.model_executor.sample_tokens(grammar_output)
++                model_output = self._ks_sample_tokens_with_event_pump(grammar_output)
+ 
+         # Before processing the model output, process any aborts that happened
+         # during the model execution.
+@@ -498,6 +637,7 @@
+         3. Update the scheduler from the output.
+         """
+ 
++        self._ks_assert_no_event_callback_step()
+         batch_queue = self.batch_queue
+         assert batch_queue is not None
+ 
+@@ -557,11 +697,11 @@
+             self.log_error_detail(scheduler_output),
+             self.log_iteration_details(scheduler_output),
+         ):
+-            model_output = future.result()
++            model_output = self._ks_wait_model_future(future)
+             if model_output is None:
+                 # None from sample_tokens() implies that the original execute_model()
+                 # call failed - raise that exception.
+-                exec_model_fut.result()
++                self._ks_wait_model_future(exec_model_fut)
+                 raise RuntimeError("unexpected error")
+ 
+         # Before processing the model output, process any aborts that happened
+@@ -612,6 +752,7 @@
+         self.structured_output_manager.clear_backend()
+         if self.model_executor:
+             self.model_executor.shutdown()
++        self._ks_close_core_event_pump()
+         if self.scheduler:
+             self.scheduler.shutdown()
+ 

@@ -1,0 +1,455 @@
+{
+  "status": "PASS",
+  "document_only": true,
+  "report": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\20261026_PP分段就绪设计\\PP分段就绪调度_源码依据与修改设计.html",
+  "standaloneCopiedFile": "C:\\Users\\luv_l\\AppData\\Local\\Temp\\ks-stage-ready-doc-XOOcjh\\独立复制后的说明.html",
+  "offline": true,
+  "viewportChecks": {
+    "desktop": {
+      "innerWidth": 1440,
+      "clientWidth": 1425,
+      "scrollWidth": 1425,
+      "scrollHeight": 17119,
+      "pageOverflow": false,
+      "scrollWrappers": 21,
+      "scrollWrappersUsable": true
+    },
+    "mobile": {
+      "innerWidth": 390,
+      "clientWidth": 390,
+      "scrollWidth": 390,
+      "scrollHeight": 23975,
+      "pageOverflow": false,
+      "scrollWrappers": 21,
+      "scrollWrappersUsable": true
+    }
+  },
+  "sections": {
+    "required": [
+      "summary",
+      "flow",
+      "changes",
+      "code",
+      "validation",
+      "gaps",
+      "reproduce"
+    ],
+    "found": [
+      "summary",
+      "flow",
+      "changes",
+      "code",
+      "validation",
+      "gaps",
+      "reproduce"
+    ],
+    "missing": []
+  },
+  "modeToggle": {
+    "buttonCount": 2,
+    "oldButtonCount": 1,
+    "newButtonCount": 1,
+    "timelinePresent": true,
+    "oldPressedCount": 1,
+    "newPressedCount": 1,
+    "oldMode": "",
+    "newMode": "",
+    "timelineChanged": true,
+    "pass": true
+  },
+  "code": {
+    "blocks": 3434,
+    "syntaxTokenCount": 5435,
+    "requiredMinimum": 31
+  },
+  "diff": {
+    "containers": 21,
+    "groups": 808,
+    "groupCounts": [
+      {
+        "tag": "div",
+        "className": "diff-grid",
+        "groups": 478
+      },
+      {
+        "tag": "table",
+        "className": "diff-table",
+        "groups": 239
+      },
+      {
+        "tag": "table",
+        "className": "diff-table",
+        "groups": 239
+      },
+      {
+        "tag": "div",
+        "className": "diff-grid",
+        "groups": 808
+      },
+      {
+        "tag": "table",
+        "className": "diff-table",
+        "groups": 404
+      },
+      {
+        "tag": "table",
+        "className": "diff-table",
+        "groups": 404
+      },
+      {
+        "tag": "div",
+        "className": "diff-grid",
+        "groups": 388
+      },
+      {
+        "tag": "table",
+        "className": "diff-table",
+        "groups": 194
+      },
+      {
+        "tag": "table",
+        "className": "diff-table",
+        "groups": 194
+      },
+      {
+        "tag": "div",
+        "className": "diff-grid",
+        "groups": 552
+      },
+      {
+        "tag": "table",
+        "className": "diff-table",
+        "groups": 276
+      },
+      {
+        "tag": "table",
+        "className": "diff-table",
+        "groups": 276
+      },
+      {
+        "tag": "div",
+        "className": "diff-grid",
+        "groups": 546
+      },
+      {
+        "tag": "table",
+        "className": "diff-table",
+        "groups": 273
+      },
+      {
+        "tag": "table",
+        "className": "diff-table",
+        "groups": 273
+      },
+      {
+        "tag": "div",
+        "className": "diff-grid",
+        "groups": 94
+      },
+      {
+        "tag": "table",
+        "className": "diff-table",
+        "groups": 47
+      },
+      {
+        "tag": "table",
+        "className": "diff-table",
+        "groups": 47
+      },
+      {
+        "tag": "div",
+        "className": "diff-grid",
+        "groups": 506
+      },
+      {
+        "tag": "table",
+        "className": "diff-table",
+        "groups": 253
+      },
+      {
+        "tag": "table",
+        "className": "diff-table",
+        "groups": 253
+      }
+    ]
+  },
+  "diffLayout": {
+    "longestDiffTd": {
+      "index": 6307,
+      "scrollWidth": 822,
+      "clientWidth": 822,
+      "overflow": 0
+    },
+    "diffScrollContainers": [
+      {
+        "className": "diff-scroll",
+        "clientWidth": 1056,
+        "scrollWidth": 1056,
+        "overflowX": "auto",
+        "canScroll": false,
+        "moved": false
+      },
+      {
+        "className": "diff-grid",
+        "clientWidth": 1056,
+        "scrollWidth": 1056,
+        "overflowX": "visible",
+        "canScroll": false,
+        "moved": false
+      },
+      {
+        "className": "diff-scroll diff-pane-scroll",
+        "clientWidth": 527,
+        "scrollWidth": 631,
+        "overflowX": "auto",
+        "canScroll": true,
+        "moved": true
+      },
+      {
+        "className": "diff-scroll diff-pane-scroll",
+        "clientWidth": 527,
+        "scrollWidth": 671,
+        "overflowX": "auto",
+        "canScroll": true,
+        "moved": true
+      },
+      {
+        "className": "diff-scroll",
+        "clientWidth": 1056,
+        "scrollWidth": 1056,
+        "overflowX": "auto",
+        "canScroll": false,
+        "moved": false
+      },
+      {
+        "className": "diff-grid",
+        "clientWidth": 1056,
+        "scrollWidth": 1056,
+        "overflowX": "visible",
+        "canScroll": false,
+        "moved": false
+      },
+      {
+        "className": "diff-scroll diff-pane-scroll",
+        "clientWidth": 527,
+        "scrollWidth": 624,
+        "overflowX": "auto",
+        "canScroll": true,
+        "moved": true
+      },
+      {
+        "className": "diff-scroll diff-pane-scroll",
+        "clientWidth": 527,
+        "scrollWidth": 684,
+        "overflowX": "auto",
+        "canScroll": true,
+        "moved": true
+      },
+      {
+        "className": "diff-scroll",
+        "clientWidth": 1056,
+        "scrollWidth": 1056,
+        "overflowX": "auto",
+        "canScroll": false,
+        "moved": false
+      },
+      {
+        "className": "diff-grid",
+        "clientWidth": 1056,
+        "scrollWidth": 1056,
+        "overflowX": "visible",
+        "canScroll": false,
+        "moved": false
+      },
+      {
+        "className": "diff-scroll diff-pane-scroll",
+        "clientWidth": 527,
+        "scrollWidth": 527,
+        "overflowX": "auto",
+        "canScroll": false,
+        "moved": false
+      },
+      {
+        "className": "diff-scroll diff-pane-scroll",
+        "clientWidth": 527,
+        "scrollWidth": 670,
+        "overflowX": "auto",
+        "canScroll": true,
+        "moved": true
+      },
+      {
+        "className": "diff-scroll",
+        "clientWidth": 1056,
+        "scrollWidth": 1056,
+        "overflowX": "auto",
+        "canScroll": false,
+        "moved": false
+      },
+      {
+        "className": "diff-grid",
+        "clientWidth": 1056,
+        "scrollWidth": 1056,
+        "overflowX": "visible",
+        "canScroll": false,
+        "moved": false
+      },
+      {
+        "className": "diff-scroll diff-pane-scroll",
+        "clientWidth": 527,
+        "scrollWidth": 598,
+        "overflowX": "auto",
+        "canScroll": true,
+        "moved": true
+      },
+      {
+        "className": "diff-scroll diff-pane-scroll",
+        "clientWidth": 527,
+        "scrollWidth": 697,
+        "overflowX": "auto",
+        "canScroll": true,
+        "moved": true
+      },
+      {
+        "className": "diff-scroll",
+        "clientWidth": 1056,
+        "scrollWidth": 1056,
+        "overflowX": "auto",
+        "canScroll": false,
+        "moved": false
+      },
+      {
+        "className": "diff-grid",
+        "clientWidth": 1056,
+        "scrollWidth": 1056,
+        "overflowX": "visible",
+        "canScroll": false,
+        "moved": false
+      },
+      {
+        "className": "diff-scroll diff-pane-scroll",
+        "clientWidth": 527,
+        "scrollWidth": 527,
+        "overflowX": "auto",
+        "canScroll": false,
+        "moved": false
+      },
+      {
+        "className": "diff-scroll diff-pane-scroll",
+        "clientWidth": 527,
+        "scrollWidth": 644,
+        "overflowX": "auto",
+        "canScroll": true,
+        "moved": true
+      },
+      {
+        "className": "diff-scroll",
+        "clientWidth": 1056,
+        "scrollWidth": 1056,
+        "overflowX": "auto",
+        "canScroll": false,
+        "moved": false
+      },
+      {
+        "className": "diff-grid",
+        "clientWidth": 1056,
+        "scrollWidth": 1056,
+        "overflowX": "visible",
+        "canScroll": false,
+        "moved": false
+      },
+      {
+        "className": "diff-scroll diff-pane-scroll",
+        "clientWidth": 527,
+        "scrollWidth": 527,
+        "overflowX": "auto",
+        "canScroll": false,
+        "moved": false
+      },
+      {
+        "className": "diff-scroll diff-pane-scroll",
+        "clientWidth": 527,
+        "scrollWidth": 684,
+        "overflowX": "auto",
+        "canScroll": true,
+        "moved": true
+      },
+      {
+        "className": "diff-scroll",
+        "clientWidth": 1056,
+        "scrollWidth": 1056,
+        "overflowX": "auto",
+        "canScroll": false,
+        "moved": false
+      },
+      {
+        "className": "diff-grid",
+        "clientWidth": 1056,
+        "scrollWidth": 1056,
+        "overflowX": "visible",
+        "canScroll": false,
+        "moved": false
+      },
+      {
+        "className": "diff-scroll diff-pane-scroll",
+        "clientWidth": 527,
+        "scrollWidth": 697,
+        "overflowX": "auto",
+        "canScroll": true,
+        "moved": true
+      },
+      {
+        "className": "diff-scroll diff-pane-scroll",
+        "clientWidth": 527,
+        "scrollWidth": 822,
+        "overflowX": "auto",
+        "canScroll": true,
+        "moved": true
+      }
+    ],
+    "scrollContainerPass": true,
+    "pass": true
+  },
+  "foldables": {
+    "count": 7,
+    "diffDetails": 7,
+    "toggled": true,
+    "restored": true,
+    "allOpen": true,
+    "pass": true
+  },
+  "anchors": {
+    "checked": 8,
+    "broken": []
+  },
+  "externalResources": {
+    "domResourceRefs": [],
+    "cssExternalRefs": [],
+    "networkRequests": [],
+    "count": 0
+  },
+  "placeholders": [],
+  "jsErrors": [],
+  "screenshot": {
+    "path": "E:\\work\\ks\\.codex\\qa\\stage-report\\stage-report-desktop-full.png",
+    "mode": "full-page"
+  },
+  "screenshots": {
+    "fullPage": {
+      "path": "E:\\work\\ks\\.codex\\qa\\stage-report\\stage-report-desktop-full.png",
+      "mode": "full-page"
+    },
+    "firstScreen": {
+      "path": "E:\\work\\ks\\.codex\\qa\\stage-report\\stage-report-desktop-first-screen.png",
+      "mode": "first-screen"
+    },
+    "firstDiffExpanded": {
+      "path": "E:\\work\\ks\\.codex\\qa\\stage-report\\stage-report-diff-expanded.png",
+      "mode": "viewport-clip",
+      "summary": "vLLM 核心：等待与事件消费"
+    }
+  },
+  "inferenceTestsExecuted": false,
+  "cpuCandidateTestsExecuted": false,
+  "serverActions": 0,
+  "sshUsed": false
+}

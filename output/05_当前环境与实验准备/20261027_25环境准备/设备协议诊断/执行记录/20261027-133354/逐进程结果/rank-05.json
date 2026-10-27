@@ -1,0 +1,525 @@
+{
+  "rank": 5,
+  "pid": 3008,
+  "plan": {
+    "scope": "SYNTHETIC_STAGE_DEPENDENCY_DEVICE_PROTOCOL_ONLY",
+    "world_size": 16,
+    "tp": 8,
+    "pp": 2,
+    "shape": [
+      8,
+      32
+    ],
+    "device_backend": "hccl",
+    "control_backend": "existing world.cpu_group Gloo",
+    "core": "rank0 original CPU StageController prototype; not vLLM EngineCore",
+    "legacy_baseline": "unchanged AST-extracted scheduler predicate lines 2188-2219",
+    "controlled_latch": "back-stage H2D is not submitted until rank0 release",
+    "rounds": [
+      "front actual H2D+event completion; back not submitted",
+      "legacy predicate rejects while StageController dispatches front",
+      "front actual compute event completion",
+      "real HCCL PP isend/irecv and back TP postprocess completion",
+      "activation-only does not dispatch back; explicit latch release",
+      "back actual H2D+event completion; global legacy gate now opens",
+      "back actual compute, contents, all-rank checks, ordered commit"
+    ],
+    "group_timeout_seconds": 90,
+    "required_external_task_timeout_seconds": 240,
+    "background_device_threads": false,
+    "not_verified": [
+      "vLLM core integration",
+      "GLM",
+      "real LMCache KV",
+      "performance or speedup; artificial latch has no timing value"
+    ]
+  },
+  "status": "PASS_SYNTHETIC_STAGE_DEPENDENCY_ONLY",
+  "full_core_integration": "NOT_VERIFIED",
+  "safe_device_completion": true,
+  "pp_rank": 0,
+  "tp_rank": 5,
+  "pp_ranks": [
+    5,
+    13
+  ],
+  "tp_ranks": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "front_only_dispatch_contrast": {
+    "ok": true,
+    "front_dispatch": true,
+    "legacy_promoted_front_only": false,
+    "legacy_global_finished_ids": [],
+    "new_work": {
+      "key": [
+        "stage-batch-0001",
+        1
+      ],
+      "stage": 0,
+      "workers": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "requests": [
+        [
+          "stage-device-component",
+          1
+        ]
+      ],
+      "token_positions": [
+        [
+          31
+        ]
+      ]
+    },
+    "back_restore_latch_open": false
+  },
+  "activation_only_guard": {
+    "ok": true,
+    "activation_ready_without_back_kv_rejected": true,
+    "legacy_still_rejects": true,
+    "back_restore_latch_open": true,
+    "back_compute_authorized": false
+  },
+  "all_kv_dispatch_contrast": {
+    "ok": true,
+    "legacy_promoted_only_after_all_kv": true,
+    "back_compute_authorized": true,
+    "new_work": {
+      "key": [
+        "stage-batch-0001",
+        1
+      ],
+      "stage": 1,
+      "workers": [
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "requests": [
+        [
+          "stage-device-component",
+          1
+        ]
+      ],
+      "token_positions": [
+        [
+          31
+        ]
+      ]
+    },
+    "legacy_postgate_helper": "recording fixture, not full scheduler KV bookkeeping"
+  },
+  "final_commit": {
+    "ok": true,
+    "ordered_commit": {
+      "key": [
+        "stage-batch-0001",
+        1
+      ],
+      "result": {
+        "all_rank_content_checks": true
+      },
+      "cancelled": false
+    },
+    "all_rank_content_checks": true,
+    "evidence_scope": "synthetic stage dependency only; no measured speedup"
+  },
+  "events": [
+    {
+      "rank": 5,
+      "pid": 3008,
+      "index": 1,
+      "action": "framework_import_enter",
+      "monotonic_ns": 42793531433490,
+      "utc": "2026-10-27T05:34:05.463398+00:00"
+    },
+    {
+      "rank": 5,
+      "pid": 3008,
+      "index": 2,
+      "action": "framework_import_returned",
+      "monotonic_ns": 42808655365546,
+      "utc": "2026-10-27T05:34:20.587366+00:00",
+      "torch": "2.10.0+cpu",
+      "torch_npu": "2.10.0.post4"
+    },
+    {
+      "rank": 5,
+      "pid": 3008,
+      "index": 3,
+      "action": "distributed_init_enter",
+      "monotonic_ns": 42811594591039,
+      "utc": "2026-10-27T05:34:23.526555+00:00"
+    },
+    {
+      "rank": 5,
+      "pid": 3008,
+      "index": 4,
+      "action": "groups_ready",
+      "monotonic_ns": 42813510549277,
+      "utc": "2026-10-27T05:34:25.442515+00:00",
+      "pp_rank": 0,
+      "tp_rank": 5,
+      "pp_ranks": [
+        5,
+        13
+      ],
+      "tp_ranks": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ]
+    },
+    {
+      "rank": 5,
+      "pid": 3008,
+      "index": 5,
+      "action": "synthetic_kv_h2d_submit",
+      "monotonic_ns": 42813529324777,
+      "utc": "2026-10-27T05:34:25.461292+00:00",
+      "stage": 0,
+      "elements": 32
+    },
+    {
+      "rank": 5,
+      "pid": 3008,
+      "index": 6,
+      "action": "synthetic_kv_h2d_record_method_returned",
+      "monotonic_ns": 42813533195278,
+      "utc": "2026-10-27T05:34:25.465160+00:00",
+      "event_query": false
+    },
+    {
+      "rank": 5,
+      "pid": 3008,
+      "index": 7,
+      "action": "synthetic_kv_h2d_device_complete",
+      "monotonic_ns": 42813533442690,
+      "utc": "2026-10-27T05:34:25.465405+00:00",
+      "event_query": true
+    },
+    {
+      "rank": 5,
+      "pid": 3008,
+      "index": 8,
+      "action": "cpu_control_report",
+      "monotonic_ns": 42813533514501,
+      "utc": "2026-10-27T05:34:25.465476+00:00",
+      "round": 1,
+      "label": "front_kv_ready_back_latched",
+      "kv_submitted": true,
+      "kv_complete": true,
+      "stage": 0
+    },
+    {
+      "rank": 5,
+      "pid": 3008,
+      "index": 9,
+      "action": "cpu_core_command",
+      "monotonic_ns": 42813571370673,
+      "utc": "2026-10-27T05:34:25.503337+00:00",
+      "decision": {
+        "ok": true,
+        "front_dispatch": true,
+        "legacy_promoted_front_only": false,
+        "legacy_global_finished_ids": [],
+        "new_work": {
+          "key": [
+            "stage-batch-0001",
+            1
+          ],
+          "stage": 0,
+          "workers": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "requests": [
+            [
+              "stage-device-component",
+              1
+            ]
+          ],
+          "token_positions": [
+            [
+              31
+            ]
+          ]
+        },
+        "back_restore_latch_open": false
+      }
+    },
+    {
+      "rank": 5,
+      "pid": 3008,
+      "index": 10,
+      "action": "front_compute_record_method_returned",
+      "monotonic_ns": 42813687562881,
+      "utc": "2026-10-27T05:34:25.619530+00:00",
+      "event_query": false
+    },
+    {
+      "rank": 5,
+      "pid": 3008,
+      "index": 11,
+      "action": "front_compute_device_complete",
+      "monotonic_ns": 42813771082459,
+      "utc": "2026-10-27T05:34:25.703047+00:00",
+      "event_query": true
+    },
+    {
+      "rank": 5,
+      "pid": 3008,
+      "index": 12,
+      "action": "cpu_control_report",
+      "monotonic_ns": 42813771203240,
+      "utc": "2026-10-27T05:34:25.703165+00:00",
+      "round": 2,
+      "label": "front_compute_complete",
+      "front_complete": true,
+      "back_compute_started": false,
+      "back_kv_submitted": false
+    },
+    {
+      "rank": 5,
+      "pid": 3008,
+      "index": 13,
+      "action": "cpu_core_command",
+      "monotonic_ns": 42813943851769,
+      "utc": "2026-10-27T05:34:25.875815+00:00",
+      "decision": {
+        "ok": true,
+        "activation_transfer_authorized": true,
+        "back_compute_blocked": true,
+        "back_restore_latch_open": false
+      }
+    },
+    {
+      "rank": 5,
+      "pid": 3008,
+      "index": 14,
+      "action": "isend_enter",
+      "monotonic_ns": 42813943997830,
+      "utc": "2026-10-27T05:34:25.875960+00:00",
+      "back_kv_still_not_submitted": true
+    },
+    {
+      "rank": 5,
+      "pid": 3008,
+      "index": 15,
+      "action": "isend_method_returned",
+      "monotonic_ns": 42814277295513,
+      "utc": "2026-10-27T05:34:26.209262+00:00",
+      "handle_count": 1
+    },
+    {
+      "rank": 5,
+      "pid": 3008,
+      "index": 16,
+      "action": "work_query_before_wait",
+      "monotonic_ns": 42814278454683,
+      "utc": "2026-10-27T05:34:26.210417+00:00",
+      "values": [
+        false
+      ]
+    },
+    {
+      "rank": 5,
+      "pid": 3008,
+      "index": 17,
+      "action": "work_wait_enter",
+      "monotonic_ns": 42814278527213,
+      "utc": "2026-10-27T05:34:26.210489+00:00"
+    },
+    {
+      "rank": 5,
+      "pid": 3008,
+      "index": 18,
+      "action": "work_wait_method_returned",
+      "monotonic_ns": 42814278583974,
+      "utc": "2026-10-27T05:34:26.210545+00:00",
+      "values": [
+        false
+      ]
+    },
+    {
+      "rank": 5,
+      "pid": 3008,
+      "index": 19,
+      "action": "communication_fence_record_method_returned",
+      "monotonic_ns": 42814278720175,
+      "utc": "2026-10-27T05:34:26.210682+00:00",
+      "event_query": false
+    },
+    {
+      "rank": 5,
+      "pid": 3008,
+      "index": 20,
+      "action": "communication_fence_device_complete",
+      "monotonic_ns": 42814536064351,
+      "utc": "2026-10-27T05:34:26.468031+00:00",
+      "event_query": true
+    },
+    {
+      "rank": 5,
+      "pid": 3008,
+      "index": 21,
+      "action": "cpu_control_report",
+      "monotonic_ns": 42814606350502,
+      "utc": "2026-10-27T05:34:26.538315+00:00",
+      "round": 3,
+      "label": "activation_complete_back_kv_still_latched",
+      "activation_complete": false,
+      "back_kv_submitted": false,
+      "back_compute_started": false,
+      "source_retained": true
+    },
+    {
+      "rank": 5,
+      "pid": 3008,
+      "index": 22,
+      "action": "cpu_core_command",
+      "monotonic_ns": 42815255345978,
+      "utc": "2026-10-27T05:34:27.187312+00:00",
+      "decision": {
+        "ok": true,
+        "activation_ready_without_back_kv_rejected": true,
+        "legacy_still_rejects": true,
+        "back_restore_latch_open": true,
+        "back_compute_authorized": false
+      }
+    },
+    {
+      "rank": 5,
+      "pid": 3008,
+      "index": 23,
+      "action": "cpu_control_report",
+      "monotonic_ns": 42815255486709,
+      "utc": "2026-10-27T05:34:27.187448+00:00",
+      "round": 4,
+      "label": "both_stages_actual_kv_complete",
+      "kv_complete": true,
+      "activation_complete": false,
+      "kv_submitted": true
+    },
+    {
+      "rank": 5,
+      "pid": 3008,
+      "index": 24,
+      "action": "cpu_core_command",
+      "monotonic_ns": 42815267708646,
+      "utc": "2026-10-27T05:34:27.199671+00:00",
+      "decision": {
+        "ok": true,
+        "legacy_promoted_only_after_all_kv": true,
+        "back_compute_authorized": true,
+        "new_work": {
+          "key": [
+            "stage-batch-0001",
+            1
+          ],
+          "stage": 1,
+          "workers": [
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ],
+          "requests": [
+            [
+              "stage-device-component",
+              1
+            ]
+          ],
+          "token_positions": [
+            [
+              31
+            ]
+          ]
+        },
+        "legacy_postgate_helper": "recording fixture, not full scheduler KV bookkeeping"
+      }
+    },
+    {
+      "rank": 5,
+      "pid": 3008,
+      "index": 25,
+      "action": "cpu_control_report",
+      "monotonic_ns": 42815267807277,
+      "utc": "2026-10-27T05:34:27.199769+00:00",
+      "round": 5,
+      "label": "back_compute_and_content_complete",
+      "back_complete": false,
+      "content_ok": true,
+      "all_resources_still_retained": true
+    },
+    {
+      "rank": 5,
+      "pid": 3008,
+      "index": 26,
+      "action": "cpu_core_command",
+      "monotonic_ns": 42815791121798,
+      "utc": "2026-10-27T05:34:27.723090+00:00",
+      "decision": {
+        "ok": true,
+        "ordered_commit": {
+          "key": [
+            "stage-batch-0001",
+            1
+          ],
+          "result": {
+            "all_rank_content_checks": true
+          },
+          "cancelled": false
+        },
+        "all_rank_content_checks": true,
+        "evidence_scope": "synthetic stage dependency only; no measured speedup"
+      }
+    },
+    {
+      "rank": 5,
+      "pid": 3008,
+      "index": 27,
+      "action": "all_ranks_device_protocol_complete",
+      "monotonic_ns": 42815792061896,
+      "utc": "2026-10-27T05:34:27.724027+00:00",
+      "retained_resource_count": 9
+    }
+  ],
+  "normal_cleanup": true,
+  "completed_utc": "2026-10-27T05:34:28.247713+00:00"
+}

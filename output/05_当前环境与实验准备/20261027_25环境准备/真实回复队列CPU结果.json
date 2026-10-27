@@ -1,0 +1,8 @@
+{
+  "status": "FAIL_OR_DEPENDENCY_BLOCKED",
+  "scope": "actual_reply_queue_CPU_component_only",
+  "not_model_or_performance_test": true,
+  "source_root": "/opt/ks-stage-ready/real_reply_queue_probe/source_bundle",
+  "device_nodes": [],
+  "error": "RuntimeError('Failed to load the backend extension: torch_npu. You can disable extension auto-loading with TORCH_DEVICE_BACKEND_AUTOLOAD=0.')"
+}

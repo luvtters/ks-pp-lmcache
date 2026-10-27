@@ -1,0 +1,72 @@
+{
+  "status": "KNOWN_LIMITATION_CONFIRMED",
+  "scope": "ONE_BOUNDED_CPU_CALL_ORDER_CASE",
+  "observed_control_waited_behind_old_future": true,
+  "threads_left_alive": 0,
+  "true_source": {
+    "future_wrapper": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\KV完成通知修改策略与隔离分支_20261022\\source_baseline\\vllm\\v1\\executor\\multiproc_executor.py",
+    "methods": {
+      "__init__": {
+        "start": 75,
+        "end": 85
+      },
+      "result": {
+        "start": 87,
+        "end": 96
+      },
+      "_wait_for_response": {
+        "start": 98,
+        "end": 106
+      }
+    },
+    "stage_bridge": "E:\\work\\ks\\output\\04_修改策略与验证\\01_修改策略与隔离候选\\20261027_PP分段就绪原型\\executor_bridge.py",
+    "collect": {
+      "start": 92,
+      "end": 117
+    }
+  },
+  "trace": [
+    {
+      "sequence": 1,
+      "action": "后段控制回复载荷已在CPU中准备好；尚未调用collect"
+    },
+    {
+      "sequence": 2,
+      "action": "读取旧的B2前段回复：进入等待"
+    },
+    {
+      "sequence": 3,
+      "action": "已观察：collect控制结果时先等旧future，控制载荷仍未读取"
+    },
+    {
+      "sequence": 4,
+      "action": "外部CPU测试释放旧前段等待条件"
+    },
+    {
+      "sequence": 5,
+      "action": "旧B2前段等待已被外部测试条件放行"
+    },
+    {
+      "sequence": 6,
+      "action": "现在才读取已准备好的B1后段控制回复"
+    },
+    {
+      "sequence": 7,
+      "action": "Bridge.collect返回后段控制结果"
+    }
+  ],
+  "fixture_conditions": [
+    "后续控制RPC的全部16份CPU回复载荷预先可用，排除本例的worker回复缺失",
+    "旧前段get_response由CPU Event暂时挡住，随后由主线程显式放行",
+    "直接执行真实StageRPCBridge.collect及归档FutureWrapper，没有改其排队逻辑"
+  ],
+  "not_proven": [
+    "真实HCCL发生死锁或设备等待时长",
+    "本轮GPU任务为什么未完成",
+    "新阶段调度完整接入或性能收益",
+    "PP2相对PP1新增等待量"
+  ],
+  "server_actions": 0,
+  "npu_actions": 0,
+  "framework_source_modified": false
+}

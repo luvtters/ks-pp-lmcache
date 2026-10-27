@@ -1,0 +1,20 @@
+{"captured_utc": "2026-10-27T03:58:38.152192+00:00", "machine": "115.120.90.25", "read_only": true, "signals_sent": 0, "records": []}
+{"status": "STARTING_DEVICE_PROTOCOL_ONLY", "command": ["docker", "exec", "-e", "ASCEND_RT_VISIBLE_DEVICES=0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15", "-e", "HCCL_IF_IP=192.168.0.122", "-e", "GLOO_SOCKET_IFNAME=enp23s0f3", "-e", "TP_SOCKET_IFNAME=enp23s0f3", "-e", "HCCL_SOCKET_IFNAME=enp23s0f3", "-e", "HCCL_NPU_SOCKET_PORT_RANGE=auto", "-e", "OMP_NUM_THREADS=1", "ks-luv-m25-stage-probe", "timeout", "--signal=TERM", "--kill-after=15", "240", "torchrun", "--standalone", "--nnodes=1", "--nproc-per-node=16", "--max-restarts=0", "/opt/ks-stage-ready/device-probe/pp_stage_device_probe.py", "--run-device-probe", "--output-dir", "/opt/ks-stage-ready/device-probe/results/current"]}
+can not use command: npu-smi info
+[W1027 03:58:43.573501072 socket.cpp:764] [c10d] The IPv6 network addresses of (liteserver-hps-805f-00003.novalocal, 38411) cannot be retrieved (gai error: -2 - Name or service not known).
+Failed to obtain the console log level. The possible causes are as follows:
+1. Different containers share the same device;
+2. Failed to open the character device when interacting with the OS kernel;
+3. Failed to obtain the number of devices.
+[W1027 03:58:44.208295239 socket.cpp:764] [c10d] The IPv6 network addresses of (liteserver-hps-805f-00003.novalocal, 38411) cannot be retrieved (gai error: -2 - Name or service not known).
+[W1027 03:58:44.773703484 socket.cpp:764] [c10d] The IPv6 network addresses of (liteserver-hps-805f-00003.novalocal, 38411) cannot be retrieved (gai error: -2 - Name or service not known).
+[W1027 03:58:46.430511929 socket.cpp:764] [c10d] The IPv6 network addresses of (liteserver-hps-805f-00003.novalocal, 38411) cannot be retrieved (gai error: -2 - Name or service not known).
+[W1027 03:58:47.888431186 socket.cpp:764] [c10d] The IPv6 network addresses of (liteserver-hps-805f-00003.novalocal, 38411) cannot be retrieved (gai error: -2 - Name or service not known).
+[W1027 03:58:49.178248009 socket.cpp:764] [c10d] The IPv6 network addresses of (liteserver-hps-805f-00003.novalocal, 38411) cannot be retrieved (gai error: -2 - Name or service not known).
+[W1027 03:58:53.035072802 socket.cpp:764] [c10d] The IPv6 network addresses of (liteserver-hps-805f-00003.novalocal, 38411) cannot be retrieved (gai error: -2 - Name or service not known).
+[W1027 03:59:02.473964224 socket.cpp:764] [c10d] The IPv6 network addresses of (liteserver-hps-805f-00003.novalocal, 38411) cannot be retrieved (gai error: -2 - Name or service not known).
+[W1027 03:59:12.092736558 socket.cpp:764] [c10d] The IPv6 network addresses of (liteserver-hps-805f-00003.novalocal, 38411) cannot be retrieved (gai error: -2 - Name or service not known).
+[W1027 03:59:26.370697696 socket.cpp:764] [c10d] The IPv6 network addresses of (liteserver-hps-805f-00003.novalocal, 38411) cannot be retrieved (gai error: -2 - Name or service not known).
+[W1027 03:59:40.791877160 socket.cpp:764] [c10d] The IPv6 network addresses of (liteserver-hps-805f-00003.novalocal, 38411) cannot be retrieved (gai error: -2 - Name or service not known).
+[W1027 03:59:56.874639357 socket.cpp:764] [c10d] The IPv6 network addresses of (liteserver-hps-805f-00003.novalocal, 38411) cannot be retrieved (gai error: -2 - Name or service not known).
+[W1027 04:00:54.740407941 socket.cpp:764] [c10d] The IPv6 network addresses of (liteserver-hps-805f-00003.novalocal, 38411) cannot be retrieved (gai error: -2 - Name or service not known).

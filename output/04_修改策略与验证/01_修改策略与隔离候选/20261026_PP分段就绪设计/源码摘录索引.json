@@ -1,0 +1,237 @@
+[
+  {
+    "label": "原调度器：整请求恢复完成才放行",
+    "source": "05_当前环境与实验准备/20261027_25环境准备/25镜像源码与配置快照/sources/vllm/vllm/v1/core/sched/scheduler.py",
+    "begin": 2192,
+    "end": 2203,
+    "lines": [
+      "        if request.status == RequestStatus.WAITING_FOR_REMOTE_KVS:",
+      "            # finished_recving_kv_req_ids is populated during",
+      "            # update_from_output(), based on worker-side connector signals",
+      "            # in KVConnectorOutput.finished_recving",
+      "            if request.request_id not in self.finished_recving_kv_req_ids:",
+      "                return False",
+      "            self._update_waiting_for_remote_kv(request)",
+      "            if request.num_preemptions:",
+      "                request.status = RequestStatus.PREEMPTED",
+      "            else:",
+      "                request.status = RequestStatus.WAITING",
+      "            return True"
+    ]
+  },
+  {
+    "label": "原核心：直接等待模型结果",
+    "source": "05_当前环境与实验准备/20261027_25环境准备/25镜像源码与配置快照/sources/vllm/vllm/v1/engine/core.py",
+    "begin": 554,
+    "end": 565,
+    "lines": [
+      "        # Block until the next result is available.",
+      "        future, scheduler_output, exec_model_fut = batch_queue.pop()",
+      "        with (",
+      "            self.log_error_detail(scheduler_output),",
+      "            self.log_iteration_details(scheduler_output),",
+      "        ):",
+      "            model_output = future.result()",
+      "            if model_output is None:",
+      "                # None from sample_tokens() implies that the original execute_model()",
+      "                # call failed - raise that exception.",
+      "                exec_model_fut.result()",
+      "                raise RuntimeError(\"unexpected error\")"
+    ]
+  },
+  {
+    "label": "旧模型回复 FIFO 保留",
+    "source": "04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/draft_wait_followup/multiproc_executor.py",
+    "begin": 246,
+    "end": 254,
+    "lines": [
+      "    def result(self, timeout=None):",
+      "        if timeout is not None:",
+      "            raise RuntimeError(\"timeout not implemented\")",
+      "",
+      "        # Drain any futures ahead of us in the queue.",
+      "        while not self.done():",
+      "            future = self.futures_queue.pop()",
+      "            future._wait_for_response()",
+      "        return super().result()"
+    ]
+  },
+  {
+    "label": "LMCache：真实设备状态由唯一线程查询",
+    "source": "04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/lmcache_stage_observer/stage_observer.py",
+    "begin": 126,
+    "end": 142,
+    "lines": [
+      "    def poll_once(self):",
+      "        if threading.get_ident() != self.owner:",
+      "            raise RuntimeError(\"only the device-context owner may query real futures\")",
+      "        with self.lock:",
+      "            snapshot = list(self.entries.items())",
+      "        for key, operation in snapshot:",
+      "            real = operation.real_future",
+      "            if real is None:",
+      "                continue",
+      "            value, error = None, None",
+      "            try:",
+      "                # No lock is held for event import/query/result or device work.",
+      "                if not real.query():",
+      "                    continue",
+      "                value = real.result(timeout=0)",
+      "                if type(value) is not bool:",
+      "                    raise TypeError(\"current RetrieveResult must be bool\")"
+    ]
+  },
+  {
+    "label": "核心：按身份登记单 worker 就绪",
+    "source": "04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/restore_event_binding/restore_binding.py",
+    "begin": 38,
+    "end": 47,
+    "lines": [
+      "        event.validate()",
+      "        if (event.stage != event.worker_id // self.tp_size",
+      "                or event.tp_rank != event.worker_id % self.tp_size",
+      "                or event.pcp_rank != 0):",
+      "            raise ValueError(\"restore callback rank identity mismatch\")",
+      "        # Deliberately never call begin_restore here: unknown/stale events cannot",
+      "        # create state. One worker's readiness cannot stand for all PP/TP workers.",
+      "        self.controller.mark_kv_ready(event.request_id, event.restore_generation,",
+      "                                      event.stage, event.worker_id, device_complete=True)",
+      "        return None"
+    ]
+  },
+  {
+    "label": "新核心：等待期间仍处理事件",
+    "source": "04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/draft_wait_followup/core.py",
+    "begin": 575,
+    "end": 586,
+    "lines": [
+      "            event_error = None",
+      "            while True:",
+      "                if event_error is None:",
+      "                    try:",
+      "                        self._ks_consume_stage_events()",
+      "                    except BaseException as error:",
+      "                        # Keep the sole reader and batch alive until the real result",
+      "                        # is terminal. Do not update scheduler after callback failure.",
+      "                        event_error = error",
+      "                if completed.is_set():",
+      "                    break",
+      "                completed.wait(self._ks_event_poll_interval)"
+    ]
+  },
+  {
+    "label": "调度器模型更新仍等真实结果",
+    "source": "04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/draft_wait_followup/core.py",
+    "begin": 728,
+    "end": 740,
+    "lines": [
+      "            model_output = self._ks_wait_model_future(future)",
+      "            if model_output is None:",
+      "                # None from sample_tokens() implies that the original execute_model()",
+      "                # call failed - raise that exception.",
+      "                self._ks_wait_model_future(exec_model_fut)",
+      "                raise RuntimeError(\"unexpected error\")",
+      "",
+      "        # Before processing the model output, process any aborts that happened",
+      "        # during the model execution.",
+      "        self._process_aborts_queue()",
+      "        engine_core_outputs = self.scheduler.update_from_output(",
+      "            scheduler_output, model_output",
+      "        )"
+    ]
+  },
+  {
+    "label": "阶段控制器：只检查本段的完整依赖",
+    "source": "04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/controller/stage_controller.py",
+    "begin": 166,
+    "end": 177,
+    "lines": [
+      "            for request_id, generation in batch.requests:",
+      "                restore = self._restores[request_id]",
+      "                if (restore.generation != generation",
+      "                        or restore.ready[stage] != set(self.stage_workers[stage])):",
+      "                    return None",
+      "            if stage == 0:",
+      "                if self.buffered_activations >= self.max_buffered_activations:",
+      "                    return None",
+      "                batch.buffer_reserved = True",
+      "            elif (batch.state[0] != \"done\"",
+      "                  or batch.received != set(self.stage_workers[1])):",
+      "                return None"
+    ]
+  },
+  {
+    "label": "Ascend worker：后段先准备接收",
+    "source": "04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/worker_split/worker.py",
+    "begin": 675,
+    "end": 686,
+    "lines": [
+      "        if get_pp_group().is_first_rank:",
+      "            raise ValueError(\"first PP stage has no upstream activation\")",
+      "        record = self._ks_pp_stage_record(batch_key, scheduler_output, create=True)",
+      "        if record[\"input\"] is not None:",
+      "            return {\"batch_key\": batch_key, \"prepared\": True}",
+      "        try:",
+      "            tensor_dict, handles, postprocess = get_pp_group().irecv_tensor_dict(",
+      "                all_gather_group=None if enable_sp() else get_tp_group()",
+      "            )",
+      "            if tensor_dict is None:",
+      "                raise RuntimeError(\"PP receive returned no activation buffer\")",
+      "            record[\"handles\"] = handles"
+    ]
+  },
+  {
+    "label": "通信完成仍要建立设备使用依赖",
+    "source": "04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/worker_split/worker.py",
+    "begin": 705,
+    "end": 716,
+    "lines": [
+      "        record = self._ks_pp_stage_record(batch_key)",
+      "        if record[\"input_event\"] is not None:",
+      "            return",
+      "        if not self.pp_stage_input_received(batch_key):",
+      "            raise RuntimeError(\"communication has not completed\")",
+      "        try:",
+      "            # wait() also establishes the device-stream dependency; query alone",
+      "            # must not be mistaken for permission to read the received tensor.",
+      "            record[\"input\"].wait_for_comm()",
+      "            event = torch.npu.Event()",
+      "            event.record()",
+      "            record[\"input_event\"] = event"
+    ]
+  },
+  {
+    "label": "MTP：保留同步接口，新增异步取结果",
+    "source": "04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/draft_wait_followup/multiproc_executor.py",
+    "begin": 604,
+    "end": 609,
+    "lines": [
+      "    def take_draft_token_ids_async(self) -> Future[DraftTokenIds | None]:",
+      "        # Explicit async entry; old take_draft_token_ids remains unchanged.",
+      "        return self.collective_rpc(",
+      "            \"take_draft_token_ids\", unique_reply_rank=self.output_rank,",
+      "            non_block=True,",
+      "        )"
+    ]
+  },
+  {
+    "label": "草稿广播仍由核心提交",
+    "source": "04_修改策略与验证/01_修改策略与隔离候选/20261027_PP分段就绪原型/draft_wait_followup/core.py",
+    "begin": 548,
+    "end": 559,
+    "lines": [
+      "        reader = getattr(self, \"_ks_result_reader\", None)",
+      "        if reader is None:",
+      "            return self.model_executor.take_draft_token_ids()",
+      "        self._ks_assert_no_event_callback_step()",
+      "        if threading.get_ident() != reader.owner:",
+      "            raise RuntimeError(\"draft RPC must be submitted by the configured core writer\")",
+      "        submit = getattr(self.model_executor, \"take_draft_token_ids_async\", None)",
+      "        if not callable(submit):",
+      "            raise RuntimeError(\"executor has no verified async draft RPC interface\")",
+      "        # Enqueue on the core thread. The result reader never writes broadcast MQ.",
+      "        future = submit()",
+      "        return self._ks_wait_executor_future(future, model_batch=False)"
+    ]
+  }
+]

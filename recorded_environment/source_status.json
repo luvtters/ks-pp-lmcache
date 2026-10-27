@@ -1,0 +1,25 @@
+{
+  "branch": "ks/pp-stage-ready-luv-20261027",
+  "base_commit": "0fc695fc6d1d82e9a5ac6835ac8e4e1c83703665",
+  "status": "## ks/pp-stage-ready-luv-20261027\n M vllm/v1/engine/core.py\n M vllm/v1/executor/multiproc_executor.py\n",
+  "recorded_at_utc": "2026-10-27T06:56:33.926675+00:00",
+  "candidate_content_equal_actual_worktree": true,
+  "file_comparisons": [
+    {
+      "file": "vllm/v1/engine/core.py",
+      "content_equal": true,
+      "byte_identical": false,
+      "comparison": "line endings normalized only"
+    },
+    {
+      "file": "vllm/v1/executor/multiproc_executor.py",
+      "content_equal": true,
+      "byte_identical": false,
+      "comparison": "line endings normalized only"
+    }
+  ],
+  "read_only_capture": true,
+  "runtime_source_changes": 0,
+  "service_actions": 0,
+  "npu_actions": 0
+}

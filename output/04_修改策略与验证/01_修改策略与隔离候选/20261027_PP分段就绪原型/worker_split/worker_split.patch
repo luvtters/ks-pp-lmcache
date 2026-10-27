@@ -1,0 +1,261 @@
+--- a/vllm_ascend/worker/worker.py
++++ b/vllm_ascend/worker/worker.py
+@@ -609,11 +609,217 @@
+             self.torch_allocated / GiB_bytes,
+         )
+ 
++    def _ks_pp_batch_signature(self, scheduler_output):
++        # 分段必须沿用相同的请求顺序、token位置和KV块，不能只比总token数。
++        tokens = tuple(scheduler_output.num_scheduled_tokens.items())
++        if not tokens or any(type(n) is not int or n <= 0 for _, n in tokens):
++            raise ValueError("stage execution requires positive scheduled tokens")
++        if sum(n for _, n in tokens) != scheduler_output.total_num_scheduled_tokens:
++            raise ValueError("scheduled token total differs from request members")
++        new = tuple(
++            (r.req_id, r.num_computed_tokens, repr(r.block_ids))
++            for r in scheduler_output.scheduled_new_reqs
++        )
++        cached = scheduler_output.scheduled_cached_reqs
++        return (tokens, new, tuple(cached.req_ids), tuple(cached.num_computed_tokens), repr(cached.new_block_ids))
++
++    def _ks_pp_stage_record(self, batch_key, scheduler_output=None, create=False):
++        if (not isinstance(batch_key, tuple) or len(batch_key) != 2
++                or not isinstance(batch_key[0], str) or not batch_key[0]
++                or type(batch_key[1]) is not int or batch_key[1] < 0):
++            raise ValueError("batch key must be (non-empty str, non-negative int generation)")
++        retired = getattr(self, "_ks_pp_stage_retired", set())
++        if batch_key in retired:
++            raise RuntimeError("a retired logical batch cannot execute again")
++        record = getattr(self, "_ks_pp_stage_current", None)
++        if record is None:
++            if not create:
++                raise KeyError(batch_key)
++            record = {
++                "key": batch_key,
++                "signature": self._ks_pp_batch_signature(scheduler_output),
++                "input": None, "handles": None, "input_event": None,
++                "model_event": None, "send_event": None,
++                "executed": False, "failed": False,
++            }
++            self._ks_pp_stage_current = record
++        if record["key"] != batch_key:
++            raise RuntimeError("another logical batch owns this stage buffer")
++        if record["failed"]:
++            raise RuntimeError("failed stage batch requires coordinated abort; retry is forbidden")
++        if scheduler_output is not None and record["signature"] != self._ks_pp_batch_signature(scheduler_output):
++            raise ValueError("logical batch members, positions or block IDs changed")
++        return record
++
++    def _ks_pp_handles_done(self, handles):
++        # 只使用真实通信句柄的完成接口；没有接口、查询失败均不放行。
++        if handles is None:
++            return False
++        for handle in handles:
++            probe = getattr(handle, "is_completed", None)
++            if not callable(probe):
++                return False
++            try:
++                if probe() is not True:
++                    return False
++            except Exception:
++                return False
++        return True
++
++    def prepare_pp_stage_input(self, batch_key, scheduler_output):
++        """Receive-only control operation, never a model forward.
++
++        irecv_tensor_dict still receives CPU metadata synchronously. The executor
++        must enqueue this non-blocking RPC before waiting for the front result.
++        """
++        if get_pp_group().is_first_rank:
++            raise ValueError("first PP stage has no upstream activation")
++        record = self._ks_pp_stage_record(batch_key, scheduler_output, create=True)
++        if record["input"] is not None:
++            return {"batch_key": batch_key, "prepared": True}
++        try:
++            tensor_dict, handles, postprocess = get_pp_group().irecv_tensor_dict(
++                all_gather_group=None if enable_sp() else get_tp_group()
++            )
++            if tensor_dict is None:
++                raise RuntimeError("PP receive returned no activation buffer")
++            record["handles"] = handles
++            record["input"] = AsyncIntermediateTensors(
++                tensor_dict, comm_handles=handles, comm_postprocess=postprocess
++            )
++        except Exception:
++            record["failed"] = True
++            raise
++        return {"batch_key": batch_key, "prepared": True}
++
++    def pp_stage_input_received(self, batch_key):
++        record = self._ks_pp_stage_record(batch_key)
++        return record["input"] is not None and self._ks_pp_handles_done(record["handles"])
++
++    def finalize_pp_stage_input(self, batch_key):
++        """Run collectively across the TP stage only after every rank received.
++
++        Postprocess may issue TP all-gather. Never invoke it from rank-local
++        readiness polling, since other TP members may not be ready yet.
++        """
++        record = self._ks_pp_stage_record(batch_key)
++        if record["input_event"] is not None:
++            return
++        if not self.pp_stage_input_received(batch_key):
++            raise RuntimeError("communication has not completed")
++        try:
++            # wait() also establishes the device-stream dependency; query alone
++            # must not be mistaken for permission to read the received tensor.
++            record["input"].wait_for_comm()
++            event = torch.npu.Event()
++            event.record()
++            record["input_event"] = event
++        except Exception:
++            record["failed"] = True
++            raise
++
++    def pp_stage_input_ready(self, batch_key):
++        record = self._ks_pp_stage_record(batch_key)
++        event = record["input_event"]
++        if event is None:
++            return False
++        try:
++            return event.query() is True
++        except Exception:
++            return False
++
++    def execute_pp_stage_model(self, batch_key, scheduler_output):
++        """Execute this PP stage once. Scheduler must already prove local KV ready.
++
++        This method verifies activation/ownership, not LMCache restore state.
++        It must be invoked for every TP/EP participant of the selected stage.
++        """
++        record = self._ks_pp_stage_record(batch_key, scheduler_output, create=True)
++        if record["executed"]:
++            raise RuntimeError("logical stage batch has already executed")
++        if self.model_runner.execute_model_state is not None:
++            raise RuntimeError("previous model output must be sampled first")
++        if not self._ks_pp_handles_done(self._pp_send_work):
++            raise RuntimeError("previous PP send still owns the output buffer")
++        if not get_pp_group().is_first_rank and not self.pp_stage_input_ready(batch_key):
++            raise RuntimeError("this PP stage activation is not ready")
++        record["executed"] = True
++        self._ks_pp_stage_running = record
++        try:
++            result = self.execute_model(scheduler_output)
++            event = torch.npu.Event()
++            event.record()
++            record["model_event"] = event
++            return result
++        except Exception:
++            record["failed"] = True
++            raise
++        finally:
++            self._ks_pp_stage_running = None
++
++    def pp_stage_model_ready(self, batch_key):
++        record = self._ks_pp_stage_record(batch_key)
++        event = record["model_event"]
++        if event is None:
++            return False
++        try:
++            return event.query() is True
++        except Exception:
++            return False
++
++    def pp_stage_release_ready(self, batch_key, final_output_consumed=False):
++        """Poll normal pending state without turning it into an RPC failure.
++
++        Holds every tensor reference. All TP members must report True before
++        the executor sends the separate release operation to the stage.
++        """
++        record = self._ks_pp_stage_record(batch_key)
++        if not record["executed"] or not self.pp_stage_model_ready(batch_key):
++            return False
++        if self.model_runner.execute_model_state is not None:
++            return False
++        # 非末段也可能保留Connector输出，必须经过sample路径消费；不能
++        # 因execute_model_state天然为None就让下一批覆盖这份完成消息。
++        if getattr(self.model_runner, "kv_connector_output", None) is not None:
++            return False
++        if get_pp_group().is_last_rank and final_output_consumed is not True:
++            return False
++        if not self._ks_pp_handles_done(self._pp_send_work):
++            return False
++        if self._pp_send_work:
++            if record["send_event"] is None:
++                for handle in self._pp_send_work:
++                    handle.wait()
++                event = torch.npu.Event()
++                event.record()
++                record["send_event"] = event
++            try:
++                send_ready = record["send_event"].query() is True
++            except Exception:
++                send_ready = False
++            if not send_ready:
++                return False
++        return True
++
++    def release_pp_stage_batch(self, batch_key, final_output_consumed=False):
++        record = self._ks_pp_stage_record(batch_key)
++        if not self.pp_stage_release_ready(batch_key, final_output_consumed):
++            raise RuntimeError("stage release was sent before all device/output dependencies completed")
++        self._pp_send_work = []
++        self._ks_pp_retained_send_tensors = None
++        retired = getattr(self, "_ks_pp_stage_retired", set())
++        retired.add(batch_key)
++        self._ks_pp_stage_retired = retired
++        self._ks_pp_stage_current = None
++
+     @_ks_pipeline_step
+     def execute_model(
+         self,
+         scheduler_output: "SchedulerOutput",
+     ) -> ModelRunnerOutput | AsyncModelRunnerOutput | None:
++        if (getattr(self, "_ks_pp_stage_current", None) is not None
++                and getattr(self, "_ks_pp_stage_running", None) is None):
++            raise RuntimeError("stage batch owns worker state; do not mix legacy execute_model calls")
+         self.log_memory_stats()
+         # enable msMonitor to monitor the performance of vllm-ascend
+         if get_ascend_config().msmonitor_use_daemon:
+@@ -634,16 +840,21 @@
+                 all_gather_group = None
+             else:
+                 all_gather_group = get_tp_group()
+-            with _ks_span("pipeline.pp_metadata_receive"):
+-                tensor_dict, comm_handles, comm_postprocess = get_pp_group().irecv_tensor_dict(
+-                    all_gather_group=all_gather_group
++            stage_record = getattr(self, "_ks_pp_stage_running", None)
++            if stage_record is not None:
++                # 新入口只消费已完成且归属于此逻辑批的接收结果，不再次接收。
++                intermediate_tensors = stage_record["input"]
++            else:
++                with _ks_span("pipeline.pp_metadata_receive"):
++                    tensor_dict, comm_handles, comm_postprocess = get_pp_group().irecv_tensor_dict(
++                        all_gather_group=all_gather_group
++                    )
++                assert tensor_dict is not None
++                intermediate_tensors = AsyncIntermediateTensors(
++                    tensor_dict,
++                    comm_handles=comm_handles,
++                    comm_postprocess=comm_postprocess,
+                 )
+-            assert tensor_dict is not None
+-            intermediate_tensors = AsyncIntermediateTensors(
+-                tensor_dict,
+-                comm_handles=comm_handles,
+-                comm_postprocess=comm_postprocess,
+-            )
+ 
+         if self.profiler is not None:
+             self.profiler.step()
+@@ -662,6 +873,9 @@
+             all_gather_group = None
+         else:
+             all_gather_group = get_tp_group()
++        if getattr(self, "_ks_pp_stage_running", None) is not None:
++            # 句柄/设备完成之前保留源tensor，不因Python方法返回就复用缓冲。
++            self._ks_pp_retained_send_tensors = output.tensors
+         self._pp_send_work = get_pp_group().isend_tensor_dict(
+             output.tensors,
+             all_gather_group=all_gather_group,
