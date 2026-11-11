@@ -1124,6 +1124,12 @@ class LMCacheMPSchedulerAdapter:
         per_server = self._per_server_hits.setdefault(request_id, {})
         unresolved_urls = [u for u in self._server_urls if u not in per_server]
 
+        if deadline is not None and request_id not in self._lookup_status:
+            # ACKs are complete. Give the first STATUS its own fixed budget;
+            # scheduler delay before dispatch is not an outstanding RPC.
+            # Keep the table even when empty so None replies never renew it.
+            deadline = time.monotonic() + self._mq_timeout
+            self._lookup_deadlines[request_id] = deadline
         futures = self._lookup_status.setdefault(request_id, {})
         for url in unresolved_urls:
             # Keep the same future until its reply arrives; never restart a poll.

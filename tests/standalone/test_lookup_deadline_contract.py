@@ -106,8 +106,8 @@ class LookupDeadlineTest(unittest.TestCase):
         self.assertEqual(obj._finished_lookup_results["r"], 12)
         self.assertEqual(obj.timed_out, [])
 
-    def test_late_first_poll_after_ack_preserves_server_health(self):
-        obj, clock, _ = scheduler()
+    def test_late_first_poll_after_ack_starts_status_budget_and_keeps_hit(self):
+        obj, clock, replies = scheduler()
         marker = methods(
             "lmcache/integration/vllm/vllm_multi_process_adapter.py",
             "LMCacheMPSchedulerAdapter", {"_mark_lookup_timed_out"},
@@ -122,10 +122,63 @@ class LookupDeadlineTest(unittest.TestCase):
         # ACK is complete. Only the scheduler's first revisit is late; no
         # STATUS request was sent, so there is no evidence of an RPC timeout.
         clock.now = 8.0
-        self.assertEqual(obj.check_lookup_result("r"), 0)
-        self.assertEqual(obj.requests, [])
+        replies.append(Reply(16))
+        self.assertEqual(obj.check_lookup_result("r"), 64)
+        self.assertEqual(obj.requests, ["r"])
+        self.assertEqual(obj._lookup_deadlines["r"], 13.0)
         self.assertNotIn("r", obj._unacked_lookups)
         self.assertTrue(obj._health_events["server"].is_set())
+
+    def test_empty_status_table_after_none_never_renews_stage_budget(self):
+        obj, clock, replies = scheduler()
+        for now in (8.0, 10.0, 12.9):
+            clock.now = now
+            replies.append(Reply(None))
+            self.assertIsNone(obj.check_lookup_result("r"))
+            self.assertEqual(obj._lookup_deadlines["r"], 13.0)
+            self.assertIn("r", obj._lookup_status)
+            self.assertEqual(obj._lookup_status["r"], {})
+        clock.now = 13.1
+        self.assertEqual(obj.check_lookup_result("r"), 0)
+        self.assertEqual(len(obj.requests), 3)
+        self.assertEqual(obj._lookup_deadlines["r"], 13.0)
+
+    def test_pending_status_keeps_same_future_until_fixed_stage_deadline(self):
+        obj, clock, replies = scheduler()
+        reply = Reply(ready=False)
+        replies.append(reply)
+        for now in (8.0, 10.0, 12.9):
+            clock.now = now
+            self.assertIsNone(obj.check_lookup_result("r"))
+            self.assertIs(obj._lookup_status["r"]["server"][0], reply)
+            self.assertEqual(obj._lookup_deadlines["r"], 13.0)
+        clock.now = 13.1
+        self.assertEqual(obj.check_lookup_result("r"), 0)
+        self.assertEqual(obj.timed_out, ["server"])
+        self.assertEqual(obj.requests, ["r"])
+        self.assertIs(obj._lookup_status["r"]["server"][0], reply)
+
+    def test_two_servers_share_budget_and_consume_late_minimum(self):
+        obj, clock, replies = scheduler()
+        obj._server_urls = ["server", "second"]
+        second = Reply(8, ready=False)
+        calls = []
+        obj.req_clients["second"] = SimpleNamespace(
+            query_prefetch_status=lambda rid: (calls.append(rid), second)[1])
+        replies.append(Reply(16))
+        clock.now = 8.0
+        self.assertIsNone(obj.check_lookup_result("r"))
+        self.assertEqual(obj._per_server_hits["r"], {"server": 16})
+        self.assertEqual(obj._lookup_deadlines["r"], 13.0)
+        clock.now = 12.0
+        self.assertIsNone(obj.check_lookup_result("r"))
+        self.assertEqual(obj._lookup_deadlines["r"], 13.0)
+        second.ready = True
+        clock.now = 15.0
+        self.assertEqual(obj.check_lookup_result("r"), 32)
+        self.assertEqual(obj.requests, ["r"])
+        self.assertEqual(calls, ["r"])
+        self.assertEqual(obj.timed_out, [])
 
     def test_ack_timeout_uses_total_budget_and_retains_pending_dependency(self):
         obj, clock, _ = scheduler()
@@ -143,9 +196,19 @@ class LookupDeadlineTest(unittest.TestCase):
         obj, clock, replies = scheduler(nonblocking=False)
         clock.now = 4.0
         reply = Reply(2)
-        replies.append(reply)
+        # An existing STATUS phase keeps its original deadline.
+        obj._lookup_status = {"r": {"server": (reply, 0.0)}}
         self.assertEqual(obj.check_lookup_result("r"), 8)
         self.assertEqual(reply.timeouts, [1.0])
+
+    def test_first_blocking_status_gets_its_own_fixed_budget(self):
+        obj, clock, replies = scheduler(nonblocking=False)
+        clock.now = 8.0
+        reply = Reply(2)
+        replies.append(reply)
+        self.assertEqual(obj.check_lookup_result("r"), 8)
+        self.assertEqual(reply.timeouts, [5.0])
+        self.assertEqual(obj._lookup_deadlines["r"], 13.0)
 
     def test_timed_out_status_is_retained_for_end_ordering(self):
         obj, clock, replies = scheduler(nonblocking=False)
