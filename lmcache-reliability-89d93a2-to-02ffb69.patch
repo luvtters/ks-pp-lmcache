@@ -1,0 +1,1718 @@
+diff --git a/lmcache/integration/vllm/lmcache_mp_connector.py b/lmcache/integration/vllm/lmcache_mp_connector.py
+index 755e7bd..83358b7 100644
+--- a/lmcache/integration/vllm/lmcache_mp_connector.py
++++ b/lmcache/integration/vllm/lmcache_mp_connector.py
+@@ -797,7 +797,15 @@ class LMCacheMPConnector(KVConnectorBase_V1, SupportsHMA):
+                 "supported in a follow-up PR."
+             )
+ 
++        from lmcache.v1.multiprocess.read_policy import (
++            get_read_policy, validate_connector_policy,
++        )
++        self._read_policy = get_read_policy()
+         parallel_strategy = self.build_parallel_strategy(vllm_config, n_servers)
++        validate_connector_policy(
++            self._read_policy, stage_local=parallel_strategy.pp_stage_local,
++            failure_policy=getattr(vllm_config.kv_transfer_config, "kv_load_failure_policy", "fail"),
++        )
+         pp_stage_locators: tuple[PPStageLocator, ...] = ()
+         if parallel_strategy.pp_stage_local:
+             server_urls = normalize_pp_server_urls(server_urls)
+@@ -822,6 +830,9 @@ class LMCacheMPConnector(KVConnectorBase_V1, SupportsHMA):
+                 "(enable_prefix_caching=True)"
+             )
+ 
++        # Requests whose scheduler explicitly requested delayed freeing.
++        self._delay_free_req_ids: set[str] = set()
++
+         if self.role == KVConnectorRole.SCHEDULER:
+             # Banner from the scheduler role only, so tensor-parallel
+             # deployments print it once rather than once per worker.
+@@ -1029,6 +1040,7 @@ class LMCacheMPConnector(KVConnectorBase_V1, SupportsHMA):
+         """
+         metadata = self._get_connector_metadata()
+         assert isinstance(metadata, LMCacheMPConnectorMetadata)
++        self._delay_free_req_ids.update(metadata.delay_free_req_ids)
+ 
+         request_ids = []
+         ops = []
+@@ -1183,9 +1195,13 @@ class LMCacheMPConnector(KVConnectorBase_V1, SupportsHMA):
+         else:
+             # The adapter reports engine-finished IDs even without a STORE.
+             # Consumers never delay frees for saves, but must still poll retrieves.
+-            val = self.worker_adapter.get_finished(
++            sending, receiving = self.worker_adapter.get_finished(
+                 finished_req_ids if self._can_store else set()
+             )
++            # Only a scheduler-authorized delayed free may report a send.
++            sending = set(sending or ()) & self._delay_free_req_ids
++            self._delay_free_req_ids -= sending
++            val = (sending, receiving)
+         # logger.error("Finished req ids: %s, %s", val[0], val[1])
+         return val
+ 
+@@ -1406,20 +1422,28 @@ class LMCacheMPConnector(KVConnectorBase_V1, SupportsHMA):
+             tracker.num_stored_tokens = 0
+             tracker.num_vllm_hit_tokens = 0
+             tracker.num_lmcache_hit_tokens = 0
++            tracker.borrowed_restore_submitted = False
+             tracker.state = LMCacheMPRequestState.BYPASS_LMCACHE
+             return 0, False
+ 
+         if tracker.lookup_started_at is None:
+             tracker.lookup_started_at = time.monotonic()
+-        self.scheduler_adapter.maybe_submit_lookup_request(
++        lookup_pending = self.scheduler_adapter.maybe_submit_lookup_request(
+             request.request_id,
+             token_ids=tracker.get_token_ids(),
+             cache_salt=tracker.cache_salt,
+             request_configs=tracker.request_configs,
+             reserve_last_token=self._reserve_last_token_for_lookup,
++            resume_existing_session=(
++                getattr(self, "_read_policy", "legacy") == "transfer_borrow"
++                and request.status == RequestStatus.PREEMPTED
++            ),
+         )
+ 
+-        ret = self.scheduler_adapter.check_lookup_result(request.request_id)
++        ret = (
++            0 if lookup_pending is False
++            else self.scheduler_adapter.check_lookup_result(request.request_id)
++        )
+         if ret is None:
+             return None, True
+         assert tracker.lookup_started_at is not None
+@@ -1443,7 +1467,10 @@ class LMCacheMPConnector(KVConnectorBase_V1, SupportsHMA):
+ 
+         assert ret % self.scheduler_adapter.lmcache_tokens_per_chunk == 0
+ 
+-        tracker.num_stored_tokens = ret
++        # A hint can be evicted before transfer. Only legacy treats it as
++        # successful storage progress; the borrow path may need full recompute.
++        if getattr(self, "_read_policy", "legacy") != "transfer_borrow":
++            tracker.num_stored_tokens = ret
+         tracker.num_lmcache_hit_tokens = ret
+ 
+         need_to_load = max(0, ret - num_computed_tokens)
+@@ -1595,6 +1622,8 @@ class LMCacheMPConnector(KVConnectorBase_V1, SupportsHMA):
+         """
+         metadata = LMCacheMPConnectorMetadata()
+         metadata.need_flush_before_forward = _has_preemption_reqs(scheduler_output)
++        metadata.delay_free_req_ids = self._delay_free_req_ids
++        self._delay_free_req_ids = set()
+ 
+         self._process_retrieve_requests(metadata)
+         self._process_new_requests(scheduler_output, metadata)
+@@ -1677,6 +1706,10 @@ class LMCacheMPConnector(KVConnectorBase_V1, SupportsHMA):
+                 "num_lmcache_extra_cached_tokens": max(0, num_lmcache - num_vllm),
+             }
+ 
++        # Delay only if STORE metadata was issued for this tracker.
++        tracker = self.request_trackers.get(request.request_id)
++        delay_free = tracker is not None and tracker.store_scheduled
++
+         # Clean up request tracker to prevent memory leak
+         self._cleanup_request_tracker(request.request_id)
+ 
+@@ -1696,7 +1729,9 @@ class LMCacheMPConnector(KVConnectorBase_V1, SupportsHMA):
+ 
+         # Notify LMCache to end the session for this request
+         self.scheduler_adapter.end_session(request.request_id)
+-        return self._can_store, (return_params or None)
++        if delay_free:
++            self._delay_free_req_ids.add(request.request_id)
++        return delay_free, (return_params or None)
+ 
+     def request_finished_all_groups(
+         self,
+@@ -1804,6 +1839,8 @@ class LMCacheMPConnector(KVConnectorBase_V1, SupportsHMA):
+             )
+             if r_metadata is not None:
+                 metadata.add_request_metadata(r_metadata)
++                if getattr(self, "_read_policy", "legacy") == "transfer_borrow":
++                    request_tracker.borrowed_restore_submitted = True
+             request_tracker.state = LMCacheMPRequestState.READY
+ 
+     def _process_new_requests(
+@@ -1815,6 +1852,10 @@ class LMCacheMPConnector(KVConnectorBase_V1, SupportsHMA):
+ 
+         for new_request in scheduler_output.scheduled_new_reqs:
+             request_tracker = self._get_request_tracker(new_request.req_id)
++            if getattr(self, "_read_policy", "legacy") == "transfer_borrow":
++                request_tracker.confirm_borrowed_restore(
++                    getattr(new_request, "num_computed_tokens", 0), lmcache_tokens_per_chunk
++                )
+ 
+             # MultiConnector may pass empty blocks to a non-selected loader,
+             # but a writer still needs the scheduler's allocated block ids.
+@@ -1841,6 +1882,7 @@ class LMCacheMPConnector(KVConnectorBase_V1, SupportsHMA):
+                     self._lazy_offload_manager.add_store_candidate(r_meta)
+                 else:
+                     metadata.add_request_metadata(r_meta)
++                    request_tracker.store_scheduled = True
+ 
+     def _process_cached_requests(
+         self,
+@@ -1852,6 +1894,11 @@ class LMCacheMPConnector(KVConnectorBase_V1, SupportsHMA):
+         cached_reqs = scheduler_output.scheduled_cached_reqs
+         for idx, request_id in enumerate(cached_reqs.req_ids):
+             request_tracker = self._get_request_tracker(request_id)
++            if getattr(self, "_read_policy", "legacy") == "transfer_borrow":
++                computed = getattr(cached_reqs, "num_computed_tokens", ())
++                request_tracker.confirm_borrowed_restore(
++                    computed[idx] if computed else 0, lmcache_tokens_per_chunk
++                )
+ 
+             # Update block ids
+             new_block_ids = cached_reqs.new_block_ids[idx] or ()
+@@ -1881,6 +1928,7 @@ class LMCacheMPConnector(KVConnectorBase_V1, SupportsHMA):
+                     self._lazy_offload_manager.add_store_candidate(r_meta)
+                 else:
+                     metadata.add_request_metadata(r_meta)
++                    request_tracker.store_scheduled = True
+ 
+     def _report_block_allocation_deltas(
+         self,
+diff --git a/lmcache/integration/vllm/lmcache_mp_metadata.py b/lmcache/integration/vllm/lmcache_mp_metadata.py
+index aeca3b3..1c568d9 100644
+--- a/lmcache/integration/vllm/lmcache_mp_metadata.py
++++ b/lmcache/integration/vllm/lmcache_mp_metadata.py
+@@ -66,6 +66,10 @@ class LMCacheMPRequestTracker:
+     # requests.
+     num_stored_tokens: int = 0
+ 
++    # Whether non-lazy STORE metadata was issued for this tracker.
++    store_scheduled: bool = False
++    borrowed_restore_submitted: bool = False
++
+     # Staging load operation -- save vllm and lmcache hit tokens during lookup
+     num_vllm_hit_tokens: int = 0
+     num_lmcache_hit_tokens: int = 0
+@@ -92,6 +96,8 @@ class LMCacheMPRequestTracker:
+         self.num_prompt_tokens = request.num_prompt_tokens
+         self.allocated_block_ids = {}
+         self.num_stored_tokens = 0
++        self.store_scheduled = False
++        self.borrowed_restore_submitted = False
+         self.num_vllm_hit_tokens = 0
+         self.num_lmcache_hit_tokens = 0
+         self.state = LMCacheMPRequestState.PREFETCHING
+@@ -137,6 +143,32 @@ class LMCacheMPRequestTracker:
+         """
+         self.num_stored_tokens += num_new_tokens
+ 
++    def confirm_borrowed_restore(self, num_computed_tokens: int, chunk_size: int) -> None:
++        """Confirm only when vLLM actually schedules a completed async load.
++
++        Allocation already uses the lookup hint as num_computed_tokens while
++        loading, so callers must be actual scheduled-new/cached entries.
++        A failed load resets the hint and cannot skip the recomputed STORE.
++        """
++        if not self.borrowed_restore_submitted:
++            return
++        if num_computed_tokens < self.num_lmcache_hit_tokens - 1:
++            # Recovery may retain a nonzero local APC prefix, in which case
++            # vLLM schedules recomputation without calling lookup again. Drop
++            # the old external hint before GetStoreMetadata adds scheduled
++            # tokens to it; otherwise it can store KV not computed yet.
++            self.num_lmcache_hit_tokens = 0
++            self.num_vllm_hit_tokens = max(0, num_computed_tokens)
++            self.num_stored_tokens = 0
++            self.borrowed_restore_submitted = False
++            return
++        confirmed = min(
++            self.num_lmcache_hit_tokens,
++            num_computed_tokens // chunk_size * chunk_size,
++        )
++        self.num_stored_tokens = max(self.num_stored_tokens, confirmed)
++        self.borrowed_restore_submitted = False
++
+     def append_block_ids(
+         self,
+         new_block_ids: tuple[list[int], ...],
+@@ -412,6 +444,7 @@ class LMCacheMPConnectorMetadata(KVConnectorMetadata):
+         super().__init__()
+         self.requests: list[LMCacheMPRequestMetadata] = []
+         self.need_flush_before_forward: bool = False
++        self.delay_free_req_ids: set[str] = set()
+ 
+     def add_request_metadata(self, request_metadata: LMCacheMPRequestMetadata):
+         self.requests.append(request_metadata)
+diff --git a/lmcache/integration/vllm/vllm_multi_process_adapter.py b/lmcache/integration/vllm/vllm_multi_process_adapter.py
+index 093307e..ce641ff 100644
+--- a/lmcache/integration/vllm/vllm_multi_process_adapter.py
++++ b/lmcache/integration/vllm/vllm_multi_process_adapter.py
+@@ -56,6 +56,8 @@ from lmcache.v1.multiprocess.pp_layout import (
+     PPStageStatus,
+ )
+ from lmcache.v1.multiprocess.token_hasher import TokenHasher
++from lmcache.v1.multiprocess.read_policy import get_read_policy
++from lmcache.v1.multiprocess.lookup_control_cleanup import LookupControlRegistry
+ from lmcache.v1.multiprocess.transfer_context import (
+     LMCacheDrivenTransferContext,
+     TransferContext,
+@@ -863,6 +865,8 @@ class LMCacheMPSchedulerAdapter:
+             status = futures[url].result(timeout=max(0.0, deadline - time.monotonic()))
+             if not isinstance(status, PPStageStatus):
+                 raise ValueError(f"PP server {url} returned an incompatible status")
++            if status.read_policy != get_read_policy():
++                raise ValueError(f"PP server {url} uses a different read policy")
+             if status.locator != locator or not status.ready or status.profile is None:
+                 raise ValueError(
+                     f"PP server {url} has incomplete or mismatched registration"
+@@ -924,7 +928,8 @@ class LMCacheMPSchedulerAdapter:
+         cache_salt: str = "",
+         request_configs: dict[str, Any] | None = None,
+         reserve_last_token: bool = False,
+-    ) -> None:
++        resume_existing_session: bool = False,
++    ) -> bool:
+         """
+         Submit a new lookup request to LMCache if there is no ongoing request.
+ 
+@@ -942,9 +947,12 @@ class LMCacheMPSchedulerAdapter:
+                 the IPC key.
+             reserve_last_token: Whether to exclude the final token before
+                 aligning the lookup range.
++            resume_existing_session: Continue this same preempted request's
++                admitted session after its previous control RPCs have completed.
+ 
+         Returns:
+-            None
++            True if a lookup is pending; False if this call must use a local
++            miss without consulting results retained from an earlier lookup.
+ 
+         Notes:
+             This function will have a side-effect: submitting a look up request to
+@@ -956,11 +964,25 @@ class LMCacheMPSchedulerAdapter:
+         self._ensure_heartbeat_started()
+ 
+         if not self.is_healthy:
+-            return
++            return False
++
++        if get_read_policy() == "transfer_borrow":
++            can_resume = self._check_lookup_reuse(
++                request_id, resume_existing_session=resume_existing_session
++            )
++            if not can_resume:
++                # The old generation contains control RPCs only. Preserve it
++                # for ordered END, but let this preempted request recompute.
++                return False
+ 
+         if request_id in self._pending_lookups:
+-            # Skip if there is already a lookup request
+-            return
++            # Skip if there is already a lookup request.
++            return True
++
++        if get_read_policy() == "transfer_borrow":
++            if not hasattr(self, "_lookup_deadlines"):
++                self._lookup_deadlines = {}
++            self._lookup_deadlines[request_id] = time.monotonic() + self._mq_timeout
+ 
+         lookup_tokens = max(0, len(token_ids) - int(reserve_last_token))
+         aligned_end = (
+@@ -991,6 +1013,7 @@ class LMCacheMPSchedulerAdapter:
+         )
+         self._pending_lookups.add(request_id)
+         self._lookup_params[request_id] = (token_ids, cache_salt, request_configs)
++        return True
+ 
+     def _free_inconsistent_lookup_locks(
+         self,
+@@ -1063,6 +1086,8 @@ class LMCacheMPSchedulerAdapter:
+             # Return the cached aggregate if any, otherwise 0.
+             return self._finished_lookup_results.get(request_id, 0)
+ 
++        deadline = getattr(self, "_lookup_deadlines", {}).get(request_id)
++
+         if not self.is_healthy:
+             # Server went down — give up on this lookup
+             return 0
+@@ -1082,10 +1107,12 @@ class LMCacheMPSchedulerAdapter:
+                 url: fut for url, fut in ack.futures.items() if not fut.query()
+             }
+             if ack.futures:
+-                if time.monotonic() - ack.submitted_at >= self._mq_timeout:
++                if (time.monotonic() >= deadline if deadline is not None else
++                        time.monotonic() - ack.submitted_at >= self._mq_timeout):
+                     for url in ack.futures:
+                         self._mark_lookup_timed_out(url)
+-                    del self._unacked_lookups[request_id]
++                    if deadline is None:
++                        del self._unacked_lookups[request_id]
+                     return 0
+                 # Acknowledgement still in flight; poll again next step.
+                 return None
+@@ -1101,6 +1128,10 @@ class LMCacheMPSchedulerAdapter:
+         for url in unresolved_urls:
+             # Keep the same future until its reply arrives; never restart a poll.
+             if url not in futures:
++                if deadline is not None and time.monotonic() >= deadline:
++                    # The local lookup budget expired before sending STATUS.
++                    # No outstanding RPC here establishes server failure.
++                    return 0
+                 futures[url] = (
+                     self.req_clients[url].query_prefetch_status(request_id),
+                     time.monotonic(),
+@@ -1108,14 +1139,18 @@ class LMCacheMPSchedulerAdapter:
+ 
+         for url, (fut, submitted_at) in list(futures.items()):
+             if self._nonblocking_lookup_status and not fut.query():
+-                if time.monotonic() - submitted_at >= self._mq_timeout:
++                if (time.monotonic() >= deadline if deadline is not None else
++                        time.monotonic() - submitted_at >= self._mq_timeout):
+                     self._mark_lookup_timed_out(url)
+                     return 0
+                 continue
+-            del futures[url]
++            if deadline is None:
++                del futures[url]
+             try:
+                 r = fut.result(
+-                    timeout=0 if self._nonblocking_lookup_status else self._mq_timeout
++                    timeout=(0 if self._nonblocking_lookup_status else
++                             max(0.0, deadline - time.monotonic()) if deadline is not None
++                             else self._mq_timeout)
+                 )
+             except TimeoutError:
+                 logger.warning(
+@@ -1124,7 +1159,12 @@ class LMCacheMPSchedulerAdapter:
+                 )
+                 self._health_events[url].clear()
+                 return 0
++            if deadline is not None:
++                del futures[url]
+             if r is None:
++                if deadline is not None and time.monotonic() >= deadline:
++                    self._mark_lookup_timed_out(url)
++                    return 0
+                 continue
+             per_server[url] = int(r)
+ 
+@@ -1154,12 +1194,43 @@ class LMCacheMPSchedulerAdapter:
+         """
+         return self.blocks_in_chunk
+ 
++    def _retain_lookup_controls(self, request_id: str) -> Any:
++        registry = getattr(self, "_lookup_control_registry", None)
++        if registry is None:
++            registry = self._lookup_control_registry = LookupControlRegistry()
++        dependencies: dict[str, list[Any]] = {url: [] for url in self._server_urls}
++        ack = self._unacked_lookups.get(request_id)
++        if ack is not None:
++            for url, future in ack.futures.items():
++                dependencies[url].append(future)
++        for url, (future, _) in self._lookup_status.get(request_id, {}).items():
++            dependencies[url].append(future)
++        registry.retain(request_id, self.req_clients, dependencies)
++        self._unacked_lookups.pop(request_id, None)
++        self._lookup_status.pop(request_id, None)
++        return registry
++
++    def _check_lookup_reuse(
++        self, request_id: str, *, resume_existing_session: bool = False
++    ) -> bool:
++        if get_read_policy() != "transfer_borrow":
++            return True
++        registry = getattr(self, "_lookup_control_registry", None)
++        if registry is not None:
++            return registry.check_reuse(
++                request_id, resume_existing_session=resume_existing_session
++            )
++        return True
++
+     def cleanup_lookup_result(self, request_id: str) -> None:
+         """
+         Clean up lookup state for a finished request to prevent memory leak.
+         Args:
+             request_id: The ID of the finished request.
+         """
++        if get_read_policy() == "transfer_borrow":
++            self._retain_lookup_controls(request_id)
++        getattr(self, "_lookup_deadlines", {}).pop(request_id, None)
+         self._pending_lookups.discard(request_id)
+         self._unacked_lookups.pop(request_id, None)
+         self._lookup_status.pop(request_id, None)
+@@ -1272,6 +1343,10 @@ class LMCacheMPSchedulerAdapter:
+         Args:
+             request_id: The ID of the finished request.
+         """
++        if get_read_policy() == "transfer_borrow":
++            registry = self._retain_lookup_controls(request_id)
++            registry.end(request_id)
++            return
+         if not self.is_healthy:
+             return
+ 
+@@ -1719,6 +1794,7 @@ class LMCacheMPWorkerAdapter:
+                 layer_names=tuple(kv_caches),
+                 registration_token=self._pp_registration_token,
+                 mla_only=self.parallel_strategy.mla_only,
++                read_policy=get_read_policy(),
+             )
+         for info in engine_group_infos:
+             if (
+@@ -1795,6 +1871,7 @@ class LMCacheMPWorkerAdapter:
+                     or ack.profile.locator != info.locator
+                     or ack.profile.layer_names != info.layer_names
+                     or ack.profile.mla_only != info.mla_only
++                    or ack.read_policy != info.read_policy
+                 ):
+                     raise ValueError(
+                         "PP server returned an incompatible registration ACK"
+@@ -2183,6 +2260,50 @@ class LMCacheMPWorkerAdapter:
+         self._returned_finished.update(ret_stores)
+         return ret_stores
+ 
++    def _check_unhealthy_transfers(self) -> None:
++        """Bound unknown device work independently of cache-server health.
++
++        Timers follow each future's identity, so repeated polls and heartbeat
++        recovery cannot renew a pending DMA deadline. Device completion is
++        checked before deciding that an observed deadline has expired.
++        """
++        pending_since = getattr(self, "_transfer_pending_since", None)
++        if pending_since is None:
++            pending_since = self._transfer_pending_since = {}
++        futures = {
++            ("store", request_id): future
++            for request_id, future in self.store_futures.items()
++        }
++        futures.update({
++            ("retrieve", request_id): entry[0]
++            for request_id, entry in self.retrieve_futures.items()
++        })
++        for identifier in set(pending_since) - futures.keys():
++            pending_since.pop(identifier)
++        now = time.monotonic()
++        expired = []
++        try:
++            for identifier, future in futures.items():
++                if future.query():
++                    pending_since.pop(identifier, None)
++                    continue
++                previous = pending_since.get(identifier)
++                if previous is None or previous[0] is not future:
++                    pending_since[identifier] = (future, now)
++                    previous = pending_since[identifier]
++                if now - previous[1] >= self._mq_timeout:
++                    expired.append(identifier)
++        except Exception as exc:
++            raise RuntimeError(
++                "Cannot establish device transfer completion; "
++                "worker must be isolated with in-flight resources retained"
++            ) from exc
++        if expired:
++            raise RuntimeError(
++                "Worker device transfer completion remains unknown past "
++                f"mq_timeout for {expired}; isolate worker and retain resources"
++            )
++
+     @_lmcache_nvtx_annotate
+     def get_finished(
+         self, finished_req_ids_from_engine: set[str]
+@@ -2212,8 +2333,15 @@ class LMCacheMPWorkerAdapter:
+         if self.dispatcher is not None:
+             dispatch(self.dispatcher, "reclaim")
+ 
+-        # If unhealthy, drain all pending futures immediately
+-        if not self.is_healthy:
++        healthy = self.is_healthy
++        strict_transfers = get_read_policy() == "transfer_borrow"
++        strict_unhealthy = not healthy and strict_transfers
++        if strict_transfers:
++            self._check_unhealthy_transfers()
++
++        # Legacy mode retains its immediate unhealthy drain. Transfer borrows
++        # require device completion and continue through normal query/result.
++        if not healthy and not strict_unhealthy:
+             finished_stores = set(self.store_futures.keys())
+             finished_retrieves = set()
+             for request_id, (
+@@ -2289,9 +2417,13 @@ class LMCacheMPWorkerAdapter:
+         for request_id in finished_stores:
+             self.store_futures.pop(request_id, None)
+             self.store_events.pop(request_id, None)
++            if strict_transfers:
++                self._transfer_pending_since.pop(("store", request_id), None)
+         for request_id in finished_retrieves:
+             self.retrieve_futures.pop(request_id, None)
+             self.retrieve_events.pop(request_id, None)
++            if strict_transfers:
++                self._transfer_pending_since.pop(("retrieve", request_id), None)
+ 
+         # Retrieves dropped while unhealthy still must be reported,
+         # exactly once, or async loads hang in WAITING_FOR_REMOTE_KVS. No
+@@ -2304,9 +2436,16 @@ class LMCacheMPWorkerAdapter:
+         finished_retrieves.update(dropped)
+ 
+         # Update the internal states
++        if strict_transfers:
++            # Engine completion cannot release blocks still targeted by DMA.
++            finished_req_ids_from_engine = finished_req_ids_from_engine - (
++                set(self.retrieve_futures) | finished_retrieves
++            )
+         ret_stores = self._process_finished_stores(
+             finished_stores, finished_req_ids_from_engine
+         )
++        if strict_transfers:
++            ret_stores -= set(self.retrieve_futures) | finished_retrieves
+ 
+         # the invocation of `get_finished` means that
+         # these requests' KV caches are already fully stored.
+@@ -2346,8 +2485,15 @@ class LMCacheMPWorkerAdapter:
+         if self.dispatcher is not None:
+             dispatch(self.dispatcher, "reclaim")
+ 
+-        # If unhealthy, drain all pending futures immediately
+-        if not self.is_healthy:
++        healthy = self.is_healthy
++        strict_transfers = get_read_policy() == "transfer_borrow"
++        strict_unhealthy = not healthy and strict_transfers
++        if strict_transfers:
++            self._check_unhealthy_transfers()
++
++        # Legacy mode retains its immediate unhealthy drain. Transfer borrows
++        # require device completion and continue through normal query/result.
++        if not healthy and not strict_unhealthy:
+             finished_stores = set(self.store_futures.keys())
+             finished_retrieves = set()
+             for request_id, (
+@@ -2420,9 +2566,13 @@ class LMCacheMPWorkerAdapter:
+         for request_id in finished_stores:
+             self.store_futures.pop(request_id, None)
+             self.store_events.pop(request_id, None)
++            if strict_transfers:
++                self._transfer_pending_since.pop(("store", request_id), None)
+         for request_id in finished_retrieves:
+             self.retrieve_futures.pop(request_id, None)
+             self.retrieve_events.pop(request_id, None)
++            if strict_transfers:
++                self._transfer_pending_since.pop(("retrieve", request_id), None)
+ 
+         # Retrieves dropped while unhealthy still must be reported,
+         # exactly once, or async loads hang in WAITING_FOR_REMOTE_KVS. No
+diff --git a/lmcache/v1/distributed/api.py b/lmcache/v1/distributed/api.py
+index d261551..74ba0c3 100644
+--- a/lmcache/v1/distributed/api.py
++++ b/lmcache/v1/distributed/api.py
+@@ -20,6 +20,7 @@ from lmcache.logging import init_logger
+ if TYPE_CHECKING:
+     # First Party
+     from lmcache.lmcache_native import Bitmap
++    from lmcache.v1.memory_management import MemoryObj
+     from lmcache.v1.multiprocess.custom_types import IPCCacheServerKey
+ 
+ logger = init_logger(__name__)
+@@ -245,6 +246,25 @@ class ObjectKey:
+         return (kv_rank >> 24) & 0xFF
+ 
+ 
++@dataclass(frozen=True)
++class ReadBorrowToken:
++    """Identity of one non-expiring read borrow in one L1 server instance."""
++
++    server_instance_id: str
++    sequence: int
++
++
++@dataclass
++class BorrowedRead:
++    """Resident buffers protected until this token is explicitly released.
++
++    Objects stay in the server; only the token may cross a completion callback.
++    """
++
++    token: ReadBorrowToken
++    objects: dict[ObjectKey, "MemoryObj"]
++
++
+ @dataclass(frozen=True)
+ class EncodedObjectKey:
+     """JSON-safe wire form of :class:`ObjectKey` — ``chunk_hash`` is
+diff --git a/lmcache/v1/distributed/l1_manager.py b/lmcache/v1/distributed/l1_manager.py
+index f2dbcea..1c6e04e 100644
+--- a/lmcache/v1/distributed/l1_manager.py
++++ b/lmcache/v1/distributed/l1_manager.py
+@@ -8,12 +8,19 @@ from collections.abc import Callable
+ from dataclasses import dataclass
+ from itertools import count
+ import threading
++import uuid
+ import weakref
+ 
+ # First Party
+ from lmcache.lmcache_native import TTLLock
+ from lmcache.logging import init_logger
+-from lmcache.v1.distributed.api import L1BackendType, MemoryLayoutDesc, ObjectKey
++from lmcache.v1.distributed.api import (
++    BorrowedRead,
++    L1BackendType,
++    MemoryLayoutDesc,
++    ObjectKey,
++    ReadBorrowToken,
++)
+ from lmcache.v1.distributed.config import L1ManagerConfig, get_configured_capacity_bytes
+ from lmcache.v1.distributed.error import L1Error, L1ReconfigureError
+ from lmcache.v1.distributed.internal_api import (
+@@ -105,6 +112,9 @@ class L1ObjectState:
+     is_temporary: bool
+     """ Whether the object is temporary (need to be deleted after read). """
+ 
++    active_borrows: int = 0
++    """ Non-expiring transfer ownership; never changed by anonymous TTL readers. """
++
+ 
+ def l1_mgr_synchronized(func):
+     """
+@@ -200,6 +210,14 @@ class L1Manager(L1ManagerInterface):
+         self._config = config
+         self._l1_manager_id = next_l1_manager_id()
+         self._lock = threading.Lock()
++        self._close_lock = threading.Lock()
++        self._closing = False
++        self._closed = False
++        self._borrow_instance_id = str(uuid.uuid4())
++        self._borrow_sequence = count(1)
++        # Keep entry identities, not merely keys: a late token must never touch
++        # a different allocation subsequently admitted under the same key.
++        self._read_borrows: dict[ReadBorrowToken, dict[ObjectKey, L1ObjectState]] = {}
+ 
+         # Resident objects: readable, never write-locked.
+         self._objects: dict[ObjectKey, L1ObjectState] = {}
+@@ -287,6 +305,62 @@ class L1Manager(L1ManagerInterface):
+         with self._lock:
+             self._registered_listeners.append(listener)
+ 
++    def _ensure_open(self) -> None:
++        """Called under the manager lock before admitting work."""
++        if self._closing:
++            raise RuntimeError("L1Manager is closing or closed")
++
++    @l1_mgr_synchronized
++    def borrow_read(self, keys: list[ObjectKey]) -> BorrowedRead | None:
++        """Atomically borrow all resident buffers, or retain nothing on a miss.
++
++        Unlike reserve_read, ownership cannot expire. The caller must release
++        only after all device work using the returned buffers has completed.
++        Staging entries are not eligible; repeated keys own one count per token.
++        """
++        self._ensure_open()
++        entries: dict[ObjectKey, L1ObjectState] = {}
++        for key in keys:
++            entry = self._objects.get(key)
++            if entry is None:
++                return None
++            entries[key] = entry
++        token = ReadBorrowToken(self._borrow_instance_id, next(self._borrow_sequence))
++        borrowed = BorrowedRead(
++            token, {key: entry.memory_obj for key, entry in entries.items()}
++        )
++        self._read_borrows[token] = entries
++        for entry in entries.values():
++            entry.active_borrows += 1
++        return borrowed
++
++    @l1_mgr_synchronized
++    def release_borrow(self, token: ReadBorrowToken) -> bool:
++        """Release exactly this token, once; unknown or old tokens return False.
++
++        Uses only the L1 lock, with the same allocator/listener ordering as
++        finish_read. Callbacks must not hold a dependent allocator lock.
++        """
++        entries = self._read_borrows.pop(token, None)
++        if entries is None:
++            return False
++        keys_to_free: list[ObjectKey] = []
++        objects_to_free: list[MemoryObj] = []
++        for key, entry in entries.items():
++            entry.active_borrows -= 1
++            if (
++                entry.is_temporary
++                and entry.active_borrows == 0
++                and not entry.read_lock.is_locked()
++                and self._objects.get(key) is entry
++            ):
++                del self._objects[key]
++                keys_to_free.append(key)
++                objects_to_free.append(entry.memory_obj)
++        if keys_to_free:
++            self._free_and_report_deleted(keys_to_free, objects_to_free)
++        return True
++
+     @l1_mgr_synchronized
+     def reserve_read(
+         self,
+@@ -314,6 +388,7 @@ class L1Manager(L1ManagerInterface):
+             Staging objects are never readable; a key that is only
+             being written is reported as ``KEY_NOT_EXIST``.
+         """
++        self._ensure_open()
+         total = validate_read_locks(read_locks)
+         ret: dict[ObjectKey, L1OperationResult] = {}
+         successful_keys: list[ObjectKey] = []
+@@ -356,6 +431,7 @@ class L1Manager(L1ManagerInterface):
+             KEY_NOT_EXIST: The key does not exist.
+             KEY_NOT_READABLE: The key is not readable (in this case, not read-locked).
+         """
++        self._ensure_open()
+         ret: dict[ObjectKey, L1OperationResult] = {}
+ 
+         for key in keys:
+@@ -432,7 +508,11 @@ class L1Manager(L1ManagerInterface):
+             # overhead (TTLLock is C++ std::atomic).
+             for _ in range(total):
+                 entry.read_lock.unlock()
+-            if entry.is_temporary and not entry.read_lock.is_locked():
++            if (
++                entry.is_temporary
++                and not entry.read_lock.is_locked()
++                and entry.active_borrows == 0
++            ):
+                 need_to_free.append(entry.memory_obj)
+                 need_to_free_keys.append(key)
+                 del self._objects[key]
+@@ -501,6 +581,7 @@ class L1Manager(L1ManagerInterface):
+             it is admitted. Different tags may stage the same key at the same
+             time.
+         """
++        self._ensure_open()
+         if len(keys) != len(is_temporary):
+             raise ValueError(
+                 f"L1Manager.reserve_write: {len(keys)} keys but "
+@@ -615,6 +696,7 @@ class L1Manager(L1ManagerInterface):
+             is discarded, the resident object is kept and ``SUCCESS`` is
+             still reported: the data is in L1 either way.
+         """
++        self._ensure_open()
+         ret: dict[ObjectKey, L1Error] = {}
+         notification_keys: list[ObjectKey] = []
+         notification_keys_meta: list[L1ObjectMeta] = []
+@@ -693,6 +775,7 @@ class L1Manager(L1ManagerInterface):
+             the read locks are taken on the resident object, so the caller
+             always holds the object that readers see.
+         """
++        self._ensure_open()
+         total = validate_read_locks(read_locks)
+         ret: dict[ObjectKey, L1OperationResult] = {}
+         successful_keys: list[ObjectKey] = []
+@@ -756,7 +839,8 @@ class L1Manager(L1ManagerInterface):
+             force: When True, delete even a read-locked key and discard its
+                 live staging objects. This may free memory a concurrent
+                 store/read still uses (same hazard as :meth:`clear` with
+-                ``force=True``); use with care.
++                ``force=True``); use with care. Active transfer borrows are
++                always protected, even with force.
+ 
+         Returns:
+             A dictionary mapping each object key to an L1Error.
+@@ -764,8 +848,8 @@ class L1Manager(L1ManagerInterface):
+         Errors:
+             KEY_NOT_EXIST: The key does not exist.
+             KEY_IS_LOCKED: The key is read-locked, or a live staging object
+-                exists for it, so it cannot be deleted. Never returned when
+-                ``force`` is True.
++                exists for it, or a transfer borrow still owns the buffer.
++                Active borrows also return this error when ``force`` is True.
+         """
+         need_to_free: list[MemoryObj] = []
+         ret: dict[ObjectKey, L1Error] = {}
+@@ -778,6 +862,10 @@ class L1Manager(L1ManagerInterface):
+                 ret[key] = L1Error.KEY_NOT_EXIST
+                 continue
+ 
++            if entry is not None and entry.active_borrows:
++                ret[key] = L1Error.KEY_IS_LOCKED
++                continue
++
+             self._reclaim_staging(key, force)
+             if key in self._staging:
+                 # A live reservation still pins the key.
+@@ -873,27 +961,31 @@ class L1Manager(L1ManagerInterface):
+         """Clear objects from L1 cache.
+ 
+         Args:
+-            force: If True, clear ALL objects including read-locked ones and
+-                every staging object. This may corrupt in-flight
++            force: If True, clear objects including TTL read-locked ones and
++                every staging object, except active transfer borrows. This
++                may corrupt in-flight
+                 store/prefetch operations. If False (default), only clear
+                 unlocked resident objects and staging objects whose write
+                 lock expired, keeping read-locked objects and live staging
+-                objects intact.
++                objects intact. Active transfer borrows are always kept.
+         """
+         if force:
+             staging_count = sum(len(per_tag) for per_tag in self._staging.values())
+             logger.warning(
+-                "L1Manager: force-clearing all %d objects and %d staging objects "
+-                "(including locked ones). This may corrupt in-flight "
++                "L1Manager: force-clearing up to %d objects and %d staging objects "
++                "(active borrows are kept). This may corrupt in-flight "
+                 "store/prefetch operations — use with caution.",
+                 len(self._objects),
+                 staging_count,
+             )
+-            all_keys = list(self._objects.keys())
+-            all_memory_objs = [entry.memory_obj for entry in self._objects.values()]
++            all_keys = [
++                key for key, entry in self._objects.items() if not entry.active_borrows
++            ]
++            all_memory_objs = [self._objects[key].memory_obj for key in all_keys]
+             all_meta = [self._object_meta(obj) for obj in all_memory_objs]
+             self._memory_manager.free(all_memory_objs)
+-            self._objects.clear()
++            for key in all_keys:
++                del self._objects[key]
+             for listener in self._registered_listeners:
+                 listener.on_l1_keys_deleted_by_manager(all_keys)
+             self._event_bus.publish(
+@@ -907,14 +999,18 @@ class L1Manager(L1ManagerInterface):
+                 )
+             )
+             cleared = set(all_keys)
+-            staging_keys = [k for k in self._staging if k not in cleared]
++            staging_keys = [
++                k for k in self._staging if k not in cleared and k not in self._objects
++            ]
+             for key in list(self._staging.keys()):
+                 self._reclaim_staging(key, force=True)
+             self._report_staging_gone(staging_keys)
+             logger.info(
+-                "L1Manager: cleared %d objects and %d staging objects, 0 remaining.",
++                "L1Manager: cleared %d objects and %d staging objects, "
++                "%d borrowed objects remaining.",
+                 len(all_keys),
+                 staging_count,
++                len(self._objects),
+             )
+             return
+ 
+@@ -923,7 +1019,7 @@ class L1Manager(L1ManagerInterface):
+         locked_count = 0
+ 
+         for key, entry in list(self._objects.items()):
+-            if entry.read_lock.is_locked():
++            if entry.read_lock.is_locked() or entry.active_borrows:
+                 locked_count += 1
+                 continue
+             keys_to_clear.append(key)
+@@ -969,6 +1065,8 @@ class L1Manager(L1ManagerInterface):
+             or a staging object whose write lock expired; False otherwise.
+         """
+         entry = self._objects.get(key, None)
++        if entry is not None and entry.active_borrows:
++            return False
+         if entry is not None and not entry.read_lock.is_locked():
+             return True
+         per_tag = self._staging.get(key, None)
+@@ -1138,19 +1236,39 @@ class L1Manager(L1ManagerInterface):
+         """Return this manager's backend and lifetime configuration."""
+         return self._config
+ 
++    @l1_mgr_synchronized
++    def prepare_close(self) -> None:
++        """Reject active transfers before closing dependencies; stop admission."""
++        if self._read_borrows:
++            raise RuntimeError("Cannot close L1Manager with active read borrows")
++        self._closing = True
++
+     def close(self) -> None:
+-        """Close the L1Manager and free all resources."""
+-        close_l1_gds_context(self._l1_manager_id)
+-        with self._lock:
+-            all_memory_objs = [entry.memory_obj for entry in self._objects.values()]
+-            for per_tag in self._staging.values():
+-                all_memory_objs.extend(staged.memory_obj for staged in per_tag.values())
+-            self._memory_manager.free(all_memory_objs)
+-            self._objects.clear()
+-            self._staging.clear()
+-            self._staging_bytes = 0
++        """Close resources only after every active transfer borrow is released."""
++        with self._close_lock:
++            with self._lock:
++                if self._closed:
++                    return
++                if self._read_borrows:
++                    raise RuntimeError("Cannot close L1Manager with active read borrows")
++                self._closing = True
++            # Device draining may wait for legacy callbacks that acquire _lock.
++            # Admission is closed, but their completion must remain possible.
++            close_l1_gds_context(self._l1_manager_id)
++            with self._lock:
++                all_memory_objs = [entry.memory_obj for entry in self._objects.values()]
++                for per_tag in self._staging.values():
++                    all_memory_objs.extend(
++                        staged.memory_obj for staged in per_tag.values()
++                    )
++                self._memory_manager.free(all_memory_objs)
++                self._objects.clear()
++                self._staging.clear()
++                self._staging_bytes = 0
++            self._memory_manager.close()
++            with self._lock:
++                self._closed = True
+ 
+-        self._memory_manager.close()
+         with L1Manager._gauge_lock:
+             L1Manager._gauge_targets.pop(self._l1_manager_id, None)
+ 
+diff --git a/lmcache/v1/distributed/storage_controllers/prefetch_controller.py b/lmcache/v1/distributed/storage_controllers/prefetch_controller.py
+index 1e54287..f49f9f7 100644
+--- a/lmcache/v1/distributed/storage_controllers/prefetch_controller.py
++++ b/lmcache/v1/distributed/storage_controllers/prefetch_controller.py
+@@ -618,6 +618,15 @@ class PrefetchController(StorageControllerInterface):
+         with self._prefetch_results_lock:
+             return self._completed_results.pop(request_id, None)
+ 
++    def discard_prefetch_result(self, request_id: PrefetchRequestId) -> None:
++        """Discard a completed result after an L1-only submission has returned.
++
++        L1-only submit finishes synchronously on its calling thread. This is
++        deliberately not cancellation of an asynchronous L2 prefetch.
++        """
++        with self._prefetch_results_lock:
++            self._completed_results.pop(request_id, None)
++
+     def wait_prefetch_result(
+         self, request_id: PrefetchRequestId, timeout: float
+     ) -> bool:
+diff --git a/lmcache/v1/distributed/storage_manager.py b/lmcache/v1/distributed/storage_manager.py
+index 239a652..25c600e 100644
+--- a/lmcache/v1/distributed/storage_manager.py
++++ b/lmcache/v1/distributed/storage_manager.py
+@@ -15,6 +15,7 @@ import time
+ from lmcache.lmcache_native import PeriodicEventNotifier
+ from lmcache.logging import init_logger
+ from lmcache.v1.distributed.api import (
++    BorrowedRead,
+     CapacitySnapshot,
+     L1BackendType,
+     MemoryLayoutDesc,
+@@ -23,6 +24,7 @@ from lmcache.v1.distributed.api import (
+     PrefetchHandle,
+     PrefetchResult,
+     PrefetchTaskSpec,
++    ReadBorrowToken,
+     Tier,
+ )
+ from lmcache.v1.distributed.config import (
+@@ -662,6 +664,11 @@ class StorageManager:
+             )
+         return result
+ 
++    def discard_prefetch_result(self, handle: PrefetchHandle) -> None:
++        """Retire a cancelled NO_LOCK lookup without keeping its result."""
++        if handle.prefetch_request_id != -1:
++            self._prefetch_controller.discard_prefetch_result(handle.prefetch_request_id)
++
+     def wait_prefetch_status(
+         self,
+         handle: PrefetchHandle,
+@@ -1254,10 +1261,32 @@ class StorageManager:
+         for manager in self._l1_managers_by_id.values():
+             manager.clear(force=force)
+ 
++    def _borrow_manager(self) -> L1Manager:
++        """The first borrow implementation has a single concrete L1 owner."""
++        if self.is_multi_l1:
++            raise ValueError("Read borrows require a single L1 manager")
++        if not isinstance(self._l1_manager, L1Manager):
++            raise ValueError("Read borrows require the resident L1Manager backend")
++        return self._l1_manager
++
++    def borrow_read(self, keys: list[ObjectKey]) -> BorrowedRead | None:
++        """Borrow resident buffers atomically; no L2 fetch or TTL reservation."""
++        return self._borrow_manager().borrow_read(keys)
++
++    def release_borrow(self, token: ReadBorrowToken) -> bool:
++        """Release a completed transfer's single-L1 borrow exactly once."""
++        return self._borrow_manager().release_borrow(token)
++
+     def close(self):
+         """
+         Close the storage manager and release all resources.
+         """
++        # Refuse shutdown before stopping dependencies used by in-flight reads.
++        # prepare_close takes and releases only the manager lock; controller
++        # stop/join must happen outside it so their final callbacks can finish.
++        for manager in self._l1_managers_by_id.values():
++            if isinstance(manager, L1Manager):
++                manager.prepare_close()
+         self._prefetch_controller.stop()
+         for controller in self._store_controllers.values():
+             controller.stop()
+diff --git a/lmcache/v1/multiprocess/engine_context.py b/lmcache/v1/multiprocess/engine_context.py
+index 1f8dd99..8f83594 100644
+--- a/lmcache/v1/multiprocess/engine_context.py
++++ b/lmcache/v1/multiprocess/engine_context.py
+@@ -21,6 +21,7 @@ from lmcache.v1.mp_observability.event_bus import EventBus, get_event_bus
+ from lmcache.v1.multiprocess.custom_types import IPCCacheServerKey
+ from lmcache.v1.multiprocess.session import SessionManager
+ from lmcache.v1.multiprocess.token_hasher import TokenHasher
++from lmcache.v1.multiprocess.read_policy import get_read_policy, TRANSFER_BORROW
+ 
+ logger = init_logger(__name__)
+ 
+@@ -207,6 +208,12 @@ class MPCacheServerContext:
+         null_block_id: int = 0,
+         session_ttl_seconds: float = SessionManager.DEFAULT_SESSION_TTL,
+     ) -> None:
++        self.read_policy = get_read_policy()
++        if self.read_policy == TRANSFER_BORROW:
++            if storage_manager_config.l2_adapter_config.adapters:
++                raise ValueError("transfer_borrow currently supports resident L1 only")
++            if len(storage_manager_config.l1_manager_configs) != 1:
++                raise ValueError("transfer_borrow currently requires exactly one L1")
+         self._chunk_size = chunk_size
+         self._null_block_id = null_block_id
+         self._separate_object_groups = separate_object_groups
+diff --git a/lmcache/v1/multiprocess/futures.py b/lmcache/v1/multiprocess/futures.py
+index f3f0ce4..7233e72 100644
+--- a/lmcache/v1/multiprocess/futures.py
++++ b/lmcache/v1/multiprocess/futures.py
+@@ -6,6 +6,7 @@ import threading
+ 
+ # First Party
+ from lmcache import torch_dev
++from lmcache.logging import init_logger
+ from lmcache.utils import lmcache_deprecate
+ from lmcache.v1.mp_observability.errors import LMCacheTimeoutError
+ from lmcache.v1.platform.base.event_ipc import (
+@@ -14,6 +15,7 @@ from lmcache.v1.platform.base.event_ipc import (
+ )
+ 
+ T = TypeVar("T")
++logger = init_logger(__name__)
+ 
+ 
+ class MessagingStream(Iterator[T]):
+@@ -62,6 +64,46 @@ class MessagingFuture(Generic[T]):
+         self.result_: T | None = None
+         self.exception_: BaseException | None = None
+         self._retained_references: list[object] = []
++        self._completion_lock = threading.Lock()
++        self._done_callbacks: list[Callable[["MessagingFuture[T]"], None]] = []
++
++    def add_done_callback(
++        self, callback: Callable[["MessagingFuture[T]"], None]
++    ) -> None:
++        """Invoke ``callback(self)`` once for this registration on completion.
++
++        An already completed future invokes the callback synchronously here;
++        otherwise the completing thread invokes it. The terminal state is
++        published first and callbacks run outside the completion lock. Callbacks
++        must not block the transport thread. Their failures are logged without
++        preventing other callbacks from running.
++        """
++        with self._completion_lock:
++            if not self.is_done_.is_set():
++                self._done_callbacks.append(callback)
++                return
++        self._invoke_done_callback(callback)
++
++    def _invoke_done_callback(
++        self, callback: Callable[["MessagingFuture[T]"], None]
++    ) -> None:
++        try:
++            callback(self)
++        except BaseException:
++            # A callback must not terminate the shared transport poller, even
++            # if it raises SystemExit, or prevent subsequent callbacks.
++            logger.exception("MessagingFuture completion callback failed")
++
++    def _complete(self, result: T | None, exception: BaseException | None) -> None:
++        with self._completion_lock:
++            if self.is_done_.is_set():
++                return
++            self.result_ = result
++            self.exception_ = exception
++            self.is_done_.set()
++            callbacks, self._done_callbacks = self._done_callbacks, []
++        for callback in callbacks:
++            self._invoke_done_callback(callback)
+ 
+     def query(self) -> bool:
+         """
+@@ -137,8 +179,7 @@ class MessagingFuture(Generic[T]):
+         Args:
+             result (T): The result to set.
+         """
+-        self.result_ = result
+-        self.is_done_.set()
++        self._complete(result, None)
+ 
+     def set_exception(self, exception: BaseException) -> None:
+         """Set a request exception and mark this future as complete.
+@@ -151,8 +192,7 @@ class MessagingFuture(Generic[T]):
+         Args:
+             exception: Failure raised while processing the request.
+         """
+-        self.exception_ = exception
+-        self.is_done_.set()
++        self._complete(None, exception)
+ 
+     def retain_reference(self, value: object) -> None:
+         """Keep a resource alive for at least the lifetime of this future.
+@@ -241,6 +281,15 @@ class DeviceMessagingFuture(MessagingFuture[T]):
+             event_backend.check_event_support(self.device_)
+         self._event_backend = event_backend
+ 
++    def add_done_callback(
++        self, callback: Callable[["MessagingFuture[T]"], None]
++    ) -> None:
++        """Reject callbacks because raw RPC completion is not device completion."""
++        raise NotImplementedError(
++            "DeviceMessagingFuture callbacks require device completion tracking; "
++            "use query() or device events instead"
++        )
++
+     def _on_raw_future_complete(self) -> None:
+         """
+         Update the device event and result when the raw future is complete.
+diff --git a/lmcache/v1/multiprocess/lookup_control_cleanup.py b/lmcache/v1/multiprocess/lookup_control_cleanup.py
+new file mode 100644
+index 0000000..4bd35a4
+--- /dev/null
++++ b/lmcache/v1/multiprocess/lookup_control_cleanup.py
+@@ -0,0 +1,154 @@
++# SPDX-License-Identifier: Apache-2.0
++"""Retain cancelled lookup control RPCs until each endpoint acknowledges END."""
++from collections.abc import Callable
++from typing import Any
++import logging
++import threading
++
++logger = logging.getLogger(__name__)
++
++
++class _Cleanup:
++    def __init__(
++        self,
++        request_id: str,
++        clients: dict[str, Any],
++        on_quiescent: Callable[[Any], None],
++    ) -> None:
++        self.request_id = request_id
++        self.clients = dict(clients)
++        self.dependencies: dict[str, list[Any]] = {url: [] for url in clients}
++        self.ending = False
++        self.started: set[str] = set()
++        self.failed: set[str] = set()
++        self.end_futures: dict[str, Any] = {}
++        self.completed: set[str] = set()
++        self._lock = threading.Lock()
++        self._on_quiescent = on_quiescent
++
++    def retain(self, dependencies: dict[str, list[Any]]) -> None:
++        registrations = []
++        with self._lock:
++            for url, futures in dependencies.items():
++                for future in futures:
++                    if any(item is future for item in self.dependencies[url]):
++                        continue
++                    if url in self.started:
++                        raise RuntimeError("Cannot add lookup RPC after END submission")
++                    self.dependencies[url].append(future)
++                    registrations.append((url, future))
++        for url, future in registrations:
++            future.add_done_callback(lambda done, url=url: self._advance(url))
++
++    def end(self) -> None:
++        with self._lock:
++            self.ending = True
++        for url in self.clients:
++            self._advance(url)
++
++    def _advance(self, url: str) -> None:
++        with self._lock:
++            if not self.ending or url in self.started or url in self.failed:
++                return
++            if not all(future.query() for future in self.dependencies[url]):
++                return
++            try:
++                for dependency in self.dependencies[url]:
++                    dependency.result(timeout=0)
++            except Exception:
++                # A failed transport response (for example a cancelled gRPC)
++                # does not prove the remote handler stopped. Do not let END
++                # acknowledge before that unknown handler and permit ID reuse.
++                self.failed.add(url)
++                logger.exception("Lookup outcome unknown for %s at %s; retain generation",
++                                 self.request_id, url)
++                return
++            self.started.add(url)
++        try:
++            future = self.clients[url].end_session(self.request_id)
++        except Exception:
++            # Unknown submission outcome keeps this generation quarantined.
++            logger.exception(
++                "END_SESSION submission failed for %s at %s", self.request_id, url
++            )
++            return
++        with self._lock:
++            self.end_futures[url] = future
++        future.add_done_callback(lambda done: self._end_complete(url, done))
++
++    def _end_complete(self, url: str, future: Any) -> None:
++        try:
++            future.result(timeout=0)
++        except Exception:
++            logger.exception(
++                "END_SESSION acknowledgement failed for %s at %s", self.request_id, url
++            )
++            return
++        with self._lock:
++            self.completed.add(url)
++            quiescent = len(self.completed) == len(self.clients)
++        if quiescent:
++            self._on_quiescent(self)
++
++
++class LookupControlRegistry:
++    """Own generations independently of scheduler admission bookkeeping."""
++
++    def __init__(self) -> None:
++        self._lock = threading.Lock()
++        self._states: dict[str, _Cleanup] = {}
++
++    def retain(
++        self,
++        request_id: str,
++        clients: dict[str, Any],
++        dependencies: dict[str, list[Any]],
++    ) -> None:
++        with self._lock:
++            state = self._states.get(request_id)
++            if state is None:
++                state = _Cleanup(request_id, clients, self._retire)
++                self._states[request_id] = state
++        state.retain(dependencies)
++
++    def end(self, request_id: str) -> None:
++        with self._lock:
++            state = self._states[request_id]
++        state.end()
++
++    def check_reuse(
++        self, request_id: str, *, resume_existing_session: bool = False
++    ) -> bool:
++        with self._lock:
++            state = self._states.get(request_id)
++            if state is None:
++                return True
++            if resume_existing_session:
++                # Preemption continues the admitted request's live session.
++                # It may submit another LOOKUP only after every old control
++                # handler has returned successfully, and never after END began.
++                with state._lock:
++                    if not state.ending and not state.failed:
++                        dependencies = [
++                            future for futures in state.dependencies.values()
++                            for future in futures
++                        ]
++                        if all(future.query() for future in dependencies):
++                            try:
++                                for future in dependencies:
++                                    future.result(timeout=0)
++                            except Exception:
++                                pass
++                            else:
++                                return True
++                # Only a preempted request may fall back to local computation
++                # while its old lookup controls remain quarantined until END.
++                return False
++            raise RuntimeError(
++                f"Lookup request {request_id!r} has an unquiescent generation"
++            )
++
++    def _retire(self, state: _Cleanup) -> None:
++        with self._lock:
++            if self._states.get(state.request_id) is state:
++                del self._states[state.request_id]
+diff --git a/lmcache/v1/multiprocess/modules/lmcache_driven_transfer.py b/lmcache/v1/multiprocess/modules/lmcache_driven_transfer.py
+index cdcdc97..99b2f57 100644
+--- a/lmcache/v1/multiprocess/modules/lmcache_driven_transfer.py
++++ b/lmcache/v1/multiprocess/modules/lmcache_driven_transfer.py
+@@ -19,6 +19,7 @@ from lmcache.utils import (
+ from lmcache.v1.distributed.api import (
+     MemoryLayoutDesc,
+     ObjectKey,
++    ReadBorrowToken,
+ )
+ from lmcache.v1.distributed.storage_manager import L1WriteCompletion
+ from lmcache.v1.gpu_connector.utils import LayoutHints
+@@ -50,6 +51,7 @@ from lmcache.v1.multiprocess.pp_layout import (
+ )
+ from lmcache.v1.multiprocess.request_handler import HandlerType, request_handler
+ from lmcache.v1.multiprocess.token_hasher import TokenHasher
++from lmcache.v1.multiprocess.read_policy import TRANSFER_BORROW
+ from lmcache.v1.platform.base.cache_context import BaseCacheContext
+ from lmcache.v1.platform.base.event_ipc import (
+     EventIPCBackend,
+@@ -276,8 +278,15 @@ class LMCacheDrivenTransferModule(InstanceLivenessTarget):
+             self._release_imported_event,
+             payload_type=tuple[int, int],
+         )
++        self._device_host_func_dispatcher.register(
++            "release_read_borrow", self._release_read_borrow,
++            payload_type=tuple[str, int],
++        )
+         self._device_host_func_dispatcher.start()
+ 
++    def _release_read_borrow(self, payload: tuple[str, int]) -> None:
++        self._ctx.storage_manager.release_borrow(ReadBorrowToken(*payload))
++
+     def _release_imported_event(self, payload: tuple[int, int]) -> None:
+         """Drop an imported worker event; the stream wait queued on it has run.
+ 
+@@ -497,6 +506,13 @@ class LMCacheDrivenTransferModule(InstanceLivenessTarget):
+ 
+     def close(self) -> None:
+         """Release GPU resources owned by this module."""
++        if getattr(self._ctx, "read_policy", "legacy") == TRANSFER_BORROW:
++            # The server has stopped admission before closing modules. Drain
++            # device streams while the dispatcher and imported contexts are
++            # still alive; stop() then consumes their final host callbacks.
++            # On failure keep context owners and borrowed allocations intact.
++            for entry in self.context_entries_snapshot().values():
++                entry.cache_context.stream.synchronize()
+         # Stop the drain thread before storage_manager.close() so any
+         # in-flight completions reach a live storage manager.
+         self._device_host_func_dispatcher.stop()
+@@ -533,6 +549,8 @@ class LMCacheDrivenTransferModule(InstanceLivenessTarget):
+             engine_group_infos: Engine-neutral KV cache group metadata
+                 (already msgspec-decoded by the message queue).
+         """
++        if getattr(self._ctx, "read_policy", "legacy") == TRANSFER_BORROW:
++            raise ValueError("transfer_borrow requires negotiated PP registration")
+         now = time.monotonic()
+         # NOOP-register: an already-registered instance (e.g. a recovering
+         # worker re-registering on its first ping) refreshes its last-seen
+@@ -632,6 +650,9 @@ class LMCacheDrivenTransferModule(InstanceLivenessTarget):
+             RuntimeError: If platform context/event initialization fails.
+         """
+         info = registration_info
++        read_policy = getattr(self._ctx, "read_policy", "legacy")
++        if info.read_policy != read_policy:
++            raise ValueError("Worker and cache server read policies differ")
+         if model_name != info.locator.base_model_name:
+             raise ValueError("PP base model does not match locator")
+         expected_world = 1 if info.mla_only else info.locator.tp_size
+@@ -662,6 +683,8 @@ class LMCacheDrivenTransferModule(InstanceLivenessTarget):
+             namespace = profile.cache_namespace
+             backend = get_event_ipc_backend(cache_context.device)
+             backend.check_event_support(cache_context.device)
++            if read_policy == TRANSFER_BORROW and str(cache_context.device).split(":")[0] != "npu":
++                raise ValueError("transfer_borrow currently supports NPU lmcache_driven only")
+             manager = cache_context.kv_layer_groups_manager
+             layouts = {
+                 gid: get_layout_desc(cache_context, self._ctx.chunk_size, gid)
+@@ -680,7 +703,8 @@ class LMCacheDrivenTransferModule(InstanceLivenessTarget):
+                     with self._lock:
+                         existing.last_seen = time.monotonic()
+                     return PPRegistrationAck(
+-                        profile, self._server_instance_id, instance_id, info.tp_rank
++                        profile, self._server_instance_id, instance_id, info.tp_rank,
++                        read_policy=read_policy,
+                     )
+                 for _, peer in peers:
+                     peer_info = peer.registration_info
+@@ -702,7 +726,8 @@ class LMCacheDrivenTransferModule(InstanceLivenessTarget):
+                                 "PP TP slot already has an active instance"
+                             )
+                 ack = PPRegistrationAck(
+-                    profile, self._server_instance_id, instance_id, info.tp_rank
++                    profile, self._server_instance_id, instance_id, info.tp_rank,
++                    read_policy=read_policy,
+                 )
+                 try:
+                     self._ctx.layout_desc_registry.register(
+@@ -753,7 +778,10 @@ class LMCacheDrivenTransferModule(InstanceLivenessTarget):
+             ]
+             ranks = tuple(sorted(entry.registration_info.tp_rank for entry in matching))
+             profile = matching[0].pp_profile if matching else None
+-            return PPStageStatus(locator, self._server_instance_id, profile, ranks)
++            return PPStageStatus(
++                locator, self._server_instance_id, profile, ranks,
++                read_policy=getattr(self._ctx, "read_policy", "legacy"),
++            )
+ 
+     @request_handler()
+     def unregister_kv_cache(self, instance_id: int) -> None:
+@@ -1112,6 +1140,10 @@ class LMCacheDrivenTransferModule(InstanceLivenessTarget):
+         Raises:
+             RuntimeError: If the backend does not support IPC event handles.
+         """
++        if getattr(self._ctx, "read_policy", "legacy") == TRANSFER_BORROW:
++            return self._retrieve_borrowed(
++                key, instance_id, gpu_block_ids, event_ipc_handle, skip_first_n_tokens
++            )
+         st = time.perf_counter()
+ 
+         entry = self.get_and_touch_context_entry(instance_id)
+@@ -1335,6 +1367,114 @@ class LMCacheDrivenTransferModule(InstanceLivenessTarget):
+             retrieve_succeeded,
+         )
+ 
++    def _retrieve_borrowed(
++        self, key: IPCCacheServerKey, instance_id: int,
++        gpu_block_ids: list[list[int]], event_ipc_handle: bytes,
++        skip_first_n_tokens: int,
++    ) -> tuple[bytes, bool]:
++        """Borrow every source before device submission; release in stream order.
++
++        A lookup is only a hint in this mode. A resident miss submits no device
++        work. Exceptions after submission must drain the stream before replying
++        without an event; failure to drain retains the borrow and is a safety
++        error, never permission to reuse the source or destination allocation.
++        """
++        entry = self.get_and_touch_context_entry(instance_id)
++        if entry is None:
++            return b"", False
++        if entry.registration_info is None or entry.registration_info.read_policy != TRANSFER_BORROW:
++            raise ValueError("Borrowed RETRIEVE requires negotiated PP read policy")
++        context = entry.cache_context
++        backend = entry.event_backend
++        if backend is None:
++            raise RuntimeError("Registered cache context has no event backend")
++        manager = context.kv_layer_groups_manager
++        keys_by_group = self._ctx.resolve_obj_keys(key, list(range(manager.num_object_groups)))
++        num_chunks = len(keys_by_group[0])
++        blocks_per_chunk = [context.calculate_num_blocks(self._ctx.chunk_size, g)
++                            for g in range(manager.num_kernel_groups)]
++        if len(gpu_block_ids) != len(blocks_per_chunk) or any(
++            len(ids) < num_chunks * bpc
++            for ids, bpc in zip(gpu_block_ids, blocks_per_chunk, strict=True)
++        ):
++            return b"", False
++        attn = manager.get_attn_desc()
++        skipped = {g for g, kind in enumerate(attn.group_kinds) if kind == "aux"}
++        skips = [0 if w < 0 else max(0, num_chunks - w) for w in attn.num_chunks_in_sw]
++        retained = [k for g, keys in enumerate(keys_by_group) if g not in skipped
++                    for k in keys[skips[g]:]]
++        borrow = self._ctx.storage_manager.borrow_read(retained)
++        if borrow is None:
++            logger.info("RETRIEVE resident miss request_id=%s; recompute required", key.request_id)
++            return b"", False
++        token_payload = (borrow.token.server_instance_id, borrow.token.sequence)
++        total_bytes = sum(obj.get_size() for obj in borrow.objects.values())
++        transfer_key = next_transfer_key(key.request_id)
++        submitted = False
++        try:
++            with torch_dev.device(context.device), torch_dev.stream(context.stream):
++                event = backend.create_event(context.device)
++                submitted = True
++                self._ctx.event_bus.publish(Event(
++                    event_type=EventType.MP_RETRIEVE_SUBMITTED, session_id=key.request_id,
++                    metadata={"device": str(context.device)},
++                ))
++                self._ctx.event_bus.publish_on_stream(context.cupy_stream, Event(
++                    event_type=EventType.MP_RETRIEVE_START, session_id=key.request_id,
++                    metadata={"device": str(context.device), "engine_id": instance_id,
++                              "model_name": entry.model_name, "transfer_key": transfer_key},
++                ))
++                producer = backend.import_event(event_ipc_handle, context.device)
++                backend.wait_event(producer, context.stream)
++                import_token = context.hold_imported_event(producer)
++                try:
++                    submit_callback_to_stream(context.cupy_stream, "release_imported_event",
++                                              (instance_id, import_token))
++                except Exception:
++                    context.stream.synchronize()
++                    context.release_imported_event(import_token)
++                    raise
++                staged_ids = downsample_and_stage_block_ids(context, gpu_block_ids)
++                succeeded = True
++                try:
++                    for group, keys in enumerate(keys_by_group):
++                        if group in skipped:
++                            continue
++                        objects = [borrow.objects[k] for k in keys[skips[group]:]]
++                        transfer_kv_per_object_group(
++                            context, staged_ids, [None] * skips[group] + objects,
++                            object_group_id=group, batch_size=context.max_batch_size,
++                            skip_first_n_tokens=skip_first_n_tokens,
++                            direction=lmcache_native.TransferDirection.H2D,
++                            transfer_key=transfer_key, block_ids_host=gpu_block_ids,
++                        )
++                except Exception:
++                    logger.exception("Borrowed RETRIEVE transfer failed request_id=%s", key.request_id)
++                    succeeded = False
++                backend.record_event(event, context.stream)
++                submit_callback_to_stream(context.cupy_stream, "release_read_borrow", token_payload)
++                self._ctx.event_bus.publish_on_stream(context.cupy_stream, Event(
++                    event_type=EventType.MP_RETRIEVE_END, session_id=key.request_id,
++                    metadata={"retrieved_count": len(retained) if succeeded else 0,
++                              "device": str(context.device), "engine_id": instance_id,
++                              "model_name": entry.model_name, "cache_salt": key.cache_salt,
++                              "total_bytes": total_bytes if succeeded else 0,
++                              "num_tokens": num_chunks * self._ctx.chunk_size if succeeded else 0,
++                              "transfer_key": transfer_key},
++                ))
++                return backend.export_event(event, context.device), succeeded
++        except Exception:
++            logger.exception("Borrowed RETRIEVE completion failed request_id=%s", key.request_id)
++            if submitted:
++                try:
++                    context.stream.synchronize()
++                except Exception as exc:
++                    raise RuntimeError(
++                        "Cannot prove RETRIEVE device completion; retain borrowed KV and isolate worker"
++                    ) from exc
++            self._ctx.storage_manager.release_borrow(borrow.token)
++            return b"", False
++
+     def _publish_token_bindings(
+         self, key: IPCCacheServerKey, obj_keys: list[ObjectKey]
+     ) -> None:
+diff --git a/lmcache/v1/multiprocess/modules/lookup.py b/lmcache/v1/multiprocess/modules/lookup.py
+index f6d9256..57513d6 100644
+--- a/lmcache/v1/multiprocess/modules/lookup.py
++++ b/lmcache/v1/multiprocess/modules/lookup.py
+@@ -15,6 +15,7 @@ from lmcache.v1.distributed.api import (
+     ObjectKey,
+     PrefetchHandle,
+     PrefetchTaskSpec,
++    PrefetchLockMode,
+     ipc_key_to_grouped_object_keys,
+     ipc_key_to_object_keys,
+ )
+@@ -25,6 +26,7 @@ from lmcache.v1.multiprocess.custom_types import IPCCacheServerKey
+ from lmcache.v1.multiprocess.engine_context import MPCacheServerContext
+ from lmcache.v1.multiprocess.request_handler import HandlerType, request_handler
+ from lmcache.v1.multiprocess.token_hasher import TokenHasher
++from lmcache.v1.multiprocess.read_policy import TRANSFER_BORROW
+ 
+ logger = init_logger(__name__)
+ 
+@@ -298,6 +300,11 @@ class LookupModule:
+                 attn_desc,
+             ),
+             num_kv_readers=num_kv_readers,
++            lock_mode=(
++                PrefetchLockMode.NO_LOCK
++                if getattr(self._ctx, "read_policy", "legacy") == TRANSFER_BORROW
++                else PrefetchLockMode.LOCK
++            ),
+         )
+         handle = self._ctx.storage_manager.submit_prefetch_task(
+             spec,
+@@ -409,6 +416,8 @@ class LookupModule:
+             key: Cache key whose read locks should be released.
+             tp_size: Legacy wire field; ignored (kept for payload arity).
+         """
++        if getattr(self._ctx, "read_policy", "legacy") == TRANSFER_BORROW:
++            return
+         if key.start >= key.end:
+             return
+ 
+@@ -465,6 +474,11 @@ class LookupModule:
+         Args:
+             request_id: The request ID whose session should be removed.
+         """
++        if getattr(self._ctx, "read_policy", "legacy") == TRANSFER_BORROW:
++            with self._prefetch_job_lock:
++                job = self._prefetch_jobs.pop(request_id, None)
++            if job is not None:
++                self._ctx.storage_manager.discard_prefetch_result(job.handle)
+         self._ctx.event_bus.publish(
+             Event(
+                 event_type=EventType.MP_VLLM_END_SESSION,
+@@ -561,12 +575,13 @@ class LookupModule:
+         # free_lookup_locks can reconstruct which keys the prefetch
+         # read-locked (see ``unfold``: full-attention groups lock the whole
+         # hit prefix, sliding-window groups only its in-window suffix).
+-        session = self._ctx.session_manager.get_or_create(job.request_id)
+-        session.record_prefetch_result(
+-            found_count,
+-            tuple(range(job.attn_desc.num_object_groups)),
+-            result.l1_owners,
+-        )
++        if getattr(self._ctx, "read_policy", "legacy") != TRANSFER_BORROW:
++            session = self._ctx.session_manager.get_or_create(job.request_id)
++            session.record_prefetch_result(
++                found_count,
++                tuple(range(job.attn_desc.num_object_groups)),
++                result.l1_owners,
++            )
+ 
+         # L1 is credited with the prefix its own cells serve under the same
+         # window rule; L2 with however far it extended that prefix.
+diff --git a/lmcache/v1/multiprocess/pp_layout.py b/lmcache/v1/multiprocess/pp_layout.py
+index d75f6fc..00f40ec 100644
+--- a/lmcache/v1/multiprocess/pp_layout.py
++++ b/lmcache/v1/multiprocess/pp_layout.py
+@@ -111,8 +111,11 @@ class PPRegistrationInfo:
+     layer_names: tuple[str, ...]
+     registration_token: str
+     mla_only: bool
++    read_policy: str = "legacy"
+ 
+     def __post_init__(self) -> None:
++        if self.read_policy not in ("legacy", "transfer_borrow"):
++            raise ValueError("unsupported PP read policy")
+         _integer(self.global_rank, "global_rank")
+         _integer(self.tp_rank, "tp_rank")
+         if self.tp_rank >= self.locator.tp_size or self.global_rank != (
+@@ -189,8 +192,11 @@ class PPRegistrationAck:
+     server_instance_id: str
+     instance_id: int
+     tp_rank: int
++    read_policy: str = "legacy"
+ 
+     def __post_init__(self) -> None:
++        if self.read_policy not in ("legacy", "transfer_borrow"):
++            raise ValueError("unsupported PP read policy")
+         _text(self.server_instance_id, "server_instance_id")
+         _integer(self.instance_id, "instance_id")
+         _integer(self.tp_rank, "tp_rank")
+@@ -212,8 +218,11 @@ class PPStageStatus:
+     profile: PPStageProfile | None
+     registered_tp_ranks: tuple[int, ...]
+     schema_version: int = 1
++    read_policy: str = "legacy"
+ 
+     def __post_init__(self) -> None:
++        if self.read_policy not in ("legacy", "transfer_borrow"):
++            raise ValueError("unsupported PP read policy")
+         _text(self.server_instance_id, "server_instance_id")
+         if type(self.schema_version) is not int or self.schema_version != 1:
+             raise ValueError("unsupported PP schema version")
+diff --git a/lmcache/v1/multiprocess/read_policy.py b/lmcache/v1/multiprocess/read_policy.py
+new file mode 100644
+index 0000000..1c7a5a2
+--- /dev/null
++++ b/lmcache/v1/multiprocess/read_policy.py
+@@ -0,0 +1,28 @@
++# SPDX-License-Identifier: Apache-2.0
++"""Private opt-in read lifetime policy, shared by server and vLLM adapters."""
++import os
++
++LEGACY = "legacy"
++TRANSFER_BORROW = "transfer_borrow"
++
++
++def validate_read_policy(policy: str) -> str:
++    if policy not in (LEGACY, TRANSFER_BORROW):
++        raise ValueError(f"Unsupported LMCache MP read policy: {policy!r}")
++    return policy
++
++
++def get_read_policy() -> str:
++    policy = validate_read_policy(os.environ.get("KS_LMCACHE_MP_READ_POLICY", LEGACY))
++    if policy == TRANSFER_BORROW and os.environ.get("KS_LMCACHE_L1_RECHECK_ON_STATUS") == "1":
++        raise ValueError("transfer_borrow cannot be combined with status_recheck")
++    return policy
++
++
++def validate_connector_policy(policy: str, *, stage_local: bool, failure_policy: str) -> None:
++    validate_read_policy(policy)
++    if policy == TRANSFER_BORROW:
++        if not stage_local:
++            raise ValueError("transfer_borrow requires native stage-local PP registration")
++        if failure_policy != "recompute":
++            raise ValueError("transfer_borrow requires kv_load_failure_policy=recompute")
