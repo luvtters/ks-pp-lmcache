@@ -337,6 +337,9 @@ class MessageQueueClient:
 
         # Input queue
         self.input_queue: queue.Queue = queue.Queue()
+        self._pp_queue_observer = create_pp_wait_observer(
+            True, "client_queue", server_url
+        )
 
         # Pending job's futures
         self._request_counter = itertools.count()
@@ -353,6 +356,9 @@ class MessageQueueClient:
         """Send a FIFO batch; zero preserves unlimited draining on close.
 
         Every dequeued request or control frame consumes one budget slot.
+        Opt-in PP observations cover normally completed turns, counting dequeued
+        frames (including encoding failures), host wall time, and sampled backlog.
+        Exhaustion includes exact-empty turns; queue samples never control wakes.
 
         Args:
             max_tasks: Override the client budget; None uses its configuration,
@@ -364,6 +370,8 @@ class MessageQueueClient:
         limit = self.outbound_batch_limit if max_tasks is None else max_tasks
         if limit < 0:
             raise ValueError("max_tasks must be nonnegative")
+        observer = getattr(self, "_pp_queue_observer", None)
+        started = time.monotonic_ns() if observer is not None else 0
         processed = 0
         try:
             while not limit or processed < limit:
@@ -434,6 +442,16 @@ class MessageQueueClient:
         # Residual work must remain runnable even when producers are idle.
         if limit and processed == limit:
             self._polling_loop.notify()
+
+        if observer is not None:
+            elapsed = time.monotonic_ns() - started
+            remaining = self.input_queue.qsize()
+            observer.record("outbound_processed", processed)
+            observer.record("outbound_wall_ns", elapsed)
+            observer.record("outbound_remaining", remaining)
+            if limit and processed == limit:
+                observer.record("outbound_budget_exhausted")
+                observer.record("outbound_budget_exhausted_remaining", remaining)
 
     def process_inbound(self) -> None:
         """Process one inbound response from the server.
