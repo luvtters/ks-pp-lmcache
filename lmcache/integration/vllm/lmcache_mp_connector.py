@@ -1393,6 +1393,8 @@ class LMCacheMPConnector(KVConnectorBase_V1, SupportsHMA):
             call. If the cache cannot be loaded for some tokens (e.g., due to
             connectivity issues or eviction), those tokens must not be taken
             into account.
+            Repeated reads of a final lookup result record its duration once,
+            until allocation cleanup or a fresh request tracker starts a lookup.
         """
         tracker = self._get_or_create_request_tracker(request)
 
@@ -1423,6 +1425,7 @@ class LMCacheMPConnector(KVConnectorBase_V1, SupportsHMA):
                 request.request_id,
             )
             self.scheduler_adapter.cleanup_lookup_result(request.request_id)
+            tracker.lookup_duration_recorded = False
             tracker.allocated_block_ids.clear()
             tracker.num_stored_tokens = 0
             tracker.num_vllm_hit_tokens = 0
@@ -1431,7 +1434,7 @@ class LMCacheMPConnector(KVConnectorBase_V1, SupportsHMA):
             tracker.state = LMCacheMPRequestState.BYPASS_LMCACHE
             return 0, False
 
-        if tracker.lookup_started_at is None:
+        if tracker.lookup_started_at is None and not tracker.lookup_duration_recorded:
             tracker.lookup_started_at = time.monotonic()
         lookup_pending = self.scheduler_adapter.maybe_submit_lookup_request(
             request.request_id,
@@ -1451,11 +1454,13 @@ class LMCacheMPConnector(KVConnectorBase_V1, SupportsHMA):
         )
         if ret is None:
             return None, True
-        assert tracker.lookup_started_at is not None
-        self._connector_stats.record_lookup(
-            time.monotonic() - tracker.lookup_started_at
-        )
-        tracker.lookup_started_at = None
+        if not tracker.lookup_duration_recorded:
+            assert tracker.lookup_started_at is not None
+            self._connector_stats.record_lookup(
+                time.monotonic() - tracker.lookup_started_at
+            )
+            tracker.lookup_started_at = None
+            tracker.lookup_duration_recorded = True
 
         # Save the vLLM hit count even when LMCache misses. It is rounded
         # down to a boundary aligned for every engine group (a full-prompt
@@ -1513,7 +1518,7 @@ class LMCacheMPConnector(KVConnectorBase_V1, SupportsHMA):
             return
 
         tracker = self._get_or_create_request_tracker(request)
-        if tracker.lookup_started_at is None:
+        if tracker.lookup_started_at is None and not tracker.lookup_duration_recorded:
             tracker.lookup_started_at = time.monotonic()
         self.scheduler_adapter.maybe_submit_lookup_request(
             request.request_id,
@@ -1582,6 +1587,7 @@ class LMCacheMPConnector(KVConnectorBase_V1, SupportsHMA):
             )
             # Clean up lookup future in scheduler adapter
             self.scheduler_adapter.cleanup_lookup_result(request.request_id)
+            tracker.lookup_duration_recorded = False
 
             # Free locks on chunks that vLLM already computed and won't
             # retrieve from LMCache.

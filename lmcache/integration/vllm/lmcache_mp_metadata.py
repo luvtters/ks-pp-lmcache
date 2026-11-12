@@ -81,6 +81,8 @@ class LMCacheMPRequestTracker:
     request_configs: dict[str, Any] | None = None
     max_offload_tokens: int | None = None
     lookup_started_at: float | None = None
+    # Final-result revisits share one duration until lookup cleanup.
+    lookup_duration_recorded: bool = False
 
     mm_adjusted_prompt_ids: list[int] = field(default_factory=list)
 
@@ -92,6 +94,7 @@ class LMCacheMPRequestTracker:
             "lmcache.max_offload_tokens"
         )
         self.lookup_started_at = None
+        self.lookup_duration_recorded = False
         self.all_token_ids = request.all_token_ids
         self.num_prompt_tokens = request.num_prompt_tokens
         self.allocated_block_ids = {}
