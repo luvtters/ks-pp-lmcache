@@ -1,0 +1,838 @@
+{
+  "scope": "GitHub review archive; original measured commits preserved",
+  "repositories": {
+    "LMCache": {
+      "upstream": "https://github.com/LMCache/LMCache.git",
+      "base": "3e11e10812b448142c6cdb177a3058652bd826fa",
+      "branches": {
+        "ks/pp-control-fastpath-luv-20261111": {
+          "head": "e8e2f1d7295e56b55f880f51b4609c46b46fdc0a",
+          "commits": [
+            {
+              "hash": "8cd2d5b8c2bcb64039f702fb9510b9802777b107",
+              "subject": "fix: preserve historical PP local-cache handshake STORE and index pin"
+            },
+            {
+              "hash": "c02facadc4a1037212c473af6423ccf677f9adc9",
+              "subject": "feat: expose MP geometry hook for Ascend stage-local PP caches"
+            },
+            {
+              "hash": "3f018d17e3174648ab4d7613fe3483ecbbc8b2b9",
+              "subject": "feat(mp): internalize complete-stage PP cache registration"
+            },
+            {
+              "hash": "89d93a2ea62030f6890b5bbe8f902c5b92945c8d",
+              "subject": "fix(mp): return PP initialization rejection reasons over ZMQ"
+            },
+            {
+              "hash": "eececb6017c0a4feefdaf40062028097850c1249",
+              "subject": "fix(mp): retain delayed store completion baseline for safe reads"
+            },
+            {
+              "hash": "fe3d38d30960216f2ab11e5a9fa908541346b63f",
+              "subject": "Protect resident L1 buffers with identity-bound read borrows"
+            },
+            {
+              "hash": "86135ad23f8c0a1b77d0f3496135b264514f6e39",
+              "subject": "Add race-safe completion callbacks to control messaging futures"
+            },
+            {
+              "hash": "db0cee65d12dc9008af320fb6fbf9ae0b72a66d3",
+              "subject": "Test borrowed retrieve ownership through real source methods"
+            },
+            {
+              "hash": "91010ca1f4028fdaee6af2219d97a8ad40b68488",
+              "subject": "Check uniform PP borrow policy registration and readiness"
+            },
+            {
+              "hash": "326f18435bdf8a8c4876d2b93135e06c563918c3",
+              "subject": "Verify lookup deadlines, result cleanup and safe transfer shutdown"
+            },
+            {
+              "hash": "858619faccfd5b65cf8a526c1a1908e2468a47a6",
+              "subject": "fix(mp): borrow resident KV through device completion and drain failed loads safely"
+            },
+            {
+              "hash": "fefb6f330165eda254b8e6a331a7ad53d92db908",
+              "subject": "test(mp): provide read policy in registration source harness"
+            },
+            {
+              "hash": "1b574d24b616fdd441748f52eedfcddf8e6a755c",
+              "subject": "fix(mp): retain generations when control delivery is unknown"
+            },
+            {
+              "hash": "9a155a5e0c71adad7c8610553cc8eb62153a8149",
+              "subject": "fix(mp): discard stale restore hints after partial APC recovery"
+            },
+            {
+              "hash": "91875d1669fde53c6fe902f1ef52a89bd24e0147",
+              "subject": "test: bound stores after partial APC load failure"
+            },
+            {
+              "hash": "13ce9651944325da5870f1640ca7b54aa12f635e",
+              "subject": "test(mp): verify failed load bypass through local allocation"
+            },
+            {
+              "hash": "944f0c507e07b30d9562afb3b368b0596ec9e28f",
+              "subject": "fix(mp): preserve server health on late local lookup poll"
+            },
+            {
+              "hash": "02ffb6943924d1ebd78e31dc3a608dd4af3de271",
+              "subject": "fix(mp): resume preempted lookup sessions without stale hits"
+            },
+            {
+              "hash": "4e2e3de27cace5dce01d04bbef490f91c912b345",
+              "subject": "Add opt-in PP final-zero lookup short circuit"
+            },
+            {
+              "hash": "f6a517654336efaf67489f07e0d00dfdf6d59991",
+              "subject": "Advance PP lookup STATUS after each endpoint ACK"
+            },
+            {
+              "hash": "fe11bf0f8b7285672f253c29c910f25794daea78",
+              "subject": "Budget ZMQ outbound batches without starving shared polling"
+            },
+            {
+              "hash": "e56fb68268349431bc7b9625962ef536cf69af46",
+              "subject": "Add PP control configuration and opt-in wait observations"
+            },
+            {
+              "hash": "d713144cba213afa3a1c415384cb5254f4f14f96",
+              "subject": "Verify PP control fastpath over real CPU ZMQ TCP"
+            },
+            {
+              "hash": "e8e2f1d7295e56b55f880f51b4609c46b46fdc0a",
+              "subject": "Keep PP wait observations within supported lifecycle boundaries"
+            }
+          ],
+          "changed_files_from_upstream_base": [
+            "docs/design/integration/vllm/pp_control_fastpath.md",
+            "docs/design/integration/vllm/pp_stage_local.md",
+            "docs/design/v1/multiprocess/pp_stage_local.md",
+            "docs/source/mp/deployment.rst",
+            "lmcache/integration/vllm/lmcache_mp_connector.py",
+            "lmcache/integration/vllm/lmcache_mp_metadata.py",
+            "lmcache/integration/vllm/vllm_multi_process_adapter.py",
+            "lmcache/v1/distributed/api.py",
+            "lmcache/v1/distributed/l1_manager.py",
+            "lmcache/v1/distributed/storage_controllers/prefetch_controller.py",
+            "lmcache/v1/distributed/storage_manager.py",
+            "lmcache/v1/multiprocess/engine_context.py",
+            "lmcache/v1/multiprocess/futures.py",
+            "lmcache/v1/multiprocess/lookup_control_cleanup.py",
+            "lmcache/v1/multiprocess/modules/lmcache_driven_transfer.py",
+            "lmcache/v1/multiprocess/modules/lookup.py",
+            "lmcache/v1/multiprocess/pp_layout.py",
+            "lmcache/v1/multiprocess/pp_wait_observer.py",
+            "lmcache/v1/multiprocess/read_policy.py",
+            "lmcache/v1/multiprocess/transfer_context/worker_transfer.py",
+            "lmcache/v1/multiprocess/transport/base.py",
+            "lmcache/v1/multiprocess/transport/factory.py",
+            "lmcache/v1/multiprocess/transport/grpc_impl/protos/lmcache_driven_service.proto",
+            "lmcache/v1/multiprocess/transport/zmq_impl/__init__.py",
+            "lmcache/v1/multiprocess/transport/zmq_impl/mq.py",
+            "lmcache/v1/platform/base/device_spec.py",
+            "lmcache/v1/platform/cache_context.py",
+            "tests/ks/test_minimal_cpu.py",
+            "tests/ks/test_pp_extension_cpu.py",
+            "tests/standalone/test_borrowed_retrieve_contract.py",
+            "tests/standalone/test_lookup_deadline_contract.py",
+            "tests/standalone/test_partial_apc_store_bound.py",
+            "tests/standalone/test_pp_adapter_config.py",
+            "tests/standalone/test_pp_completion_contract.py",
+            "tests/standalone/test_pp_control_observe.py",
+            "tests/standalone/test_pp_control_wire.py",
+            "tests/standalone/test_pp_early_miss_contract.py",
+            "tests/standalone/test_pp_mq_progress_contract.py",
+            "tests/standalone/test_pp_store_wait_observe.py",
+            "tests/standalone/test_preempted_lookup_contract.py",
+            "tests/standalone/test_read_policy.py",
+            "tests/standalone/test_recompute_bypass_contract.py",
+            "tests/unit/test_lookup_control_cleanup.py",
+            "tests/unit/test_native_pp_connector.py",
+            "tests/unit/test_pp_registration_factory.py",
+            "tests/unit/test_pp_zmq_errors.py",
+            "tests/unit/test_transfer_health_completion.py",
+            "tests/v1/distributed/test_l1_read_borrow.py",
+            "tests/v1/multiprocess/test_messaging_future_callbacks.py",
+            "tests/v1/multiprocess/test_pp_layout.py",
+            "tests/v1/multiprocess/test_pp_server_registration.py"
+          ]
+        },
+        "ks/mq-observe-luv-20261112": {
+          "head": "4ebc47edbcfe332a06271f56e15e472bff046998",
+          "commits": [
+            {
+              "hash": "8cd2d5b8c2bcb64039f702fb9510b9802777b107",
+              "subject": "fix: preserve historical PP local-cache handshake STORE and index pin"
+            },
+            {
+              "hash": "c02facadc4a1037212c473af6423ccf677f9adc9",
+              "subject": "feat: expose MP geometry hook for Ascend stage-local PP caches"
+            },
+            {
+              "hash": "3f018d17e3174648ab4d7613fe3483ecbbc8b2b9",
+              "subject": "feat(mp): internalize complete-stage PP cache registration"
+            },
+            {
+              "hash": "89d93a2ea62030f6890b5bbe8f902c5b92945c8d",
+              "subject": "fix(mp): return PP initialization rejection reasons over ZMQ"
+            },
+            {
+              "hash": "eececb6017c0a4feefdaf40062028097850c1249",
+              "subject": "fix(mp): retain delayed store completion baseline for safe reads"
+            },
+            {
+              "hash": "fe3d38d30960216f2ab11e5a9fa908541346b63f",
+              "subject": "Protect resident L1 buffers with identity-bound read borrows"
+            },
+            {
+              "hash": "86135ad23f8c0a1b77d0f3496135b264514f6e39",
+              "subject": "Add race-safe completion callbacks to control messaging futures"
+            },
+            {
+              "hash": "db0cee65d12dc9008af320fb6fbf9ae0b72a66d3",
+              "subject": "Test borrowed retrieve ownership through real source methods"
+            },
+            {
+              "hash": "91010ca1f4028fdaee6af2219d97a8ad40b68488",
+              "subject": "Check uniform PP borrow policy registration and readiness"
+            },
+            {
+              "hash": "326f18435bdf8a8c4876d2b93135e06c563918c3",
+              "subject": "Verify lookup deadlines, result cleanup and safe transfer shutdown"
+            },
+            {
+              "hash": "858619faccfd5b65cf8a526c1a1908e2468a47a6",
+              "subject": "fix(mp): borrow resident KV through device completion and drain failed loads safely"
+            },
+            {
+              "hash": "fefb6f330165eda254b8e6a331a7ad53d92db908",
+              "subject": "test(mp): provide read policy in registration source harness"
+            },
+            {
+              "hash": "1b574d24b616fdd441748f52eedfcddf8e6a755c",
+              "subject": "fix(mp): retain generations when control delivery is unknown"
+            },
+            {
+              "hash": "9a155a5e0c71adad7c8610553cc8eb62153a8149",
+              "subject": "fix(mp): discard stale restore hints after partial APC recovery"
+            },
+            {
+              "hash": "91875d1669fde53c6fe902f1ef52a89bd24e0147",
+              "subject": "test: bound stores after partial APC load failure"
+            },
+            {
+              "hash": "13ce9651944325da5870f1640ca7b54aa12f635e",
+              "subject": "test(mp): verify failed load bypass through local allocation"
+            },
+            {
+              "hash": "944f0c507e07b30d9562afb3b368b0596ec9e28f",
+              "subject": "fix(mp): preserve server health on late local lookup poll"
+            },
+            {
+              "hash": "02ffb6943924d1ebd78e31dc3a608dd4af3de271",
+              "subject": "fix(mp): resume preempted lookup sessions without stale hits"
+            },
+            {
+              "hash": "4e2e3de27cace5dce01d04bbef490f91c912b345",
+              "subject": "Add opt-in PP final-zero lookup short circuit"
+            },
+            {
+              "hash": "f6a517654336efaf67489f07e0d00dfdf6d59991",
+              "subject": "Advance PP lookup STATUS after each endpoint ACK"
+            },
+            {
+              "hash": "fe11bf0f8b7285672f253c29c910f25794daea78",
+              "subject": "Budget ZMQ outbound batches without starving shared polling"
+            },
+            {
+              "hash": "e56fb68268349431bc7b9625962ef536cf69af46",
+              "subject": "Add PP control configuration and opt-in wait observations"
+            },
+            {
+              "hash": "d713144cba213afa3a1c415384cb5254f4f14f96",
+              "subject": "Verify PP control fastpath over real CPU ZMQ TCP"
+            },
+            {
+              "hash": "e8e2f1d7295e56b55f880f51b4609c46b46fdc0a",
+              "subject": "Keep PP wait observations within supported lifecycle boundaries"
+            },
+            {
+              "hash": "4ebc47edbcfe332a06271f56e15e472bff046998",
+              "subject": "Observe optional PP client MQ outbound budget usage"
+            }
+          ],
+          "changed_files_from_upstream_base": [
+            "docs/design/integration/vllm/pp_control_fastpath.md",
+            "docs/design/integration/vllm/pp_stage_local.md",
+            "docs/design/v1/multiprocess/pp_stage_local.md",
+            "docs/source/mp/deployment.rst",
+            "lmcache/integration/vllm/lmcache_mp_connector.py",
+            "lmcache/integration/vllm/lmcache_mp_metadata.py",
+            "lmcache/integration/vllm/vllm_multi_process_adapter.py",
+            "lmcache/v1/distributed/api.py",
+            "lmcache/v1/distributed/l1_manager.py",
+            "lmcache/v1/distributed/storage_controllers/prefetch_controller.py",
+            "lmcache/v1/distributed/storage_manager.py",
+            "lmcache/v1/multiprocess/engine_context.py",
+            "lmcache/v1/multiprocess/futures.py",
+            "lmcache/v1/multiprocess/lookup_control_cleanup.py",
+            "lmcache/v1/multiprocess/modules/lmcache_driven_transfer.py",
+            "lmcache/v1/multiprocess/modules/lookup.py",
+            "lmcache/v1/multiprocess/pp_layout.py",
+            "lmcache/v1/multiprocess/pp_wait_observer.py",
+            "lmcache/v1/multiprocess/read_policy.py",
+            "lmcache/v1/multiprocess/transfer_context/worker_transfer.py",
+            "lmcache/v1/multiprocess/transport/base.py",
+            "lmcache/v1/multiprocess/transport/factory.py",
+            "lmcache/v1/multiprocess/transport/grpc_impl/protos/lmcache_driven_service.proto",
+            "lmcache/v1/multiprocess/transport/zmq_impl/__init__.py",
+            "lmcache/v1/multiprocess/transport/zmq_impl/mq.py",
+            "lmcache/v1/platform/base/device_spec.py",
+            "lmcache/v1/platform/cache_context.py",
+            "tests/ks/test_minimal_cpu.py",
+            "tests/ks/test_pp_extension_cpu.py",
+            "tests/standalone/test_borrowed_retrieve_contract.py",
+            "tests/standalone/test_lookup_deadline_contract.py",
+            "tests/standalone/test_partial_apc_store_bound.py",
+            "tests/standalone/test_pp_adapter_config.py",
+            "tests/standalone/test_pp_completion_contract.py",
+            "tests/standalone/test_pp_control_observe.py",
+            "tests/standalone/test_pp_control_wire.py",
+            "tests/standalone/test_pp_early_miss_contract.py",
+            "tests/standalone/test_pp_mq_observation.py",
+            "tests/standalone/test_pp_mq_progress_contract.py",
+            "tests/standalone/test_pp_store_wait_observe.py",
+            "tests/standalone/test_preempted_lookup_contract.py",
+            "tests/standalone/test_read_policy.py",
+            "tests/standalone/test_recompute_bypass_contract.py",
+            "tests/unit/test_lookup_control_cleanup.py",
+            "tests/unit/test_native_pp_connector.py",
+            "tests/unit/test_pp_registration_factory.py",
+            "tests/unit/test_pp_zmq_errors.py",
+            "tests/unit/test_transfer_health_completion.py",
+            "tests/v1/distributed/test_l1_read_borrow.py",
+            "tests/v1/multiprocess/test_messaging_future_callbacks.py",
+            "tests/v1/multiprocess/test_pp_layout.py",
+            "tests/v1/multiprocess/test_pp_server_registration.py"
+          ]
+        },
+        "ks/lookup-metric-luv-20261112": {
+          "head": "a46b9277bd258aab451868a7b31e31cf61fd10e0",
+          "commits": [
+            {
+              "hash": "8cd2d5b8c2bcb64039f702fb9510b9802777b107",
+              "subject": "fix: preserve historical PP local-cache handshake STORE and index pin"
+            },
+            {
+              "hash": "c02facadc4a1037212c473af6423ccf677f9adc9",
+              "subject": "feat: expose MP geometry hook for Ascend stage-local PP caches"
+            },
+            {
+              "hash": "3f018d17e3174648ab4d7613fe3483ecbbc8b2b9",
+              "subject": "feat(mp): internalize complete-stage PP cache registration"
+            },
+            {
+              "hash": "89d93a2ea62030f6890b5bbe8f902c5b92945c8d",
+              "subject": "fix(mp): return PP initialization rejection reasons over ZMQ"
+            },
+            {
+              "hash": "eececb6017c0a4feefdaf40062028097850c1249",
+              "subject": "fix(mp): retain delayed store completion baseline for safe reads"
+            },
+            {
+              "hash": "fe3d38d30960216f2ab11e5a9fa908541346b63f",
+              "subject": "Protect resident L1 buffers with identity-bound read borrows"
+            },
+            {
+              "hash": "86135ad23f8c0a1b77d0f3496135b264514f6e39",
+              "subject": "Add race-safe completion callbacks to control messaging futures"
+            },
+            {
+              "hash": "db0cee65d12dc9008af320fb6fbf9ae0b72a66d3",
+              "subject": "Test borrowed retrieve ownership through real source methods"
+            },
+            {
+              "hash": "91010ca1f4028fdaee6af2219d97a8ad40b68488",
+              "subject": "Check uniform PP borrow policy registration and readiness"
+            },
+            {
+              "hash": "326f18435bdf8a8c4876d2b93135e06c563918c3",
+              "subject": "Verify lookup deadlines, result cleanup and safe transfer shutdown"
+            },
+            {
+              "hash": "858619faccfd5b65cf8a526c1a1908e2468a47a6",
+              "subject": "fix(mp): borrow resident KV through device completion and drain failed loads safely"
+            },
+            {
+              "hash": "fefb6f330165eda254b8e6a331a7ad53d92db908",
+              "subject": "test(mp): provide read policy in registration source harness"
+            },
+            {
+              "hash": "1b574d24b616fdd441748f52eedfcddf8e6a755c",
+              "subject": "fix(mp): retain generations when control delivery is unknown"
+            },
+            {
+              "hash": "9a155a5e0c71adad7c8610553cc8eb62153a8149",
+              "subject": "fix(mp): discard stale restore hints after partial APC recovery"
+            },
+            {
+              "hash": "91875d1669fde53c6fe902f1ef52a89bd24e0147",
+              "subject": "test: bound stores after partial APC load failure"
+            },
+            {
+              "hash": "13ce9651944325da5870f1640ca7b54aa12f635e",
+              "subject": "test(mp): verify failed load bypass through local allocation"
+            },
+            {
+              "hash": "944f0c507e07b30d9562afb3b368b0596ec9e28f",
+              "subject": "fix(mp): preserve server health on late local lookup poll"
+            },
+            {
+              "hash": "02ffb6943924d1ebd78e31dc3a608dd4af3de271",
+              "subject": "fix(mp): resume preempted lookup sessions without stale hits"
+            },
+            {
+              "hash": "4e2e3de27cace5dce01d04bbef490f91c912b345",
+              "subject": "Add opt-in PP final-zero lookup short circuit"
+            },
+            {
+              "hash": "f6a517654336efaf67489f07e0d00dfdf6d59991",
+              "subject": "Advance PP lookup STATUS after each endpoint ACK"
+            },
+            {
+              "hash": "fe11bf0f8b7285672f253c29c910f25794daea78",
+              "subject": "Budget ZMQ outbound batches without starving shared polling"
+            },
+            {
+              "hash": "e56fb68268349431bc7b9625962ef536cf69af46",
+              "subject": "Add PP control configuration and opt-in wait observations"
+            },
+            {
+              "hash": "d713144cba213afa3a1c415384cb5254f4f14f96",
+              "subject": "Verify PP control fastpath over real CPU ZMQ TCP"
+            },
+            {
+              "hash": "e8e2f1d7295e56b55f880f51b4609c46b46fdc0a",
+              "subject": "Keep PP wait observations within supported lifecycle boundaries"
+            },
+            {
+              "hash": "a46b9277bd258aab451868a7b31e31cf61fd10e0",
+              "subject": "Record one lookup duration per result lifecycle"
+            }
+          ],
+          "changed_files_from_upstream_base": [
+            "docs/design/integration/vllm/pp_control_fastpath.md",
+            "docs/design/integration/vllm/pp_stage_local.md",
+            "docs/design/v1/multiprocess/pp_stage_local.md",
+            "docs/source/mp/deployment.rst",
+            "lmcache/integration/vllm/lmcache_mp_connector.py",
+            "lmcache/integration/vllm/lmcache_mp_metadata.py",
+            "lmcache/integration/vllm/vllm_multi_process_adapter.py",
+            "lmcache/v1/distributed/api.py",
+            "lmcache/v1/distributed/l1_manager.py",
+            "lmcache/v1/distributed/storage_controllers/prefetch_controller.py",
+            "lmcache/v1/distributed/storage_manager.py",
+            "lmcache/v1/multiprocess/engine_context.py",
+            "lmcache/v1/multiprocess/futures.py",
+            "lmcache/v1/multiprocess/lookup_control_cleanup.py",
+            "lmcache/v1/multiprocess/modules/lmcache_driven_transfer.py",
+            "lmcache/v1/multiprocess/modules/lookup.py",
+            "lmcache/v1/multiprocess/pp_layout.py",
+            "lmcache/v1/multiprocess/pp_wait_observer.py",
+            "lmcache/v1/multiprocess/read_policy.py",
+            "lmcache/v1/multiprocess/transfer_context/worker_transfer.py",
+            "lmcache/v1/multiprocess/transport/base.py",
+            "lmcache/v1/multiprocess/transport/factory.py",
+            "lmcache/v1/multiprocess/transport/grpc_impl/protos/lmcache_driven_service.proto",
+            "lmcache/v1/multiprocess/transport/zmq_impl/__init__.py",
+            "lmcache/v1/multiprocess/transport/zmq_impl/mq.py",
+            "lmcache/v1/platform/base/device_spec.py",
+            "lmcache/v1/platform/cache_context.py",
+            "tests/ks/test_minimal_cpu.py",
+            "tests/ks/test_pp_extension_cpu.py",
+            "tests/standalone/test_borrowed_retrieve_contract.py",
+            "tests/standalone/test_lookup_deadline_contract.py",
+            "tests/standalone/test_partial_apc_store_bound.py",
+            "tests/standalone/test_pp_adapter_config.py",
+            "tests/standalone/test_pp_completion_contract.py",
+            "tests/standalone/test_pp_control_observe.py",
+            "tests/standalone/test_pp_control_wire.py",
+            "tests/standalone/test_pp_early_miss_contract.py",
+            "tests/standalone/test_pp_mq_progress_contract.py",
+            "tests/standalone/test_pp_store_wait_observe.py",
+            "tests/standalone/test_preempted_lookup_contract.py",
+            "tests/standalone/test_read_policy.py",
+            "tests/standalone/test_recompute_bypass_contract.py",
+            "tests/unit/test_lookup_control_cleanup.py",
+            "tests/unit/test_native_pp_connector.py",
+            "tests/unit/test_pp_registration_factory.py",
+            "tests/unit/test_pp_zmq_errors.py",
+            "tests/unit/test_transfer_health_completion.py",
+            "tests/v1/distributed/test_l1_read_borrow.py",
+            "tests/v1/multiprocess/test_messaging_future_callbacks.py",
+            "tests/v1/multiprocess/test_pp_layout.py",
+            "tests/v1/multiprocess/test_pp_server_registration.py"
+          ]
+        },
+        "ks/pp-status-budget-luv-20261111": {
+          "head": "1362d907a5e474b7359fe3636955ab0f5852ae92",
+          "commits": [
+            {
+              "hash": "8cd2d5b8c2bcb64039f702fb9510b9802777b107",
+              "subject": "fix: preserve historical PP local-cache handshake STORE and index pin"
+            },
+            {
+              "hash": "c02facadc4a1037212c473af6423ccf677f9adc9",
+              "subject": "feat: expose MP geometry hook for Ascend stage-local PP caches"
+            },
+            {
+              "hash": "3f018d17e3174648ab4d7613fe3483ecbbc8b2b9",
+              "subject": "feat(mp): internalize complete-stage PP cache registration"
+            },
+            {
+              "hash": "89d93a2ea62030f6890b5bbe8f902c5b92945c8d",
+              "subject": "fix(mp): return PP initialization rejection reasons over ZMQ"
+            },
+            {
+              "hash": "eececb6017c0a4feefdaf40062028097850c1249",
+              "subject": "fix(mp): retain delayed store completion baseline for safe reads"
+            },
+            {
+              "hash": "fe3d38d30960216f2ab11e5a9fa908541346b63f",
+              "subject": "Protect resident L1 buffers with identity-bound read borrows"
+            },
+            {
+              "hash": "86135ad23f8c0a1b77d0f3496135b264514f6e39",
+              "subject": "Add race-safe completion callbacks to control messaging futures"
+            },
+            {
+              "hash": "db0cee65d12dc9008af320fb6fbf9ae0b72a66d3",
+              "subject": "Test borrowed retrieve ownership through real source methods"
+            },
+            {
+              "hash": "91010ca1f4028fdaee6af2219d97a8ad40b68488",
+              "subject": "Check uniform PP borrow policy registration and readiness"
+            },
+            {
+              "hash": "326f18435bdf8a8c4876d2b93135e06c563918c3",
+              "subject": "Verify lookup deadlines, result cleanup and safe transfer shutdown"
+            },
+            {
+              "hash": "858619faccfd5b65cf8a526c1a1908e2468a47a6",
+              "subject": "fix(mp): borrow resident KV through device completion and drain failed loads safely"
+            },
+            {
+              "hash": "fefb6f330165eda254b8e6a331a7ad53d92db908",
+              "subject": "test(mp): provide read policy in registration source harness"
+            },
+            {
+              "hash": "1b574d24b616fdd441748f52eedfcddf8e6a755c",
+              "subject": "fix(mp): retain generations when control delivery is unknown"
+            },
+            {
+              "hash": "9a155a5e0c71adad7c8610553cc8eb62153a8149",
+              "subject": "fix(mp): discard stale restore hints after partial APC recovery"
+            },
+            {
+              "hash": "91875d1669fde53c6fe902f1ef52a89bd24e0147",
+              "subject": "test: bound stores after partial APC load failure"
+            },
+            {
+              "hash": "13ce9651944325da5870f1640ca7b54aa12f635e",
+              "subject": "test(mp): verify failed load bypass through local allocation"
+            },
+            {
+              "hash": "944f0c507e07b30d9562afb3b368b0596ec9e28f",
+              "subject": "fix(mp): preserve server health on late local lookup poll"
+            },
+            {
+              "hash": "02ffb6943924d1ebd78e31dc3a608dd4af3de271",
+              "subject": "fix(mp): resume preempted lookup sessions without stale hits"
+            },
+            {
+              "hash": "1362d907a5e474b7359fe3636955ab0f5852ae92",
+              "subject": "fix(mp): start fixed status budget after lookup acknowledgement"
+            }
+          ],
+          "changed_files_from_upstream_base": [
+            "docs/design/integration/vllm/pp_stage_local.md",
+            "docs/design/v1/multiprocess/pp_stage_local.md",
+            "docs/source/mp/deployment.rst",
+            "lmcache/integration/vllm/lmcache_mp_connector.py",
+            "lmcache/integration/vllm/lmcache_mp_metadata.py",
+            "lmcache/integration/vllm/vllm_multi_process_adapter.py",
+            "lmcache/v1/distributed/api.py",
+            "lmcache/v1/distributed/l1_manager.py",
+            "lmcache/v1/distributed/storage_controllers/prefetch_controller.py",
+            "lmcache/v1/distributed/storage_manager.py",
+            "lmcache/v1/multiprocess/engine_context.py",
+            "lmcache/v1/multiprocess/futures.py",
+            "lmcache/v1/multiprocess/lookup_control_cleanup.py",
+            "lmcache/v1/multiprocess/modules/lmcache_driven_transfer.py",
+            "lmcache/v1/multiprocess/modules/lookup.py",
+            "lmcache/v1/multiprocess/pp_layout.py",
+            "lmcache/v1/multiprocess/read_policy.py",
+            "lmcache/v1/multiprocess/transfer_context/worker_transfer.py",
+            "lmcache/v1/multiprocess/transport/base.py",
+            "lmcache/v1/multiprocess/transport/grpc_impl/protos/lmcache_driven_service.proto",
+            "lmcache/v1/multiprocess/transport/zmq_impl/mq.py",
+            "lmcache/v1/platform/base/device_spec.py",
+            "lmcache/v1/platform/cache_context.py",
+            "tests/ks/test_minimal_cpu.py",
+            "tests/ks/test_pp_extension_cpu.py",
+            "tests/standalone/test_borrowed_retrieve_contract.py",
+            "tests/standalone/test_lookup_deadline_contract.py",
+            "tests/standalone/test_partial_apc_store_bound.py",
+            "tests/standalone/test_pp_completion_contract.py",
+            "tests/standalone/test_preempted_lookup_contract.py",
+            "tests/standalone/test_read_policy.py",
+            "tests/standalone/test_recompute_bypass_contract.py",
+            "tests/unit/test_lookup_control_cleanup.py",
+            "tests/unit/test_native_pp_connector.py",
+            "tests/unit/test_pp_registration_factory.py",
+            "tests/unit/test_pp_zmq_errors.py",
+            "tests/unit/test_transfer_health_completion.py",
+            "tests/v1/distributed/test_l1_read_borrow.py",
+            "tests/v1/multiprocess/test_messaging_future_callbacks.py",
+            "tests/v1/multiprocess/test_pp_layout.py",
+            "tests/v1/multiprocess/test_pp_server_registration.py"
+          ]
+        }
+      }
+    },
+    "LMCache-Ascend": {
+      "upstream": "https://github.com/LMCache/LMCache-Ascend.git",
+      "base": "fbabeecc79ba79663db6c7bb8555b9dcc649a125",
+      "branches": {
+        "ks/pp-framework-patches-luv-20261110": {
+          "head": "b06a829b8d2d0601e722fcd1b11578a2372ad665",
+          "commits": [
+            {
+              "hash": "8c494547f2887505cd8bb9a524b866fd9f1c6f7f",
+              "subject": "feat: add opt-in TP16 PP2 stage-local caches with NPU-only pinning"
+            },
+            {
+              "hash": "ac1e4c73bc3115d3b6b2179da31d9ccb4ebed28e",
+              "subject": "feat(ascend): select PP cache contexts from registration metadata"
+            },
+            {
+              "hash": "9183a46592a891b35cd998073ac01dab84514911",
+              "subject": "docs: package cross-host PP framework patches and apply helper"
+            },
+            {
+              "hash": "b06a829b8d2d0601e722fcd1b11578a2372ad665",
+              "subject": "fix: replace local PP startup patches with official Ascend fix"
+            }
+          ],
+          "changed_files_from_upstream_base": [
+            "docs/mp_mode/customer_pp2_stage_local.md",
+            "lmcache_ascend/__init__.py",
+            "lmcache_ascend/integration/vllm/pp_stage_local.py",
+            "lmcache_ascend/v1/pp_stage_local_activation.py",
+            "lmcache_ascend/v1/pp_stage_pinning.py",
+            "patches/native-pp-20261110/0001-headless-executor.patch",
+            "patches/native-pp-20261110/0002-eplb-receive-buffers.patch",
+            "patches/native-pp-20261110/0003-ascend-official-headless-executor.patch",
+            "patches/native-pp-20261110/README.md",
+            "patches/native-pp-20261110/apply.sh",
+            "patches/native-pp-20261110/switch-to-official.sh",
+            "tests/ks/test_pp_stage_local_cpu.py"
+          ]
+        }
+      }
+    }
+  },
+  "review_ranges": [
+    {
+      "label": "PP-integration",
+      "start": "3e11e10812b448142c6cdb177a3058652bd826fa",
+      "end": "89d93a2ea62030f6890b5bbe8f902c5b92945c8d",
+      "commits": [
+        {
+          "hash": "8cd2d5b8c2bcb64039f702fb9510b9802777b107",
+          "subject": "fix: preserve historical PP local-cache handshake STORE and index pin"
+        },
+        {
+          "hash": "c02facadc4a1037212c473af6423ccf677f9adc9",
+          "subject": "feat: expose MP geometry hook for Ascend stage-local PP caches"
+        },
+        {
+          "hash": "3f018d17e3174648ab4d7613fe3483ecbbc8b2b9",
+          "subject": "feat(mp): internalize complete-stage PP cache registration"
+        },
+        {
+          "hash": "89d93a2ea62030f6890b5bbe8f902c5b92945c8d",
+          "subject": "fix(mp): return PP initialization rejection reasons over ZMQ"
+        }
+      ],
+      "diff_stat": "docs/design/integration/vllm/pp_stage_local.md     |  35 ++\n docs/design/v1/multiprocess/pp_stage_local.md      |  70 +++\n docs/source/mp/deployment.rst                      |  18 +\n lmcache/integration/vllm/lmcache_mp_connector.py   | 160 ++++++-\n .../integration/vllm/vllm_multi_process_adapter.py | 202 ++++++--\n .../modules/lmcache_driven_transfer.py             | 327 +++++++++++--\n lmcache/v1/multiprocess/pp_layout.py               | 235 ++++++++++\n .../transfer_context/worker_transfer.py            |  54 +++\n lmcache/v1/multiprocess/transport/base.py          |  28 ++\n .../grpc_impl/protos/lmcache_driven_service.proto  |  65 +++\n lmcache/v1/multiprocess/transport/zmq_impl/mq.py   |  52 +-\n lmcache/v1/platform/base/device_spec.py            |   8 +\n lmcache/v1/platform/cache_context.py               |  13 +-\n tests/ks/test_minimal_cpu.py                       | 106 +++++\n tests/ks/test_pp_extension_cpu.py                  |  35 ++\n tests/unit/test_native_pp_connector.py             | 522 +++++++++++++++++++++\n tests/unit/test_pp_registration_factory.py         | 149 ++++++\n tests/unit/test_pp_zmq_errors.py                   | 219 +++++++++\n tests/v1/multiprocess/test_pp_layout.py            | 153 ++++++\n .../v1/multiprocess/test_pp_server_registration.py | 281 +++++++++++\n 20 files changed, 2633 insertions(+), 99 deletions(-)"
+    },
+    {
+      "label": "Reliability",
+      "start": "89d93a2ea62030f6890b5bbe8f902c5b92945c8d",
+      "end": "02ffb6943924d1ebd78e31dc3a608dd4af3de271",
+      "commits": [
+        {
+          "hash": "eececb6017c0a4feefdaf40062028097850c1249",
+          "subject": "fix(mp): retain delayed store completion baseline for safe reads"
+        },
+        {
+          "hash": "fe3d38d30960216f2ab11e5a9fa908541346b63f",
+          "subject": "Protect resident L1 buffers with identity-bound read borrows"
+        },
+        {
+          "hash": "86135ad23f8c0a1b77d0f3496135b264514f6e39",
+          "subject": "Add race-safe completion callbacks to control messaging futures"
+        },
+        {
+          "hash": "db0cee65d12dc9008af320fb6fbf9ae0b72a66d3",
+          "subject": "Test borrowed retrieve ownership through real source methods"
+        },
+        {
+          "hash": "91010ca1f4028fdaee6af2219d97a8ad40b68488",
+          "subject": "Check uniform PP borrow policy registration and readiness"
+        },
+        {
+          "hash": "326f18435bdf8a8c4876d2b93135e06c563918c3",
+          "subject": "Verify lookup deadlines, result cleanup and safe transfer shutdown"
+        },
+        {
+          "hash": "858619faccfd5b65cf8a526c1a1908e2468a47a6",
+          "subject": "fix(mp): borrow resident KV through device completion and drain failed loads safely"
+        },
+        {
+          "hash": "fefb6f330165eda254b8e6a331a7ad53d92db908",
+          "subject": "test(mp): provide read policy in registration source harness"
+        },
+        {
+          "hash": "1b574d24b616fdd441748f52eedfcddf8e6a755c",
+          "subject": "fix(mp): retain generations when control delivery is unknown"
+        },
+        {
+          "hash": "9a155a5e0c71adad7c8610553cc8eb62153a8149",
+          "subject": "fix(mp): discard stale restore hints after partial APC recovery"
+        },
+        {
+          "hash": "91875d1669fde53c6fe902f1ef52a89bd24e0147",
+          "subject": "test: bound stores after partial APC load failure"
+        },
+        {
+          "hash": "13ce9651944325da5870f1640ca7b54aa12f635e",
+          "subject": "test(mp): verify failed load bypass through local allocation"
+        },
+        {
+          "hash": "944f0c507e07b30d9562afb3b368b0596ec9e28f",
+          "subject": "fix(mp): preserve server health on late local lookup poll"
+        },
+        {
+          "hash": "02ffb6943924d1ebd78e31dc3a608dd4af3de271",
+          "subject": "fix(mp): resume preempted lookup sessions without stale hits"
+        }
+      ],
+      "diff_stat": "lmcache/integration/vllm/lmcache_mp_connector.py   |  58 ++-\n lmcache/integration/vllm/lmcache_mp_metadata.py    |  33 ++\n .../integration/vllm/vllm_multi_process_adapter.py | 178 +++++++-\n lmcache/v1/distributed/api.py                      |  20 +\n lmcache/v1/distributed/l1_manager.py               | 172 ++++++--\n .../storage_controllers/prefetch_controller.py     |   9 +\n lmcache/v1/distributed/storage_manager.py          |  29 ++\n lmcache/v1/multiprocess/engine_context.py          |   7 +\n lmcache/v1/multiprocess/futures.py                 |  57 ++-\n lmcache/v1/multiprocess/lookup_control_cleanup.py  | 154 +++++++\n .../modules/lmcache_driven_transfer.py             | 146 ++++++-\n lmcache/v1/multiprocess/modules/lookup.py          |  27 +-\n lmcache/v1/multiprocess/pp_layout.py               |   9 +\n lmcache/v1/multiprocess/read_policy.py             |  28 ++\n .../standalone/test_borrowed_retrieve_contract.py  | 472 +++++++++++++++++++++\n tests/standalone/test_lookup_deadline_contract.py  | 293 +++++++++++++\n tests/standalone/test_partial_apc_store_bound.py   | 122 ++++++\n tests/standalone/test_pp_completion_contract.py    | 252 +++++++++++\n tests/standalone/test_preempted_lookup_contract.py | 175 ++++++++\n tests/standalone/test_read_policy.py               |  76 ++++\n tests/standalone/test_recompute_bypass_contract.py |  48 +++\n tests/unit/test_lookup_control_cleanup.py          | 203 +++++++++\n tests/unit/test_transfer_health_completion.py      | 227 ++++++++++\n tests/v1/distributed/test_l1_read_borrow.py        | 310 ++++++++++++++\n .../test_messaging_future_callbacks.py             | 244 +++++++++++\n .../v1/multiprocess/test_pp_server_registration.py |   1 +\n 26 files changed, 3291 insertions(+), 59 deletions(-)"
+    },
+    {
+      "label": "Query-MQ",
+      "start": "02ffb6943924d1ebd78e31dc3a608dd4af3de271",
+      "end": "e8e2f1d7295e56b55f880f51b4609c46b46fdc0a",
+      "commits": [
+        {
+          "hash": "4e2e3de27cace5dce01d04bbef490f91c912b345",
+          "subject": "Add opt-in PP final-zero lookup short circuit"
+        },
+        {
+          "hash": "f6a517654336efaf67489f07e0d00dfdf6d59991",
+          "subject": "Advance PP lookup STATUS after each endpoint ACK"
+        },
+        {
+          "hash": "fe11bf0f8b7285672f253c29c910f25794daea78",
+          "subject": "Budget ZMQ outbound batches without starving shared polling"
+        },
+        {
+          "hash": "e56fb68268349431bc7b9625962ef536cf69af46",
+          "subject": "Add PP control configuration and opt-in wait observations"
+        },
+        {
+          "hash": "d713144cba213afa3a1c415384cb5254f4f14f96",
+          "subject": "Verify PP control fastpath over real CPU ZMQ TCP"
+        },
+        {
+          "hash": "e8e2f1d7295e56b55f880f51b4609c46b46fdc0a",
+          "subject": "Keep PP wait observations within supported lifecycle boundaries"
+        }
+      ],
+      "diff_stat": ".../design/integration/vllm/pp_control_fastpath.md |  60 ++++\n lmcache/integration/vllm/lmcache_mp_connector.py   |  24 ++\n .../integration/vllm/vllm_multi_process_adapter.py | 162 ++++++++--\n lmcache/v1/multiprocess/pp_wait_observer.py        | 117 +++++++\n .../transfer_context/worker_transfer.py            |  24 ++\n lmcache/v1/multiprocess/transport/factory.py       |  12 +-\n .../v1/multiprocess/transport/zmq_impl/__init__.py |   7 +-\n lmcache/v1/multiprocess/transport/zmq_impl/mq.py   |  94 +++++-\n tests/standalone/test_lookup_deadline_contract.py  |   1 +\n tests/standalone/test_pp_adapter_config.py         |  89 ++++++\n tests/standalone/test_pp_control_observe.py        |  70 +++++\n tests/standalone/test_pp_control_wire.py           | 338 +++++++++++++++++++++\n tests/standalone/test_pp_early_miss_contract.py    | 210 +++++++++++++\n tests/standalone/test_pp_mq_progress_contract.py   | 187 ++++++++++++\n tests/standalone/test_pp_store_wait_observe.py     | 195 ++++++++++++\n tests/standalone/test_preempted_lookup_contract.py |   1 +\n 16 files changed, 1563 insertions(+), 28 deletions(-)"
+    },
+    {
+      "label": "MQ-observation",
+      "start": "e8e2f1d7295e56b55f880f51b4609c46b46fdc0a",
+      "end": "4ebc47edbcfe332a06271f56e15e472bff046998",
+      "commits": [
+        {
+          "hash": "4ebc47edbcfe332a06271f56e15e472bff046998",
+          "subject": "Observe optional PP client MQ outbound budget usage"
+        }
+      ],
+      "diff_stat": "lmcache/v1/multiprocess/transport/zmq_impl/mq.py |  18 ++++\n tests/standalone/test_pp_mq_observation.py       | 132 +++++++++++++++++++++++\n 2 files changed, 150 insertions(+)"
+    },
+    {
+      "label": "Lookup-metric-CPU-only",
+      "start": "e8e2f1d7295e56b55f880f51b4609c46b46fdc0a",
+      "end": "a46b9277bd258aab451868a7b31e31cf61fd10e0",
+      "commits": [
+        {
+          "hash": "a46b9277bd258aab451868a7b31e31cf61fd10e0",
+          "subject": "Record one lookup duration per result lifecycle"
+        }
+      ],
+      "diff_stat": "lmcache/integration/vllm/lmcache_mp_connector.py | 20 +++++++++++++-------\n lmcache/integration/vllm/lmcache_mp_metadata.py  |  3 +++\n 2 files changed, 16 insertions(+), 7 deletions(-)"
+    },
+    {
+      "label": "STATUS-budget-CPU-only",
+      "start": "02ffb6943924d1ebd78e31dc3a608dd4af3de271",
+      "end": "1362d907a5e474b7359fe3636955ab0f5852ae92",
+      "commits": [
+        {
+          "hash": "1362d907a5e474b7359fe3636955ab0f5852ae92",
+          "subject": "fix(mp): start fixed status budget after lookup acknowledgement"
+        }
+      ],
+      "diff_stat": ".../integration/vllm/vllm_multi_process_adapter.py |  6 ++\n tests/standalone/test_lookup_deadline_contract.py  | 73 ++++++++++++++++++++--\n 2 files changed, 74 insertions(+), 5 deletions(-)"
+    },
+    {
+      "label": "Ascend-PP-integration",
+      "start": "fbabeecc79ba79663db6c7bb8555b9dcc649a125",
+      "end": "ac1e4c73bc3115d3b6b2179da31d9ccb4ebed28e",
+      "commits": [
+        {
+          "hash": "8c494547f2887505cd8bb9a524b866fd9f1c6f7f",
+          "subject": "feat: add opt-in TP16 PP2 stage-local caches with NPU-only pinning"
+        },
+        {
+          "hash": "ac1e4c73bc3115d3b6b2179da31d9ccb4ebed28e",
+          "subject": "feat(ascend): select PP cache contexts from registration metadata"
+        }
+      ],
+      "diff_stat": "docs/mp_mode/customer_pp2_stage_local.md          |  79 +++++\n lmcache_ascend/__init__.py                        |  14 +\n lmcache_ascend/integration/vllm/pp_stage_local.py | 135 +++++++++\n lmcache_ascend/v1/pp_stage_local_activation.py    |  53 ++++\n lmcache_ascend/v1/pp_stage_pinning.py             |  50 ++++\n tests/ks/test_pp_stage_local_cpu.py               | 340 ++++++++++++++++++++++\n 6 files changed, 671 insertions(+)"
+    },
+    {
+      "label": "Ascend-startup-patch-package",
+      "start": "ac1e4c73bc3115d3b6b2179da31d9ccb4ebed28e",
+      "end": "b06a829b8d2d0601e722fcd1b11578a2372ad665",
+      "commits": [
+        {
+          "hash": "9183a46592a891b35cd998073ac01dab84514911",
+          "subject": "docs: package cross-host PP framework patches and apply helper"
+        },
+        {
+          "hash": "b06a829b8d2d0601e722fcd1b11578a2372ad665",
+          "subject": "fix: replace local PP startup patches with official Ascend fix"
+        }
+      ],
+      "diff_stat": ".../0001-headless-executor.patch                   | 12 +++++\n .../0002-eplb-receive-buffers.patch                | 19 +++++++\n .../0003-ascend-official-headless-executor.patch   | 17 +++++++\n patches/native-pp-20261110/README.md               | 58 ++++++++++++++++++++++\n patches/native-pp-20261110/apply.sh                | 26 ++++++++++\n patches/native-pp-20261110/switch-to-official.sh   | 52 +++++++++++++++++++\n 6 files changed, 184 insertions(+)"
+    }
+  ],
+  "archive_repository": "https://github.com/luvtters/ks-pp-lmcache"
+}
