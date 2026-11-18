@@ -11,6 +11,10 @@ import threading
 import time
 import uuid
 
+from lmcache import _ks_store_submit_probe as _ks_store_probe
+
+from lmcache._ks_store_export import ExportQueue
+
 # Third Party
 from prometheus_client import Counter, Gauge
 import torch
@@ -1959,6 +1963,13 @@ class LMCacheMPWorkerAdapter:
             req_client=self.req_client,
             mode=self._mp_transfer_mode,
         )
+        if (os.environ.get("KS_STORE_ASYNC_EXPORT") == "1"
+                and self.parallel_strategy.pp_stage_local and self.is_kv_writer
+                and self.parallel_strategy.vllm_worker_id == 16
+                and isinstance(transfer_ctx, LMCacheDrivenTransferContext)):
+            if getattr(self, "_ks_store_exports", None) is None:
+                self._ks_store_exports = ExportQueue(torch_dev)
+            transfer_ctx._ks_store_exports = self._ks_store_exports
         layout_hints = self._layout_hints
         self.transfer_ctx = transfer_ctx
         try:
@@ -2098,8 +2109,11 @@ class LMCacheMPWorkerAdapter:
 
         return True
 
-    def create_recorded_event(self) -> _IpcEvent | None:
+    def create_recorded_event(self, *, for_store: bool = False) -> _IpcEvent | None:
         """Create the ordering event required by the active transfer context.
+
+        Args:
+            for_store: The event is needed only for STORE and its dispatcher.
 
         Returns:
             A recorded event for contexts that need stream ordering, or
@@ -2117,8 +2131,18 @@ class LMCacheMPWorkerAdapter:
             )
         if not self.is_healthy:
             return None
+        # The non-writer STORE branch never consumes the producer event.
+        if (
+            for_store
+            and self._pp_profile is not None
+            and isinstance(transfer_ctx, LMCacheDrivenTransferContext)
+            and not self.is_kv_writer
+            and self.dispatcher is None
+        ):
+            return None
         return transfer_ctx.create_recorded_event()
 
+    @_ks_store_probe.request
     @_lmcache_nvtx_annotate
     def submit_store_request(
         self,
@@ -2167,6 +2191,7 @@ class LMCacheMPWorkerAdapter:
             return
 
         assert op.token_ids is not None
+        _ks_store_probe.mark(0)
         key = self._create_key(
             op.token_ids,
             op.start,
@@ -2175,6 +2200,7 @@ class LMCacheMPWorkerAdapter:
             cache_salt=cache_salt,
             request_configs=request_configs,
         )
+        _ks_store_probe.mark(1)
         if self.transfer_ctx is None:
             raise RuntimeError(
                 "Transfer context is not initialized. "
@@ -2188,6 +2214,7 @@ class LMCacheMPWorkerAdapter:
             event,
             self.blocks_in_chunk,
         )
+        _ks_store_probe.mark(7)
         self.store_futures[request_id] = future
         observer = getattr(self, "_pp_wait_observer", None)
         if (observer is not None and not self.lazy_offload
@@ -2270,6 +2297,7 @@ class LMCacheMPWorkerAdapter:
         if event is not None:
             self.retrieve_events[request_id] = event
 
+    @_ks_store_probe.batch
     @_lmcache_nvtx_annotate
     def batched_submit_store_requests(
         self,
@@ -2929,6 +2957,9 @@ class LMCacheMPWorkerAdapter:
             self.transfer_ctx.close()
             self.transfer_ctx = None
 
+        exports = getattr(self, "_ks_store_exports", None)
+        if exports is not None:
+            exports.close()
         self.req_client.close()
         self.request_telemetry.close()
 

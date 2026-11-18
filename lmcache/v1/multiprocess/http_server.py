@@ -5,6 +5,7 @@ from contextlib import asynccontextmanager
 import argparse
 import asyncio
 import contextlib
+import os
 
 # Third Party
 from fastapi import FastAPI
@@ -67,6 +68,21 @@ _configs: dict = {}
 # ----------------------------
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncIterator[None]:
+    order = contextlib.nullcontext(None)
+    if os.environ.get("LMCACHE_BIFROST_ORDER"):
+        from lmcache.v1.multiprocess.bifrost_order import paired_workers
+
+        cfg = _configs["storage_manager"]
+        if len(cfg.l1_manager_configs) != 1:
+            raise ValueError("Bifrost startup order requires a single local L1 pool")
+        order = paired_workers(_configs["mp"].port, cfg.l1_manager_config.memory_config.size_in_bytes)
+    with order as release:
+        async with _cache_lifespan(app, release):
+            yield
+
+
+@asynccontextmanager
+async def _cache_lifespan(app: FastAPI, release) -> AsyncIterator[None]:
     """
     Manage the lifecycle of the LMCache HTTP server.
 
@@ -91,6 +107,13 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     )
     assert result is not None, "run_cache_server returned None with return_engine=True"
     request_server, engine = result
+    if release is not None:
+        try:
+            release(engine.report_status())
+        except BaseException:
+            request_server.close()
+            engine.close()
+            raise
 
     # Launch runtime plugins if configured. Plugins receive the full
     # server config (including HTTP host/port) via the

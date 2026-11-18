@@ -12,6 +12,8 @@ import queue
 import threading
 import time
 
+from lmcache._ks_store_export import DeferredHandle
+
 # Third Party
 from zmq.utils.monitor import recv_monitor_message
 import msgspec
@@ -345,9 +347,18 @@ class MessageQueueClient:
             int, tuple[MessagingStream[Any], RpcSpec, queue.Queue]
         ] = {}
 
+        self._ks_store_head = None
+        self._ks_store_sent = set()
+        self._ks_wake_lock = threading.Lock()
+        self._ks_wake_open = True
         # Register with the shared polling loop
         self._polling_loop = ClientPollingLoop.get_instance()
         self._polling_loop.register(self)
+
+    def _ks_store_wake(self, _future):
+        with self._ks_wake_lock:
+            if self._ks_wake_open:
+                self._polling_loop.notify()
 
     def process_outbound_task(self, *, max_tasks: int | None = None) -> None:
         """Send a FIFO batch; zero preserves unlimited draining on close.
@@ -364,10 +375,21 @@ class MessageQueueClient:
         limit = self.outbound_batch_limit if max_tasks is None else max_tasks
         if limit < 0:
             raise ValueError("max_tasks must be nonnegative")
+        # Only UNREGISTER explicitly calls with max_tasks=0. Normal
+        # unlimited drains use None and can yield a not-yet-exported head.
+        closing = max_tasks == 0
+        if closing:
+            for uid in self._ks_store_sent:
+                item = self.pending_futures.pop(uid, None)
+                if item is not None:
+                    item[0].set_exception(ConnectionError("client closed before STORE reply"))
+            self._ks_store_sent.clear()
         processed = 0
         try:
             while not limit or processed < limit:
-                wrapped_request = self.input_queue.get_nowait()
+                wrapped_request = self._ks_store_head
+                if wrapped_request is None:
+                    wrapped_request = self.input_queue.get_nowait()
                 processed += 1
                 if isinstance(wrapped_request, list):
                     self.socket.send_multipart(wrapped_request)
@@ -378,6 +400,26 @@ class MessageQueueClient:
                     continue
                 request_uid = wrapped_request.request_uid
                 try:
+                    ks_export = None
+                    if (wrapped_request.rpc_spec.operation == "store"
+                            and isinstance(wrapped_request.request_payloads[-1], DeferredHandle)):
+                        ks_export = wrapped_request.request_payloads[-1]
+                        blob = ks_export.future
+                        if closing:
+                            self._ks_store_head = None
+                            raise ConnectionError("client closed before deferred STORE was sent")
+                        if not blob.done():
+                            if self._ks_store_head is None:
+                                self._ks_store_head = wrapped_request
+                                self._ks_parked = time.monotonic_ns()
+                                self._ks_park_replies = {}
+                                blob.add_done_callback(self._ks_store_wake)
+                            return
+                        ks_parked = self._ks_parked if self._ks_store_head is wrapped_request else None
+                        ks_replies = self._ks_park_replies if ks_parked is not None else {}
+                        self._ks_store_head = None
+                        wrapped_request.request_payloads[-1] = blob.result()
+                        self._ks_store_sent.add(request_uid)
                     b_request_uid = msgspec_encode(request_uid, cls=RequestUID)
                     rpc_spec = wrapped_request.rpc_spec
                     b_operation = encode_operation(rpc_spec.operation)
@@ -421,7 +463,16 @@ class MessageQueueClient:
                     self.socket.send_multipart(
                         [b_request_uid, b_operation] + b_payloads
                     )
+                    if ks_export is not None:
+                        # Wire send already succeeded. Diagnostics must never
+                        # turn this accepted RPC into a failed future.
+                        try:
+                            rid = str(getattr(wrapped_request.request_payloads[0], "request_id", ""))
+                            ks_export.first_send(rid, request_uid, ks_parked, ks_replies)
+                        except Exception:
+                            pass
                 except Exception as exc:
+                    self._ks_store_sent.discard(request_uid)
                     self.pending_futures.pop(request_uid, None)
                     if isinstance(wrapped_request.future, MessagingStream):
                         self.pending_streams.pop(request_uid, None)
@@ -472,6 +523,10 @@ class MessageQueueClient:
 
         if request_uid in self.pending_futures:
             future, rpc_spec = self.pending_futures.pop(request_uid)
+            self._ks_store_sent.discard(request_uid)
+            if self._ks_store_head is not None:
+                op = rpc_spec.operation
+                self._ks_park_replies[op] = self._ks_park_replies.get(op, 0) + 1
             operation = decode_operation(b_operation)
             if operation != rpc_spec.operation:
                 future.set_exception(
@@ -578,6 +633,8 @@ class MessageQueueClient:
         self.pending_streams.clear()
 
     def close(self) -> None:
+        with self._ks_wake_lock:
+            self._ks_wake_open = False
         self._polling_loop.unregister(self)
         ClientPollingLoop.release_instance()
         self.monitor.close(linger=0)

@@ -8,6 +8,8 @@ from typing import Any, Callable, Protocol, cast
 import os
 import threading
 
+from lmcache import _ks_store_submit_probe as _ks_store_probe
+
 # Third Party
 import torch
 
@@ -692,18 +694,28 @@ class LMCacheDrivenTransferContext(TransferContext):
             )
         if event is None:
             raise RuntimeError("LMCache-driven transfer requires an IPC event.")
-        event_ipc_handle = self._event_backend.export_event(event, self._device)
+        _ks_store_probe.mark(2)
+        exports = getattr(self, "_ks_store_exports", None)
+        if exports is not None and self._device.type == "npu":
+            event_ipc_handle = exports.submit(event, self._event_backend, self._device)
+        else:
+            event_ipc_handle = self._event_backend.export_event(event, self._device)
+        _ks_store_probe.mark(3)
         future = self._req_client.store(
             key, self._instance_id, block_ids, event_ipc_handle
-        ).to_device_future(
+        )
+        _ks_store_probe.mark(4)
+        future = future.to_device_future(
             device=self._device,
             event_backend=self._event_backend,
         )
+        _ks_store_probe.mark(5)
         with self._inflight_lock:
             self._inflight_stores = [
                 f for f in self._inflight_stores if not self._store_settled(f)
             ]
             self._inflight_stores.append(future)
+        _ks_store_probe.mark(6)
         return future
 
     def submit_q_store(

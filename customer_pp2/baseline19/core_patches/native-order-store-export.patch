@@ -1,0 +1,832 @@
+diff --git a/lmcache/_ks_store_submit_probe.py b/lmcache/_ks_store_submit_probe.py
+--- /dev/null
++++ b/lmcache/_ks_store_submit_probe.py
+@@ -0,0 +1,71 @@
++"""Optional writer host timings; disabled without KS_STORE_SUBMIT_DIR."""
++import functools
++import json
++import os
++import threading
++import time
++
++OUT = os.environ.get("KS_STORE_SUBMIT_DIR")
++clock = time.perf_counter_ns
++local = threading.local()
++
++
++def batch(fn):
++    if not OUT:
++        return fn
++
++    @functools.wraps(fn)
++    def measured(self, request_ids, *args, **kwargs):
++        if not self.is_kv_writer:
++            return fn(self, request_ids, *args, **kwargs)
++        if not hasattr(local, "log"):
++            pid = os.getpid()
++            local.log = open(os.path.join(OUT, f"store-submit-{pid}.jsonl"), "a",
++                             encoding="utf-8")
++            local.seq = 0
++        local.seq += 1
++        rows = []
++        local.rows = rows
++        wall = time.time_ns()
++        start = clock()
++        ok = False
++        try:
++            result = fn(self, request_ids, *args, **kwargs)
++            ok = True
++            return result
++        finally:
++            end = clock()
++            local.rows = None
++            data = dict(schema=1, pid=os.getpid(), rank=self.parallel_strategy.vllm_worker_id,
++                        kv_rank=self.worker_id, seq=local.seq, wall_ns=wall,
++                        start_ns=start, end_ns=end, wanted=len(request_ids), ok=ok, rows=rows)
++            local.log.write(json.dumps(data, separators=(",", ":")) + "\n")
++            local.log.flush()
++    return measured
++
++
++def request(fn):
++    if not OUT:
++        return fn
++
++    @functools.wraps(fn)
++    def measured(self, request_id, op, *args, **kwargs):
++        rows = getattr(local, "rows", None)
++        if rows is None:
++            return fn(self, request_id, op, *args, **kwargs)
++        row = [request_id, op.start, op.end, None, [0] * 8, None]
++        rows.append(row)
++        local.marks = row[4]
++        row[3] = clock()
++        try:
++            return fn(self, request_id, op, *args, **kwargs)
++        finally:
++            row[5] = clock()
++            local.marks = None
++    return measured
++
++
++def mark(i):
++    marks = getattr(local, "marks", None)
++    if marks is not None:
++        marks[i] = clock()
+diff --git a/lmcache/_ks_store_export.py b/lmcache/_ks_store_export.py
+--- /dev/null
++++ b/lmcache/_ks_store_export.py
+@@ -0,0 +1,83 @@
++"""Opt-in deferred NPU producer-event export for the PP1 writer."""
++from concurrent.futures import Future, ThreadPoolExecutor
++import threading
++import os
++import json
++import time
++
++
++def trace(path, record):
++    if not path:
++        return
++    try:
++        with open(os.path.join(path, f"store-export-{os.getpid()}.jsonl"), "a") as out:
++            out.write(json.dumps(record, separators=(",", ":")) + "\n")
++    except OSError:
++        pass
++
++
++class DeferredHandle:
++    def __init__(self, future, seq=0, directory=None):
++        self.future = future
++        self.seq = seq
++        self.directory = directory
++        self.sent = False
++
++    def first_send(self, request_id, uid, parked, replies):
++        if not self.sent:
++            self.sent = True
++            trace(self.directory, ["send", self.seq, time.monotonic_ns(),
++                                   request_id, uid, parked, replies])
++
++
++class ExportQueue:
++    def __init__(self, device_module):
++        self.module = device_module
++        self.pool = ThreadPoolExecutor(max_workers=1, thread_name_prefix="ks-store-export")
++        self.lock = threading.Lock()
++        self.last = None
++        self.streams = {}
++        self.closed = False
++        self.seq = 0
++        self.trace_dir = os.environ.get("KS_STORE_SUBMIT_DIR")
++
++    def submit(self, event, backend, device):
++        with self.lock:
++            if self.closed:
++                failure = Future()
++                failure.set_exception(ConnectionError("STORE export queue is closed"))
++                return DeferredHandle(failure)
++            if self.last is not None:
++                old_event, old_backend, old_device, old_handle = self.last
++                if old_event is event and old_backend is backend and old_device == device:
++                    return old_handle
++            self.seq += 1
++            fut = self.pool.submit(self._export, event, backend, device, self.seq, time.monotonic_ns())
++            handle = DeferredHandle(fut, self.seq, self.trace_dir)
++            self.last = (event, backend, device, handle)
++            return handle
++
++    def _export(self, event, backend, device, seq, submitted):
++        started = time.monotonic_ns()
++        # The NPU wait binding releases the GIL until the original producer
++        # record is dequeued and enqueues a wait on our separate stream.
++        # No work or waits are added to the producer's forward stream.
++        with self.module.device(device):
++            if device not in self.streams:
++                self.streams[device] = self.module.Stream(device=device)
++            event.wait(self.streams[device])
++            waited = time.monotonic_ns()
++            value = backend.export_event(event, device)
++        end = time.monotonic_ns()
++        if not isinstance(value, bytes) or not value:
++            raise ValueError("NPU event export did not produce a valid IPC handle")
++        trace(self.trace_dir, ["export", seq, submitted, started, waited, end])
++        return value
++
++    def close(self):
++        with self.lock:
++            if self.closed:
++                return
++            self.closed = True
++            self.last = None
++        self.pool.shutdown(wait=False, cancel_futures=True)
+diff --git a/lmcache/integration/vllm/lmcache_mp_connector.py b/lmcache/integration/vllm/lmcache_mp_connector.py
+--- a/lmcache/integration/vllm/lmcache_mp_connector.py
++++ b/lmcache/integration/vllm/lmcache_mp_connector.py
+@@ -1139,17 +1139,17 @@
+             cache_salts.append(meta.cache_salt)
+             request_configs_list.append(meta.request_configs)
+ 
+         if len(request_ids) == 0:
+             if self.dispatcher is not None:
+                 dispatch(self.dispatcher, "wait_for_save", event=None)
+             return
+ 
+-        event = self.worker_adapter.create_recorded_event()
++        event = self.worker_adapter.create_recorded_event(for_store=True)
+ 
+         self.worker_adapter.batched_submit_store_requests(
+             request_ids,
+             ops,
+             event,
+             cache_salts=cache_salts,
+             request_configs_list=request_configs_list,
+         )
+diff --git a/lmcache/integration/vllm/vllm_multi_process_adapter.py b/lmcache/integration/vllm/vllm_multi_process_adapter.py
+--- a/lmcache/integration/vllm/vllm_multi_process_adapter.py
++++ b/lmcache/integration/vllm/vllm_multi_process_adapter.py
+@@ -5,16 +5,20 @@
+ from dataclasses import dataclass
+ from typing import TYPE_CHECKING, Any, Callable, NoReturn, Protocol
+ import enum
+ import math
+ import os
+ import threading
+ import time
+ import uuid
++
++from lmcache import _ks_store_submit_probe as _ks_store_probe
++
++from lmcache._ks_store_export import ExportQueue
+ 
+ # Third Party
+ from prometheus_client import Counter, Gauge
+ import torch
+ import zmq
+ 
+ # First Party
+ from lmcache import torch_dev
+@@ -1954,16 +1958,23 @@
+         """
+         self.kv_caches = kv_caches
+         transfer_ctx = create_transfer_context(
+             kv_caches,
+             instance_id=self.instance_id,
+             req_client=self.req_client,
+             mode=self._mp_transfer_mode,
+         )
++        if (os.environ.get("KS_STORE_ASYNC_EXPORT") == "1"
++                and self.parallel_strategy.pp_stage_local and self.is_kv_writer
++                and self.parallel_strategy.vllm_worker_id == 16
++                and isinstance(transfer_ctx, LMCacheDrivenTransferContext)):
++            if getattr(self, "_ks_store_exports", None) is None:
++                self._ks_store_exports = ExportQueue(torch_dev)
++            transfer_ctx._ks_store_exports = self._ks_store_exports
+         layout_hints = self._layout_hints
+         self.transfer_ctx = transfer_ctx
+         try:
+             # Register on the local, not self.transfer_ctx: a concurrent
+             # shutdown() may null self.transfer_ctx between publish and this
+             # call. The local is always non-None.
+             if self.parallel_strategy.pp_stage_local:
+                 if not isinstance(transfer_ctx, LMCacheDrivenTransferContext):
+@@ -2093,18 +2104,21 @@
+                 logger.warning(
+                     "Failed to re-register dispatcher after server recovery; "
+                     "will retry on next heartbeat"
+                 )
+                 return False
+ 
+         return True
+ 
+-    def create_recorded_event(self) -> _IpcEvent | None:
++    def create_recorded_event(self, *, for_store: bool = False) -> _IpcEvent | None:
+         """Create the ordering event required by the active transfer context.
++
++        Args:
++            for_store: The event is needed only for STORE and its dispatcher.
+ 
+         Returns:
+             A recorded event for contexts that need stream ordering, or
+             ``None`` for synchronous engine-driven transfer or while the
+             adapter is unhealthy and requests will be dropped.
+ 
+         Raises:
+             RuntimeError: If called before ``register_kv_caches()``.
+@@ -2112,18 +2126,28 @@
+         transfer_ctx = self.transfer_ctx
+         if transfer_ctx is None:
+             raise RuntimeError(
+                 "KV caches are not registered. Call register_kv_caches() "
+                 "before creating transfer events."
+             )
+         if not self.is_healthy:
+             return None
++        # The non-writer STORE branch never consumes the producer event.
++        if (
++            for_store
++            and self._pp_profile is not None
++            and isinstance(transfer_ctx, LMCacheDrivenTransferContext)
++            and not self.is_kv_writer
++            and self.dispatcher is None
++        ):
++            return None
+         return transfer_ctx.create_recorded_event()
+ 
++    @_ks_store_probe.request
+     @_lmcache_nvtx_annotate
+     def submit_store_request(
+         self,
+         request_id: str,
+         op: LoadStoreOp,
+         event: _IpcEvent | None,
+         cache_salt: str = "",
+         request_configs: dict[str, Any] | None = None,
+@@ -2162,37 +2186,40 @@
+                     "are unpinned",
+                     request_id,
+                 )
+                 self._completed_store_requests[request_id] = 1
+                 self._failed_store_requests.add(request_id)
+             return
+ 
+         assert op.token_ids is not None
++        _ks_store_probe.mark(0)
+         key = self._create_key(
+             op.token_ids,
+             op.start,
+             op.end,
+             request_id=request_id,
+             cache_salt=cache_salt,
+             request_configs=request_configs,
+         )
++        _ks_store_probe.mark(1)
+         if self.transfer_ctx is None:
+             raise RuntimeError(
+                 "Transfer context is not initialized. "
+                 "Call register_kv_caches() before submitting store requests."
+             )
+         future = self.transfer_ctx.submit_store(
+             request_id,
+             key,
+             self.kv_caches,
+             self._block_ids_per_group(op),
+             event,
+             self.blocks_in_chunk,
+         )
++        _ks_store_probe.mark(7)
+         self.store_futures[request_id] = future
+         observer = getattr(self, "_pp_wait_observer", None)
+         if (observer is not None and not self.lazy_offload
+                 and get_read_policy() == "transfer_borrow"):
+             submitted = observer.store_submitted(request_id)
+             raw_future = getattr(future, "raw_future_", future)
+             raw_future.add_done_callback(
+                 lambda _future: observer.store_rpc_ready(submitted)
+@@ -2265,16 +2292,17 @@
+             event,
+             self.blocks_in_chunk,
+             skip_first_n_tokens=op.skip_first_n_tokens,
+         )
+         self.retrieve_futures[request_id] = (future, op.flat_block_ids)
+         if event is not None:
+             self.retrieve_events[request_id] = event
+ 
++    @_ks_store_probe.batch
+     @_lmcache_nvtx_annotate
+     def batched_submit_store_requests(
+         self,
+         request_ids: list[str],
+         ops: list[LoadStoreOp],
+         event: _IpcEvent | None,
+         cache_salts: list[str] | None = None,
+         request_configs_list: list[dict[str, Any] | None] | None = None,
+@@ -2924,16 +2952,19 @@
+ 
+         if self.dispatcher is not None:
+             dispatch(self.dispatcher, "shutdown")
+ 
+         if self.transfer_ctx is not None:
+             self.transfer_ctx.close()
+             self.transfer_ctx = None
+ 
++        exports = getattr(self, "_ks_store_exports", None)
++        if exports is not None:
++            exports.close()
+         self.req_client.close()
+         self.request_telemetry.close()
+ 
+     # Helper functions
+     def _publish_store_kv_events(self, request_id: str) -> None:
+         """Buffer successful store events and update metrics without a drain."""
+         self._buffer_kv_events(self._pending_store_kv_events.pop(request_id, []))
+ 
+diff --git a/lmcache/v1/multiprocess/bifrost_order.py b/lmcache/v1/multiprocess/bifrost_order.py
+--- /dev/null
++++ b/lmcache/v1/multiprocess/bifrost_order.py
+@@ -0,0 +1,146 @@
++"""Local startup rendezvous for the paired Bifrost TP16 / LMCache deployment."""
++from contextlib import ExitStack, contextmanager
++import math
++import os
++import select
++import socket
++import struct
++import time
++
++from lmcache.logging import init_logger
++
++logger = init_logger(__name__)
++COUNT = 16
++RECORD = struct.Struct("!4sIIIIQQ")
++
++
++def _config():
++    port, first = map(int, os.environ["LMCACHE_BIFROST_ORDER"].split(":"))
++    timeout = float(os.environ.get("LMCACHE_BIFROST_WAIT_S", "1800"))
++    if not (0 < port <= 65535 and first in (0, 16) and math.isfinite(timeout) and timeout > 0):
++        raise ValueError("Expected LMCACHE_BIFROST_ORDER=mq_port:0 or mq_port:16 and positive timeout")
++    return port, first, time.monotonic() + timeout
++
++
++def _addr(port, suffix):
++    # Linux abstract addresses disappear with their owning processes.
++    return f"\0lmcache.bifrost.v1.{os.geteuid()}.{port}.{suffix}"
++
++
++def _remaining(deadline):
++    left = deadline - time.monotonic()
++    if left <= 0:
++        raise TimeoutError("Timed out waiting for the paired local Bifrost workers and cache server")
++    return left
++
++
++def _peer(sock):
++    pid, uid, _ = struct.unpack("3i", sock.getsockopt(socket.SOL_SOCKET, socket.SO_PEERCRED, 12))
++    if pid <= 0 or uid != os.geteuid():
++        raise RuntimeError("Expected the paired service in the same PID namespace and UID")
++    return pid
++
++
++def _recv(sock, size, deadline):
++    data = bytearray()
++    while len(data) < size:
++        sock.settimeout(_remaining(deadline))
++        chunk = sock.recv(size - len(data))
++        if not chunk:
++            raise RuntimeError("Paired process exited before startup completed")
++        data.extend(chunk)
++    return bytes(data)
++
++
++def _pool_exists(port):
++    with socket.socket(socket.AF_UNIX, socket.SOCK_DGRAM) as probe:
++        try:
++            probe.connect(_addr(port, "pool"))
++        except ConnectionRefusedError:
++            return False
++        return True
++
++
++def wait_for_pool(rank, local_rank, layers, slots, instance_id):
++    port, first, deadline = _config()
++    if not (0 <= local_rank < COUNT and rank == first + local_rank and layers > 0 and slots == 2):
++        raise ValueError("Bifrost rank, completed mirrors or slots do not match local TP16")
++    stamp = time.monotonic_ns()
++    with socket.socket(socket.AF_UNIX, socket.SOCK_STREAM) as listener:
++        listener.bind(_addr(port, local_rank))
++        listener.listen(1)
++        if _pool_exists(port):
++            raise RuntimeError("An earlier cache already allocated its pool; this new model requires a new cache")
++        listener.settimeout(_remaining(deadline))
++        logger.info("BIFROST_POOL_ORDER mirror_ready rank=%d pid=%d layers=%d mirror_ns=%d",
++                    rank, os.getpid(), layers, stamp)
++        conn, _ = listener.accept()
++        with conn:
++            cache_pid = _peer(conn)
++            conn.settimeout(_remaining(deadline))
++            # The frozen VllmConfig assigns time_ns() once, before spawning workers.
++            conn.sendall(RECORD.pack(b"BFO1", rank, local_rank, layers, slots, int(instance_id), stamp))
++            if _recv(conn, 1, deadline) != b"R":
++                raise RuntimeError("Paired cache did not confirm pool readiness")
++            logger.info("BIFROST_POOL_ORDER worker_continue rank=%d pid=%d cache_pid=%d",
++                        rank, os.getpid(), cache_pid)
++
++
++def _check_connected(connections):
++    if select.select(connections, [], [], 0)[0]:
++        raise RuntimeError("A mirror worker disconnected or sent unexpected data")
++
++
++@contextmanager
++def paired_workers(mq_port, size):
++    port, first, deadline = _config()
++    if port != mq_port or size <= 0:
++        raise ValueError("Bifrost order must match the local LMCache MQ port and configured eager L1")
++    with ExitStack() as lifetime, ExitStack() as pending:
++        # One cache per local endpoint; retain pool ownership until this service exits.
++        owner = lifetime.enter_context(socket.socket(socket.AF_UNIX, socket.SOCK_DGRAM))
++        owner.bind(_addr(port, "owner"))
++        logger.info("BIFROST_POOL_ORDER waiting cache_pid=%d mq_port=%d first=%d workers=%d",
++                    os.getpid(), port, first, COUNT)
++        connections, pids = [], []
++        instance_id = None
++        latest_mirror = 0
++        for index in range(COUNT):
++            conn = pending.enter_context(socket.socket(socket.AF_UNIX, socket.SOCK_STREAM))
++            while True:
++                conn.settimeout(_remaining(deadline))
++                try:
++                    conn.connect(_addr(port, index))
++                    break
++                except ConnectionRefusedError:
++                    _check_connected(connections)
++                    time.sleep(min(0.1, _remaining(deadline)))
++            pid = _peer(conn)
++            magic, rank, local, layers, slots, model, stamp = RECORD.unpack(_recv(conn, RECORD.size, deadline))
++            if (magic != b"BFO1" or local != index or rank != first + index or not layers
++                    or slots != 2 or pid in pids or not model or (instance_id is not None and model != instance_id)):
++                raise RuntimeError("Local Bifrost mirror workers do not form one live TP16 cohort")
++            connections.append(conn)
++            pids.append(pid)
++            instance_id = model
++            latest_mirror = max(latest_mirror, stamp)
++        _check_connected(connections)
++        pool = lifetime.enter_context(socket.socket(socket.AF_UNIX, socket.SOCK_DGRAM))
++        pool.bind(_addr(port, "pool"))
++        logger.info("BIFROST_POOL_ORDER before_pool cache_pid=%d model_instance=%d first=%d workers=%s "
++                    "latest_mirror_ns=%d before_pool_ns=%d configured_bytes=%d",
++                    os.getpid(), instance_id, first, pids, latest_mirror, time.monotonic_ns(), size)
++
++        def release(status):
++            l1 = status["storage_manager"]["l1_manager"]
++            if not (status["is_healthy"] and l1["is_healthy"] and
++                    l1["memory_configured_bytes"] == l1["memory_total_bytes"] == size):
++                raise RuntimeError("Paired cache did not back the complete configured L1 pool")
++            _check_connected(connections)
++            logger.info("BIFROST_POOL_ORDER pool_ready cache_pid=%d bytes=%d pool_ready_ns=%d",
++                        os.getpid(), size, time.monotonic_ns())
++            for conn in connections:
++                conn.settimeout(_remaining(deadline))
++                conn.sendall(b"R")
++            pending.close()
++        yield release
+diff --git a/lmcache/v1/multiprocess/http_server.py b/lmcache/v1/multiprocess/http_server.py
+--- a/lmcache/v1/multiprocess/http_server.py
++++ b/lmcache/v1/multiprocess/http_server.py
+@@ -1,15 +1,16 @@
+ # SPDX-License-Identifier: Apache-2.0
+ # Standard
+ from collections.abc import AsyncIterator
+ from contextlib import asynccontextmanager
+ import argparse
+ import asyncio
+ import contextlib
++import os
+ 
+ # Third Party
+ from fastapi import FastAPI
+ import httpx
+ import uvicorn
+ 
+ # First Party
+ from lmcache import torch_dev
+@@ -62,16 +63,31 @@
+ _configs: dict = {}
+ 
+ 
+ # ----------------------------
+ # FastAPI lifespan for initialization and cleanup
+ # ----------------------------
+ @asynccontextmanager
+ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
++    order = contextlib.nullcontext(None)
++    if os.environ.get("LMCACHE_BIFROST_ORDER"):
++        from lmcache.v1.multiprocess.bifrost_order import paired_workers
++
++        cfg = _configs["storage_manager"]
++        if len(cfg.l1_manager_configs) != 1:
++            raise ValueError("Bifrost startup order requires a single local L1 pool")
++        order = paired_workers(_configs["mp"].port, cfg.l1_manager_config.memory_config.size_in_bytes)
++    with order as release:
++        async with _cache_lifespan(app, release):
++            yield
++
++
++@asynccontextmanager
++async def _cache_lifespan(app: FastAPI, release) -> AsyncIterator[None]:
+     """
+     Manage the lifecycle of the LMCache HTTP server.
+ 
+     On startup: Initialize the selected request server and cache engine.
+     On shutdown: Clean up request server and cache engine resources.
+     """
+     # Startup
+     logger.info(
+@@ -86,16 +102,23 @@
+         storage_manager_config=_configs["storage_manager"],
+         obs_config=_configs["observability"],
+         return_engine=True,
+         start_prometheus_http_server=False,
+         coordinator_config=coordinator_config,
+     )
+     assert result is not None, "run_cache_server returned None with return_engine=True"
+     request_server, engine = result
++    if release is not None:
++        try:
++            release(engine.report_status())
++        except BaseException:
++            request_server.close()
++            engine.close()
++            raise
+ 
+     # Launch runtime plugins if configured. Plugins receive the full
+     # server config (including HTTP host/port) via the
+     # LMCACHE_RUNTIME_PLUGIN_CONFIG environment variable.
+     plugin_launcher = None
+     if mp_config.runtime_plugin_config.locations:
+         extra_kwargs = {}
+         http_config = _configs.get("http")
+diff --git a/lmcache/v1/multiprocess/transfer_context/worker_transfer.py b/lmcache/v1/multiprocess/transfer_context/worker_transfer.py
+--- a/lmcache/v1/multiprocess/transfer_context/worker_transfer.py
++++ b/lmcache/v1/multiprocess/transfer_context/worker_transfer.py
+@@ -2,16 +2,18 @@
+ """Transfer context abstractions for LMCache multiprocess worker adapters."""
+ 
+ # Standard
+ from abc import ABC, abstractmethod
+ from collections.abc import Sequence
+ from typing import Any, Callable, Protocol, cast
+ import os
+ import threading
++
++from lmcache import _ks_store_submit_probe as _ks_store_probe
+ 
+ # Third Party
+ import torch
+ 
+ # First Party
+ from lmcache import torch_dev
+ from lmcache.utils import EngineType, init_logger
+ from lmcache.v1.distributed.api import MemoryLayoutDesc
+@@ -687,28 +689,38 @@
+         """
+         if self._device is None or self._event_backend is None:
+             raise RuntimeError(
+                 "LMCache-driven transfer context is not registered. "
+                 "Call register() before submit_store()."
+             )
+         if event is None:
+             raise RuntimeError("LMCache-driven transfer requires an IPC event.")
+-        event_ipc_handle = self._event_backend.export_event(event, self._device)
++        _ks_store_probe.mark(2)
++        exports = getattr(self, "_ks_store_exports", None)
++        if exports is not None and self._device.type == "npu":
++            event_ipc_handle = exports.submit(event, self._event_backend, self._device)
++        else:
++            event_ipc_handle = self._event_backend.export_event(event, self._device)
++        _ks_store_probe.mark(3)
+         future = self._req_client.store(
+             key, self._instance_id, block_ids, event_ipc_handle
+-        ).to_device_future(
++        )
++        _ks_store_probe.mark(4)
++        future = future.to_device_future(
+             device=self._device,
+             event_backend=self._event_backend,
+         )
++        _ks_store_probe.mark(5)
+         with self._inflight_lock:
+             self._inflight_stores = [
+                 f for f in self._inflight_stores if not self._store_settled(f)
+             ]
+             self._inflight_stores.append(future)
++        _ks_store_probe.mark(6)
+         return future
+ 
+     def submit_q_store(
+         self,
+         _request_id: str,
+         key: Any,
+         _q_caches: dict[str, torch.Tensor],
+         block_ids: list[list[int]],
+diff --git a/lmcache/v1/multiprocess/transport/zmq_impl/mq.py b/lmcache/v1/multiprocess/transport/zmq_impl/mq.py
+--- a/lmcache/v1/multiprocess/transport/zmq_impl/mq.py
++++ b/lmcache/v1/multiprocess/transport/zmq_impl/mq.py
+@@ -6,16 +6,18 @@
+ from dataclasses import dataclass
+ from typing import Any, Callable, Generic, TypeVar, get_type_hints
+ import enum
+ import inspect
+ import itertools
+ import queue
+ import threading
+ import time
++
++from lmcache._ks_store_export import DeferredHandle
+ 
+ # Third Party
+ from zmq.utils.monitor import recv_monitor_message
+ import msgspec
+ import zmq
+ 
+ # First Party
+ from lmcache.logging import init_logger
+@@ -340,49 +342,89 @@
+ 
+         # Pending job's futures
+         self._request_counter = itertools.count()
+         self.pending_futures: dict[int, tuple[MessagingFuture[Any], RpcSpec]] = {}
+         self.pending_streams: dict[
+             int, tuple[MessagingStream[Any], RpcSpec, queue.Queue]
+         ] = {}
+ 
++        self._ks_store_head = None
++        self._ks_store_sent = set()
++        self._ks_wake_lock = threading.Lock()
++        self._ks_wake_open = True
+         # Register with the shared polling loop
+         self._polling_loop = ClientPollingLoop.get_instance()
+         self._polling_loop.register(self)
+ 
++    def _ks_store_wake(self, _future):
++        with self._ks_wake_lock:
++            if self._ks_wake_open:
++                self._polling_loop.notify()
++
+     def process_outbound_task(self, *, max_tasks: int | None = None) -> None:
+         """Send a FIFO batch; zero preserves unlimited draining on close.
+ 
+         Every dequeued request or control frame consumes one budget slot.
+ 
+         Args:
+             max_tasks: Override the client budget; None uses its configuration,
+                 and zero explicitly drains all frames during unregistration.
+ 
+         Raises:
+             ValueError: If the override is negative.
+         """
+         limit = self.outbound_batch_limit if max_tasks is None else max_tasks
+         if limit < 0:
+             raise ValueError("max_tasks must be nonnegative")
++        # Only UNREGISTER explicitly calls with max_tasks=0. Normal
++        # unlimited drains use None and can yield a not-yet-exported head.
++        closing = max_tasks == 0
++        if closing:
++            for uid in self._ks_store_sent:
++                item = self.pending_futures.pop(uid, None)
++                if item is not None:
++                    item[0].set_exception(ConnectionError("client closed before STORE reply"))
++            self._ks_store_sent.clear()
+         processed = 0
+         try:
+             while not limit or processed < limit:
+-                wrapped_request = self.input_queue.get_nowait()
++                wrapped_request = self._ks_store_head
++                if wrapped_request is None:
++                    wrapped_request = self.input_queue.get_nowait()
+                 processed += 1
+                 if isinstance(wrapped_request, list):
+                     self.socket.send_multipart(wrapped_request)
+                     if wrapped_request[-1] == b"cancel":
+                         self.pending_streams.pop(
+                             decode_request_uid(wrapped_request[0]), None
+                         )
+                     continue
+                 request_uid = wrapped_request.request_uid
+                 try:
++                    ks_export = None
++                    if (wrapped_request.rpc_spec.operation == "store"
++                            and isinstance(wrapped_request.request_payloads[-1], DeferredHandle)):
++                        ks_export = wrapped_request.request_payloads[-1]
++                        blob = ks_export.future
++                        if closing:
++                            self._ks_store_head = None
++                            raise ConnectionError("client closed before deferred STORE was sent")
++                        if not blob.done():
++                            if self._ks_store_head is None:
++                                self._ks_store_head = wrapped_request
++                                self._ks_parked = time.monotonic_ns()
++                                self._ks_park_replies = {}
++                                blob.add_done_callback(self._ks_store_wake)
++                            return
++                        ks_parked = self._ks_parked if self._ks_store_head is wrapped_request else None
++                        ks_replies = self._ks_park_replies if ks_parked is not None else {}
++                        self._ks_store_head = None
++                        wrapped_request.request_payloads[-1] = blob.result()
++                        self._ks_store_sent.add(request_uid)
+                     b_request_uid = msgspec_encode(request_uid, cls=RequestUID)
+                     rpc_spec = wrapped_request.rpc_spec
+                     b_operation = encode_operation(rpc_spec.operation)
+                     payload_classes = rpc_spec.payload_types
+                     if len(payload_classes) != len(wrapped_request.request_payloads):
+                         expected_classes = [cls.__name__ for cls in payload_classes]
+                         actual_classes = [
+                             type(payload).__name__
+@@ -416,17 +458,26 @@
+                     else:
+                         self.pending_futures[request_uid] = (
+                             wrapped_request.future,
+                             rpc_spec,
+                         )
+                     self.socket.send_multipart(
+                         [b_request_uid, b_operation] + b_payloads
+                     )
++                    if ks_export is not None:
++                        # Wire send already succeeded. Diagnostics must never
++                        # turn this accepted RPC into a failed future.
++                        try:
++                            rid = str(getattr(wrapped_request.request_payloads[0], "request_id", ""))
++                            ks_export.first_send(rid, request_uid, ks_parked, ks_replies)
++                        except Exception:
++                            pass
+                 except Exception as exc:
++                    self._ks_store_sent.discard(request_uid)
+                     self.pending_futures.pop(request_uid, None)
+                     if isinstance(wrapped_request.future, MessagingStream):
+                         self.pending_streams.pop(request_uid, None)
+                         wrapped_request.responses.put_nowait(exc)
+                     else:
+                         wrapped_request.future.set_exception(exc)
+         except queue.Empty:
+             pass
+@@ -467,16 +518,20 @@
+                 response = msgspec_decode(b_response[0], cls=rpc_spec.response_type)
+                 responses.put_nowait(response)
+             except Exception:
+                 stream.close()
+             return
+ 
+         if request_uid in self.pending_futures:
+             future, rpc_spec = self.pending_futures.pop(request_uid)
++            self._ks_store_sent.discard(request_uid)
++            if self._ks_store_head is not None:
++                op = rpc_spec.operation
++                self._ks_park_replies[op] = self._ks_park_replies.get(op, 0) + 1
+             operation = decode_operation(b_operation)
+             if operation != rpc_spec.operation:
+                 future.set_exception(
+                     ValueError(
+                         f"Response operation {operation!r} does not match "
+                         f"request {rpc_spec.operation!r}"
+                     )
+                 )
+@@ -573,16 +628,18 @@
+ 
+     def cancel_streams(self) -> None:
+         """Wake subscription readers on disconnect; called by the socket loop."""
+         for stream, _, _ in list(self.pending_streams.values()):
+             stream.close()
+         self.pending_streams.clear()
+ 
+     def close(self) -> None:
++        with self._ks_wake_lock:
++            self._ks_wake_open = False
+         self._polling_loop.unregister(self)
+         ClientPollingLoop.release_instance()
+         self.monitor.close(linger=0)
+         self.socket.close()
+ 
+ 
+ ResponseType = TypeVar("ResponseType", covariant=True)
+ StateType = TypeVar("StateType", covariant=True)

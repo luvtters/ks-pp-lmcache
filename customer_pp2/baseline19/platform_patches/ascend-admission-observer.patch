@@ -1,0 +1,104 @@
+--- a/vllm_ascend/patch/platform/patch_kv_delivery_preemption.py
++++ b/vllm_ascend/patch/platform/patch_kv_delivery_preemption.py
+@@ -55,6 +55,58 @@
+     return False
+ 
+ 
++
++import json as _diag_json
++import os as _diag_os
++
++
++def _diag_open(self):
++    self._ks_admit_log = None
++    self._ks_admit_adapter = None
++    path = _diag_os.environ.get("KS_ADMIT_DIAG_DIR")
++    if not path:
++        return
++    for child in getattr(self.connector, "_connectors", [self.connector]):
++        adapter = getattr(child, "scheduler_adapter", None)
++        if hasattr(adapter, "_unacked_lookups"):
++            self._ks_admit_adapter = adapter
++            break
++    _diag_os.makedirs(path, exist_ok=True)
++    self._ks_admit_log = open(
++        _diag_os.path.join(path, f"admit-{_diag_os.getpid()}.jsonl"),
++        "a", encoding="utf-8", buffering=1,
++    )
++
++
++def _diag_end(self, pending, token_budget, kv_none, defer_prefills, preempted_reqs,
++              allocated, scheduled, started_ns):
++    adapter = self._ks_admit_adapter
++    t0 = time.monotonic_ns()
++    for entry in pending:
++        req_id = entry[0]
++        ready = None
++        if adapter is not None:
++            known = adapter._per_server_hits.get(req_id, {})
++            ack = adapter._unacked_lookups.get(req_id)
++            if req_id in adapter._finished_lookup_results or any(v == 0 for v in known.values()):
++                ready = True
++            else:
++                fs = ack.futures if ack is not None else {}
++                ready = all(u in known or (u in fs and fs[u].query()) for u in adapter._server_urls)
++        entry.append(ready)
++    # Observe readiness only, without consuming results or reserving cache blocks.
++    head = self.skipped_waiting.peek_request().request_id if self.skipped_waiting else None
++    free = getattr(getattr(self.kv_cache_manager, "block_pool", None), "get_num_free_blocks", None)
++    rec = dict(step=self.current_step, start=started_ns, snapshot_start=t0,
++               cut=time.monotonic_ns(), budget=token_budget,
++               slots=self.max_num_running_reqs-len(self.running)-self.num_waiting_for_streaming_input,
++               free=free() if callable(free) else None, kv_fail=kv_none,
++               defer=bool(defer_prefills), preempted=len(preempted_reqs),
++               waiting=len(self.waiting), skipped=len(self.skipped_waiting), head=head,
++               scheduled=scheduled, allocated=allocated, pending=pending)
++    self._ks_admit_log.write(_diag_json.dumps(rec, separators=(",", ":")) + "\n")
++
++
+ class KVDeliveryScheduler(Scheduler):
+     def __init__(
+         self,
+@@ -81,6 +133,13 @@
+ 
+     def schedule(self, throttle_prefills: bool = False) -> SchedulerOutput:
+         self.current_step += 1
++        if not hasattr(self, "_ks_admit_log"):
++            _diag_open(self)
++        ks_active = self._ks_admit_log is not None
++        if ks_active:
++            ks_start = time.monotonic_ns()
++            ks_pending = []
++            ks_alloc = []
+         if self.current_step == 1 and self._tail_lookup_adapter is not None:
+             logger.info(
+                 "PP_LOOKUP_TAIL_ACTIVE schedule=%s.KVDeliveryScheduler.schedule "
+@@ -464,6 +523,9 @@
+                         )
+ 
+                         if ext_tokens is None:
++                            if ks_active:
++                                ks_pending.append([request_id, time.monotonic_ns(), token_budget,
++                                                   num_new_local_computed_tokens, request.num_tokens])
+                             if second_pass:
+                                 break
+                             if pending_this_pass is not None:
+@@ -649,6 +711,8 @@
+                             preempted=request.num_preemptions > 0,
+                         )
+ 
++                if ks_active:
++                    ks_alloc.append([request_id, int(num_new_tokens), int(num_external_computed_tokens)])
+                 request = request_queue.pop_request()
+                 if second_pass:
+                     extra += 1
+@@ -744,6 +808,9 @@
+                 len(self.running) if running_before is None else running_before,
+                 len(self.running), kv_none,
+             )
++        if ks_active and (ks_pending or ks_alloc or num_scheduled_tokens or self.waiting or self.skipped_waiting):
++            _diag_end(self, ks_pending, token_budget, kv_none, defer_prefills, preempted_reqs,
++                      ks_alloc, num_scheduled_tokens, ks_start)
+         total_num_scheduled_tokens = sum(num_scheduled_tokens.values())
+         assert total_num_scheduled_tokens <= self.max_num_scheduled_tokens
+ 

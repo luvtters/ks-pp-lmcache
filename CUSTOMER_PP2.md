@@ -1,4 +1,8 @@
-# 客户 PP2 完整实测版本
+# 客户 PP2 服务部署
+
+当前 480 GiB、开启权重卸载的双机验证基线使用 [两端安装、启动与检查](customer_pp2/baseline19/README.md)。交付分支为 `delivery/customer-pp2-lm480-20261119`。
+
+## 11 月 18 日历史版本
 
 固定交付分支：`delivery/customer-pp2-verified-20261118`。
 

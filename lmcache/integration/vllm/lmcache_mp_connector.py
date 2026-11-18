@@ -1144,7 +1144,7 @@ class LMCacheMPConnector(KVConnectorBase_V1, SupportsHMA):
                 dispatch(self.dispatcher, "wait_for_save", event=None)
             return
 
-        event = self.worker_adapter.create_recorded_event()
+        event = self.worker_adapter.create_recorded_event(for_store=True)
 
         self.worker_adapter.batched_submit_store_requests(
             request_ids,
