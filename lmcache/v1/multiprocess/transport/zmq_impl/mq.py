@@ -507,6 +507,8 @@ class MessageQueueClient:
                     exception_cls(f"Remote {operation} raised {error_type}: {message}")
                 )
                 return
+            if operation == "lookup_with_result":
+                future.lookup_reply_ns = time.monotonic_ns()
             if b_response:
                 response = msgspec_decode(b_response[0], cls=rpc_spec.response_type)
                 future.set_result(response)
@@ -1057,7 +1059,7 @@ class MessageQueueServer(RequestServer):
         self.handlers[rpc_spec.operation] = BlockingRequestHandler(
             list(rpc_spec.payload_types), rpc_spec.response_type, handler,
             observer=(self._pp_control_observer if rpc_spec.operation in {
-                "ping", "lookup", "query_prefetch_status", "end_session"
+                "ping", "lookup", "lookup_with_result", "query_prefetch_status", "end_session"
             } else None),
             operation=rpc_spec.operation,
         )

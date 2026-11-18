@@ -324,6 +324,12 @@ class LookupModule:
         )
 
     @request_handler(HandlerType.BLOCKING)
+    def lookup_with_result(self, key: IPCCacheServerKey, tp_size: int) -> int | None:
+        """Submit once and consume a ready result, leaving pending jobs for STATUS."""
+        self.lookup(key, tp_size)
+        return self.query_prefetch_status(key.request_id)
+
+    @request_handler(HandlerType.BLOCKING)
     def query_prefetch_status(
         self,
         request_id: str,

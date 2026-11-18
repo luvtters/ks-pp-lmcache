@@ -59,6 +59,9 @@ class MessagingStream(Iterator[T]):
 
 
 class MessagingFuture(Generic[T]):
+    # ZMQ sets this before publishing an inline LOOKUP reply to the scheduler.
+    lookup_reply_ns: int | None = None
+
     def __init__(self) -> None:
         self.is_done_ = threading.Event()
         self.result_: T | None = None

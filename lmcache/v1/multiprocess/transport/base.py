@@ -135,6 +135,11 @@ class RequestClient(Protocol):
     def lookup(self, key: IPCCacheServerKey, tp_size: int) -> MessagingFuture[None]: ...
 
     @rpc_method
+    def lookup_with_result(
+        self, key: IPCCacheServerKey, tp_size: int
+    ) -> MessagingFuture[int | None]: ...
+
+    @rpc_method
     def query_prefetch_status(self, request_id: str) -> MessagingFuture[int | None]: ...
 
     @rpc_method

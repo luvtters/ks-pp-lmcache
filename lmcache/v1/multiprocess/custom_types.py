@@ -317,6 +317,7 @@ def get_customized_decoder(type: Any) -> msgspec.msgpack.Decoder:
 
 # Subscribe only to advertising servers; older versions expose a polling API.
 KV_EVENT_CAPABILITY = "kv_event_stream"
+LOOKUP_RESULT_CAPABILITY = "lookup_with_result"
 KV_EVENT_KIND_STORED = "stored"
 KV_EVENT_KIND_REMOVED = "removed"
 KV_EVENT_MEDIUM_CPU = "CPU"

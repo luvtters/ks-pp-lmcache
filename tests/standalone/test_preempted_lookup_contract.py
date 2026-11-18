@@ -34,6 +34,7 @@ def adapter(policy='transfer_borrow'):
     obj = cls()
     obj.is_healthy = True
     obj._server_urls = ['stage0', 'stage1']
+    obj._inline_lookup_urls = set()
     obj._pending_lookups = {'request'}
     obj._unacked_lookups = {}
     obj._lookup_status = {}

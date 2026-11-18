@@ -36,6 +36,7 @@ from lmcache.utils import (
 from lmcache.v1.gpu_connector.utils import LayoutHints
 from lmcache.v1.multiprocess.custom_types import (
     KV_EVENT_CAPABILITY,
+    LOOKUP_RESULT_CAPABILITY,
     KV_EVENT_KIND_REMOVED,
     KV_EVENT_KIND_STORED,
     BlockAllocationRecord,
@@ -266,7 +267,7 @@ class _LookupAck:
     a reply that never arrives can be detected via ``submitted_at``.
     """
 
-    futures: dict[str, MessagingFuture[None]]
+    futures: dict[str, MessagingFuture[Any]]
     """Outstanding LOOKUP futures keyed by server URL; acked ones are removed."""
 
     submitted_at: float
@@ -800,6 +801,8 @@ class LMCacheMPSchedulerAdapter:
             "lookup", ",".join(server_urls)
         )
         self._mq_timeout = mq_timeout
+        self._inline_lookup_urls: set[str] = set()
+        self.trace_inline_lookup = os.getenv("KS_LMCACHE_INLINE_LOOKUP_TRACE") == "1"
 
         # Lookup state tracking:
         # - _pending_lookups: request_ids submitted but not yet resolved
@@ -843,6 +846,10 @@ class LMCacheMPSchedulerAdapter:
                 chunk_sizes[url] = get_lmcache_chunk_size(
                     client, timeout=self._mq_timeout
                 )
+                if self._pp_query_fastpath:
+                    capabilities = get_experimental(client, timeout=self._mq_timeout)
+                    if LOOKUP_RESULT_CAPABILITY in capabilities:
+                        self._inline_lookup_urls.add(url)
             except TimeoutError:
                 for c in self.req_clients.values():
                     c.close()
@@ -1037,27 +1044,30 @@ class LMCacheMPSchedulerAdapter:
             lookup_tokens // self.lmcache_tokens_per_chunk
         ) * self.lmcache_tokens_per_chunk
 
-        futures: dict[str, MessagingFuture[None]] = {
-            url: self.req_clients[url].lookup(
-                self._create_key(
-                    token_ids,
-                    start=0,
-                    end=aligned_end,
-                    request_id=request_id,
-                    cache_salt=cache_salt,
-                    request_configs=request_configs,
-                    server_url=url,
-                ).no_worker_id_version(),
-                self.tp_size,
+        futures: dict[str, MessagingFuture[Any]] = {}
+        submitted_at = time.monotonic()
+        for url in self._server_urls:
+            client = self.req_clients[url]
+            lookup = (
+                client.lookup_with_result if url in self._inline_lookup_urls
+                else client.lookup
             )
-            for url in self._server_urls
-        }
+            key = self._create_key(
+                token_ids,
+                start=0,
+                end=aligned_end,
+                request_id=request_id,
+                cache_salt=cache_salt,
+                request_configs=request_configs,
+                server_url=url,
+            ).no_worker_id_version()
+            futures[url] = lookup(key, self.tp_size)
 
         # Do not wait for the acknowledgement here: that is a full server
         # round trip on the scheduler thread. check_lookup_result resolves
         # the futures lazily, one non-blocking poll per call.
         self._unacked_lookups[request_id] = _LookupAck(
-            futures=futures, submitted_at=time.monotonic()
+            futures=futures, submitted_at=submitted_at
         )
         self._pending_lookups.add(request_id)
         self._lookup_params[request_id] = (token_ids, cache_salt, request_configs)
@@ -1110,8 +1120,8 @@ class LMCacheMPSchedulerAdapter:
         With ``lmcache.mp.pp_query_fastpath`` enabled, a consumed final integer
         zero establishes an empty common prefix immediately. Outstanding peer
         controls remain owned until normal request cleanup and session end.
-        Each stage may submit STATUS after its own successful LOOKUP ACK;
-        positive results still require final STATUS from every stage.
+        Each stage returns a ready result inline when supported. A pending
+        or legacy reply needs STATUS. Positive results require every stage.
 
         First polls, without blocking, whether every server has acknowledged
         the LOOKUP sent by ``maybe_submit_lookup_request``; while any ack is
@@ -1153,6 +1163,7 @@ class LMCacheMPSchedulerAdapter:
             # Aggregation already done; return the cached value.
             return self._finished_lookup_results[request_id]
 
+        per_server = self._per_server_hits.setdefault(request_id, {})
         ack = self._unacked_lookups.get(request_id)
         if ack is not None:
             # The server registers the prefetch job while handling LOOKUP.
@@ -1164,11 +1175,24 @@ class LMCacheMPSchedulerAdapter:
                 for url, fut in list(ack.futures.items()):
                     if fut.query():
                         try:
-                            fut.result(timeout=0)
+                            hits = fut.result(timeout=0)
                         except TimeoutError:
                             self._mark_lookup_timed_out(url)
                             return 0
                         del ack.futures[url]
+                        if hits is not None:
+                            per_server[url] = hits
+                            if self.trace_inline_lookup:
+                                logger.info(
+                                    "INLINE_LOOKUP req=%s url=%s hits=%d submitted_ns=%d reply_ns=%s poll_ns=%d",
+                                    request_id, url, hits, int(ack.submitted_at * 1e9),
+                                    fut.lookup_reply_ns, time.monotonic_ns(),
+                                )
+                            if hits == 0:
+                                self._finished_lookup_results[request_id] = 0
+                                if observer is not None:
+                                    observer.record("early_miss")
+                                return 0
             else:
                 ack.futures = {
                     url: fut for url, fut in ack.futures.items() if not fut.query()
@@ -1192,7 +1216,6 @@ class LMCacheMPSchedulerAdapter:
         # Persistent accumulator for this request. A server present in
         # the dict has already handed over its final hit count and must
         # not be polled again; absence means "not yet observed".
-        per_server = self._per_server_hits.setdefault(request_id, {})
         unresolved_urls = [u for u in self._server_urls if u not in per_server]
         if self._pp_query_fastpath and ack is not None:
             unresolved_urls = [u for u in unresolved_urls if u not in ack.futures]

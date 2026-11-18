@@ -1551,6 +1551,12 @@ class LMCacheMPConnector(KVConnectorBase_V1, SupportsHMA):
         # to avoid duplication, which would corrupt the store path's block indexing.
         tracker = self._get_request_tracker(request.request_id)
         block_ids = blocks.get_block_ids() or ()
+        if getattr(self.scheduler_adapter, "trace_inline_lookup", False):
+            logger.info(
+                "INLINE_ALLOC req=%s external=%d state=%s alloc_ns=%d",
+                request.request_id, num_external_tokens, tracker.state.name,
+                time.monotonic_ns(),
+            )
 
         # Only append blocks beyond what's already tracked, per engine group.
         existing_counts = tracker.num_allocated_blocks()
