@@ -5,6 +5,7 @@
 import importlib.util
 import io
 import json
+import os
 from pathlib import Path
 import subprocess
 import sys
@@ -138,6 +139,19 @@ class DeployTest(unittest.TestCase):
         paths = [str(HERE.parent), str(self.core), *sys.path]
         with mock.patch.object(sys, "path", paths):
             self.assertEqual(deploy.source_root("lmcache", None), self.core.resolve())
+
+    def test_zombie_worker_is_not_an_active_service(self) -> None:
+        proc = self.root / "proc"
+        sleeping, zombie = os.getpid() + 10000, os.getpid() + 10001
+        for pid, state in ((sleeping, "S"), (zombie, "Z")):
+            entry = proc / str(pid)
+            entry.mkdir(parents=True)
+            (entry / "stat").write_text(f"{pid} (VLLM::Worker) {state} 1\n")
+            (entry / "cmdline").write_bytes(b"VLLM::Worker\0")
+            (entry / "comm").write_text("VLLM::Worker\n")
+        original_path = deploy.Path
+        with mock.patch.object(deploy, "Path", side_effect=lambda p: proc if p == "/proc" else original_path(p)):
+            self.assertEqual(deploy.service_pids(), [sleeping])
 
 
 class GateTest(unittest.TestCase):

@@ -1,0 +1,206 @@
+diff --git a/vllm/v1/core/sched/scheduler.py b/vllm/v1/core/sched/scheduler.py
+index b77d014..ecf8bd3 100644
+--- a/vllm/v1/core/sched/scheduler.py
++++ b/vllm/v1/core/sched/scheduler.py
+@@ -1,6 +1,7 @@
+ # SPDX-License-Identifier: Apache-2.0
+ # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
+ import itertools
++import os
+ import time
+ from collections import defaultdict, deque
+ from collections.abc import Iterable
+@@ -153,6 +154,19 @@ class Scheduler(SchedulerInterface):
+             if multiple_inflight_batches and kv_transfer_config.is_kv_consumer:
+                 self.defer_block_free = True
+ 
++        self._tail_lookup_adapter = None
++        if os.getenv("KS_LMCACHE_LOOKUP_TAIL_20MS") == "1":
++            children = getattr(self.connector, "_connectors", (self.connector,))
++            adapters = [
++                a for c in children
++                if (a := getattr(c, "scheduler_adapter", None)) is not None
++                and getattr(a, "_pp_query_fastpath", False)
++                and set(a._server_urls) == a._inline_lookup_urls
++            ]
++            if len(adapters) != 1:
++                raise ValueError("LOOKUP tail wait requires one inline PP LMCache adapter")
++            self._tail_lookup_adapter = adapters[0]
++
+         self.kv_event_publisher = EventPublisherFactory.create(
+             self.kv_events_config,
+             self.parallel_config.data_parallel_index,
+@@ -422,6 +436,36 @@ class Scheduler(SchedulerInterface):
+         end = min((s for s in stops if start < s < end), default=end)
+         return max(end - start, 0)
+ 
++    def _wait_inline_lookup(self, request_id: str) -> tuple[int, int]:
++        """Observe existing ACK futures on the scheduler thread; consume via the connector."""
++        ack = self._tail_lookup_adapter._unacked_lookups.get(request_id)
++        if not ack:
++            return 0, 0
++        start = time.perf_counter_ns()
++        deadline = start + 20_000_000
++        waits = 0
++        while True:
++            pending = []
++            for future in ack.futures.values():
++                if not future.query():
++                    pending.append(future)
++                    continue
++                # A final zero permits an early miss. A legacy reply or error
++                # belongs to normal STATUS/error handling, without extra delay.
++                try:
++                    if not future.result(timeout=0):
++                        return waits, time.perf_counter_ns() - start if waits else 0
++                except Exception:
++                    return waits, time.perf_counter_ns() - start if waits else 0
++            remaining = deadline - time.perf_counter_ns()
++            if not pending or remaining <= 0:
++                return waits, time.perf_counter_ns() - start if waits else 0
++            # For two pending peers, allow the other peer's zero to end the
++            # wait promptly. Every wait spends the same monotonic deadline.
++            timeout = remaining if len(pending) == 1 else min(remaining, 1_000_000)
++            waits += 1
++            pending[0].wait(timeout=timeout / 1e9)
++
+     def schedule(self, throttle_prefills: bool = False) -> SchedulerOutput:
+         self.current_step += 1
+         # NOTE(woosuk) on the scheduling algorithm:
+@@ -443,6 +487,10 @@ class Scheduler(SchedulerInterface):
+         req_to_new_blocks: dict[str, KVCacheBlocks] = {}
+         num_scheduled_tokens: dict[str, int] = {}
+         token_budget = self.max_num_scheduled_tokens
++        pending_this_pass = set() if self._tail_lookup_adapter is not None else None
++        second_pass = False
++        wait_calls = wait_ns = extra = extra_load = kv_none = 0
++        budget_before = running_before = None
+         if self._pause_state == PauseState.PAUSED_ALL:
+             # Do not schedule any requests when paused.
+             token_budget = 0
+@@ -570,6 +618,7 @@ class Scheduler(SchedulerInterface):
+                     if new_blocks is not None:
+                         # The request can be scheduled.
+                         break
++                    kv_none += 1
+ 
+                     # The request cannot be scheduled.
+                     # Preempt the lowest-priority request.
+@@ -666,7 +715,7 @@ class Scheduler(SchedulerInterface):
+         if not preempted_reqs and self._pause_state == PauseState.UNPAUSED:
+             step_skipped_waiting = create_request_queue(self.policy)
+ 
+-            while (self.waiting or self.skipped_waiting) and token_budget > 0:
++            while token_budget > 0:
+                 # Paused streaming sessions (WAITING_FOR_STREAMING_REQ) are not
+                 # in `running` but still hold a model-runner request slot.
+                 num_running = len(self.running) + self.num_waiting_for_streaming_input
+@@ -674,15 +723,42 @@ class Scheduler(SchedulerInterface):
+                     break
+ 
+                 request_queue = self._select_waiting_queue_for_scheduling()
+-                assert request_queue is not None
++                if request_queue is None:
++                    if second_pass or not pending_this_pass or kv_none or defer_prefills:
++                        break
++                    # Only natural exhaustion reaches here. Restore native queue
++                    # order before deciding whether its head qualifies.
++                    self.skipped_waiting.prepend_requests(step_skipped_waiting)
++                    step_skipped_waiting = create_request_queue(self.policy)
++                    request_queue = self.skipped_waiting
++                    head = request_queue.peek_request()
++                    if (
++                        head not in pending_this_pass
++                        or head.request_id not in self._tail_lookup_adapter._pending_lookups
++                        or (
++                            self.lora_config and head.lora_request
++                            and len(scheduled_loras) == self.lora_config.max_loras
++                            and head.lora_request.lora_int_id not in scheduled_loras
++                        )
++                    ):
++                        break
++                    second_pass = True
++                    budget_before, running_before = token_budget, len(self.running)
++                    wait_calls, wait_ns = self._wait_inline_lookup(head.request_id)
+ 
+                 request = request_queue.peek_request()
++                if second_pass and (
++                    request not in pending_this_pass or extra >= self.max_num_running_reqs
++                ):
++                    break
+                 request_id = request.request_id
+ 
+                 # try to promote blocked statuses while traversing skipped queue.
+                 if self._is_blocked_waiting_status(
+                     request.status
+                 ) and not self._try_promote_blocked_waiting_request(request):
++                    if second_pass:
++                        break
+                     if request.status == RequestStatus.WAITING_FOR_REMOTE_KVS:
+                         logger.debug(
+                             "%s is still in WAITING_FOR_REMOTE_KVS state.",
+@@ -703,6 +779,8 @@ class Scheduler(SchedulerInterface):
+                     )
+                 ):
+                     # Scheduling would exceed max_loras, skip.
++                    if second_pass:
++                        break
+                     request_queue.pop_request()
+                     step_skipped_waiting.prepend_request(request)
+                     continue
+@@ -770,6 +848,10 @@ class Scheduler(SchedulerInterface):
+                         )
+ 
+                         if ext_tokens is None:
++                            if second_pass:
++                                break
++                            if pending_this_pass is not None:
++                                pending_this_pass.add(request)
+                             # The request cannot be scheduled because
+                             # the KVConnector couldn't determine
+                             # the number of matched tokens.
+@@ -798,6 +880,8 @@ class Scheduler(SchedulerInterface):
+                             request, num_computed_tokens
+                         )
+                     ):
++                        if second_pass:
++                            break
+                         request_queue.pop_request()
+                         step_skipped_waiting.prepend_request(request)
+                         continue
+@@ -948,6 +1032,7 @@ class Scheduler(SchedulerInterface):
+ 
+                 if new_blocks is None:
+                     # The request cannot be scheduled.
++                    kv_none += 1
+ 
+                     # NOTE: we need to untouch the request from the encode cache
+                     # manager
+@@ -976,6 +1061,9 @@ class Scheduler(SchedulerInterface):
+                         )
+ 
+                 request = request_queue.pop_request()
++                if second_pass:
++                    extra += 1
++                    extra_load += int(load_kv_async)
+                 if load_kv_async:
+                     # If loading async, allocate memory and put request
+                     # into the WAITING_FOR_REMOTE_KV state.
+@@ -1062,6 +1150,17 @@ class Scheduler(SchedulerInterface):
+                 self.prefill_capacity_bound = bool(self.waiting)
+ 
+         # Check if the scheduling constraints are satisfied.
++        if pending_this_pass is not None:
++            logger.info(
++                "PP_LOOKUP_TAIL step=%d pending=%d pass=%d waited=%d wait_ns=%d "
++                "added=%d added_load=%d budget_before=%d budget_after=%d "
++                "running_before=%d running_after=%d alloc_none=%d",
++                self.current_step, len(pending_this_pass), second_pass, bool(wait_calls),
++                wait_ns, extra, extra_load,
++                token_budget if budget_before is None else budget_before, token_budget,
++                len(self.running) if running_before is None else running_before,
++                len(self.running), kv_none,
++            )
+         total_num_scheduled_tokens = sum(num_scheduled_tokens.values())
+         assert total_num_scheduled_tokens <= self.max_num_scheduled_tokens
+ 

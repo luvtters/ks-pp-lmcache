@@ -1,0 +1,90 @@
+--- a/vllm/v1/engine/core.py
++++ b/vllm/v1/engine/core.py
+@@ -1070,6 +1070,15 @@
+                 internal_dp_balancing,
+             )
+ 
++            if (
++                os.getenv("KS_LMCACHE_ADMIT_DURING_MODEL_WAIT") == "1"
++                and vllm_config.parallel_config.data_parallel_size == 1
++                and not self.has_coordinator
++                and self.scheduler.get_kv_connector() is not None
++            ):
++                self.model_executor.on_model_wait = self._admit_next_generation_request
++                self._admitted_during_model_wait = 0
++
+             # Background Threads and Queues for IO. These enable us to
+             # overlap ZMQ socket IO with GPU since they release the GIL,
+             # and to overlap some serialization/deserialization with the
+@@ -1364,6 +1373,26 @@
+             self._process_engine_step()
+ 
+         raise SystemExit
++
++    def _admit_next_generation_request(self) -> None:
++        """Use the engine owner thread to enqueue one ADD while workers execute."""
++        if not self.is_running():
++            return
++        # The socket thread appends. This engine thread is the sole consumer.
++        # Keep control, shutdown, pooling and streaming requests in FIFO order.
++        with self.input_queue.mutex:
++            if not self.input_queue.queue:
++                return
++            kind, payload = self.input_queue.queue[0]
++            if kind != EngineCoreRequestType.ADD:
++                return
++            req, _ = payload
++            if req.pooling_params is not None or req.resumable or req.abort_immediately:
++                return
++        self._handle_client_request(*self.input_queue.get_nowait())
++        self._admitted_during_model_wait += 1
++        if self._admitted_during_model_wait == 1 or self._admitted_during_model_wait % 256 == 0:
++            logger.info("LMCache ADD during model wait: count=%d", self._admitted_during_model_wait)
+ 
+     def _process_input_queue(self):
+         """Exits when an engine step needs to be performed."""
+--- a/vllm/v1/executor/multiproc_executor.py
++++ b/vllm/v1/executor/multiproc_executor.py
+@@ -382,7 +382,10 @@
+ 
+         def get_response():
+             responses = []
++            on_wait = getattr(self, "on_model_wait", None) if non_block else None
+             for mq in response_mqs:
++                if on_wait is not None and method in ("execute_model", "sample_tokens"):
++                    mq.wait_readable_servicing(on_wait, deadline)
+                 dequeue_timeout = (
+                     None if deadline is None else (deadline - time.monotonic())
+                 )
+--- a/vllm/distributed/device_communicators/shm_broadcast.py
++++ b/vllm/distributed/device_communicators/shm_broadcast.py
+@@ -768,6 +768,29 @@
+ 
+         if self.n_remote_reader > 0:
+             self.remote_socket.send_multipart(all_buffers, copy=False)
++
++    def wait_readable_servicing(self, on_wait, deadline: float | None) -> None:
++        """Service ingress between bounded readiness checks. Never consume a reply."""
++        while not self.shutting_down:
++            if self._is_local_reader:
++                with self.buffer.get_metadata(self.current_idx) as flags:
++                    memory_fence()
++                    if flags[0] and not flags[self.local_reader_rank + 1]:
++                        return
++            elif self._is_remote_reader:
++                if self.remote_socket.poll(timeout=0):
++                    return
++            else:
++                return
++            if deadline is not None and time.monotonic() >= deadline:
++                return
++            on_wait()
++            # Locally sample the flags without taking a slot or consuming the
++            # cancellation socket. Remote ZMQ can wake us as soon as data lands.
++            if self._is_local_reader:
++                time.sleep(0.002)
++            elif self.remote_socket.poll(timeout=2):
++                return
+ 
+     def dequeue(
+         self,

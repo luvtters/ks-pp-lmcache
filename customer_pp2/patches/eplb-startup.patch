@@ -1,0 +1,23 @@
+--- a/vllm_ascend/eplb/eplb_updator.py
++++ b/vllm_ascend/eplb/eplb_updator.py
+@@ -170,16 +170,19 @@
+             global_dst = self.comm_group.ranks[dst_rank]
+             comm_op_list.append(dist.P2POp(dist.isend, src_tensor, global_dst, group=self.comm_group.device_group))
+ 
++        recv_buffers = []
+         for src_rank in range(self.comm_group.world_size):
+             if src_rank == self.comm_group.rank_in_group:
+                 continue
+             global_src = self.comm_group.ranks[src_rank]
+-            comm_op_list.append(dist.P2POp(dist.irecv, src_tensor, global_src, group=self.comm_group.device_group))
++            recv_buffers.append(torch.empty_like(src_tensor))
++            comm_op_list.append(dist.P2POp(dist.irecv, recv_buffers[-1], global_src, group=self.comm_group.device_group))
+         if comm_op_list:
+             reqs = dist.batch_isend_irecv(comm_op_list)
+ 
+         for req in reqs:
+             req.wait()
++        torch.npu.synchronize(self.device)
+         logger.info("[eplb/updator] EPLB warm-up completed")
+ 
+     def shutdown(self):

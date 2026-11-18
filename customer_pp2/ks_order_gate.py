@@ -102,7 +102,7 @@ def open_gate(root, rows, cache_pid, pool_gib=480, status_url='http://127.0.0.1:
     size = pool_gib * 1024**3
     if not (status["is_healthy"] and l1["is_healthy"] and
             l1["memory_configured_bytes"] == l1["memory_total_bytes"] == size):
-        raise RuntimeError("New native 480 GiB cache is not ready")
+        raise RuntimeError(f"New native {pool_gib} GiB cache is not ready")
     if process_start(cache_pid) != start:
         raise RuntimeError("Cache process changed during status check")
     receipt = dict(gate=str(root), at_ns=time.time_ns(), cache_pid=cache_pid,

@@ -1,5 +1,21 @@
 {
   "release": "customer-pp2-verified-20261118",
+  "full_install_option": "--full",
+  "full_tested_run": "LM480_13725_EPfix_inline_eager_admit_tail20_20261118_2026_r1",
+  "full_install": [
+    "all original LMCache inline-result and mirror-first components",
+    "device-tested native vLLM model-wait admission: core, executor and shared-memory queue",
+    "device-tested native Scheduler tail initializer and bounded wait method",
+    "device-tested actual Ascend KVDeliveryScheduler 20ms tail path",
+    "shared EPLB startup independent receive buffers and completion synchronization"
+  ],
+  "full_model_environment": {
+    "KS_LMCACHE_ADMIT_DURING_MODEL_WAIT": "1",
+    "KS_LMCACHE_LOOKUP_TAIL_20MS": "1",
+    "KS_LMCACHE_INLINE_LOOKUP_TRACE": "1",
+    "KS_L1_REGISTERED_MMAP": "0",
+    "KS_WEIGHT_REGISTERED_MMAP": "0"
+  },
   "lmcache_base": "e8e2f1d7295e56b55f880f51b4609c46b46fdc0a",
   "lmcache_inline_result": "91de3c8517699e11a4d1f04b732333b09867c6d9",
   "default_apply": [
@@ -7,8 +23,8 @@
     "tested mirror-first gate before NPUWorker.ensure_kv_transfer_initialized"
   ],
   "manual_configuration": ["lmcache.mp.eager_prefetch=true", "source customer_pp2/enable.sh before vllm serve"],
-  "optional_reference_only": ["reference/verified-native-vllm-admission.patch"],
-  "excluded": ["unverified Ascend port of native admission patch", "20ms tail candidate", "partial-PP APC-bound candidate"],
+  "legacy_optional_reference_only": ["reference/verified-native-vllm-admission.patch"],
+  "excluded": ["unverified Ascend port of native admission patch", "partial-PP APC-bound candidate", "CPU-only automatic two-server startup candidate"],
   "validation": {
     "mirror_first_real_weights_single_request_ms": {
       "480_cache_first_mean": 1689.036,
@@ -27,6 +43,16 @@
       "mean_ttft_ms": 2217.778837456135,
       "p90_ttft_ms": 2765.766669111326
     },
-    "customer_runtime": "NOT_VERIFIED"
+    "full_13725_dummy_shared4000": {
+      "completed": 4000,
+      "failed": 0,
+      "mean_ttft_ms": 2118.3505892702087,
+      "p50_ttft_ms": 2073.164228524547,
+      "p90_ttft_ms": 2675.379221595358,
+      "p99_ttft_ms": 3669.2890375666316,
+      "actual_ascend_tail_path_verified": true,
+      "extra_tail_admissions": 28
+    },
+    "customer_runtime": "Full patch set still requires customer source applicability and runtime verification"
   }
 }

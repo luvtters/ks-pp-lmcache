@@ -22,6 +22,12 @@ import time
 HERE = Path(__file__).resolve().parent
 PATCH = HERE / "patches" / "lmcache-e8-to-inline.patch"
 RELEASE = "customer-pp2-verified-20261118"
+FULL_PATCHES = (
+    ("model_wait_admission", "vllm", "model-wait-admission.patch"),
+    ("tail_scheduler_base", "vllm", "tail-scheduler-base.patch"),
+    ("ascend_tail_20ms", "ascend", "ascend-tail-20ms.patch"),
+    ("eplb_startup", "ascend", "eplb-startup.patch"),
+)
 
 
 def source_root(package: str, supplied: str | None) -> Path:
@@ -48,13 +54,13 @@ def source_root(package: str, supplied: str | None) -> Path:
     return root
 
 
-def git_apply(root: Path, *options: str) -> subprocess.CompletedProcess[str]:
+def git_apply(root: Path, *options: str, patch: Path = PATCH) -> subprocess.CompletedProcess[str]:
     """Run patch checks without discovering an unrelated parent repository."""
     env = dict(os.environ, GIT_CEILING_DIRECTORIES=str(root.parent),
                GIT_OPTIONAL_LOCKS="0")
     for key in ("GIT_DIR", "GIT_WORK_TREE", "GIT_INDEX_FILE", "GIT_PREFIX"):
         env.pop(key, None)
-    return subprocess.run(["git", "-C", str(root), "apply", *options, str(PATCH)],
+    return subprocess.run(["git", "-C", str(root), "apply", *options, str(patch)],
                           env=env, capture_output=True, text=True, timeout=30)
 
 
@@ -65,6 +71,9 @@ def service_pids() -> list[int]:
         if int(entry.name) == os.getpid():
             continue
         try:
+            state = (entry / "stat").read_text().rsplit(") ", 1)[1].split()[0]
+            if state in ("Z", "X"):
+                continue
             words = (entry / "cmdline").read_bytes().split(b"\0")
             comm = (entry / "comm").read_text().strip()
         except (FileNotFoundError, ProcessLookupError, PermissionError):
@@ -118,6 +127,7 @@ def plan(args: argparse.Namespace) -> tuple[dict[str, object], list[tuple[Path, 
     out: dict[str, object] = {"release": RELEASE, "python": sys.executable,
                               "lmcache_root": str(root), "lookup": state,
                               "active_service_pids": service_pids()}
+    out["delivery_scope"] = "FULL_13725_2026" if getattr(args, "full", False) else "LEGACY_PARTIAL"
     if not args.only_lookup:
         ascend = source_root("vllm_ascend", args.ascend_root)
         manager = ascend / "vllm_ascend/moe_offload/manager.py"
@@ -132,6 +142,29 @@ def plan(args: argparse.Namespace) -> tuple[dict[str, object], list[tuple[Path, 
         gated = gate_worker(old)
         out.update(ascend_root=str(ascend), mirror_gate=(
             "ALREADY_APPLIED" if gated == old else "READY_TO_APPLY"))
+        if getattr(args, "full", False):
+            vllm = source_root("vllm", args.vllm_root)
+            out["vllm_root"] = str(vllm)
+            out["full_patches"] = []
+            for label, kind, filename in FULL_PATCHES:
+                target = vllm if kind == "vllm" else ascend
+                patch = HERE / "patches" / filename
+                names = re.findall(r"^\+\+\+ b/(.+)$", patch.read_text(encoding="utf-8"), re.M)
+                prefix = "vllm/" if kind == "vllm" else "vllm_ascend/"
+                if not names or any(not n.startswith(prefix) or ".." in Path(n).parts for n in names):
+                    raise RuntimeError(f"Unexpected {label} patch paths")
+                reverse = git_apply(target, "--reverse", "--check", patch=patch)
+                forward = git_apply(target, "--check", patch=patch)
+                if reverse.returncode == 0:
+                    state = "ALREADY_APPLIED"
+                elif forward.returncode == 0:
+                    state = "READY_TO_APPLY"
+                else:
+                    raise RuntimeError(f"{label}: source differs; no files changed.\n"
+                                       + forward.stderr + reverse.stderr)
+                out["full_patches"].append(dict(component=label, root=str(target),
+                                               patch=filename, state=state))
+                files.extend((target / name, (target / name).read_bytes()) for name in names)
         files.append((worker, old))
     return out, files
 
@@ -153,7 +186,8 @@ def apply(args: argparse.Namespace) -> dict[str, object]:
     info, files = plan(args)
     if info["active_service_pids"]:
         raise RuntimeError(f"Stop the model and cache services first: {info['active_service_pids']}")
-    needed = info["lookup"] == "READY_TO_APPLY" or info.get("mirror_gate") == "READY_TO_APPLY"
+    needed = (info["lookup"] == "READY_TO_APPLY" or info.get("mirror_gate") == "READY_TO_APPLY"
+              or any(p["state"] == "READY_TO_APPLY" for p in info.get("full_patches", [])))
     if not needed:
         return info
     state = Path(args.state_dir).resolve()
@@ -169,6 +203,11 @@ def apply(args: argparse.Namespace) -> dict[str, object]:
             result = git_apply(Path(str(info["lmcache_root"])))
             if result.returncode:
                 raise RuntimeError(result.stderr)
+        for item in info.get("full_patches", []):
+            if item["state"] == "READY_TO_APPLY":
+                result = git_apply(Path(item["root"]), patch=HERE / "patches" / item["patch"])
+                if result.returncode:
+                    raise RuntimeError(result.stderr)
         if not args.only_lookup and info["mirror_gate"] == "READY_TO_APPLY":
             worker, original = files[-1]
             write_file(worker, gate_worker(original))
@@ -214,13 +253,24 @@ def main() -> None:
     parser.add_argument("command", choices=("check", "apply", "rollback"))
     parser.add_argument("--lmcache-root")
     parser.add_argument("--ascend-root")
+    parser.add_argument("--vllm-root")
+    parser.add_argument("--full", action="store_true",
+                        help="Install the complete device-tested 137+25 patch set")
+    parser.add_argument("--require-applied", action="store_true")
     parser.add_argument("--only-lookup", action="store_true")
     parser.add_argument("--state-dir", default="/opt/ks-luv-pp/pp2-update-backups")
     parser.add_argument("--backup")
     args = parser.parse_args()
+    if args.full and args.only_lookup:
+        parser.error("--full and --only-lookup cannot be combined")
     try:
         result = rollback(args) if args.command == "rollback" else (
             apply(args) if args.command == "apply" else plan(args)[0])
+        if args.require_applied:
+            states = [result["lookup"], result.get("mirror_gate", "ALREADY_APPLIED")]
+            states.extend(p["state"] for p in result.get("full_patches", []))
+            if any(state != "ALREADY_APPLIED" for state in states):
+                raise RuntimeError("Required patches are not all installed; apply --full before starting")
         print(json.dumps(result, ensure_ascii=False, indent=2))
     except (OSError, RuntimeError, ValueError, subprocess.SubprocessError) as error:
         print(f"STOP: {error}", file=sys.stderr)
