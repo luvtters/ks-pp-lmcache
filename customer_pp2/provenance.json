@@ -1,0 +1,32 @@
+{
+  "release": "customer-pp2-verified-20261118",
+  "lmcache_base": "e8e2f1d7295e56b55f880f51b4609c46b46fdc0a",
+  "lmcache_inline_result": "91de3c8517699e11a4d1f04b732333b09867c6d9",
+  "default_apply": [
+    "eight LMCache Python files from the verified base to inline-result commit",
+    "tested mirror-first gate before NPUWorker.ensure_kv_transfer_initialized"
+  ],
+  "manual_configuration": ["lmcache.mp.eager_prefetch=true", "source customer_pp2/enable.sh before vllm serve"],
+  "optional_reference_only": ["reference/verified-native-vllm-admission.patch"],
+  "excluded": ["unverified Ascend port of native admission patch", "20ms tail candidate", "partial-PP APC-bound candidate"],
+  "validation": {
+    "mirror_first_real_weights_single_request_ms": {
+      "480_cache_first_mean": 1689.036,
+      "480_mirror_first_mean": 937.761,
+      "128_mirror_first_mean": 933.081
+    },
+    "inline_and_eager_dummy_shared4000": {
+      "completed": 4000,
+      "failed": 0,
+      "mean_ttft_ms": 2761.442642535636,
+      "p90_ttft_ms": 3319.8990818695165
+    },
+    "native_vllm_admission_reference_dummy_shared4000": {
+      "completed": 4000,
+      "failed": 0,
+      "mean_ttft_ms": 2217.778837456135,
+      "p90_ttft_ms": 2765.766669111326
+    },
+    "customer_runtime": "NOT_VERIFIED"
+  }
+}

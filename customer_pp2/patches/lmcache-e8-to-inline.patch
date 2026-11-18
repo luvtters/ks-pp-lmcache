@@ -1,0 +1,263 @@
+diff --git a/lmcache/integration/vllm/lmcache_mp_connector.py b/lmcache/integration/vllm/lmcache_mp_connector.py
+index f311b2c5..b4ec6187 100644
+--- a/lmcache/integration/vllm/lmcache_mp_connector.py
++++ b/lmcache/integration/vllm/lmcache_mp_connector.py
+@@ -1551,6 +1551,12 @@ class LMCacheMPConnector(KVConnectorBase_V1, SupportsHMA):
+         # to avoid duplication, which would corrupt the store path's block indexing.
+         tracker = self._get_request_tracker(request.request_id)
+         block_ids = blocks.get_block_ids() or ()
++        if getattr(self.scheduler_adapter, "trace_inline_lookup", False):
++            logger.info(
++                "INLINE_ALLOC req=%s external=%d state=%s alloc_ns=%d",
++                request.request_id, num_external_tokens, tracker.state.name,
++                time.monotonic_ns(),
++            )
+ 
+         # Only append blocks beyond what's already tracked, per engine group.
+         existing_counts = tracker.num_allocated_blocks()
+diff --git a/lmcache/integration/vllm/vllm_multi_process_adapter.py b/lmcache/integration/vllm/vllm_multi_process_adapter.py
+index dffda868..8dd29b89 100644
+--- a/lmcache/integration/vllm/vllm_multi_process_adapter.py
++++ b/lmcache/integration/vllm/vllm_multi_process_adapter.py
+@@ -36,6 +36,7 @@ from lmcache.utils import (
+ from lmcache.v1.gpu_connector.utils import LayoutHints
+ from lmcache.v1.multiprocess.custom_types import (
+     KV_EVENT_CAPABILITY,
++    LOOKUP_RESULT_CAPABILITY,
+     KV_EVENT_KIND_REMOVED,
+     KV_EVENT_KIND_STORED,
+     BlockAllocationRecord,
+@@ -266,7 +267,7 @@ class _LookupAck:
+     a reply that never arrives can be detected via ``submitted_at``.
+     """
+ 
+-    futures: dict[str, MessagingFuture[None]]
++    futures: dict[str, MessagingFuture[Any]]
+     """Outstanding LOOKUP futures keyed by server URL; acked ones are removed."""
+ 
+     submitted_at: float
+@@ -800,6 +801,8 @@ class LMCacheMPSchedulerAdapter:
+             "lookup", ",".join(server_urls)
+         )
+         self._mq_timeout = mq_timeout
++        self._inline_lookup_urls: set[str] = set()
++        self.trace_inline_lookup = os.getenv("KS_LMCACHE_INLINE_LOOKUP_TRACE") == "1"
+ 
+         # Lookup state tracking:
+         # - _pending_lookups: request_ids submitted but not yet resolved
+@@ -843,6 +846,10 @@ class LMCacheMPSchedulerAdapter:
+                 chunk_sizes[url] = get_lmcache_chunk_size(
+                     client, timeout=self._mq_timeout
+                 )
++                if self._pp_query_fastpath:
++                    capabilities = get_experimental(client, timeout=self._mq_timeout)
++                    if LOOKUP_RESULT_CAPABILITY in capabilities:
++                        self._inline_lookup_urls.add(url)
+             except TimeoutError:
+                 for c in self.req_clients.values():
+                     c.close()
+@@ -1037,27 +1044,30 @@ class LMCacheMPSchedulerAdapter:
+             lookup_tokens // self.lmcache_tokens_per_chunk
+         ) * self.lmcache_tokens_per_chunk
+ 
+-        futures: dict[str, MessagingFuture[None]] = {
+-            url: self.req_clients[url].lookup(
+-                self._create_key(
+-                    token_ids,
+-                    start=0,
+-                    end=aligned_end,
+-                    request_id=request_id,
+-                    cache_salt=cache_salt,
+-                    request_configs=request_configs,
+-                    server_url=url,
+-                ).no_worker_id_version(),
+-                self.tp_size,
++        futures: dict[str, MessagingFuture[Any]] = {}
++        submitted_at = time.monotonic()
++        for url in self._server_urls:
++            client = self.req_clients[url]
++            lookup = (
++                client.lookup_with_result if url in self._inline_lookup_urls
++                else client.lookup
+             )
+-            for url in self._server_urls
+-        }
++            key = self._create_key(
++                token_ids,
++                start=0,
++                end=aligned_end,
++                request_id=request_id,
++                cache_salt=cache_salt,
++                request_configs=request_configs,
++                server_url=url,
++            ).no_worker_id_version()
++            futures[url] = lookup(key, self.tp_size)
+ 
+         # Do not wait for the acknowledgement here: that is a full server
+         # round trip on the scheduler thread. check_lookup_result resolves
+         # the futures lazily, one non-blocking poll per call.
+         self._unacked_lookups[request_id] = _LookupAck(
+-            futures=futures, submitted_at=time.monotonic()
++            futures=futures, submitted_at=submitted_at
+         )
+         self._pending_lookups.add(request_id)
+         self._lookup_params[request_id] = (token_ids, cache_salt, request_configs)
+@@ -1110,8 +1120,8 @@ class LMCacheMPSchedulerAdapter:
+         With ``lmcache.mp.pp_query_fastpath`` enabled, a consumed final integer
+         zero establishes an empty common prefix immediately. Outstanding peer
+         controls remain owned until normal request cleanup and session end.
+-        Each stage may submit STATUS after its own successful LOOKUP ACK;
+-        positive results still require final STATUS from every stage.
++        Each stage returns a ready result inline when supported. A pending
++        or legacy reply needs STATUS. Positive results require every stage.
+ 
+         First polls, without blocking, whether every server has acknowledged
+         the LOOKUP sent by ``maybe_submit_lookup_request``; while any ack is
+@@ -1153,6 +1163,7 @@ class LMCacheMPSchedulerAdapter:
+             # Aggregation already done; return the cached value.
+             return self._finished_lookup_results[request_id]
+ 
++        per_server = self._per_server_hits.setdefault(request_id, {})
+         ack = self._unacked_lookups.get(request_id)
+         if ack is not None:
+             # The server registers the prefetch job while handling LOOKUP.
+@@ -1164,11 +1175,24 @@ class LMCacheMPSchedulerAdapter:
+                 for url, fut in list(ack.futures.items()):
+                     if fut.query():
+                         try:
+-                            fut.result(timeout=0)
++                            hits = fut.result(timeout=0)
+                         except TimeoutError:
+                             self._mark_lookup_timed_out(url)
+                             return 0
+                         del ack.futures[url]
++                        if hits is not None:
++                            per_server[url] = hits
++                            if self.trace_inline_lookup:
++                                logger.info(
++                                    "INLINE_LOOKUP req=%s url=%s hits=%d submitted_ns=%d reply_ns=%s poll_ns=%d",
++                                    request_id, url, hits, int(ack.submitted_at * 1e9),
++                                    fut.lookup_reply_ns, time.monotonic_ns(),
++                                )
++                            if hits == 0:
++                                self._finished_lookup_results[request_id] = 0
++                                if observer is not None:
++                                    observer.record("early_miss")
++                                return 0
+             else:
+                 ack.futures = {
+                     url: fut for url, fut in ack.futures.items() if not fut.query()
+@@ -1192,7 +1216,6 @@ class LMCacheMPSchedulerAdapter:
+         # Persistent accumulator for this request. A server present in
+         # the dict has already handed over its final hit count and must
+         # not be polled again; absence means "not yet observed".
+-        per_server = self._per_server_hits.setdefault(request_id, {})
+         unresolved_urls = [u for u in self._server_urls if u not in per_server]
+         if self._pp_query_fastpath and ack is not None:
+             unresolved_urls = [u for u in unresolved_urls if u not in ack.futures]
+diff --git a/lmcache/v1/multiprocess/custom_types.py b/lmcache/v1/multiprocess/custom_types.py
+index 992b64ac..fc2043da 100644
+--- a/lmcache/v1/multiprocess/custom_types.py
++++ b/lmcache/v1/multiprocess/custom_types.py
+@@ -317,6 +317,7 @@ def get_customized_decoder(type: Any) -> msgspec.msgpack.Decoder:
+ 
+ # Subscribe only to advertising servers; older versions expose a polling API.
+ KV_EVENT_CAPABILITY = "kv_event_stream"
++LOOKUP_RESULT_CAPABILITY = "lookup_with_result"
+ KV_EVENT_KIND_STORED = "stored"
+ KV_EVENT_KIND_REMOVED = "removed"
+ KV_EVENT_MEDIUM_CPU = "CPU"
+diff --git a/lmcache/v1/multiprocess/futures.py b/lmcache/v1/multiprocess/futures.py
+index 7233e727..cb4a6054 100644
+--- a/lmcache/v1/multiprocess/futures.py
++++ b/lmcache/v1/multiprocess/futures.py
+@@ -59,6 +59,9 @@ class MessagingStream(Iterator[T]):
+ 
+ 
+ class MessagingFuture(Generic[T]):
++    # ZMQ sets this before publishing an inline LOOKUP reply to the scheduler.
++    lookup_reply_ns: int | None = None
++
+     def __init__(self) -> None:
+         self.is_done_ = threading.Event()
+         self.result_: T | None = None
+diff --git a/lmcache/v1/multiprocess/modules/lookup.py b/lmcache/v1/multiprocess/modules/lookup.py
+index 57513d62..b71a8675 100644
+--- a/lmcache/v1/multiprocess/modules/lookup.py
++++ b/lmcache/v1/multiprocess/modules/lookup.py
+@@ -323,6 +323,12 @@ class LookupModule:
+             )
+         )
+ 
++    @request_handler(HandlerType.BLOCKING)
++    def lookup_with_result(self, key: IPCCacheServerKey, tp_size: int) -> int | None:
++        """Submit once and consume a ready result, leaving pending jobs for STATUS."""
++        self.lookup(key, tp_size)
++        return self.query_prefetch_status(key.request_id)
++
+     @request_handler(HandlerType.BLOCKING)
+     def query_prefetch_status(
+         self,
+diff --git a/lmcache/v1/multiprocess/server.py b/lmcache/v1/multiprocess/server.py
+index fd896093..d9fefd1f 100644
+--- a/lmcache/v1/multiprocess/server.py
++++ b/lmcache/v1/multiprocess/server.py
+@@ -47,7 +47,10 @@ from lmcache.v1.multiprocess.config import (
+     parse_args_to_coordinator_config,
+     parse_args_to_mp_server_config,
+ )
+-from lmcache.v1.multiprocess.custom_types import KV_EVENT_CAPABILITY
++from lmcache.v1.multiprocess.custom_types import (
++    KV_EVENT_CAPABILITY,
++    LOOKUP_RESULT_CAPABILITY,
++)
+ from lmcache.v1.multiprocess.engine_context import MPCacheServerContext
+ from lmcache.v1.multiprocess.engine_module import EngineModule, InstanceLivenessTarget
+ from lmcache.v1.multiprocess.ext_server_module import (
+@@ -306,7 +309,7 @@ def _build_server_components(
+         None,
+     )
+     enabled_modules = set(mp_config.enable)
+-    experimental_transfer: list[str] = []
++    experimental_transfer: list[str] = [LOOKUP_RESULT_CAPABILITY]
+     experimental_modules: list[EngineModule] = []
+     for enabled_module in enabled_modules:
+         if enabled_module not in EXPERIMENTAL_TRANSFER:
+diff --git a/lmcache/v1/multiprocess/transport/base.py b/lmcache/v1/multiprocess/transport/base.py
+index 98e37bda..668224e3 100644
+--- a/lmcache/v1/multiprocess/transport/base.py
++++ b/lmcache/v1/multiprocess/transport/base.py
+@@ -134,6 +134,11 @@ class RequestClient(Protocol):
+     @rpc_method
+     def lookup(self, key: IPCCacheServerKey, tp_size: int) -> MessagingFuture[None]: ...
+ 
++    @rpc_method
++    def lookup_with_result(
++        self, key: IPCCacheServerKey, tp_size: int
++    ) -> MessagingFuture[int | None]: ...
++
+     @rpc_method
+     def query_prefetch_status(self, request_id: str) -> MessagingFuture[int | None]: ...
+ 
+diff --git a/lmcache/v1/multiprocess/transport/zmq_impl/mq.py b/lmcache/v1/multiprocess/transport/zmq_impl/mq.py
+index 8fd815ef..4ab8dd0c 100644
+--- a/lmcache/v1/multiprocess/transport/zmq_impl/mq.py
++++ b/lmcache/v1/multiprocess/transport/zmq_impl/mq.py
+@@ -507,6 +507,8 @@ class MessageQueueClient:
+                     exception_cls(f"Remote {operation} raised {error_type}: {message}")
+                 )
+                 return
++            if operation == "lookup_with_result":
++                future.lookup_reply_ns = time.monotonic_ns()
+             if b_response:
+                 response = msgspec_decode(b_response[0], cls=rpc_spec.response_type)
+                 future.set_result(response)
+@@ -1057,7 +1059,7 @@ class MessageQueueServer(RequestServer):
+         self.handlers[rpc_spec.operation] = BlockingRequestHandler(
+             list(rpc_spec.payload_types), rpc_spec.response_type, handler,
+             observer=(self._pp_control_observer if rpc_spec.operation in {
+-                "ping", "lookup", "query_prefetch_status", "end_session"
++                "ping", "lookup", "lookup_with_result", "query_prefetch_status", "end_session"
+             } else None),
+             operation=rpc_spec.operation,
+         )
